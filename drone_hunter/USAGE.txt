@@ -1,0 +1,54 @@
+========================================================================
+                      DRONE HUNTER - GAME USER GUIDE
+========================================================================
+
+1. HOW TO LAUNCH THE GAME
+------------------------------------------------------------------------
+Open Command Prompt (cmd) or PowerShell and run:
+
+    cd /d D:\AI_Projects\drone_hunter
+    python main.py
+
+------------------------------------------------------------------------
+2. CONTROLS
+------------------------------------------------------------------------
+  [ Spacebar ]        - Fly Upward / Upward Thrusters
+  [ A ] / [ D ]       - Move Left / Right
+  [ Left Arrow ]      - Move Left
+  [ Right Arrow ]     - Move Right
+  [ Mouse Cursor ]    - Aim Drone Cannon dynamically in 360 degrees
+  [ Left Mouse Click ]- Fire Bullets (Hold for continuous firing)
+  [ R ]               - Restart Game after Game Over
+  [ ESC ]             - Exit / Quit Game
+
+------------------------------------------------------------------------
+3. LEVEL SYSTEM & GAMEPLAY RULES
+------------------------------------------------------------------------
+- LEVEL SYSTEM:
+    * Each level requires accumulating 100 points.
+    * Completing a level unlocks the next Level (Level 1 -> Level 2 -> Level 3...).
+    * Higher levels feature faster enemy movement (+35 px/s per level) and accelerated spawn rates!
+    * Reaching a new level triggers a level-up sound and banner notification.
+
+- GAME OVER RULES:
+    * Gravity continuously pulls your drone downward. Use [Spacebar] to stay airborne.
+    * GAME OVER triggers if your drone touches the ground or collides with a target.
+
+------------------------------------------------------------------------
+4. PROJECT FILE STRUCTURE
+------------------------------------------------------------------------
+d:/AI_Projects/drone_hunter/
+│
+├── main.py             # Main game loop, levels system, HUD & rendering
+├── settings.py         # Global settings (Colors, Speed, Gravity, Resolution)
+├── requirements.txt    # Python dependencies (pygame-ce)
+├── USAGE.txt           # Usage instructions text file
+├── README.md           # Project documentation
+│
+└── src/
+    ├── __init__.py     # Source package marker
+    ├── player.py       # Drone class (Gravity, Thrust, Mouse Aiming)
+    ├── bullet.py       # Bullet projectile class (Trigonometry calculations)
+    ├── target.py       # Target enemy class & Spawner timer with level difficulty
+    └── game_manager.py # State manager & collision controller
+========================================================================
