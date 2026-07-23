@@ -134,14 +134,14 @@ def main():
                     if levelup_sound:
                         levelup_sound.play()
 
-            # 2. Check Game Over Conditions: Drone hits ground OR collides with target
+            # 2. Check Game Over Conditions: Drone collides directly with an enemy target
             drone_hit_target = pygame.sprite.spritecollide(drone, target_group, False, pygame.sprite.collide_circle)
-            drone_hit_ground = drone.is_touching_ground()
 
-            if drone_hit_target or drone_hit_ground:
+            if drone_hit_target:
                 game_over = True
                 if gameover_sound:
                     gameover_sound.play()
+
 
         # --- Rendering Pipeline ---
         screen.fill(COLOR_BG)
