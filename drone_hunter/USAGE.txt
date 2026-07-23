@@ -16,35 +16,56 @@ Option B: Run from Python Source
 ------------------------------------------------------------------------
 2. CONTROLS
 ------------------------------------------------------------------------
-  [ Up Arrow / W / Spacebar ] - Fly / Thrust Upward
-  [ Down Arrow / S ]         - Move Downward / Desend
-  [ Left / Right Arrow ]     - Move Left / Right (A / D)
+  [ W / Up Arrow / Spacebar ] - Fly / Thrust Upward
+  [ S / Down Arrow ]         - Fast Descent / Dive Downward
+  [ A / D / Left / Right ]   - Move Left / Right
   [ Mouse Cursor ]           - Aim Tactical Cannons (360 degrees)
-  [ Left Mouse Click ]       - Fire Energy Laser (Hold for continuous fire)
-  [ Space / Enter / S ]      - Advance Level on Celebration Screen
-  [ R / Space / S ]          - Restart Game after Game Over
-  [ ESC ]                    - Exit / Quit Game
+  [ Left Mouse Click ]       - Fire Laser Cannon (Hold for auto-fire)
+  [ E / Right Mouse Click ]  - EMP Shockwave Blast (Clears screen & damages bosses)
+  [ P Key / [⏸ PAUSE] HUD ]  - Pause / Resume Game
+  [ H Key / [🛒 SHOP] HUD ]   - Visit Drone Hangar Shop & Purchase Upgrades
+  [ Space / Enter / S ]      - Start Next Level on Mission Complete Screen
+  [ R / Space / S ]          - Restart Game on Defeat Screen
+  [ ESC ]                    - Exit / Back to Menu
 
 ------------------------------------------------------------------------
-3. GAMEPLAY & WEAPON UPGRADES
+3. DRONE HANGAR SHOP & PERMANENT UPGRADES
+------------------------------------------------------------------------
+Collect Gold Scrap ($) from destroyed targets and floating coins.
+Press [H] or click cards directly to buy permanent upgrades:
+  1. Max Battery Capacity       : Increases max drone battery health (+20% / level)
+  2. Thruster Agility           : Increases flight speed & maneuverability (+15% / level)
+  3. Cannon Fire-Rate           : Decreases laser firing cooldown (-12% / level)
+  4. EMP Shockwave Charger      : Reduces EMP recharge time (-2.5s / level)
+
+------------------------------------------------------------------------
+4. GAMEPLAY, POWER-UPS & HAZARDS
 ------------------------------------------------------------------------
 - WEAPON TIERS PER LEVEL:
-    * Level 1  : Single Laser Cannon
-    * Level 2  : Double Twin Laser Cannons
-    * Level 3+ : TRIPLE SPREAD LASER CANNONS (3 Beams Simultaneously!)
+    * Level 1  : Single Cannon
+    * Level 2  : Double Twin Cannons
+    * Level 3+ : TRIPLE SPREAD CANNONS (3 Beams Simultaneously!)
 
-- BATTERY RECHARGE POWER-UPS:
-    * Drone starts with 100% Battery Health.
-    * Touch floating Green Battery Orbs to RECHARGE +30% Battery!
-    * Battery Orbs spawn every 7s and drop from destroyed targets (35% chance).
+- POWER-UP PICKUPS:
+    * 🔋 Battery Charge     : Recharges +30% Battery Health
+    * 🛡️ Forcefield Shield  : Absorbs 2 hits with a protective bubble
+    * ⚡ Overclock Booster  : Grants 5s 2x fire-rate & +40% speed
+    * ⌛ Time-Dilation      : 6s 60% Slow Motion for enemies & enemy bullets
+    * 🪙 Gold Scrap Coins   : +$25 Gold Coins
 
-- ENEMY TARGET TYPES:
-    * Standard Target (Red Ring)    : Normal Speed, 1 HP, +10 pts
-    * Fast Target (Magenta/Cyan)    : High Speed, Small, 1 HP, +25 pts
-    * Armored Target (Crimson/Gold) : Heavy Shield, 3 to 5 HP, +50 pts
+- ENEMY TARGET VARIANTS:
+    * Standard Target (Red Ring)    : 1 HP, +10 pts
+    * Fast Target (Magenta/Cyan)    : High Speed, 1 HP, +25 pts
+    * Armored Target (Crimson/Gold) : Heavy Armor, 3-5 HP, +50 pts
+    * Hunter Drone (Shooter)        : Fires plasma bullets, 2 HP, +40 pts
+    * Boss Dreadnought (Level 3+)   : 20+ HP, dual cannons, rotating shield, +250 pts
+
+- DYNAMIC WEATHER HAZARDS:
+    * 🌧️ Stormy Rain : Rain particles + lightning thunder flashes
+    * 💨 Gusty Wind  : Heavy wind gusts pushing the drone laterally
 
 ------------------------------------------------------------------------
-4. HOW TO REBUILD THE STANDALONE .EXE
+5. HOW TO REBUILD THE STANDALONE .EXE
 ------------------------------------------------------------------------
 Double-click `build_exe.bat` or run in Command Prompt:
     python -m PyInstaller --noconfirm --onefile --windowed --name "DroneHunterSingle" main.py

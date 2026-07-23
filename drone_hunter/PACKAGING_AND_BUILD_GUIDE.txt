@@ -4,7 +4,7 @@
 
 1. HOW TO PLAY THE STANDALONE WINDOWS EXECUTABLE (.EXE)
 ------------------------------------------------------------------------
-No Python or Pygame installation is needed! Anyone on Windows can play.
+No Python or Pygame installation is needed! Anyone on Windows can play instantly.
 
 Option A: Single Portable Executable (Recommended to Share)
   - Navigate to folder:

@@ -6,7 +6,7 @@ import pygame
 
 from src.settings import (
     SCREEN_WIDTH, SCREEN_HEIGHT, FPS, TITLE, COLOR_BG, COLOR_HUD,
-    STATE_MENU, STATE_PLAYING, STATE_GAME_OVER, STATE_LEVEL_CLEAR, STATE_HANGAR,
+    STATE_MENU, STATE_PLAYING, STATE_GAME_OVER, STATE_LEVEL_CLEAR, STATE_HANGAR, STATE_PAUSED,
     COLOR_CYAN, COLOR_EMERALD, COLOR_GOLD, COLOR_MAGENTA, COLOR_CRIMSON,
     COLOR_SHIELD, COLOR_OVERCLOCK, COLOR_SLOWMO, COLOR_COIN, TARGET_TYPE_BOSS, UPGRADES
 )
@@ -94,6 +94,9 @@ def main():
     wind_force = 0.0
     lightning_flash = 0.0
 
+    # Pause Button Rect on HUD
+    pause_btn_rect = pygame.Rect(SCREEN_WIDTH - 110, 48, 90, 30)
+
     drone = None
     spawner = None
 
@@ -177,7 +180,46 @@ def main():
                 highscore = total_score
             save_game_data(coins, highscore, upgrade_levels)
 
+    def buy_upgrade(name: str) -> bool:
+
+        nonlocal coins
+        info = UPGRADES[name]
+        cur_lvl = upgrade_levels.get(name, 0)
+        cost = int(info["base_cost"] * (info["cost_mult"] ** cur_lvl))
+        if cur_lvl < info["max_lvl"] and coins >= cost:
+            coins -= cost
+            upgrade_levels[name] = cur_lvl + 1
+            audio_manager.play_buy()
+            save_game_data(coins, highscore, upgrade_levels)
+            if drone:
+                drone.apply_shop_upgrades(upgrade_levels)
+            return True
+        return False
+
     reset_game()
+
+    # Shop Card Rects for Mouse Interaction
+    card_rects = [
+        (pygame.Rect(160, 240, 440, 160), "battery"),
+        (pygame.Rect(680, 240, 440, 160), "speed"),
+        (pygame.Rect(160, 440, 440, 160), "fire_rate"),
+        (pygame.Rect(680, 440, 440, 160), "emp_recharge"),
+    ]
+
+    # Track origin state when entering Hangar Shop
+    shop_return_state = STATE_MENU
+
+    def exit_hangar_shop():
+        nonlocal game_state
+        if shop_return_state == STATE_LEVEL_CLEAR:
+            start_next_level()
+        else:
+            reset_game()
+            game_state = STATE_PLAYING
+
+    # Hangar Launch Button Rect
+    launch_btn_rect = pygame.Rect((SCREEN_WIDTH - 460) // 2, 635, 460, 54)
+
 
     # Main Loop
     running = True
@@ -224,9 +266,22 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     if game_state == STATE_HANGAR:
-                        game_state = STATE_MENU
+                        exit_hangar_shop()
+                    elif game_state == STATE_PAUSED:
+                        game_state = STATE_PLAYING
                     else:
                         running = False
+
+                # Pause Toggle with 'P' Key
+                if event.key == pygame.K_p:
+                    if game_state == STATE_PLAYING:
+                        game_state = STATE_PAUSED
+                    elif game_state == STATE_PAUSED:
+                        game_state = STATE_PLAYING
+
+                # Return to menu from Pause
+                if game_state == STATE_PAUSED and event.key == pygame.K_m:
+                    game_state = STATE_MENU
 
                 # EMP Shockwave Blast on 'E' Key
                 if game_state == STATE_PLAYING and event.key == pygame.K_e:
@@ -238,51 +293,64 @@ def main():
                         reset_game()
                         game_state = STATE_PLAYING
                     elif event.key == pygame.K_h:
+                        shop_return_state = STATE_MENU
                         game_state = STATE_HANGAR
 
                 elif game_state == STATE_HANGAR:
-                    # Shop Buy Inputs (Keys 1-4)
-                    upg_keys = [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4]
-                    upg_names = ["battery", "speed", "fire_rate", "emp_recharge"]
-                    for idx, key in enumerate(upg_keys):
-                        if event.key == key:
-                            name = upg_names[idx]
-                            info = UPGRADES[name]
-                            cur_lvl = upgrade_levels.get(name, 0)
-                            cost = int(info["base_cost"] * (info["cost_mult"] ** cur_lvl))
-                            if cur_lvl < info["max_lvl"] and coins >= cost:
-                                coins -= cost
-                                upgrade_levels[name] = cur_lvl + 1
-                                audio_manager.play_buy()
-                                save_game_data(coins, highscore, upgrade_levels)
-                                if drone:
-                                    drone.apply_shop_upgrades(upgrade_levels)
-
-                    if event.key in (pygame.K_SPACE, pygame.K_RETURN):
-                        reset_game()
-                        game_state = STATE_PLAYING
+                    # Keyboard & Numpad Shop Purchases
+                    if event.key in (pygame.K_1, pygame.K_KP1):
+                        buy_upgrade("battery")
+                    elif event.key in (pygame.K_2, pygame.K_KP2):
+                        buy_upgrade("speed")
+                    elif event.key in (pygame.K_3, pygame.K_KP3):
+                        buy_upgrade("fire_rate")
+                    elif event.key in (pygame.K_4, pygame.K_KP4):
+                        buy_upgrade("emp_recharge")
+                    elif event.key in (pygame.K_SPACE, pygame.K_RETURN):
+                        exit_hangar_shop()
 
                 elif game_state == STATE_LEVEL_CLEAR:
                     if event.key in (pygame.K_SPACE, pygame.K_RETURN, pygame.K_s):
                         start_next_level()
+                    elif event.key in (pygame.K_h, pygame.K_b):
+                        shop_return_state = STATE_LEVEL_CLEAR
+                        game_state = STATE_HANGAR
 
                 elif game_state == STATE_GAME_OVER:
                     if event.key in (pygame.K_r, pygame.K_SPACE, pygame.K_s):
                         reset_game()
                         game_state = STATE_PLAYING
 
-            # Shooting / EMP Event (Left Click Shoot, Right Click EMP)
-            if game_state == STATE_PLAYING and event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:
-                    new_bullets = drone.shoot(pygame.mouse.get_pos(), level=current_level)
-                    if new_bullets:
-                        for b in new_bullets:
-                            bullet_group.add(b)
-                        audio_manager.play_laser()
-                elif event.button == 3: # Right Click EMP
-                    execute_emp_blast()
+            # Mouse Click Events (Pause button check, Shop card clicks, & Shooting)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                m_pos = pygame.mouse.get_pos()
+                
+                if game_state == STATE_HANGAR:
+                    if launch_btn_rect.collidepoint(m_pos):
+                        exit_hangar_shop()
+                    else:
+                        for rect, name in card_rects:
+                            if rect.collidepoint(m_pos):
+                                buy_upgrade(name)
+
+                # Handle Pause Button Click on HUD
+
+                elif game_state == STATE_PLAYING and pause_btn_rect.collidepoint(m_pos):
+                    game_state = STATE_PAUSED
+                elif game_state == STATE_PAUSED:
+                    game_state = STATE_PLAYING
+                elif game_state == STATE_PLAYING:
+                    if event.button == 1:
+                        new_bullets = drone.shoot(m_pos, level=current_level)
+                        if new_bullets:
+                            for b in new_bullets:
+                                bullet_group.add(b)
+                            audio_manager.play_laser()
+                    elif event.button == 3: # Right Click EMP
+                        execute_emp_blast()
 
         # Update Logic per State
+
         if game_state == STATE_PLAYING:
             points_per_level = 200 + (current_level - 1) * 100
             slowmo_active = drone.slowmo_timer > 0
@@ -295,7 +363,7 @@ def main():
                     combo_count = 1
 
             # Continuous automatic fire when holding left click
-            if pygame.mouse.get_pressed()[0]:
+            if pygame.mouse.get_pressed()[0] and not pause_btn_rect.collidepoint(pygame.mouse.get_pos()):
                 new_bullets = drone.shoot(pygame.mouse.get_pos(), level=current_level)
                 if new_bullets:
                     for b in new_bullets:
@@ -371,7 +439,6 @@ def main():
                             audio_manager.play_celebration_fanfare()
                             break
 
-
             # Enemy Bullet vs Player Drone Collisions
             if game_state == STATE_PLAYING:
                 eb_hits = pygame.sprite.spritecollide(drone, enemy_bullet_group, True, pygame.sprite.collide_circle)
@@ -429,7 +496,7 @@ def main():
         canvas.fill(COLOR_BG)
         background.draw(canvas)
 
-        if game_state in (STATE_PLAYING, STATE_LEVEL_CLEAR, STATE_GAME_OVER):
+        if game_state in (STATE_PLAYING, STATE_PAUSED, STATE_LEVEL_CLEAR, STATE_GAME_OVER):
             player_group.draw(canvas)
             bullet_group.draw(canvas)
             enemy_bullet_group.draw(canvas)
@@ -465,7 +532,13 @@ def main():
             canvas.blit(score_surf, (400, 15))
             canvas.blit(coin_surf, (560, 15))
             canvas.blit(high_surf, (720, 15))
-            canvas.blit(fps_surf, (SCREEN_WIDTH - 110, 15))
+            canvas.blit(fps_surf, (SCREEN_WIDTH - 210, 15))
+
+            # HUD Pause Button [⏸ PAUSE]
+            pygame.draw.rect(canvas, (30, 41, 59), pause_btn_rect)
+            pygame.draw.rect(canvas, COLOR_CYAN, pause_btn_rect, 2)
+            pause_btn_txt = font_hud.render("⏸ PAUSE", True, COLOR_CYAN)
+            canvas.blit(pause_btn_txt, pause_btn_txt.get_rect(center=pause_btn_rect.center))
 
             # Drone Health / Battery Bar
             bar_w, bar_h = 200, 16
@@ -512,42 +585,72 @@ def main():
                 boss_txt = font_hud.render(f"⚠️ BOSS DREADNOUGHT CRUISER - {boss_target.hp}/{boss_target.max_hp} HP", True, COLOR_GOLD)
                 canvas.blit(boss_txt, boss_txt.get_rect(center=(SCREEN_WIDTH // 2, b_bar_y - 12)))
 
+        # --- PAUSED SCREEN OVERLAY ---
+        if game_state == STATE_PAUSED:
+            p_box_w, p_box_h = 600, 260
+            p_box_x = (SCREEN_WIDTH - p_box_w) // 2
+            p_box_y = (SCREEN_HEIGHT - p_box_h) // 2
+
+            p_dialog = pygame.Surface((p_box_w, p_box_h), pygame.SRCALPHA)
+            p_dialog.fill((15, 23, 42, 230))
+            pygame.draw.rect(p_dialog, COLOR_CYAN, (0, 0, p_box_w, p_box_h), 3)
+            canvas.blit(p_dialog, (p_box_x, p_box_y))
+
+            p_title = font_banner.render("⏸️ GAME PAUSED", True, COLOR_CYAN)
+            p_sub1 = font_banner.render("Press 'P' or Click Anywhere to Resume", True, COLOR_EMERALD)
+            p_sub2 = font_hud.render("Press 'M' to Quit to Main Menu", True, COLOR_HUD)
+
+            canvas.blit(p_title, p_title.get_rect(center=(SCREEN_WIDTH // 2, p_box_y + 55)))
+            canvas.blit(p_sub1, p_sub1.get_rect(center=(SCREEN_WIDTH // 2, p_box_y + 125)))
+            canvas.blit(p_sub2, p_sub2.get_rect(center=(SCREEN_WIDTH // 2, p_box_y + 195)))
+
         # --- Hangar / Shop Screen ---
         elif game_state == STATE_HANGAR:
             shop_title = font_title.render("🛸 DRONE HANGAR & UPGRADES 🛸", True, COLOR_CYAN)
             coin_display = font_banner.render(f"Available Gold Scrap: ${coins}", True, COLOR_COIN)
-            sub_txt = font_hud.render("Press Keys [1] [2] [3] [4] to Purchase Upgrades | Press SPACE or ESC to Exit", True, COLOR_HUD)
+            
+            sub_prompt = f"👉 Press SPACE to Start Level {current_level + 1} 👈" if shop_return_state == STATE_LEVEL_CLEAR else "👉 Press SPACE to Play 👈"
+            sub_txt = font_hud.render(f"Click Any Card or Press Keys [1] [2] [3] [4] to Upgrade | {sub_prompt}", True, COLOR_HUD)
 
-            canvas.blit(shop_title, shop_title.get_rect(center=(SCREEN_WIDTH // 2, 80)))
-            canvas.blit(coin_display, coin_display.get_rect(center=(SCREEN_WIDTH // 2, 140)))
-            canvas.blit(sub_txt, sub_txt.get_rect(center=(SCREEN_WIDTH // 2, 185)))
+            canvas.blit(shop_title, shop_title.get_rect(center=(SCREEN_WIDTH // 2, 65)))
+            canvas.blit(coin_display, coin_display.get_rect(center=(SCREEN_WIDTH // 2, 120)))
+            canvas.blit(sub_txt, sub_txt.get_rect(center=(SCREEN_WIDTH // 2, 165)))
 
-            # Upgrade Cards (2x2 Grid)
-            grid_positions = [
-                (160, 240), (680, 240),
-                (160, 440), (680, 440)
-            ]
+            m_pos = pygame.mouse.get_pos()
             upg_keys_str = ["1", "2", "3", "4"]
-            upg_names = ["battery", "speed", "fire_rate", "emp_recharge"]
 
-            for idx, name in enumerate(upg_names):
-                gx, gy = grid_positions[idx]
+
+            for idx, (rect, name) in enumerate(card_rects):
+                gx, gy = rect.x, rect.y
                 info = UPGRADES[name]
                 cur_lvl = upgrade_levels.get(name, 0)
                 max_lvl = info["max_lvl"]
                 cost = int(info["base_cost"] * (info["cost_mult"] ** cur_lvl))
                 is_max = cur_lvl >= max_lvl
                 can_afford = coins >= cost and not is_max
+                is_hovered = rect.collidepoint(m_pos)
 
-                card_w, card_h = 440, 160
-                bg_color = (30, 41, 59) if can_afford else (15, 23, 42)
-                border_color = COLOR_CYAN if can_afford else (71, 85, 105)
+                card_w, card_h = rect.width, rect.height
+                
+                # Dynamic hover colors
+                if is_hovered and can_afford:
+                    bg_color = (30, 58, 110) # Highlighted navy
+                    border_color = COLOR_GOLD # Glowing Gold border
+                    border_width = 3
+                elif can_afford:
+                    bg_color = (30, 41, 59)
+                    border_color = COLOR_CYAN
+                    border_width = 2
+                else:
+                    bg_color = (15, 23, 42)
+                    border_color = (71, 85, 105)
+                    border_width = 1
 
-                pygame.draw.rect(canvas, bg_color, (gx, gy, card_w, card_h))
-                pygame.draw.rect(canvas, border_color, (gx, gy, card_w, card_h), 2)
+                pygame.draw.rect(canvas, bg_color, rect)
+                pygame.draw.rect(canvas, border_color, rect, border_width)
 
                 # Upgrade Header
-                name_surf = font_banner.render(f"[{upg_keys_str[idx]}] {info['name']}", True, COLOR_GOLD)
+                name_surf = font_banner.render(f"[{upg_keys_str[idx]}] {info['name']}", True, COLOR_GOLD if (is_hovered and can_afford) else COLOR_CYAN)
                 canvas.blit(name_surf, (gx + 16, gy + 16))
 
                 # Level Progress Meter
@@ -562,37 +665,64 @@ def main():
                     b_color = COLOR_EMERALD if b < cur_lvl else (51, 65, 85)
                     pygame.draw.rect(canvas, b_color, (bx, by, 22, 12))
 
-                # Price Tag
-                price_str = "COST: MAX" if is_max else f"COST: ${cost}"
-                price_color = COLOR_COIN if can_afford else (148, 163, 184)
-                price_surf = font_hud.render(price_str, True, price_color)
-                canvas.blit(price_surf, (gx + card_w - 140, gy + 115))
+                # Price Tag & Click Button
+                if is_max:
+                    btn_rect = pygame.Rect(gx + card_w - 140, gy + 105, 120, 36)
+                    pygame.draw.rect(canvas, (51, 65, 85), btn_rect)
+                    btn_txt = font_hud.render("MAXED", True, (148, 163, 184))
+                    canvas.blit(btn_txt, btn_txt.get_rect(center=btn_rect.center))
+                else:
+                    btn_rect = pygame.Rect(gx + card_w - 160, gy + 105, 140, 38)
+                    btn_bg = COLOR_GOLD if (is_hovered and can_afford) else ((30, 41, 59) if can_afford else (15, 23, 42))
+                    btn_border = COLOR_GOLD if can_afford else (71, 85, 105)
+                    
+                    pygame.draw.rect(canvas, btn_bg, btn_rect)
+                    pygame.draw.rect(canvas, btn_border, btn_rect, 2)
+                    
+                    btn_txt_color = (15, 23, 42) if (is_hovered and can_afford) else (COLOR_COIN if can_afford else (148, 163, 184))
+                    btn_txt = font_hud.render(f"BUY ${cost}", True, btn_txt_color)
+                    canvas.blit(btn_txt, btn_txt.get_rect(center=btn_rect.center))
+
+            # Bottom Launch / Resume Button
+            is_launch_hovered = launch_btn_rect.collidepoint(m_pos)
+            l_bg = COLOR_EMERALD if is_launch_hovered else (30, 41, 59)
+            l_border = (255, 255, 255) if is_launch_hovered else COLOR_EMERALD
+            pygame.draw.rect(canvas, l_bg, launch_btn_rect)
+            pygame.draw.rect(canvas, l_border, launch_btn_rect, 3)
+
+            l_str = f"🚀 START LEVEL {current_level + 1} NOW!" if shop_return_state == STATE_LEVEL_CLEAR else "🚀 LAUNCH MISSION NOW!"
+            l_txt_color = (15, 23, 42) if is_launch_hovered else COLOR_EMERALD
+            l_surf = font_banner.render(l_str, True, l_txt_color)
+            canvas.blit(l_surf, l_surf.get_rect(center=launch_btn_rect.center))
+
+
 
         # --- Celebration Screen (Level Clear / Level Finished Notification) ---
         elif game_state == STATE_LEVEL_CLEAR:
             points_per_level = 200 + (current_level - 1) * 100
             
-            # Semi-transparent Dark Dialog Box Backdrop
-            box_w, box_h = 760, 300
+            box_w, box_h = 820, 340
             box_x = (SCREEN_WIDTH - box_w) // 2
             box_y = (SCREEN_HEIGHT - box_h) // 2
             
             dialog_surf = pygame.Surface((box_w, box_h), pygame.SRCALPHA)
-            dialog_surf.fill((15, 23, 42, 220)) # Translucent Navy
-            pygame.draw.rect(dialog_surf, COLOR_CYAN, (0, 0, box_w, box_h), 3) # Glowing Cyan Border
+            dialog_surf.fill((15, 23, 42, 235))
+            pygame.draw.rect(dialog_surf, COLOR_CYAN, (0, 0, box_w, box_h), 3)
             pygame.draw.rect(dialog_surf, COLOR_GOLD, (4, 4, box_w - 8, box_h - 8), 1)
             canvas.blit(dialog_surf, (box_x, box_y))
 
-            # Prominent Level Finished Header & Stats
             title_surf = font_banner.render(f"🏆 MISSION COMPLETE! LEVEL {current_level} FINISHED! 🏆", True, COLOR_CYAN)
             score_surf = font_banner.render(f"Level Goal Achieved: {points_per_level} / {points_per_level} PTS", True, COLOR_GOLD)
             coins_surf = font_hud.render(f"Total Score: {total_score}   |   Current Gold Scrap: ${coins}", True, (226, 232, 240))
-            prompt_surf = font_banner.render(f"Press SPACE, ENTER, or 'S' to Start Level {current_level + 1}", True, COLOR_EMERALD)
+            
+            shop_prompt = font_banner.render("🛒 Press [H] to Visit Hangar Shop & Upgrade Drone", True, COLOR_COIN)
+            launch_prompt = font_banner.render(f"🚀 Press [SPACE], [ENTER], or [S] to Start Level {current_level + 1}", True, COLOR_EMERALD)
 
-            canvas.blit(title_surf, title_surf.get_rect(center=(SCREEN_WIDTH // 2, box_y + 55)))
-            canvas.blit(score_surf, score_surf.get_rect(center=(SCREEN_WIDTH // 2, box_y + 115)))
-            canvas.blit(coins_surf, coins_surf.get_rect(center=(SCREEN_WIDTH // 2, box_y + 170)))
-            canvas.blit(prompt_surf, prompt_surf.get_rect(center=(SCREEN_WIDTH // 2, box_y + 235)))
+            canvas.blit(title_surf, title_surf.get_rect(center=(SCREEN_WIDTH // 2, box_y + 48)))
+            canvas.blit(score_surf, score_surf.get_rect(center=(SCREEN_WIDTH // 2, box_y + 105)))
+            canvas.blit(coins_surf, coins_surf.get_rect(center=(SCREEN_WIDTH // 2, box_y + 155)))
+            canvas.blit(shop_prompt, shop_prompt.get_rect(center=(SCREEN_WIDTH // 2, box_y + 215)))
+            canvas.blit(launch_prompt, launch_prompt.get_rect(center=(SCREEN_WIDTH // 2, box_y + 275)))
 
 
         # --- Menu Screens ---
@@ -601,7 +731,7 @@ def main():
             subtitle_surf = font_hud.render("Sci-Fi 2D Arcade Side-Scroller", True, (148, 163, 184))
             high_surf = font_banner.render(f"HIGH SCORE: {highscore}   |   GOLD SCRAP: ${coins}", True, COLOR_GOLD)
             start_surf = font_banner.render("Press SPACE to Play   |   Press 'H' for Hangar Shop", True, COLOR_EMERALD)
-            controls_surf = font_hud.render("WASD/Arrows: Flight | Left-Click: Shoot | E / Right-Click: EMP Blast", True, COLOR_HUD)
+            controls_surf = font_hud.render("WASD/Arrows: Flight | Left-Click: Shoot | E / Right-Click: EMP | P: Pause", True, COLOR_HUD)
 
             canvas.blit(title_surf, title_surf.get_rect(center=(SCREEN_WIDTH // 2, 200)))
             canvas.blit(subtitle_surf, subtitle_surf.get_rect(center=(SCREEN_WIDTH // 2, 270)))
@@ -609,14 +739,27 @@ def main():
             canvas.blit(start_surf, start_surf.get_rect(center=(SCREEN_WIDTH // 2, 450)))
             canvas.blit(controls_surf, controls_surf.get_rect(center=(SCREEN_WIDTH // 2, 560)))
 
+        # --- GAME OVER / DEFEAT SCREEN ---
         elif game_state == STATE_GAME_OVER:
-            over_surf = font_gameover.render("GAME OVER", True, (239, 68, 68))
-            stats_surf = font_hud.render(f"Final Level: {current_level}  |  Total Score: {total_score}  |  Gold Coins: ${coins}", True, COLOR_HUD)
-            restart_surf = font_banner.render("Press R or SPACE to Restart", True, COLOR_CYAN)
+            go_box_w, go_box_h = 780, 310
+            go_box_x = (SCREEN_WIDTH - go_box_w) // 2
+            go_box_y = (SCREEN_HEIGHT - go_box_h) // 2
 
-            canvas.blit(over_surf, over_surf.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 50)))
-            canvas.blit(stats_surf, stats_surf.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 10)))
-            canvas.blit(restart_surf, restart_surf.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 65)))
+            go_dialog = pygame.Surface((go_box_w, go_box_h), pygame.SRCALPHA)
+            go_dialog.fill((15, 23, 42, 235))
+            pygame.draw.rect(go_dialog, (239, 68, 68), (0, 0, go_box_w, go_box_h), 3) # Crimson Red border
+            pygame.draw.rect(go_dialog, COLOR_GOLD, (4, 4, go_box_w - 8, go_box_h - 8), 1)
+            canvas.blit(go_dialog, (go_box_x, go_box_y))
+
+            over_surf = font_gameover.render("☠️ MISSION FAILED - DRONE DESTROYED ☠️", True, (239, 68, 68))
+            stats_surf = font_banner.render(f"Final Level: {current_level}   |   Total Score: {total_score}", True, COLOR_GOLD)
+            coins_stat_surf = font_hud.render(f"Gold Scrap Coins Saved: ${coins}   |   High Score: {highscore}", True, COLOR_HUD)
+            restart_surf = font_banner.render("👉 Press [R], [SPACE], or [S] to Restart Mission 👈", True, COLOR_CYAN)
+
+            canvas.blit(over_surf, over_surf.get_rect(center=(SCREEN_WIDTH // 2, go_box_y + 55)))
+            canvas.blit(stats_surf, stats_surf.get_rect(center=(SCREEN_WIDTH // 2, go_box_y + 120)))
+            canvas.blit(coins_stat_surf, coins_stat_surf.get_rect(center=(SCREEN_WIDTH // 2, go_box_y + 175)))
+            canvas.blit(restart_surf, restart_surf.get_rect(center=(SCREEN_WIDTH // 2, go_box_y + 240)))
 
         # Render Canvas with EMP Screen Shake offset
         screen.fill((0, 0, 0))

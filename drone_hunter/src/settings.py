@@ -12,6 +12,8 @@ STATE_PLAYING = 1
 STATE_GAME_OVER = 2
 STATE_LEVEL_CLEAR = 3
 STATE_HANGAR = 4
+STATE_PAUSED = 5
+
 
 # Colors (Vibrant Sci-Fi Synthwave Palette)
 COLOR_BG = (15, 23, 42)          # Deep slate navy
