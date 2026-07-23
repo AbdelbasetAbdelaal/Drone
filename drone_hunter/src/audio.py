@@ -5,7 +5,7 @@ import pygame
 class AudioManager:
     """
     Manages realistic audio synthesis for gunfire/shooting, deep explosive booms,
-    celebration fanfare/cheer, and thrusters using multi-harmonic waveform synthesis.
+    EMP blasts, forcefield shields, celebration fanfare, and thrusters.
     """
     def __init__(self):
         self.audio_enabled = False
@@ -22,28 +22,10 @@ class AudioManager:
         self.thrust_sfx = self._create_thrust_sound()
         self.levelup_sfx = self._create_levelup_sound()
         self.recharge_sfx = self._create_recharge_sound()
+        self.emp_sfx = self._create_emp_sound()
+        self.shield_sfx = self._create_shield_sound()
         self.celebration_sfx = self._create_celebration_cheer_sound()
         self.gameover_sfx = self._create_gameover_sound()
-
-    def _create_recharge_sound(self) -> pygame.mixer.Sound | None:
-        """Synthesizes an uplifting high-tech battery recharge chime."""
-        if not self.audio_enabled:
-            return None
-        try:
-            sample_rate = 22050
-            duration = 0.28
-            num_samples = int(sample_rate * duration)
-            buf = bytearray()
-            for i in range(num_samples):
-                t = i / sample_rate
-                # Frequency sweeps up from 400Hz to 1200Hz
-                freq = 400.0 + (800.0 * (i / num_samples))
-                decay = 1.0 - (i / num_samples) * 0.4
-                sample_val = int(128 + 127 * 0.35 * decay * math.sin(2 * math.pi * freq * t))
-                buf.append(max(0, min(255, sample_val)))
-            return pygame.mixer.Sound(buffer=bytes(buf))
-        except Exception:
-            return None
 
     def _create_laser_sound(self) -> pygame.mixer.Sound | None:
         """Thunderous Heavy Bomb Blast sound effect."""
@@ -79,10 +61,6 @@ class AudioManager:
         except Exception:
             return None
 
-
-
-
-
     def _create_explosion_sound(self) -> pygame.mixer.Sound | None:
         """Realistic deep explosion boom with sub-bass rumble and shockwave crackle."""
         if not self.audio_enabled:
@@ -96,16 +74,10 @@ class AudioManager:
                 t = i / sample_rate
                 progress = i / num_samples
                 
-                # Low-pass rumble noise
                 noise = random.randint(-110, 110)
-                # Deep sub-bass pulse (60Hz decaying to 30Hz)
                 bass_freq = 60.0 * (1.0 - progress) + 30.0
                 bass_tone = math.sin(2 * math.pi * bass_freq * t)
-                
-                # Exponential decay envelope
                 decay = math.exp(-4.5 * progress)
-                
-                # Initial shockwave crackle (first 25ms)
                 shockwave = random.randint(-80, 80) if progress < 0.05 else 0
                 
                 combined = (noise * 0.45 + bass_tone * 90.0 + shockwave) * decay
@@ -116,7 +88,6 @@ class AudioManager:
             return None
 
     def _create_thrust_sound(self) -> pygame.mixer.Sound | None:
-        """Realistic engine jet thruster hum."""
         if not self.audio_enabled:
             return None
         try:
@@ -135,8 +106,66 @@ class AudioManager:
         except Exception:
             return None
 
+    def _create_recharge_sound(self) -> pygame.mixer.Sound | None:
+        """Synthesizes an uplifting high-tech battery recharge chime."""
+        if not self.audio_enabled:
+            return None
+        try:
+            sample_rate = 22050
+            duration = 0.28
+            num_samples = int(sample_rate * duration)
+            buf = bytearray()
+            for i in range(num_samples):
+                t = i / sample_rate
+                freq = 400.0 + (800.0 * (i / num_samples))
+                decay = 1.0 - (i / num_samples) * 0.4
+                sample_val = int(128 + 127 * 0.35 * decay * math.sin(2 * math.pi * freq * t))
+                buf.append(max(0, min(255, sample_val)))
+            return pygame.mixer.Sound(buffer=bytes(buf))
+        except Exception:
+            return None
+
+    def _create_emp_sound(self) -> pygame.mixer.Sound | None:
+        """Synthesizes a blinding electric EMP shockwave discharge blast."""
+        if not self.audio_enabled:
+            return None
+        try:
+            sample_rate = 22050
+            duration = 0.5
+            num_samples = int(sample_rate * duration)
+            buf = bytearray()
+            for i in range(num_samples):
+                t = i / sample_rate
+                progress = i / num_samples
+                freq = 1200.0 * math.exp(-12.0 * progress) + 80.0
+                zap_noise = random.randint(-120, 120)
+                decay = math.exp(-4.0 * progress)
+                sample_val = int(128 + (127 * 0.4 * math.sin(2 * math.pi * freq * t) + zap_noise * 0.5) * decay)
+                buf.append(max(0, min(255, sample_val)))
+            return pygame.mixer.Sound(buffer=bytes(buf))
+        except Exception:
+            return None
+
+    def _create_shield_sound(self) -> pygame.mixer.Sound | None:
+        """Synthesizes a forcefield shield activation chime."""
+        if not self.audio_enabled:
+            return None
+        try:
+            sample_rate = 22050
+            duration = 0.35
+            num_samples = int(sample_rate * duration)
+            buf = bytearray()
+            for i in range(num_samples):
+                t = i / sample_rate
+                freq = 600.0 + (600.0 * (i / num_samples))
+                decay = 1.0 - (i / num_samples) * 0.3
+                sample_val = int(128 + 127 * 0.35 * decay * math.sin(2 * math.pi * freq * t))
+                buf.append(max(0, min(255, sample_val)))
+            return pygame.mixer.Sound(buffer=bytes(buf))
+        except Exception:
+            return None
+
     def _create_levelup_sound(self) -> pygame.mixer.Sound | None:
-        """Realistic victory fanfare sound."""
         if not self.audio_enabled:
             return None
         try:
@@ -164,7 +193,6 @@ class AudioManager:
             return None
 
     def _create_celebration_cheer_sound(self) -> pygame.mixer.Sound | None:
-        """Realistic celebration fanfare with crowd cheer applause swell."""
         if not self.audio_enabled:
             return None
         try:
@@ -175,24 +203,18 @@ class AudioManager:
             for i in range(num_samples):
                 t = i / sample_rate
                 progress = i / num_samples
-                
-                # Multi-harmonic victory chord (C5 + E5 + G5 -> C6 + E6 + G6)
                 if t < 0.2:
-                    f1, f2 = 523.25, 659.25  # C5 + E5
+                    f1, f2 = 523.25, 659.25
                 elif t < 0.4:
-                    f1, f2 = 659.25, 783.99  # E5 + G5
+                    f1, f2 = 659.25, 783.99
                 elif t < 0.6:
-                    f1, f2 = 783.99, 1046.50 # G5 + C6
+                    f1, f2 = 783.99, 1046.50
                 else:
-                    f1, f2 = 1046.50, 1318.51 # C6 + E6
-                
-                # Crowd cheer applause noise swell
+                    f1, f2 = 1046.50, 1318.51
                 cheer_swell = math.sin(math.pi * progress) * random.randint(-40, 40)
-                
                 decay = 1.0 - progress
                 s1 = math.sin(2 * math.pi * f1 * t)
                 s2 = math.sin(2 * math.pi * f2 * t)
-                
                 sample_val = int(128 + (127 * 0.35 * (s1 + s2) + cheer_swell) * decay)
                 buf.append(max(0, min(255, sample_val)))
             return pygame.mixer.Sound(buffer=bytes(buf))
@@ -239,6 +261,14 @@ class AudioManager:
         elif self.levelup_sfx:
             self.levelup_sfx.play()
 
+    def play_emp(self):
+        if self.emp_sfx:
+            self.emp_sfx.play()
+
+    def play_shield(self):
+        if self.shield_sfx:
+            self.shield_sfx.play()
+
     def play_recharge(self):
         if self.recharge_sfx:
             self.recharge_sfx.play()
@@ -246,4 +276,3 @@ class AudioManager:
     def play_gameover(self):
         if self.gameover_sfx:
             self.gameover_sfx.play()
-

@@ -39,12 +39,77 @@ class Particle(pygame.sprite.Sprite):
         self._update_surface()
 
 
+class FloatingText(pygame.sprite.Sprite):
+    """
+    Animated floating damage/score numbers that drift upward and fade out.
+    """
+    def __init__(self, pos: tuple[float, float], text: str, color: tuple[int, int, int] = (250, 204, 21), font_size: int = 24):
+        super().__init__()
+        self.pos = pygame.Vector2(pos)
+        self.velocity = pygame.Vector2(random.uniform(-15, 15), -75.0) # Drift upward
+        self.text = text
+        self.color = color
+        self.lifetime = 0.85
+        self.max_lifetime = 0.85
+        
+        font = pygame.font.SysFont("Arial", font_size, bold=True)
+        self.base_surface = font.render(text, True, color)
+        self.image = self.base_surface.copy()
+        self.rect = self.image.get_rect(center=pos)
+
+    def update(self, dt: float):
+        self.lifetime -= dt
+        if self.lifetime <= 0:
+            self.kill()
+            return
+
+        self.pos += self.velocity * dt
+        self.rect.center = (round(self.pos.x), round(self.pos.y))
+        
+        # Alpha fade out
+        alpha = max(0, int(255 * (self.lifetime / self.max_lifetime)))
+        self.image = self.base_surface.copy()
+        self.image.set_alpha(alpha)
+
+
+class EMPRing(pygame.sprite.Sprite):
+    """
+    Blinding expanding cyan EMP shockwave ring effect.
+    """
+    def __init__(self, pos: tuple[float, float]):
+        super().__init__()
+        self.pos = pygame.Vector2(pos)
+        self.radius = 10.0
+        self.max_radius = 900.0
+        self.speed = 1800.0
+        self.lifetime = 0.5
+        self.max_lifetime = 0.5
+
+        self.image = pygame.Surface((1800, 1800), pygame.SRCALPHA)
+        self.rect = self.image.get_rect(center=pos)
+
+    def update(self, dt: float):
+        self.lifetime -= dt
+        self.radius += self.speed * dt
+
+        if self.lifetime <= 0 or self.radius >= self.max_radius:
+            self.kill()
+            return
+
+        alpha = max(0, int(255 * (self.lifetime / self.max_lifetime)))
+        self.image.fill((0, 0, 0, 0))
+        center = (900, 900)
+        pygame.draw.circle(self.image, (56, 189, 248, alpha), center, int(self.radius), 8)
+        pygame.draw.circle(self.image, (255, 255, 255, alpha), center, int(self.radius * 0.95), 3)
+
+
 class ParticleManager:
     """
-    Manages spawning and updating particle systems (Thrust smoke, Explosions, Celebration Fireworks).
+    Manages spawning and updating particle systems (Thrust smoke, Explosions, Floating Texts, EMP rings).
     """
     def __init__(self):
         self.particles = pygame.sprite.Group()
+        self.floating_texts = pygame.sprite.Group()
 
     def spawn_thrust_smoke(self, pos: tuple[float, float]):
         """Spawns small smoke/flame particles behind the drone thruster."""
@@ -76,6 +141,12 @@ class ParticleManager:
             lifetime = random.uniform(0.3, 0.7)
             self.particles.add(Particle(pos, (vx, vy), p_color, radius, lifetime))
 
+    def spawn_floating_text(self, pos: tuple[float, float], text: str, color: tuple[int, int, int] = (250, 204, 21), font_size: int = 24):
+        self.floating_texts.add(FloatingText(pos, text, color, font_size))
+
+    def spawn_emp_ring(self, pos: tuple[float, float]):
+        self.particles.add(EMPRing(pos))
+
     def spawn_celebration(self, screen_width: int, screen_height: int):
         """Spawns vibrant celebration fireworks confetti particles across the screen."""
         colors = [
@@ -102,6 +173,8 @@ class ParticleManager:
 
     def update(self, dt: float):
         self.particles.update(dt)
+        self.floating_texts.update(dt)
 
     def draw(self, surface: pygame.Surface):
         self.particles.draw(surface)
+        self.floating_texts.draw(surface)
