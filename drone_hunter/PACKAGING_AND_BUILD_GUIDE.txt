@@ -1,0 +1,50 @@
+========================================================================
+             DRONE HUNTER - STANDALONE EXE & PACKAGING GUIDE
+========================================================================
+
+1. HOW TO PLAY THE STANDALONE WINDOWS EXECUTABLE (.EXE)
+------------------------------------------------------------------------
+No Python or Pygame installation is needed! Anyone on Windows can play.
+
+Option A: Single Portable Executable (Recommended to Share)
+  - Navigate to folder:
+      D:\AI_Projects\drone_hunter\dist\
+  - Double-click:
+      DroneHunterSingle.exe
+
+Option B: Directory Distribution Executable
+  - Navigate to folder:
+      D:\AI_Projects\drone_hunter\dist\DroneHunter\
+  - Double-click:
+      DroneHunter.exe
+
+
+------------------------------------------------------------------------
+2. HOW TO REBUILD THE .EXE FILE AT ANY TIME
+------------------------------------------------------------------------
+If you modify any Python files in the source code and want to generate a 
+new updated .exe file, follow these steps:
+
+Method A: 1-Click Batch Script (Easiest)
+  1. Open Command Prompt or File Explorer in:
+       D:\AI_Projects\drone_hunter\
+  2. Double-click or run:
+       build_exe.bat
+
+Method B: Manual PyInstaller Command
+  1. Open Command Prompt or PowerShell in D:\AI_Projects\drone_hunter
+  2. Run the single-file packaging command:
+       python -m PyInstaller --noconfirm --onefile --windowed --name "DroneHunterSingle" main.py
+  3. Or run the directory packaging command:
+       python -m PyInstaller --noconfirm --onedir --windowed --name "DroneHunter" --add-data "src;src" main.py
+
+
+------------------------------------------------------------------------
+3. HOW TO SHARE THE GAME WITH FRIENDS
+------------------------------------------------------------------------
+  - Simply copy the single executable file:
+      D:\AI_Projects\drone_hunter\dist\DroneHunterSingle.exe
+  - Email it, put it on a USB flash drive, or send it via chat!
+  - Your friends can double-click and start playing immediately on any Windows PC!
+
+========================================================================

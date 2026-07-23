@@ -4,61 +4,49 @@
 
 1. HOW TO LAUNCH THE GAME
 ------------------------------------------------------------------------
-Open Command Prompt (cmd) or PowerShell and run:
+Option A: Standalone Windows .exe (No Python Required)
+  - Double-click:
+      D:\AI_Projects\drone_hunter\dist\DroneHunterSingle.exe
 
-    cd /d D:\AI_Projects\drone_hunter
-    python main.py
+Option B: Run from Python Source
+  - Open Command Prompt or PowerShell and run:
+      cd /d D:\AI_Projects\drone_hunter
+      python main.py
 
 ------------------------------------------------------------------------
 2. CONTROLS
 ------------------------------------------------------------------------
-  [ Spacebar ]        - Start Game / Upward Thrusters / Restart
-  [ A ] / [ D ]       - Move Left / Right
-  [ Left Arrow ]      - Move Left
-  [ Right Arrow ]     - Move Right
-  [ Mouse Cursor ]    - Aim Cannon in 360 degrees
-  [ Left Mouse Click ]- Fire Energy Laser (Hold for continuous fire)
-  [ R ]               - Restart Game after Game Over
-  [ ESC ]             - Exit / Quit Game
+  [ Up Arrow / W / Spacebar ] - Fly / Thrust Upward
+  [ Down Arrow / S ]         - Move Downward / Desend
+  [ Left / Right Arrow ]     - Move Left / Right (A / D)
+  [ Mouse Cursor ]           - Aim Tactical Cannons (360 degrees)
+  [ Left Mouse Click ]       - Fire Energy Laser (Hold for continuous fire)
+  [ Space / Enter / S ]      - Advance Level on Celebration Screen
+  [ R / Space / S ]          - Restart Game after Game Over
+  [ ESC ]                    - Exit / Quit Game
 
 ------------------------------------------------------------------------
-3. GAMEPLAY & ENEMY TYPES
+3. GAMEPLAY & WEAPON UPGRADES
 ------------------------------------------------------------------------
-- DRONE BATTERY SYSTEM:
+- WEAPON TIERS PER LEVEL:
+    * Level 1  : Single Laser Cannon
+    * Level 2  : Double Twin Laser Cannons
+    * Level 3+ : TRIPLE SPREAD LASER CANNONS (3 Beams Simultaneously!)
+
+- BATTERY RECHARGE POWER-UPS:
     * Drone starts with 100% Battery Health.
-    * Taking a hit from an enemy target reduces Battery Health by 25%.
-    * Game Over triggers when Battery reaches 0%.
+    * Touch floating Green Battery Orbs to RECHARGE +30% Battery!
+    * Battery Orbs spawn every 7s and drop from destroyed targets (35% chance).
 
 - ENEMY TARGET TYPES:
     * Standard Target (Red Ring)    : Normal Speed, 1 HP, +10 pts
     * Fast Target (Magenta/Cyan)    : High Speed, Small, 1 HP, +25 pts
-    * Armored Target (Crimson/Gold) : Heavy Shield, 3 HP, +50 pts
-
-- VISUALS & AUDIO:
-    * Parallax 2D Scrolling Background (Starfield, Mountains, Cyberpunk City)
-    * Smoke Thruster Trails & Target Explosion Particles
-    * Procedural SFX (Lasers, Explosions, Thrusters, Level-Up Chimes)
-    * High Score Persistence (Saved to highscore.txt)
+    * Armored Target (Crimson/Gold) : Heavy Shield, 3 to 5 HP, +50 pts
 
 ------------------------------------------------------------------------
-4. PROJECT FILE STRUCTURE
+4. HOW TO REBUILD THE STANDALONE .EXE
 ------------------------------------------------------------------------
-d:/AI_Projects/drone_hunter/
-│
-├── main.py             # Main loop, State Manager, HUD & rendering
-├── settings.py         # Sci-Fi colors, physics parameters, game states
-├── highscore.txt       # Saved local high score
-├── requirements.txt    # Python dependencies (pygame-ce)
-├── USAGE.txt           # Usage instructions text file
-├── README.md           # Markdown project guide
-│
-└── src/
-    ├── __init__.py     # Source package marker
-    ├── player.py       # Player Drone with Battery System & Thrusters
-    ├── bullet.py       # Trigonometric Laser Bullet projectile
-    ├── target.py       # Standard, Fast, and Armored Targets & Spawner
-    ├── particles.py    # Smoke trail & explosion particle system
-    ├── background.py   # Parallax scrolling 2D background layers
-    ├── audio.py        # SFX & Sound synthesis manager
-    └── game_manager.py # State controller
+Double-click `build_exe.bat` or run in Command Prompt:
+    python -m PyInstaller --noconfirm --onefile --windowed --name "DroneHunterSingle" main.py
+
 ========================================================================
