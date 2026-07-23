@@ -11,27 +11,29 @@ class Target(pygame.sprite.Sprite):
     Target (Enemy) sprite supporting multiple enemy variants:
     - Standard: Normal speed, 1 HP, 10 pts
     - Fast: High speed, small size, 1 HP, 25 pts
-    - Armored: Heavy shield, large size, 3 HP, 50 pts
+    - Armored: Heavy shield, large size, 3+ HP, 50 pts
     """
-    def __init__(self, target_type: str = TARGET_TYPE_STANDARD, speed_bonus: float = 0.0):
+    def __init__(self, target_type: str = TARGET_TYPE_STANDARD, speed_bonus: float = 0.0, level: int = 1):
         super().__init__()
         self.target_type = target_type
         
-        # Attribute configuration based on type
+        # Attribute configuration based on type & level
         if target_type == TARGET_TYPE_FAST:
             self.hp = 1
             self.max_hp = 1
             self.points = 25
             size = random.randint(26, 36)
-            base_speed = (TARGET_SPEED + 140.0)
+            base_speed = (TARGET_SPEED + 160.0)
             color_outer = COLOR_MAGENTA
             color_inner = (56, 189, 248) # Cyan core
         elif target_type == TARGET_TYPE_ARMORED:
-            self.hp = 3
-            self.max_hp = 3
-            self.points = 50
-            size = random.randint(55, 70)
-            base_speed = (TARGET_SPEED - 40.0)
+            # Higher levels make Armored targets even tougher (3 to 5 HP)
+            armor_hp = 3 + max(0, level - 3)
+            self.hp = armor_hp
+            self.max_hp = armor_hp
+            self.points = 50 + (level - 1) * 10
+            size = random.randint(58, 72)
+            base_speed = (TARGET_SPEED - 20.0)
             color_outer = COLOR_CRIMSON
             color_inner = (250, 204, 21) # Gold core
         else: # Standard
@@ -118,23 +120,28 @@ class Spawner:
     def set_level(self, level: int):
         """Adjusts spawn intervals, speed bonuses, and enemy variety based on current level."""
         self.level = level
-        reduction = (level - 1) * 0.15
-        self.min_interval = max(0.5, self.base_min_interval - reduction)
-        self.max_interval = max(0.9, self.base_max_interval - reduction)
-        self.speed_bonus = (level - 1) * 30.0
+        # Spawn interval scaling: Level 1 (1.5s - 3.0s), Level 2 (1.1s - 2.1s), Level 3 (0.7s - 1.4s), Level 4+ (0.4s - 0.8s)
+        reduction_min = (level - 1) * 0.35
+        reduction_max = (level - 1) * 0.55
+        self.min_interval = max(0.4, self.base_min_interval - reduction_min)
+        self.max_interval = max(0.8, self.base_max_interval - reduction_max)
+        
+        # Movement speed scaling: +55 px/s per level
+        self.speed_bonus = (level - 1) * 55.0
 
     def _select_target_type(self) -> str:
         """Selects target type based on current level probabilities."""
         if self.level == 1:
             return TARGET_TYPE_STANDARD
         elif self.level == 2:
-            return random.choice([TARGET_TYPE_STANDARD, TARGET_TYPE_STANDARD, TARGET_TYPE_FAST])
-        else: # Level 3+
-            weights = [60, 25, 15] # Standard, Fast, Armored
-            return random.choices(
-                [TARGET_TYPE_STANDARD, TARGET_TYPE_FAST, TARGET_TYPE_ARMORED],
-                weights=weights, k=1
-            )[0]
+            # 60% Standard, 40% Fast
+            return random.choices([TARGET_TYPE_STANDARD, TARGET_TYPE_FAST], weights=[60, 40], k=1)[0]
+        elif self.level == 3:
+            # 40% Standard, 35% Fast, 25% Armored
+            return random.choices([TARGET_TYPE_STANDARD, TARGET_TYPE_FAST, TARGET_TYPE_ARMORED], weights=[40, 35, 25], k=1)[0]
+        else: # Level 4+
+            # 20% Standard, 45% Fast, 35% Armored
+            return random.choices([TARGET_TYPE_STANDARD, TARGET_TYPE_FAST, TARGET_TYPE_ARMORED], weights=[20, 45, 35], k=1)[0]
 
     def update(self, dt: float, target_group: pygame.sprite.Group) -> Target | None:
         self.timer += dt
@@ -143,7 +150,7 @@ class Spawner:
             self.current_interval = random.uniform(self.min_interval, self.max_interval)
             
             target_type = self._select_target_type()
-            new_target = Target(target_type=target_type, speed_bonus=self.speed_bonus)
+            new_target = Target(target_type=target_type, speed_bonus=self.speed_bonus, level=self.level)
             target_group.add(new_target)
             return new_target
 

@@ -183,11 +183,42 @@ class Player(pygame.sprite.Sprite):
         self.health = max(0, self.health - amount)
         return self.health <= 0
 
+    def recharge_battery(self, amount: int = 30):
+        """Recharges the drone's battery level up to max_health."""
+        self.health = min(self.max_health, self.health + amount)
+
     def can_shoot(self) -> bool:
         return self.shoot_timer <= 0.0
 
-    def shoot(self, target_pos: tuple[int, int]) -> Bullet | None:
-        if self.can_shoot():
-            self.shoot_timer = SHOOT_COOLDOWN
-            return Bullet(start_pos=(self.pos.x, self.pos.y), target_pos=target_pos)
-        return None
+    def shoot(self, target_pos: tuple[int, int], level: int = 1) -> list[Bullet]:
+        """
+        Creates and returns Bullet instances:
+        - Level 1: Single Cannon
+        - Level 2: Double Twin Cannons
+        - Level 3+: TRIPLE SPREAD CANNONS (3 laser beams simultaneously!)
+        """
+        if not self.can_shoot():
+            return []
+
+        self.shoot_timer = SHOOT_COOLDOWN
+        bullets = []
+
+        if level >= 3:
+            # Triple Spread Shooting (Center, Top -12°, Bottom +12°)
+            b_center = Bullet(start_pos=(self.pos.x, self.pos.y), target_pos=target_pos, angle_offset_deg=0.0)
+            b_top = Bullet(start_pos=(self.pos.x, self.pos.y - 10), target_pos=target_pos, angle_offset_deg=-12.0)
+            b_bot = Bullet(start_pos=(self.pos.x, self.pos.y + 10), target_pos=target_pos, angle_offset_deg=12.0)
+            bullets.extend([b_center, b_top, b_bot])
+        elif level == 2:
+            # Double Shooting (Twin Cannons)
+            b1 = Bullet(start_pos=(self.pos.x, self.pos.y - 8), target_pos=target_pos)
+            b2 = Bullet(start_pos=(self.pos.x, self.pos.y + 8), target_pos=target_pos)
+            bullets.extend([b1, b2])
+        else:
+            # Single Cannon
+            b = Bullet(start_pos=(self.pos.x, self.pos.y), target_pos=target_pos)
+            bullets.append(b)
+
+        return bullets
+
+

@@ -1,5 +1,6 @@
 import os
 import sys
+import random
 import pygame
 from src.settings import (
     SCREEN_WIDTH, SCREEN_HEIGHT, FPS, TITLE, COLOR_BG, COLOR_HUD,
@@ -8,6 +9,7 @@ from src.settings import (
 )
 from src.player import Player
 from src.target import Spawner
+from src.powerup import BatteryCharge
 from src.particles import ParticleManager
 from src.background import ParallaxBackground
 from src.audio import AudioManager
@@ -54,6 +56,7 @@ def main():
     player_group = pygame.sprite.GroupSingle()
     bullet_group = pygame.sprite.Group()
     target_group = pygame.sprite.Group()
+    powerup_group = pygame.sprite.Group()
 
     # Game State Variables
     game_state = STATE_MENU
@@ -62,20 +65,23 @@ def main():
     current_level = 1
     level_score = 0
     total_score = 0
-    points_per_level = 100
+    battery_timer = 0.0
 
     drone = None
     spawner = None
 
     def reset_game():
-        nonlocal drone, spawner, current_level, level_score, total_score
+        nonlocal drone, spawner, current_level, level_score, total_score, battery_timer
         current_level = 1
         level_score = 0
         total_score = 0
+        battery_timer = 0.0
         
         bullet_group.empty()
         target_group.empty()
+        powerup_group.empty()
         particle_manager.particles.empty()
+        particle_manager.balloons.empty()
         
         drone = Player((200, SCREEN_HEIGHT // 2))
         player_group.add(drone)
@@ -83,12 +89,15 @@ def main():
         spawner.set_level(current_level)
 
     def start_next_level():
-        nonlocal current_level, level_score, game_state
+        nonlocal current_level, level_score, game_state, battery_timer
         current_level += 1
         level_score = 0
+        battery_timer = 0.0
         bullet_group.empty()
         target_group.empty()
+        powerup_group.empty()
         particle_manager.particles.empty()
+        particle_manager.balloons.empty()
         spawner.set_level(current_level)
         game_state = STATE_PLAYING
 
@@ -128,26 +137,37 @@ def main():
                         reset_game()
                         game_state = STATE_PLAYING
 
-            # Shooting Event
+        # Shooting Event
             if game_state == STATE_PLAYING and event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                bullet = drone.shoot(pygame.mouse.get_pos())
-                if bullet:
-                    bullet_group.add(bullet)
+                new_bullets = drone.shoot(pygame.mouse.get_pos(), level=current_level)
+                if new_bullets:
+                    for b in new_bullets:
+                        bullet_group.add(b)
                     audio_manager.play_laser()
 
         # Update Logic per State
         if game_state == STATE_PLAYING:
+            points_per_level = 200 + (current_level - 1) * 100
+
             # Continuous automatic fire when holding left click
             if pygame.mouse.get_pressed()[0]:
-                bullet = drone.shoot(pygame.mouse.get_pos())
-                if bullet:
-                    bullet_group.add(bullet)
+                new_bullets = drone.shoot(pygame.mouse.get_pos(), level=current_level)
+                if new_bullets:
+                    for b in new_bullets:
+                        bullet_group.add(b)
                     audio_manager.play_laser()
+
+            # Periodic Battery Powerup Spawner (Every 7.0 seconds)
+            battery_timer += dt
+            if battery_timer >= 7.0:
+                battery_timer = 0.0
+                powerup_group.add(BatteryCharge())
 
             # Update Entities
             drone.update(dt, particle_manager, audio_manager)
             bullet_group.update(dt)
             target_group.update(dt)
+            powerup_group.update(dt)
             particle_manager.update(dt)
             spawner.update(dt, target_group)
 
@@ -165,21 +185,32 @@ def main():
                         level_score += target.points
                         total_score += target.points
 
+                        # 35% Chance of dropping Battery Charge when destroying targets
+                        if random.random() < 0.35:
+                            powerup_group.add(BatteryCharge(pos=target.rect.center))
+
                         # High Score Check
                         if total_score > highscore:
                             highscore = total_score
                             save_highscore(highscore)
 
-                        # Level Completion Check (Every 100 points)
+                        # Level Completion Check
                         if level_score >= points_per_level:
                             game_state = STATE_LEVEL_CLEAR
                             bullet_group.empty()
                             target_group.empty()
+                            powerup_group.empty()
                             particle_manager.spawn_celebration(SCREEN_WIDTH, SCREEN_HEIGHT)
                             audio_manager.play_celebration_fanfare()
                             break
 
-
+            # Drone vs Battery Powerup Collection
+            if game_state == STATE_PLAYING:
+                powerup_hits = pygame.sprite.spritecollide(drone, powerup_group, True, pygame.sprite.collide_circle)
+                for _ in powerup_hits:
+                    drone.recharge_battery(30) # +30% Battery Recharge
+                    audio_manager.play_recharge()
+                    particle_manager.spawn_explosion(drone.rect.center, count=20, color=(52, 211, 153))
 
             # Drone vs Target Collisions (Health / Battery System)
             if game_state == STATE_PLAYING:
@@ -200,10 +231,12 @@ def main():
             player_group.draw(screen)
             bullet_group.draw(screen)
             target_group.draw(screen)
+            powerup_group.draw(screen)
             particle_manager.draw(screen)
 
             # --- HUD Overlay ---
             current_fps = int(clock.get_fps())
+            points_per_level = 200 + (current_level - 1) * 100
             
             lvl_surf = font_hud.render(f"LEVEL {current_level}", True, COLOR_GOLD)
             prog_surf = font_hud.render(f"Progress: {level_score}/{points_per_level} pts", True, COLOR_HUD)
@@ -231,10 +264,10 @@ def main():
 
         # --- Celebration Screen (Level Clear) ---
         if game_state == STATE_LEVEL_CLEAR:
+            points_per_level = 200 + (current_level - 1) * 100
             clear_surf = font_banner.render(f"🎉 LEVEL {current_level} CLEARED! 🎉", True, COLOR_CYAN)
-            detail_surf = font_hud.render(f"Level Goal Achieved: 100 / 100 pts  |  Total Score: {total_score}", True, COLOR_GOLD)
+            detail_surf = font_hud.render(f"Level Goal Achieved: {points_per_level} / {points_per_level} pts  |  Total Score: {total_score}", True, COLOR_GOLD)
             start_next_surf = font_banner.render(f"Press SPACE or 'S' to Start Level {current_level + 1}", True, COLOR_EMERALD)
-
 
             screen.blit(clear_surf, clear_surf.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 50)))
             screen.blit(detail_surf, detail_surf.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 10)))

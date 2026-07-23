@@ -21,10 +21,32 @@ class AudioManager:
         self.explosion_sfx = self._create_explosion_sound()
         self.thrust_sfx = self._create_thrust_sound()
         self.levelup_sfx = self._create_levelup_sound()
+        self.recharge_sfx = self._create_recharge_sound()
         self.celebration_sfx = self._create_celebration_cheer_sound()
         self.gameover_sfx = self._create_gameover_sound()
 
+    def _create_recharge_sound(self) -> pygame.mixer.Sound | None:
+        """Synthesizes an uplifting high-tech battery recharge chime."""
+        if not self.audio_enabled:
+            return None
+        try:
+            sample_rate = 22050
+            duration = 0.28
+            num_samples = int(sample_rate * duration)
+            buf = bytearray()
+            for i in range(num_samples):
+                t = i / sample_rate
+                # Frequency sweeps up from 400Hz to 1200Hz
+                freq = 400.0 + (800.0 * (i / num_samples))
+                decay = 1.0 - (i / num_samples) * 0.4
+                sample_val = int(128 + 127 * 0.35 * decay * math.sin(2 * math.pi * freq * t))
+                buf.append(max(0, min(255, sample_val)))
+            return pygame.mixer.Sound(buffer=bytes(buf))
+        except Exception:
+            return None
+
     def _create_laser_sound(self) -> pygame.mixer.Sound | None:
+
         """Realistic punchy gunfire / plasma laser shot."""
         if not self.audio_enabled:
             return None
@@ -210,6 +232,11 @@ class AudioManager:
         elif self.levelup_sfx:
             self.levelup_sfx.play()
 
+    def play_recharge(self):
+        if self.recharge_sfx:
+            self.recharge_sfx.play()
+
     def play_gameover(self):
         if self.gameover_sfx:
             self.gameover_sfx.play()
+

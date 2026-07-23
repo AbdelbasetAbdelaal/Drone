@@ -5,20 +5,24 @@ from src.settings import SCREEN_WIDTH, SCREEN_HEIGHT, BULLET_SPEED, COLOR_BULLET
 class Bullet(pygame.sprite.Sprite):
     """
     Bullet projectile class calculated via trigonometry (math.atan2).
-    Moves forward toward the target mouse position at creation.
+    Supports angled spread trajectories for double and triple shooting.
     """
-    def __init__(self, start_pos: tuple[float, float], target_pos: tuple[float, float]):
+    def __init__(self, start_pos: tuple[float, float], target_pos: tuple[float, float], angle_offset_deg: float = 0.0):
         super().__init__()
         
-        # Surface creation
-        self.original_image = pygame.Surface((16, 6), pygame.SRCALPHA)
+        # Surface creation (glowing energy laser bolt)
+        self.original_image = pygame.Surface((18, 6), pygame.SRCALPHA)
         self.original_image.fill(COLOR_BULLET)
+        pygame.draw.circle(self.original_image, (255, 255, 255), (14, 3), 2) # Laser tip highlight
         
         # Calculate angle and velocity using trigonometry (math.atan2)
         dx = target_pos[0] - start_pos[0]
         dy = target_pos[1] - start_pos[1]
-        self.angle_rad = math.atan2(dy, dx)
-        self.angle_deg = math.degrees(-self.angle_rad)  # Negated for Pygame coordinate system
+        base_angle_rad = math.atan2(dy, dx)
+        
+        # Add angle offset for triple spread shooting
+        self.angle_rad = base_angle_rad + math.radians(angle_offset_deg)
+        self.angle_deg = math.degrees(-self.angle_rad)
 
         # Calculate directional velocity components
         self.velocity_x = math.cos(self.angle_rad) * BULLET_SPEED
@@ -31,7 +35,7 @@ class Bullet(pygame.sprite.Sprite):
         self.pos = pygame.Vector2(start_pos)
         self.rect = self.image.get_rect(center=start_pos)
         
-        # Circular collision radius for refined collision detection
+        # Circular collision radius
         self.radius = max(self.rect.width, self.rect.height) // 2
 
     def update(self, dt: float):
