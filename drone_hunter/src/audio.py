@@ -46,35 +46,42 @@ class AudioManager:
             return None
 
     def _create_laser_sound(self) -> pygame.mixer.Sound | None:
-
-        """Realistic punchy gunfire / plasma laser shot."""
+        """Thunderous Heavy Bomb Blast sound effect."""
         if not self.audio_enabled:
             return None
         try:
             sample_rate = 22050
-            duration = 0.14
+            duration = 0.38
             num_samples = int(sample_rate * duration)
             buf = bytearray()
             for i in range(num_samples):
                 t = i / sample_rate
                 progress = i / num_samples
                 
-                # Muzzle burst transient (first 8ms noise crackle)
-                noise = random.randint(-60, 60) if progress < 0.08 else 0
+                # 1. Initial Bomb Detonation Shockwave (First 35ms explosive blast noise)
+                bomb_detonation = random.randint(-127, 127) if progress < 0.10 else random.randint(-40, 40)
                 
-                # Exponential pitch drop from 1400Hz to 160Hz
-                freq = 1400.0 * math.exp(-18.0 * progress) + 160.0
-                decay = math.exp(-12.0 * progress)
+                # 2. Thunderous 35Hz Sub-Bass Bomb Boom
+                sub_bomb_boom = math.sin(2 * math.pi * 35.0 * t) * 120.0
                 
-                # Main pulse + sub-bass punch
-                tone = math.sin(2 * math.pi * freq * t)
-                sub_bass = math.sin(2 * math.pi * 90.0 * t) * 0.4
+                # 3. Explosive Shockwave Frequency Pitch Drop (350Hz down to 45Hz)
+                freq = 350.0 * math.exp(-15.0 * progress) + 45.0
+                shockwave_pulse = math.sin(2 * math.pi * freq * t) * 75.0
                 
-                sample_val = int(128 + 127 * (0.6 * tone + sub_bass) * decay + noise * (1.0 - progress))
+                # 4. Heavy Bomb Reverb & Decay Envelope
+                decay = math.exp(-5.5 * progress)
+                
+                # Combined Heavy Bomb Blast
+                combined = (bomb_detonation * (1.0 - progress * 0.5) + sub_bomb_boom + shockwave_pulse) * decay
+                sample_val = int(128 + max(-127, min(127, combined)))
                 buf.append(max(0, min(255, sample_val)))
             return pygame.mixer.Sound(buffer=bytes(buf))
         except Exception:
             return None
+
+
+
+
 
     def _create_explosion_sound(self) -> pygame.mixer.Sound | None:
         """Realistic deep explosion boom with sub-bass rumble and shockwave crackle."""

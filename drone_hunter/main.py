@@ -87,6 +87,7 @@ def main():
         player_group.add(drone)
         spawner = Spawner(base_min_interval=1.5, base_max_interval=3.0)
         spawner.set_level(current_level)
+        background.set_level(current_level)
 
     def start_next_level():
         nonlocal current_level, level_score, game_state, battery_timer
@@ -99,7 +100,9 @@ def main():
         particle_manager.particles.empty()
 
         spawner.set_level(current_level)
+        background.set_level(current_level)
         game_state = STATE_PLAYING
+
 
     reset_game()
 
