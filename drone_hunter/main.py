@@ -81,7 +81,7 @@ def main():
         target_group.empty()
         powerup_group.empty()
         particle_manager.particles.empty()
-        particle_manager.balloons.empty()
+
         
         drone = Player((200, SCREEN_HEIGHT // 2))
         player_group.add(drone)
@@ -97,7 +97,7 @@ def main():
         target_group.empty()
         powerup_group.empty()
         particle_manager.particles.empty()
-        particle_manager.balloons.empty()
+
         spawner.set_level(current_level)
         game_state = STATE_PLAYING
 
