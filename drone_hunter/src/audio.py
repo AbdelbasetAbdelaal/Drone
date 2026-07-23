@@ -269,6 +269,10 @@ class AudioManager:
         if self.shield_sfx:
             self.shield_sfx.play()
 
+    def play_buy(self):
+        if self.levelup_sfx:
+            self.levelup_sfx.play()
+
     def play_recharge(self):
         if self.recharge_sfx:
             self.recharge_sfx.play()
@@ -276,3 +280,4 @@ class AudioManager:
     def play_gameover(self):
         if self.gameover_sfx:
             self.gameover_sfx.play()
+

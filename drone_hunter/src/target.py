@@ -3,9 +3,10 @@ import random
 import pygame
 from src.settings import (
     SCREEN_WIDTH, SCREEN_HEIGHT, TARGET_SPEED,
-    TARGET_TYPE_STANDARD, TARGET_TYPE_FAST, TARGET_TYPE_ARMORED, TARGET_TYPE_BOSS,
-    COLOR_TARGET, COLOR_MAGENTA, COLOR_CRIMSON
+    TARGET_TYPE_STANDARD, TARGET_TYPE_FAST, TARGET_TYPE_ARMORED, TARGET_TYPE_SHOOTER, TARGET_TYPE_BOSS,
+    COLOR_TARGET, COLOR_MAGENTA, COLOR_CRIMSON, COLOR_CYAN
 )
+from src.bullet import EnemyBullet
 
 class Target(pygame.sprite.Sprite):
     """
@@ -13,13 +14,15 @@ class Target(pygame.sprite.Sprite):
     - Standard: Normal speed, 1 HP, 10 pts
     - Fast: High speed, small size, 1 HP, 25 pts
     - Armored: Heavy shield, large size, 3+ HP, 50 pts
-    - Boss: Giant Dreadnought Cruiser, 20+ HP, 250 pts, hovers & rotates shield
+    - Shooter: Fires plasma bullets at player, 2 HP, 40 pts
+    - Boss: Giant Dreadnought Cruiser, 20+ HP, 250 pts, hovers & fires dual bursts
     """
     def __init__(self, target_type: str = TARGET_TYPE_STANDARD, speed_bonus: float = 0.0, level: int = 1):
         super().__init__()
         self.target_type = target_type
         self.level = level
         self.shield_angle = 0.0
+        self.shoot_timer = random.uniform(0.5, 1.8)
         
         # Attribute configuration based on type & level
         if target_type == TARGET_TYPE_BOSS:
@@ -31,6 +34,14 @@ class Target(pygame.sprite.Sprite):
             base_speed = 70.0
             color_outer = (225, 29, 72)  # Heavy Rose Crimson
             color_inner = (250, 204, 21) # Gold Core
+        elif target_type == TARGET_TYPE_SHOOTER:
+            self.hp = 2
+            self.max_hp = 2
+            self.points = 40
+            size = 46
+            base_speed = (TARGET_SPEED + 40.0)
+            color_outer = (244, 63, 94)  # Rose Coral
+            color_inner = (56, 189, 248) # Cyan Core
         elif target_type == TARGET_TYPE_FAST:
             self.hp = 1
             self.max_hp = 1
@@ -103,6 +114,12 @@ class Target(pygame.sprite.Sprite):
             pygame.draw.rect(self.image, (51, 65, 85), (bar_x, bar_y, bar_w, bar_h))
             fill_w = max(0, int(bar_w * (self.hp / self.max_hp)))
             pygame.draw.rect(self.image, (239, 68, 68), (bar_x, bar_y, fill_w, bar_h))
+        elif self.target_type == TARGET_TYPE_SHOOTER:
+            # Hunter Drone Shooter Visual
+            pygame.draw.polygon(self.image, self.color_outer, [
+                (self.size, center[1]), (8, 4), (16, center[1]), (8, self.size - 4)
+            ])
+            pygame.draw.circle(self.image, self.color_inner, center, 6)
         else:
             # Outer Ring & Inner Core Visual
             pygame.draw.circle(self.image, self.color_outer, center, self.size // 2)
@@ -127,18 +144,33 @@ class Target(pygame.sprite.Sprite):
         self._render_sprite()
         return False
 
-    def update(self, dt: float):
-        self.time_accum += dt
-        
+    def update(self, dt: float, player_pos: tuple[float, float] = (200, 360), slowmo_factor: float = 1.0) -> list[EnemyBullet]:
+        effective_dt = dt * slowmo_factor
+        self.time_accum += effective_dt
+        new_enemy_bullets = []
+
+        # Handle Enemy Firing Logic
+        if self.target_type in (TARGET_TYPE_SHOOTER, TARGET_TYPE_BOSS):
+            self.shoot_timer -= effective_dt
+            if self.shoot_timer <= 0:
+                if self.target_type == TARGET_TYPE_SHOOTER:
+                    self.shoot_timer = random.uniform(2.2, 3.2)
+                    new_enemy_bullets.append(EnemyBullet(self.rect.center, player_pos))
+                elif self.target_type == TARGET_TYPE_BOSS:
+                    self.shoot_timer = 2.4
+                    cx, cy = self.rect.center
+                    new_enemy_bullets.append(EnemyBullet((cx, cy - 25), player_pos, speed=420.0))
+                    new_enemy_bullets.append(EnemyBullet((cx, cy + 25), player_pos, speed=420.0))
+
         if self.target_type == TARGET_TYPE_BOSS:
             # Rotate Boss Shield
-            self.shield_angle = (self.shield_angle + 2.0 * dt) % 6.28318
+            self.shield_angle = (self.shield_angle + 2.0 * effective_dt) % 6.28318
             self._render_sprite()
 
             # Boss Entrance & Hover Behavior
             target_x = SCREEN_WIDTH - 180
             if self.pos.x > target_x:
-                self.pos.x -= self.speed * dt
+                self.pos.x -= self.speed * effective_dt
             else:
                 self.pos.x = target_x + math.sin(self.time_accum * 1.5) * 15.0
                 self.pos.y = (SCREEN_HEIGHT // 2) + math.sin(self.time_accum * 2.2) * 140.0
@@ -146,11 +178,13 @@ class Target(pygame.sprite.Sprite):
             self.rect.center = (round(self.pos.x), round(self.pos.y))
         else:
             # Normal Enemies move leftwards
-            self.pos.x -= self.speed * dt
+            self.pos.x -= self.speed * effective_dt
             self.rect.centerx = round(self.pos.x)
 
             if self.rect.right < 0:
                 self.kill()
+
+        return new_enemy_bullets
 
 
 class Spawner:
@@ -183,14 +217,14 @@ class Spawner:
         if self.level == 1:
             return TARGET_TYPE_STANDARD
         elif self.level == 2:
-            return random.choices([TARGET_TYPE_STANDARD, TARGET_TYPE_FAST], weights=[60, 40], k=1)[0]
+            return random.choices([TARGET_TYPE_STANDARD, TARGET_TYPE_FAST, TARGET_TYPE_SHOOTER], weights=[50, 30, 20], k=1)[0]
         elif self.level == 3:
-            return random.choices([TARGET_TYPE_STANDARD, TARGET_TYPE_FAST, TARGET_TYPE_ARMORED], weights=[40, 35, 25], k=1)[0]
+            return random.choices([TARGET_TYPE_STANDARD, TARGET_TYPE_FAST, TARGET_TYPE_ARMORED, TARGET_TYPE_SHOOTER], weights=[35, 30, 20, 15], k=1)[0]
         else: # Level 4+
-            return random.choices([TARGET_TYPE_STANDARD, TARGET_TYPE_FAST, TARGET_TYPE_ARMORED], weights=[20, 45, 35], k=1)[0]
+            return random.choices([TARGET_TYPE_STANDARD, TARGET_TYPE_FAST, TARGET_TYPE_ARMORED, TARGET_TYPE_SHOOTER], weights=[15, 35, 25, 25], k=1)[0]
 
     def update(self, dt: float, target_group: pygame.sprite.Group, level_score: int, points_per_level: int) -> Target | None:
-        # Spawn Boss Dreadnought at 75% level progress on Level 3, Level 6, etc.
+        # Spawn Boss Dreadnought at 65% level progress on Level 3, Level 6, etc.
         if (self.level % 3 == 0) and not self.boss_spawned and (level_score >= int(points_per_level * 0.65)):
             self.boss_spawned = True
             boss = Target(target_type=TARGET_TYPE_BOSS, level=self.level)

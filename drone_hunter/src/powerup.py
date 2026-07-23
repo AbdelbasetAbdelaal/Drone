@@ -2,12 +2,17 @@ import math
 import random
 import pygame
 from src.settings import (
-    SCREEN_WIDTH, SCREEN_HEIGHT, COLOR_EMERALD, COLOR_SHIELD, COLOR_OVERCLOCK
+    SCREEN_WIDTH, SCREEN_HEIGHT, COLOR_EMERALD, COLOR_SHIELD, COLOR_OVERCLOCK, COLOR_SLOWMO, COLOR_COIN
 )
 
 class PowerupItem(pygame.sprite.Sprite):
     """
-    Base class for floating powerup pickup items.
+    Base class for floating powerup pickup items:
+    - Battery (+30% Recharge)
+    - Shield (Absorbs 2 hits)
+    - Overclock (2X fire-rate & +40% speed)
+    - SlowMo (Time-Dilation 40% slow motion)
+    - Coin (+10 Gold Scrap Currency)
     """
     def __init__(self, ptype: str = "battery", pos: tuple[float, float] | None = None):
         super().__init__()
@@ -20,6 +25,10 @@ class PowerupItem(pygame.sprite.Sprite):
             self.color = COLOR_SHIELD
         elif ptype == "overclock":
             self.color = COLOR_OVERCLOCK
+        elif ptype == "slowmo":
+            self.color = COLOR_SLOWMO
+        elif ptype == "coin":
+            self.color = COLOR_COIN
         else: # battery
             self.color = COLOR_EMERALD
 
@@ -56,6 +65,18 @@ class PowerupItem(pygame.sprite.Sprite):
             pts2 = [(12, 16), (18, 8), (24, 16)]
             pygame.draw.lines(self.image, COLOR_OVERCLOCK, False, pts1, 3)
             pygame.draw.lines(self.image, (255, 255, 255), False, pts2, 3)
+        elif self.ptype == "slowmo":
+            # Slow-Mo Clock Icon
+            pygame.draw.circle(self.image, COLOR_SLOWMO, center, 8, 2)
+            pygame.draw.line(self.image, (255, 255, 255), center, (center[0], center[1] - 5), 2)
+            pygame.draw.line(self.image, (255, 255, 255), center, (center[0] + 4, center[1]), 2)
+        elif self.ptype == "coin":
+            # Gold Coin Icon
+            pygame.draw.circle(self.image, COLOR_COIN, center, 10)
+            pygame.draw.circle(self.image, (250, 204, 21), center, 7)
+            font = pygame.font.SysFont("Arial", 12, bold=True)
+            c_txt = font.render("$", True, (15, 23, 42))
+            self.image.blit(c_txt, c_txt.get_rect(center=center))
         else:
             # Battery Icon
             pygame.draw.rect(self.image, COLOR_EMERALD, (12, 10, 12, 16), 2)
@@ -72,7 +93,6 @@ class PowerupItem(pygame.sprite.Sprite):
         if self.rect.right < 0:
             self.kill()
 
-# Alias for backwards compatibility
 class BatteryCharge(PowerupItem):
     def __init__(self, pos: tuple[float, float] | None = None):
         super().__init__(ptype="battery", pos=pos)

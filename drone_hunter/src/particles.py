@@ -1,6 +1,7 @@
 import math
 import random
 import pygame
+from src.settings import SCREEN_WIDTH, SCREEN_HEIGHT
 
 class Particle(pygame.sprite.Sprite):
     """
@@ -103,13 +104,38 @@ class EMPRing(pygame.sprite.Sprite):
         pygame.draw.circle(self.image, (255, 255, 255, alpha), center, int(self.radius * 0.95), 3)
 
 
+class RainStreak(pygame.sprite.Sprite):
+    """
+    Dynamic rain particle streak for storm weather hazards.
+    """
+    def __init__(self):
+        super().__init__()
+        self.pos = pygame.Vector2(random.randint(-100, SCREEN_WIDTH), random.randint(-50, 0))
+        self.speed_y = random.uniform(600, 900)
+        self.speed_x = random.uniform(-150, -50)
+        self.length = random.randint(12, 22)
+        
+        self.image = pygame.Surface((8, self.length), pygame.SRCALPHA)
+        pygame.draw.line(self.image, (186, 230, 253, 160), (4, 0), (0, self.length), 2)
+        self.rect = self.image.get_rect(center=self.pos)
+
+    def update(self, dt: float):
+        self.pos.x += self.speed_x * dt
+        self.pos.y += self.speed_y * dt
+        self.rect.center = (round(self.pos.x), round(self.pos.y))
+        
+        if self.pos.y > SCREEN_HEIGHT + 20 or self.pos.x < -100:
+            self.kill()
+
+
 class ParticleManager:
     """
-    Manages spawning and updating particle systems (Thrust smoke, Explosions, Floating Texts, EMP rings).
+    Manages spawning and updating particle systems (Thrust smoke, Explosions, Floating Texts, EMP rings, Weather).
     """
     def __init__(self):
         self.particles = pygame.sprite.Group()
         self.floating_texts = pygame.sprite.Group()
+        self.weather_particles = pygame.sprite.Group()
 
     def spawn_thrust_smoke(self, pos: tuple[float, float]):
         """Spawns small smoke/flame particles behind the drone thruster."""
@@ -147,6 +173,11 @@ class ParticleManager:
     def spawn_emp_ring(self, pos: tuple[float, float]):
         self.particles.add(EMPRing(pos))
 
+    def spawn_weather(self, weather_type: str):
+        if weather_type == "rain":
+            if len(self.weather_particles) < 40:
+                self.weather_particles.add(RainStreak())
+
     def spawn_celebration(self, screen_width: int, screen_height: int):
         """Spawns vibrant celebration fireworks confetti particles across the screen."""
         colors = [
@@ -174,7 +205,9 @@ class ParticleManager:
     def update(self, dt: float):
         self.particles.update(dt)
         self.floating_texts.update(dt)
+        self.weather_particles.update(dt)
 
     def draw(self, surface: pygame.Surface):
+        self.weather_particles.draw(surface)
         self.particles.draw(surface)
         self.floating_texts.draw(surface)

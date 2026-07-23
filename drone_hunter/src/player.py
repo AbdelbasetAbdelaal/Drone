@@ -18,12 +18,18 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, pos: tuple[float, float]):
         super().__init__()
         
-        # Health & Ability Systems
+        # Base Health & Upgrade Multipliers
         self.max_health = MAX_HEALTH
         self.health = MAX_HEALTH
+        self.emp_cooldown_max = EMP_COOLDOWN_MAX
+        self.cooldown_mult = 1.0
+        self.agility_mult = 1.0
+        
         self.emp_cooldown = 0.0      # Seconds until EMP ready
         self.shield_hits = 0         # Shield forcefield charges
-        self.overclock_timer = 0.0    # Overclock speed boost remaining
+        self.overclock_timer = 0.0   # Overclock speed boost remaining
+        self.slowmo_timer = 0.0      # Time Dilation Slow Motion remaining
+        self.shoot_timer = 0.0
 
         # Surface Dimensions (68x44 for a clear, high-detail drone)
         self.width = 68
@@ -43,50 +49,58 @@ class Player(pygame.sprite.Sprite):
         self.velocity = pygame.Vector2(0, 0)
         self.rect = self.image.get_rect(center=pos)
         
-        # Circular collision radius
-        self.radius = 22
+        # Collision Radius
+        self.radius = 28
         self.is_thrusting = False
 
-        # Shooting Cooldown
-        self.shoot_timer = 0.0
+    def apply_shop_upgrades(self, upgrade_levels: dict[str, int]):
+        """Applies persistent shop level upgrades to player stats."""
+        bat_lvl = upgrade_levels.get("battery", 0)
+        spd_lvl = upgrade_levels.get("speed", 0)
+        fr_lvl = upgrade_levels.get("fire_rate", 0)
+        emp_lvl = upgrade_levels.get("emp_recharge", 0)
+
+        self.max_health = 100 + (bat_lvl * 20)
+        self.health = self.max_health
+        self.agility_mult = 1.0 + (spd_lvl * 0.15)
+        self.cooldown_mult = max(0.4, 1.0 - (fr_lvl * 0.12))
+        self.emp_cooldown_max = max(7.0, EMP_COOLDOWN_MAX - (emp_lvl * 2.5))
 
     def _render_drone_sprite(self):
+        """
+        Renders detailed vector graphics for the Quadcopter Drone sprite.
+        """
         self.original_image.fill((0, 0, 0, 0))
-        center_x = 28
-        center_y = 22
+        cx, cy = self.width // 2, self.height // 2
 
-        # 1. Carbon-Fiber Structural Arm Struts (4 Rotor Arms)
-        arm_color = (51, 65, 85)     # Dark slate carbon fiber
-        pygame.draw.line(self.original_image, arm_color, (center_x, center_y), (12, 8), 4)
-        pygame.draw.line(self.original_image, arm_color, (center_x, center_y), (44, 8), 4)
-        pygame.draw.line(self.original_image, arm_color, (center_x, center_y), (12, 36), 4)
-        pygame.draw.line(self.original_image, arm_color, (center_x, center_y), (44, 36), 4)
+        # 1. Carbon Fiber Chassis Body
+        pygame.draw.ellipse(self.original_image, (30, 41, 59), (cx - 18, cy - 10, 36, 20))
+        pygame.draw.ellipse(self.original_image, COLOR_DRONE, (cx - 14, cy - 7, 28, 14), 2)
 
-        # 2. Dual Tactical Cannon Barrels (Mounted on side pylons)
-        gun_color = (203, 213, 225)  # Metallic silver
-        pygame.draw.rect(self.original_image, gun_color, (34, 15, 28, 4)) # Upper Cannon
-        pygame.draw.rect(self.original_image, gun_color, (34, 25, 28, 4)) # Lower Cannon
-        pygame.draw.circle(self.original_image, (250, 204, 21), (62, 17), 2) # Upper Muzzle Glow
-        pygame.draw.circle(self.original_image, (250, 204, 21), (62, 27), 2) # Lower Muzzle Glow
+        # 2. Front Optical Camera Sensor Lens
+        pygame.draw.circle(self.original_image, (15, 23, 42), (cx + 14, cy), 5)
+        pygame.draw.circle(self.original_image, (56, 189, 248), (cx + 14, cy), 3)
 
-        # 3. Main Stealth Armored Fuselage (Body)
-        body_outer = (30, 41, 59)    # Dark metallic navy body
-        body_inner = COLOR_DRONE     # Cyan accents
-        
-        pygame.draw.ellipse(self.original_image, body_outer, (12, 12, 32, 20))
-        pygame.draw.ellipse(self.original_image, body_inner, (16, 14, 24, 16))
+        # 3. Dual Laser Cannon Barrels
+        pygame.draw.rect(self.original_image, (148, 163, 184), (cx + 10, cy - 9, 14, 3))
+        pygame.draw.rect(self.original_image, (148, 163, 184), (cx + 10, cy + 6, 14, 3))
 
-        # 4. Front Optical Sensor Camera Pod / Lens Eye
-        pygame.draw.ellipse(self.original_image, (15, 23, 42), (38, 17, 12, 10))
-        pygame.draw.circle(self.original_image, (14, 165, 233), (44, 22), 4) # Glowing Cyan Lens Eye
-        pygame.draw.circle(self.original_image, (255, 255, 255), (45, 21), 1) # Glint highlight
+        # 4. Carbon Fiber Rotor Arms (X-Shape Quadcopter Layout)
+        rotors = [
+            (cx - 20, cy - 14),  # Top-Left
+            (cx + 20, cy - 14),  # Top-Right
+            (cx - 20, cy + 14),  # Bottom-Left
+            (cx + 20, cy + 14)   # Bottom-Right
+        ]
+        for rx, ry in rotors:
+            pygame.draw.line(self.original_image, (71, 85, 105), (cx, cy), (rx, ry), 3)
 
-        # 5. Rotor Motor Hubs & Spinning Propeller Blades
-        rotor_hubs = [(12, 8), (44, 8), (12, 36), (44, 36)]
-        blade_dx = int(math.cos(self.rotor_angle) * 14)
-        blade_dy = int(math.sin(self.rotor_angle) * 6)
+        # 5. Animated Spinning Propeller Rotor Blades & Navigation Lights
+        blade_length = 13
+        blade_dx = int(math.cos(self.rotor_angle) * blade_length)
+        blade_dy = int(math.sin(self.rotor_angle) * blade_length)
 
-        for idx, (rx, ry) in enumerate(rotor_hubs):
+        for idx, (rx, ry) in enumerate(rotors):
             pygame.draw.circle(self.original_image, (15, 23, 42), (rx, ry), 5)
             pygame.draw.ellipse(self.original_image, (148, 163, 184, 140), (rx - 14, ry - 5, 28, 10), 1)
             pygame.draw.line(self.original_image, (226, 232, 240, 200), (rx - blade_dx, ry - blade_dy), (rx + blade_dx, ry + blade_dy), 2)
@@ -99,21 +113,24 @@ class Player(pygame.sprite.Sprite):
             pygame.draw.ellipse(self.original_image, (99, 102, 241, 180), (2, 2, self.width - 4, self.height - 4), 3)
             pygame.draw.ellipse(self.original_image, (165, 180, 252, 100), (4, 4, self.width - 8, self.height - 8), 1)
 
-    def update(self, dt: float, particle_manager=None, audio_manager=None):
+    def update(self, dt: float, particle_manager=None, audio_manager=None, wind_force: float = 0.0):
         # Update cooldown timers
         self.shoot_timer = max(0.0, self.shoot_timer - dt)
         self.emp_cooldown = max(0.0, self.emp_cooldown - dt)
         self.overclock_timer = max(0.0, self.overclock_timer - dt)
+        self.slowmo_timer = max(0.0, self.slowmo_timer - dt)
 
         # Animate Propellers continuously
         self.rotor_angle = (self.rotor_angle + 25.0 * dt) % 6.28318
         self._render_drone_sprite()
 
-        # 1. Physics: Apply continuous gravity with dynamic downward cap
+        # 1. Physics: Apply continuous gravity & environmental wind force
         keys = pygame.key.get_pressed()
         move_down = keys[pygame.K_DOWN] or keys[pygame.K_s]
         
         self.velocity.y += GRAVITY * dt
+        self.velocity.x += wind_force * dt
+        
         max_fall = 480.0 if move_down else MAX_FALL_SPEED
         if self.velocity.y > max_fall:
             self.velocity.y = max_fall
@@ -130,11 +147,10 @@ class Player(pygame.sprite.Sprite):
 
     def _handle_movement_input(self, dt: float, particle_manager=None, audio_manager=None, move_down: bool = False):
         keys = pygame.key.get_pressed()
-
         move_up = keys[pygame.K_SPACE] or keys[pygame.K_UP] or keys[pygame.K_w]
 
         self.is_thrusting = move_up
-        speed_mult = 1.4 if self.overclock_timer > 0 else 1.0
+        speed_mult = (1.4 if self.overclock_timer > 0 else 1.0) * self.agility_mult
 
         if move_up:
             self.velocity.y += THRUST_FORCE * speed_mult * dt
@@ -145,7 +161,6 @@ class Player(pygame.sprite.Sprite):
 
         if move_down:
             self.velocity.y += abs(THRUST_FORCE) * 2.8 * speed_mult * dt
-
 
         move_x = 0
         if keys[pygame.K_a] or keys[pygame.K_LEFT]:
@@ -173,7 +188,6 @@ class Player(pygame.sprite.Sprite):
         self.image = self._rotation_cache[cache_key]
         self.rect = self.image.get_rect(center=(round(self.pos.x), round(self.pos.y)))
 
-
     def _clamp_to_screen(self):
         half_w = self.width // 2
         half_h = self.height // 2
@@ -196,9 +210,8 @@ class Player(pygame.sprite.Sprite):
 
     def trigger_emp(self) -> bool:
         """Triggers EMP Shockwave blast if cooldown is ready."""
-
         if self.emp_cooldown <= 0.0:
-            self.emp_cooldown = EMP_COOLDOWN_MAX
+            self.emp_cooldown = self.emp_cooldown_max
             return True
         return False
 
@@ -207,6 +220,9 @@ class Player(pygame.sprite.Sprite):
 
     def activate_overclock(self, duration: float = 5.0):
         self.overclock_timer = duration
+
+    def activate_slowmo(self, duration: float = 6.0):
+        self.slowmo_timer = duration
 
     def take_damage(self, amount: int = 25) -> bool:
         # Forcefield Shield absorbs hit first!
@@ -227,8 +243,8 @@ class Player(pygame.sprite.Sprite):
         if not self.can_shoot():
             return []
 
-        # Overclock halves shoot cooldown
-        cooldown = SHOOT_COOLDOWN * 0.5 if self.overclock_timer > 0 else SHOOT_COOLDOWN
+        base_cd = SHOOT_COOLDOWN * self.cooldown_mult
+        cooldown = base_cd * 0.5 if self.overclock_timer > 0 else base_cd
         self.shoot_timer = cooldown
         bullets = []
 
