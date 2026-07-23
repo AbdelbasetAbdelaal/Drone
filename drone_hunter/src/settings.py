@@ -10,6 +10,8 @@ TITLE = "Drone Hunter - Sci-Fi Arcade"
 STATE_MENU = 0
 STATE_PLAYING = 1
 STATE_GAME_OVER = 2
+STATE_LEVEL_CLEAR = 3
+
 
 # Colors (Vibrant Sci-Fi Synthwave Palette)
 COLOR_BG = (15, 23, 42)          # Deep slate navy
