@@ -1,27 +1,28 @@
 import math
+import random
 import pygame
+
 from src.settings import (
     SCREEN_WIDTH, SCREEN_HEIGHT, GRAVITY, THRUST_FORCE,
-    MAX_FALL_SPEED, HORIZONTAL_SPEED, COLOR_DRONE, SHOOT_COOLDOWN
+    MAX_FALL_SPEED, HORIZONTAL_SPEED, COLOR_DRONE, SHOOT_COOLDOWN, MAX_HEALTH
 )
 from src.bullet import Bullet
 
 class Player(pygame.sprite.Sprite):
     """
-    Drone class with gravity, upward thrust physics, mouse aiming rotation,
-    and projectile shooting capabilities.
+    Drone player sprite with health management, gravity/thrust physics,
+    particle integration, and mouse aiming capabilities.
     """
     def __init__(self, pos: tuple[float, float]):
         super().__init__()
         
-        # Create a detailed original Surface (pointing right by default at 0 degrees)
-        self.original_image = pygame.Surface((50, 26), pygame.SRCALPHA)
-        # Drone Main Body
-        pygame.draw.ellipse(self.original_image, COLOR_DRONE, (0, 6, 40, 14))
-        # Front Cannon Barrel (pointing right)
-        pygame.draw.rect(self.original_image, (226, 232, 240), (32, 10, 18, 6))
-        # Top Rotor / Cockpit
-        pygame.draw.ellipse(self.original_image, (14, 165, 233), (12, 0, 20, 10))
+        # Health / Battery System
+        self.max_health = MAX_HEALTH
+        self.health = MAX_HEALTH
+
+        # Render high-detail sci-fi drone surface
+        self.original_image = pygame.Surface((56, 30), pygame.SRCALPHA)
+        self._render_drone_sprite()
 
         self.image = self.original_image.copy()
         
@@ -31,12 +32,25 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=pos)
         
         # Circular collision radius
-        self.radius = 18
+        self.radius = 20
+        self.is_thrusting = False
 
         # Shooting Cooldown
         self.shoot_timer = 0.0
 
-    def update(self, dt: float):
+    def _render_drone_sprite(self):
+        self.original_image.fill((0, 0, 0, 0))
+        # Main Metallic Fuselage
+        pygame.draw.ellipse(self.original_image, COLOR_DRONE, (4, 8, 44, 16))
+        # Front Cannon Barrel
+        pygame.draw.rect(self.original_image, (226, 232, 240), (36, 12, 18, 6))
+        pygame.draw.circle(self.original_image, (250, 204, 21), (52, 15), 3) # Muzzle tip glow
+        # Cockpit Dome
+        pygame.draw.ellipse(self.original_image, (14, 165, 233), (16, 2, 22, 12))
+        # Rear Thruster Exhaust Nozzle
+        pygame.draw.rect(self.original_image, (100, 116, 139), (0, 11, 8, 10))
+
+    def update(self, dt: float, particle_manager=None, audio_manager=None):
         # Update fire rate cooldown timer
         self.shoot_timer = max(0.0, self.shoot_timer - dt)
 
@@ -46,7 +60,7 @@ class Player(pygame.sprite.Sprite):
             self.velocity.y = MAX_FALL_SPEED
 
         # 2. Player Input (Thrust & Horizontal Movement)
-        self._handle_movement_input(dt)
+        self._handle_movement_input(dt, particle_manager, audio_manager)
 
         # 3. Apply position updates & boundary checks
         self.pos += self.velocity * dt
@@ -55,12 +69,23 @@ class Player(pygame.sprite.Sprite):
         # 4. Aiming: Rotate surface toward mouse position
         self._aim_towards_mouse()
 
-    def _handle_movement_input(self, dt: float):
+    def _handle_movement_input(self, dt: float, particle_manager=None, audio_manager=None):
         keys = pygame.key.get_pressed()
 
-        # Upward Thrust on Spacebar
-        if keys[pygame.K_SPACE]:
+        # Upward Movement / Thrust (Spacebar, Up Arrow, or W key)
+        move_up = keys[pygame.K_SPACE] or keys[pygame.K_UP] or keys[pygame.K_w]
+        move_down = keys[pygame.K_DOWN] or keys[pygame.K_s]
+
+        self.is_thrusting = move_up
+        if move_up:
             self.velocity.y += THRUST_FORCE * dt
+            if particle_manager:
+                particle_manager.spawn_thrust_smoke((self.pos.x - 20, self.pos.y + 8))
+            if audio_manager and random.random() < 0.2:
+                audio_manager.play_thrust()
+
+        if move_down:
+            self.velocity.y += abs(THRUST_FORCE) * 0.7 * dt
 
         # Horizontal Movement (A/D or Left/Right Arrow Keys)
         move_x = 0
@@ -71,16 +96,15 @@ class Player(pygame.sprite.Sprite):
 
         self.velocity.x = move_x * HORIZONTAL_SPEED
 
+
     def _aim_towards_mouse(self):
         mouse_pos = pygame.mouse.get_pos()
         dx = mouse_pos[0] - self.pos.x
         dy = mouse_pos[1] - self.pos.y
         
-        # Calculate rotation angle in degrees (Pygame rotates counter-clockwise)
         angle_rad = math.atan2(dy, dx)
         angle_deg = math.degrees(-angle_rad)
 
-        # Rotate original surface smoothly without stretching
         self.image = pygame.transform.rotate(self.original_image, angle_deg)
         self.rect = self.image.get_rect(center=(round(self.pos.x), round(self.pos.y)))
 
@@ -88,7 +112,6 @@ class Player(pygame.sprite.Sprite):
         half_w = self.original_image.get_width() // 2
         half_h = self.original_image.get_height() // 2
 
-        # Horizontal clamping
         if self.pos.x < half_w:
             self.pos.x = half_w
             self.velocity.x = 0
@@ -96,29 +119,24 @@ class Player(pygame.sprite.Sprite):
             self.pos.x = SCREEN_WIDTH - half_w
             self.velocity.x = 0
 
-        # Vertical clamping
         if self.pos.y < half_h:
             self.pos.y = half_h
-            self.velocity.y = 0  # Stop upward movement when hitting ceiling
+            self.velocity.y = 0
         elif self.pos.y > SCREEN_HEIGHT - half_h:
             self.pos.y = SCREEN_HEIGHT - half_h
-            self.velocity.y = 0  # Stop falling when hitting ground
+            self.velocity.y = 0
 
         self.rect.center = (round(self.pos.x), round(self.pos.y))
 
-    def is_touching_ground(self) -> bool:
-
-        half_h = self.original_image.get_height() // 2
-        return self.pos.y >= SCREEN_HEIGHT - half_h
-
+    def take_damage(self, amount: int = 25) -> bool:
+        """Decreases player health. Returns True if dead."""
+        self.health = max(0, self.health - amount)
+        return self.health <= 0
 
     def can_shoot(self) -> bool:
         return self.shoot_timer <= 0.0
 
     def shoot(self, target_pos: tuple[int, int]) -> Bullet | None:
-        """
-        Creates and returns a new Bullet instance towards target_pos if cooldown ready.
-        """
         if self.can_shoot():
             self.shoot_timer = SHOOT_COOLDOWN
             return Bullet(start_pos=(self.pos.x, self.pos.y), target_pos=target_pos)

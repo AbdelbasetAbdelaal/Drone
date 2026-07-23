@@ -1,80 +1,100 @@
-import math
+import os
 import sys
 import pygame
 from src.settings import (
-    SCREEN_WIDTH, SCREEN_HEIGHT, FPS, TITLE, COLOR_BG, COLOR_HUD
+    SCREEN_WIDTH, SCREEN_HEIGHT, FPS, TITLE, COLOR_BG, COLOR_HUD,
+    STATE_MENU, STATE_PLAYING, STATE_GAME_OVER, COLOR_CYAN, COLOR_EMERALD, COLOR_GOLD
 )
 from src.player import Player
 from src.target import Spawner
+from src.particles import ParticleManager
+from src.background import ParallaxBackground
+from src.audio import AudioManager
 
-# Procedural Sound Effect Generator
-def create_sound_effect(freq: float = 440.0, duration: float = 0.1, volume: float = 0.3) -> pygame.mixer.Sound | None:
-    try:
-        sample_rate = 22050
-        num_samples = int(sample_rate * duration)
-        buf = bytearray()
-        for i in range(num_samples):
-            t = i / sample_rate
-            decay = 1.0 - (i / num_samples)
-            sample = int(128 + 127 * volume * decay * math.sin(2 * math.pi * freq * t))
-            buf.append(max(0, min(255, sample)))
-        return pygame.mixer.Sound(buffer=bytes(buf))
-    except Exception:
-        return None
+HIGHSCORE_FILE = "highscore.txt"
 
-def main():
-    # 1. Initialize Pygame & Subsystems
-    pygame.init()
-    pygame.font.init()
+def load_highscore() -> int:
+    if os.path.exists(HIGHSCORE_FILE):
+        try:
+            with open(HIGHSCORE_FILE, "r") as f:
+                return int(f.read().strip())
+        except Exception:
+            return 0
+    return 0
+
+def save_highscore(score: int):
     try:
-        pygame.mixer.init(frequency=22050, size=-8, channels=1, buffer=512)
+        with open(HIGHSCORE_FILE, "w") as f:
+            f.write(str(score))
     except Exception:
         pass
+
+def main():
+    # Initialize Pygame & Subsystems
+    pygame.init()
+    pygame.font.init()
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption(TITLE)
     clock = pygame.time.Clock()
 
-    # Create Fonts
-    font_hud = pygame.font.SysFont("Arial", 24, bold=True)
-    font_banner = pygame.font.SysFont("Arial", 42, bold=True)
-    font_gameover = pygame.font.SysFont("Arial", 48, bold=True)
+    # Systems
+    background = ParallaxBackground()
+    particle_manager = ParticleManager()
+    audio_manager = AudioManager()
 
-    # Sound Effects
-    hit_sound = create_sound_effect(freq=600.0, duration=0.08, volume=0.4)
-    levelup_sound = create_sound_effect(freq=880.0, duration=0.3, volume=0.5)
-    gameover_sound = create_sound_effect(freq=180.0, duration=0.4, volume=0.5)
+    # Fonts
+    font_title = pygame.font.SysFont("Arial", 64, bold=True)
+    font_hud = pygame.font.SysFont("Arial", 22, bold=True)
+    font_banner = pygame.font.SysFont("Arial", 40, bold=True)
+    font_gameover = pygame.font.SysFont("Arial", 52, bold=True)
 
-    # 2. Sprite Groups Setup
+    # Sprite Groups
     player_group = pygame.sprite.GroupSingle()
     bullet_group = pygame.sprite.Group()
     target_group = pygame.sprite.Group()
 
-    # Instantiate Player Drone & Spawner
-    drone = Player((200, SCREEN_HEIGHT // 2))
-    player_group.add(drone)
-    spawner = Spawner(base_min_interval=1.5, base_max_interval=3.0)
-
     # Game State Variables
-    current_level = 1
-    level_score = 0      # Points in current level (0 to 100)
-    total_score = 0      # Cumulative score across all levels
-    points_per_level = 100
+    game_state = STATE_MENU
+    highscore = load_highscore()
     
-    level_up_timer = 0.0  # Duration to display "LEVEL UP!" message on screen
-    game_over = False
+    current_level = 1
+    level_score = 0
+    total_score = 0
+    points_per_level = 100
+    level_up_timer = 0.0
 
-    # Main Game Loop
+    drone = None
+    spawner = None
+
+    def reset_game():
+        nonlocal drone, spawner, current_level, level_score, total_score, level_up_timer
+        current_level = 1
+        level_score = 0
+        total_score = 0
+        level_up_timer = 0.0
+        
+        bullet_group.empty()
+        target_group.empty()
+        particle_manager.particles.empty()
+        
+        drone = Player((200, SCREEN_HEIGHT // 2))
+        player_group.add(drone)
+        spawner = Spawner(base_min_interval=1.5, base_max_interval=3.0)
+        spawner.set_level(current_level)
+
+    reset_game()
+
+    # Main Loop
     running = True
     while running:
-        # Compute Frame Delta Time
         dt = clock.tick(FPS) / 1000.0
+        background.update(dt)
 
-        # Update Level Up Announcement Timer
         if level_up_timer > 0:
             level_up_timer = max(0.0, level_up_timer - dt)
 
-        # --- Event Handling ---
+        # Event Loop
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -82,109 +102,146 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
-                if event.key == pygame.K_r and game_over:
-                    # Reset Game State on 'R'
-                    current_level = 1
-                    level_score = 0
-                    total_score = 0
-                    level_up_timer = 0.0
-                    game_over = False
-                    spawner.set_level(current_level)
-                    bullet_group.empty()
-                    target_group.empty()
-                    drone = Player((200, SCREEN_HEIGHT // 2))
-                    player_group.add(drone)
 
-            # Manual single click shooting event
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not game_over:
+                # State Transitions
+                if game_state == STATE_MENU:
+                    if event.key == pygame.K_SPACE or event.key == pygame.K_RETURN:
+                        reset_game()
+                        game_state = STATE_PLAYING
+
+                elif game_state == STATE_GAME_OVER:
+                    if event.key == pygame.K_r or event.key == pygame.K_SPACE:
+                        reset_game()
+                        game_state = STATE_PLAYING
+
+            # Shooting Event
+            if game_state == STATE_PLAYING and event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 bullet = drone.shoot(pygame.mouse.get_pos())
                 if bullet:
                     bullet_group.add(bullet)
+                    audio_manager.play_laser()
 
-        if not game_over:
-            # Automatic continuous shooting while holding left mouse
+        # Update Logic per State
+        if game_state == STATE_PLAYING:
+            # Continuous automatic fire when holding left click
             if pygame.mouse.get_pressed()[0]:
                 bullet = drone.shoot(pygame.mouse.get_pos())
                 if bullet:
                     bullet_group.add(bullet)
+                    audio_manager.play_laser()
 
-            # --- Game State Update ---
-            player_group.update(dt)
+            # Update Entities
+            drone.update(dt, particle_manager, audio_manager)
             bullet_group.update(dt)
             target_group.update(dt)
+            particle_manager.update(dt)
             spawner.update(dt, target_group)
 
-            # --- Collision Detection ---
-            # 1. Check collisions between bullet_group and target_group
-            hits = pygame.sprite.groupcollide(bullet_group, target_group, True, True, pygame.sprite.collide_circle)
-            if hits:
-                for _ in hits:
-                    level_score += 10
-                    total_score += 10
-                if hit_sound:
-                    hit_sound.play()
+            # Bullet vs Target Collisions
+            hits = pygame.sprite.groupcollide(bullet_group, target_group, True, False, pygame.sprite.collide_circle)
+            for bullet, targets_hit in hits.items():
+                for target in targets_hit:
+                    # Apply damage to target
+                    destroyed = target.take_damage(1)
+                    particle_manager.spawn_explosion(target.rect.center, count=15, color=target.color_outer)
+                    audio_manager.play_explosion()
 
-                # --- Level Advancement Logic (Every 100 points) ---
-                if level_score >= points_per_level:
-                    current_level += 1
-                    level_score %= points_per_level
-                    level_up_timer = 2.0  # Show banner for 2 seconds
-                    spawner.set_level(current_level)
-                    target_group.empty()  # Clear screen targets on level clear
-                    if levelup_sound:
-                        levelup_sound.play()
+                    if destroyed:
+                        target.kill()
+                        level_score += target.points
+                        total_score += target.points
 
-            # 2. Check Game Over Conditions: Drone collides directly with an enemy target
-            drone_hit_target = pygame.sprite.spritecollide(drone, target_group, False, pygame.sprite.collide_circle)
+                        # High Score Check
+                        if total_score > highscore:
+                            highscore = total_score
+                            save_highscore(highscore)
 
-            if drone_hit_target:
-                game_over = True
-                if gameover_sound:
-                    gameover_sound.play()
+                        # Level Progression Check
+                        if level_score >= points_per_level:
+                            current_level += 1
+                            level_score %= points_per_level
+                            level_up_timer = 2.0
+                            spawner.set_level(current_level)
+                            target_group.empty()
+                            audio_manager.play_levelup()
 
+            # Drone vs Target Collisions (Health / Battery System)
+            drone_hits = pygame.sprite.spritecollide(drone, target_group, True, pygame.sprite.collide_circle)
+            for target in drone_hits:
+                particle_manager.spawn_explosion(target.rect.center, count=25, color=(239, 68, 68))
+                audio_manager.play_explosion()
+                dead = drone.take_damage(25) # 25% health damage
+                if dead:
+                    game_state = STATE_GAME_OVER
+                    audio_manager.play_gameover()
 
-        # --- Rendering Pipeline ---
+        # Rendering
         screen.fill(COLOR_BG)
+        background.draw(screen)
 
-        # Draw Game Entities
-        player_group.draw(screen)
-        bullet_group.draw(screen)
-        target_group.draw(screen)
+        if game_state == STATE_PLAYING or game_state == STATE_GAME_OVER:
+            player_group.draw(screen)
+            bullet_group.draw(screen)
+            target_group.draw(screen)
+            particle_manager.draw(screen)
 
-        # --- Render HUD Overlay ---
-        current_fps = int(clock.get_fps())
-        
-        level_surface = font_hud.render(f"LEVEL {current_level}", True, (250, 204, 21))   # Yellow
-        progress_surface = font_hud.render(f"Level Progress: {level_score} / {points_per_level} pts", True, COLOR_HUD)
-        total_surface = font_hud.render(f"Total Score: {total_score}", True, COLOR_HUD)
-        fps_surface = font_hud.render(f"FPS: {current_fps}", True, (52, 211, 153))         # Mint Green
-        controls_surface = font_hud.render("Space: Thrust | A/D: Move | Left Click: Aim & Shoot", True, (148, 163, 184))
-
-        screen.blit(level_surface, (20, 15))
-        screen.blit(progress_surface, (160, 15))
-        screen.blit(total_surface, (450, 15))
-        screen.blit(fps_surface, (SCREEN_WIDTH - 130, 15))
-        screen.blit(controls_surface, (20, SCREEN_HEIGHT - 35))
-
-        # --- Render Level Up Banner Overlay ---
-        if level_up_timer > 0 and not game_over:
-            banner_surf = font_banner.render(f"🎉 LEVEL {current_level} UNLOCKED! 🎉", True, (56, 189, 248))
-            banner_rect = banner_surf.get_rect(center=(SCREEN_WIDTH // 2, 140))
-            screen.blit(banner_surf, banner_rect)
-
-        # --- Render Game Over Screen ---
-        if game_over:
-            over_surface = font_gameover.render("GAME OVER", True, (239, 68, 68))
-            stats_surface = font_hud.render(f"Final Level: {current_level}  |  Total Score: {total_score}", True, (226, 232, 240))
-            restart_surface = font_hud.render("Press 'R' to Restart", True, (56, 189, 248))
+            # --- HUD Overlay ---
+            current_fps = int(clock.get_fps())
             
-            rect_over = over_surface.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 40))
-            rect_stats = stats_surface.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 10))
-            rect_restart = restart_surface.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50))
+            # Level & Score
+            lvl_surf = font_hud.render(f"LEVEL {current_level}", True, COLOR_GOLD)
+            prog_surf = font_hud.render(f"Progress: {level_score}/{points_per_level} pts", True, COLOR_HUD)
+            score_surf = font_hud.render(f"Score: {total_score}", True, COLOR_HUD)
+            high_surf = font_hud.render(f"HI-SCORE: {highscore}", True, COLOR_CYAN)
+            fps_surf = font_hud.render(f"FPS: {current_fps}", True, COLOR_EMERALD)
+
+            screen.blit(lvl_surf, (20, 15))
+            screen.blit(prog_surf, (150, 15))
+            screen.blit(score_surf, (420, 15))
+            screen.blit(high_surf, (600, 15))
+            screen.blit(fps_surf, (SCREEN_WIDTH - 120, 15))
+
+            # Drone Health / Battery Bar
+            bar_w, bar_h = 200, 16
+            bar_x, bar_y = 20, 48
+            pygame.draw.rect(screen, (30, 41, 59), (bar_x, bar_y, bar_w, bar_h))
+            health_pct = max(0.0, drone.health / drone.max_health)
+            health_color = COLOR_EMERALD if health_pct > 0.4 else (239, 68, 68)
+            pygame.draw.rect(screen, health_color, (bar_x, bar_y, int(bar_w * health_pct), bar_h))
+            pygame.draw.rect(screen, COLOR_HUD, (bar_x, bar_y, bar_w, bar_h), 2)
             
-            screen.blit(over_surface, rect_over)
-            screen.blit(stats_surface, rect_stats)
-            screen.blit(restart_surface, rect_restart)
+            hp_txt = font_hud.render(f"BATTERY: {int(drone.health)}%", True, COLOR_HUD)
+            screen.blit(hp_txt, (bar_x + bar_w + 12, bar_y - 2))
+
+            # Level Up Banner Overlay
+            if level_up_timer > 0 and game_state == STATE_PLAYING:
+                banner_surf = font_banner.render(f"🎉 LEVEL {current_level} UNLOCKED! 🎉", True, COLOR_CYAN)
+                banner_rect = banner_surf.get_rect(center=(SCREEN_WIDTH // 2, 130))
+                screen.blit(banner_surf, banner_rect)
+
+        # --- Menu Screens ---
+        if game_state == STATE_MENU:
+            title_surf = font_title.render("DRONE HUNTER", True, COLOR_CYAN)
+            subtitle_surf = font_hud.render("Sci-Fi 2D Arcade Side-Scroller", True, (148, 163, 184))
+            high_surf = font_banner.render(f"HIGH SCORE: {highscore}", True, COLOR_GOLD)
+            start_surf = font_banner.render("Press SPACE to Play", True, COLOR_EMERALD)
+            controls_surf = font_hud.render("Arrows / WASD / Space: Flight | Mouse: Aim & Left Click: Shoot", True, COLOR_HUD)
+
+
+            screen.blit(title_surf, title_surf.get_rect(center=(SCREEN_WIDTH // 2, 200)))
+            screen.blit(subtitle_surf, subtitle_surf.get_rect(center=(SCREEN_WIDTH // 2, 270)))
+            screen.blit(high_surf, high_surf.get_rect(center=(SCREEN_WIDTH // 2, 350)))
+            screen.blit(start_surf, start_surf.get_rect(center=(SCREEN_WIDTH // 2, 450)))
+            screen.blit(controls_surf, controls_surf.get_rect(center=(SCREEN_WIDTH // 2, 560)))
+
+        elif game_state == STATE_GAME_OVER:
+            over_surf = font_gameover.render("GAME OVER", True, (239, 68, 68))
+            stats_surf = font_hud.render(f"Final Level: {current_level}  |  Total Score: {total_score}  |  High Score: {highscore}", True, COLOR_HUD)
+            restart_surf = font_banner.render("Press R or SPACE to Restart", True, COLOR_CYAN)
+
+            screen.blit(over_surf, over_surf.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 50)))
+            screen.blit(stats_surf, stats_surf.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 10)))
+            screen.blit(restart_surf, restart_surf.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 65)))
 
         pygame.display.flip()
 

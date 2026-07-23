@@ -1,6 +1,6 @@
-# 🛸 Drone Hunter
+# 🛸 Drone Hunter - Sci-Fi Arcade
 
-A 2D side-scrolling arcade game built with Python and Pygame (`pygame-ce`).
+A feature-packed 2D side-scrolling sci-fi arcade game built with Python and Pygame (`pygame-ce`).
 
 ---
 
@@ -15,13 +15,25 @@ python main.py
 
 ---
 
-## 🏆 Level Progression System
+## 🌟 Game Features
 
-* **100 Points Per Level**: Every **100 points** scored advances you to the **Next Level** (Level 1 → Level 2 → Level 3...).
-* **Dynamic Difficulty Scaling**:
-  * **Faster Enemy Targets**: Targets move faster at each new level (+35 px/s per level).
-  * **Faster Spawning**: Target spawn intervals decrease at higher levels.
-  * **Level Up Banner & Sound**: Triggers an audio chime and on-screen celebratory banner when unlocking the next level.
+### 1. 🎨 Visuals & Parallax Background
+* **Parallax 2D Layers**: Starfield layer, mountain silhouettes, and a scrolling cyberpunk city skyline.
+* **Particle System**: Real-time thruster smoke trails and explosive particle bursts when destroying enemy targets.
+
+### 2. 🔊 Audio Layer (SFX)
+* Procedurally synthesized sound effects for **laser fire**, **thruster hums**, **target explosions**, **level-up chimes**, and **game over alerts**.
+
+### 3. 🛡️ Health / Battery & Game States
+* **Start Menu**: Displays title screen, controls guide, and persistent **High Score**.
+* **Battery System**: Drone features a 100% Battery Bar. Taking damage reduces battery by 25%.
+* **Game Over & Restart**: Displays final stats, level reached, and press `R` to restart instantly.
+
+### 4. 👾 Enemy Types & Level Scaling
+* **Standard Target** (Red Ring): 1 HP, Normal speed, +10 Pts.
+* **Fast Target** (Magenta/Cyan): 1 HP, High speed, +25 Pts.
+* **Armored Target** (Crimson Shield): 3 HP (Armor Gauge), Heavy, +50 Pts.
+* **Level Progression**: Every 100 points unlocks the next level with faster enemy spawns and movement.
 
 ---
 
@@ -29,34 +41,31 @@ python main.py
 
 | Key / Input | Action |
 | :--- | :--- |
-| **`Spacebar`** | Hold to engage upward thrusters (resists gravity) |
+| **`Spacebar`** | Start game / Engage upward thrusters |
 | **`A` / `D`** or **`←` / `→`** | Move drone horizontally left / right |
-| **Mouse Cursor** | Aim cannon towards cursor position |
-| **Left Mouse Click** | Shoot bullets (Hold for continuous fire) |
+| **Mouse Cursor** | Aim cannon in 360 degrees |
+| **Left Mouse Click** | Fire laser bullets (Hold for continuous fire) |
 | **`R`** | Restart game when in Game Over state |
 | **`Esc`** | Exit game |
 
 ---
 
-## 🎯 Game Over Conditions
-
-* Touching the bottom ground floor.
-* Colliding directly with an enemy target.
-
----
-
-## 📁 File Structure
+## 📁 Project Structure
 
 ```text
 drone_hunter/
-├── main.py             # Main entry point, level system & rendering loop
-├── settings.py         # Game parameters (gravity, speed, colors, resolution)
+├── main.py             # Main game loop, states & HUD rendering
+├── settings.py         # Sci-fi colors, game states, constants
+├── highscore.txt       # Local high score persistence
 ├── requirements.txt    # Dependencies (pygame-ce)
 ├── USAGE.txt           # Plain text instructions guide
 ├── README.md           # Markdown project guide
 └── src/
-    ├── player.py       # Player drone physics & aiming
-    ├── bullet.py       # Trigonometric projectile trajectory
-    ├── target.py       # Enemy target sprite & dynamic spawner with level scaling
-    └── game_manager.py # State controller
+    ├── player.py       # Player Drone with Battery System & Thrusters
+    ├── bullet.py       # Laser projectile with trigonometry
+    ├── target.py       # Standard, Fast, and Armored Targets & Spawner
+    ├── particles.py    # Particle system (smoke, explosions)
+    ├── background.py   # Multi-layered parallax scrolling
+    ├── audio.py        # Sound synthesis manager
+    └── game_manager.py # State manager
 ```
