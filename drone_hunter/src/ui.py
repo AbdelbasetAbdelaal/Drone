@@ -9,11 +9,21 @@ from src.settings import (
 if not pygame.font.get_init():
     pygame.font.init()
 
-font_title = pygame.font.SysFont("Impact", 44)
-font_banner = pygame.font.SysFont("Verdana", 17, bold=True)
-font_hud = pygame.font.SysFont("Consolas", 15, bold=True)
-font_card = pygame.font.SysFont("Consolas", 13, bold=True)
-font_small = pygame.font.SysFont("Arial", 12)
+def safe_create_font(name: str, size: int, bold: bool = False) -> pygame.font.Font:
+    """Safe font creation with fallback for Android mobile compatibility."""
+    try:
+        f = pygame.font.SysFont(name, size, bold=bold)
+        if f:
+            return f
+    except Exception:
+        pass
+    return pygame.font.Font(None, size)
+
+font_title = safe_create_font("Impact", 44)
+font_banner = safe_create_font("Verdana", 17, bold=True)
+font_hud = safe_create_font("Consolas", 15, bold=True)
+font_card = safe_create_font("Consolas", 13, bold=True)
+font_small = safe_create_font("Arial", 12)
 
 def wrap_text(text: str, font: pygame.font.Font, max_width: int) -> list[str]:
     """Wraps text into multiple lines fitting within max_width."""

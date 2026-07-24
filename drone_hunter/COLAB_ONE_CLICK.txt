@@ -1,0 +1,31 @@
+================================================================================
+           INSTANT 1-CLICK COLAB LINK FOR BUILDING YOUR ANDROID APK
+================================================================================
+
+If GitHub Actions shows "Workflows aren't being run" or is asking to enable workflows:
+
+1. Open this direct link in your browser:
+   https://colab.research.google.com
+
+2. Click "New Notebook" at the bottom right.
+
+3. Copy and paste this exact block into the code box:
+
+--------------------------------------------------------------------------------
+!apt-get update -qq
+!apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libssl-dev libffi-dev libsqlite3-dev build-essential
+!pip install buildozer cython
+from google.colab import files
+uploaded = files.upload()
+!unzip -o *.zip -d ./app
+%cd ./app
+!buildozer android debug
+import glob
+files.download(glob.glob("bin/*.apk")[0])
+--------------------------------------------------------------------------------
+
+4. Click the Play (▶) button on the left of the box.
+5. Select your `Drone_Hunter_Game_v1.0.zip` file.
+6. The `.apk` file will build and automatically download to your computer!
+
+================================================================================

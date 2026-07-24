@@ -1,0 +1,40 @@
+================================================================================
+          BUILD AN APK ONLINE FOR FREE IN 3 MINUTES (GOOGLE COLAB)
+================================================================================
+
+If you don't have Linux or WSL on your computer, you can build `DroneHunter.apk` 
+online for FREE using Google Colab's cloud servers:
+
+1. Open https://colab.research.google.com in your browser.
+2. Click "New Notebook".
+3. Copy and paste the code block below into the notebook cell:
+
+```python
+# --- STEP 1: Install Dependencies ---
+!apt-get update -qq
+!apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libssl-dev libffi-dev libsqlite3-dev build-essential
+!pip install buildozer cython
+
+# --- STEP 2: Upload project ZIP ---
+from google.colab import files
+print("Please upload Drone_Hunter_Game_v1.0.zip:")
+uploaded = files.upload()
+
+# --- STEP 3: Unzip & Build APK ---
+!unzip -o Drone_Hunter_Game_v1.0.zip -d ./app
+%cd ./app
+!buildozer android debug
+
+# --- STEP 4: Download APK to your PC/Phone ---
+import glob
+apk_files = glob.glob("bin/*.apk")
+if apk_files:
+    files.download(apk_files[0])
+    print("SUCCESS! APK Downloaded!")
+```
+
+4. Click the **Play (▶)** button at the top left of the cell.
+5. Upload `Drone_Hunter_Game_v1.0.zip` when prompted.
+6. In ~3 minutes, Google Colab will automatically compile and download `DroneHunter-1.0.0-arm64-v8a-debug.apk` directly to your computer!
+
+================================================================================
