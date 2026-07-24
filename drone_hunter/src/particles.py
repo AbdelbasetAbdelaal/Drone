@@ -47,11 +47,11 @@ class FloatingText(pygame.sprite.Sprite):
     def __init__(self, pos: tuple[float, float], text: str, color: tuple[int, int, int] = (250, 204, 21), font_size: int = 24):
         super().__init__()
         self.pos = pygame.Vector2(pos)
-        self.velocity = pygame.Vector2(random.uniform(-15, 15), -75.0) # Drift upward
+        self.velocity = pygame.Vector2(random.uniform(-20, 20), -85.0)
         self.text = text
         self.color = color
-        self.lifetime = 0.85
-        self.max_lifetime = 0.85
+        self.lifetime = 0.90
+        self.max_lifetime = 0.90
         
         font = pygame.font.SysFont("Arial", font_size, bold=True)
         self.base_surface = font.render(text, True, color)
@@ -67,7 +67,6 @@ class FloatingText(pygame.sprite.Sprite):
         self.pos += self.velocity * dt
         self.rect.center = (round(self.pos.x), round(self.pos.y))
         
-        # Alpha fade out
         alpha = max(0, int(255 * (self.lifetime / self.max_lifetime)))
         self.image = self.base_surface.copy()
         self.image.set_alpha(alpha)
@@ -105,9 +104,7 @@ class EMPRing(pygame.sprite.Sprite):
 
 
 class RainStreak(pygame.sprite.Sprite):
-    """
-    Dynamic rain particle streak for storm weather hazards.
-    """
+    """Dynamic rain particle streak for storm weather hazards (Megacity)."""
     def __init__(self):
         super().__init__()
         self.pos = pygame.Vector2(random.randint(-100, SCREEN_WIDTH), random.randint(-50, 0))
@@ -123,14 +120,155 @@ class RainStreak(pygame.sprite.Sprite):
         self.pos.x += self.speed_x * dt
         self.pos.y += self.speed_y * dt
         self.rect.center = (round(self.pos.x), round(self.pos.y))
-        
         if self.pos.y > SCREEN_HEIGHT + 20 or self.pos.x < -100:
+            self.kill()
+
+
+class SeaWaveParticle(pygame.sprite.Sprite):
+    """Ocean sea spray droplet for Ocean sector."""
+    def __init__(self):
+        super().__init__()
+        self.pos = pygame.Vector2(random.randint(-50, SCREEN_WIDTH), random.randint(0, SCREEN_HEIGHT))
+        self.speed_y = random.uniform(200, 500)
+        self.speed_x = random.uniform(-250, -100)
+        self.length = random.randint(14, 26)
+        
+        self.image = pygame.Surface((6, self.length), pygame.SRCALPHA)
+        pygame.draw.line(self.image, (56, 189, 248, 200), (3, 0), (0, self.length), 2)
+        self.rect = self.image.get_rect(center=self.pos)
+
+    def update(self, dt: float):
+        self.pos.x += self.speed_x * dt
+        self.pos.y += self.speed_y * dt
+        self.rect.center = (round(self.pos.x), round(self.pos.y))
+        if self.pos.y > SCREEN_HEIGHT + 20 or self.pos.x < -50:
+            self.kill()
+
+
+class WaterSplashParticle(pygame.sprite.Sprite):
+    """Upward water spray splash particle when projectiles or explosions hit the sea."""
+    def __init__(self, pos: tuple[float, float]):
+        super().__init__()
+        self.pos = pygame.Vector2(pos)
+        self.velocity = pygame.Vector2(random.uniform(-90, 90), random.uniform(-250, -120))
+        self.lifetime = random.uniform(0.3, 0.6)
+        self.max_lifetime = self.lifetime
+        self.radius = random.uniform(2.5, 6.0)
+        self.image = pygame.Surface((12, 12), pygame.SRCALPHA)
+        self.rect = self.image.get_rect(center=pos)
+
+    def update(self, dt: float):
+        self.lifetime -= dt
+        if self.lifetime <= 0:
+            self.kill()
+            return
+        self.velocity.y += 450.0 * dt
+        self.pos += self.velocity * dt
+        self.rect.center = (round(self.pos.x), round(self.pos.y))
+        alpha = int(240 * (self.lifetime / self.max_lifetime))
+        self.image.fill((0, 0, 0, 0))
+        pygame.draw.circle(self.image, (186, 230, 253, alpha), (6, 6), int(self.radius))
+
+
+class DroneVaporTrail(pygame.sprite.Sprite):
+    """Glowing cyan vapor tail particle trailing behind the player drone."""
+    def __init__(self, pos: tuple[float, float]):
+        super().__init__()
+        self.pos = pygame.Vector2(pos)
+        self.velocity = pygame.Vector2(random.uniform(-40, -10), random.uniform(-15, 15))
+        self.lifetime = 0.25
+        self.max_lifetime = 0.25
+        self.radius = 4.0
+        self.image = pygame.Surface((10, 10), pygame.SRCALPHA)
+        self.rect = self.image.get_rect(center=pos)
+
+    def update(self, dt: float):
+        self.lifetime -= dt
+        if self.lifetime <= 0:
+            self.kill()
+            return
+        self.pos += self.velocity * dt
+        self.rect.center = (round(self.pos.x), round(self.pos.y))
+        alpha = int(220 * (self.lifetime / self.max_lifetime))
+        r = max(1.0, self.radius * (self.lifetime / self.max_lifetime))
+        self.image.fill((0, 0, 0, 0))
+        pygame.draw.circle(self.image, (56, 189, 248, alpha), (5, 5), int(r))
+
+
+class SandDustParticle(pygame.sprite.Sprite):
+    """Desert sandstorm dust particle for Desert sector."""
+    def __init__(self):
+        super().__init__()
+        self.pos = pygame.Vector2(SCREEN_WIDTH + 20, random.randint(0, SCREEN_HEIGHT))
+        self.speed_x = random.uniform(-380, -180)
+        self.speed_y = random.uniform(-40, 40)
+        self.lifetime = random.uniform(1.0, 2.5)
+        self.max_lifetime = self.lifetime
+        self.radius = random.uniform(2, 5)
+        
+        self.image = pygame.Surface((12, 12), pygame.SRCALPHA)
+        self.rect = self.image.get_rect(center=self.pos)
+
+    def update(self, dt: float):
+        self.lifetime -= dt
+        if self.lifetime <= 0:
+            self.kill()
+            return
+        self.pos += pygame.Vector2(self.speed_x, self.speed_y) * dt
+        self.rect.center = (round(self.pos.x), round(self.pos.y))
+        alpha = int(200 * (self.lifetime / self.max_lifetime))
+        self.image.fill((0, 0, 0, 0))
+        pygame.draw.circle(self.image, (217, 119, 6, alpha), (6, 6), int(self.radius))
+
+
+class SparkParticle(pygame.sprite.Sprite):
+    """Glowing industrial spark particle for Factory sector."""
+    def __init__(self):
+        super().__init__()
+        self.pos = pygame.Vector2(random.randint(0, SCREEN_WIDTH), random.randint(0, SCREEN_HEIGHT))
+        self.speed_y = random.uniform(30, 120)
+        self.speed_x = random.uniform(-50, 50)
+        self.lifetime = random.uniform(0.8, 2.0)
+        self.max_lifetime = self.lifetime
+        self.radius = random.uniform(2, 4)
+        
+        self.image = pygame.Surface((10, 10), pygame.SRCALPHA)
+        self.rect = self.image.get_rect(center=self.pos)
+
+    def update(self, dt: float):
+        self.lifetime -= dt
+        if self.lifetime <= 0:
+            self.kill()
+            return
+        self.pos += pygame.Vector2(self.speed_x, self.speed_y) * dt
+        self.rect.center = (round(self.pos.x), round(self.pos.y))
+        alpha = int(255 * (self.lifetime / self.max_lifetime))
+        self.image.fill((0, 0, 0, 0))
+        pygame.draw.circle(self.image, (245, 158, 11, alpha), (5, 5), int(self.radius))
+
+
+class StardustParticle(pygame.sprite.Sprite):
+    """Drifting cosmic nebula stardust for Orbital Citadel sector."""
+    def __init__(self):
+        super().__init__()
+        self.pos = pygame.Vector2(SCREEN_WIDTH + 10, random.randint(0, SCREEN_HEIGHT))
+        self.speed_x = random.uniform(-180, -60)
+        self.radius = random.uniform(1.5, 3.5)
+        
+        self.image = pygame.Surface((8, 8), pygame.SRCALPHA)
+        pygame.draw.circle(self.image, (192, 132, 252, 180), (4, 4), int(self.radius))
+        self.rect = self.image.get_rect(center=self.pos)
+
+    def update(self, dt: float):
+        self.pos.x += self.speed_x * dt
+        self.rect.center = (round(self.pos.x), round(self.pos.y))
+        if self.pos.x < -20:
             self.kill()
 
 
 class ParticleManager:
     """
-    Manages spawning and updating particle systems (Thrust smoke, Explosions, Floating Texts, EMP rings, Weather).
+    Manages spawning and updating particle systems.
     """
     def __init__(self):
         self.particles = pygame.sprite.Group()
@@ -138,31 +276,27 @@ class ParticleManager:
         self.weather_particles = pygame.sprite.Group()
 
     def spawn_thrust_smoke(self, pos: tuple[float, float]):
-        """Spawns small smoke/flame particles behind the drone thruster."""
         vx = random.uniform(-120, -60)
         vy = random.uniform(40, 100)
-        color = random.choice([
-            (255, 180, 50),  # Orange flame
-            (255, 90, 30),   # Red flame
-            (100, 116, 139)  # Grey smoke
-        ])
+        color = random.choice([(255, 180, 50), (255, 90, 30), (100, 116, 139)])
         radius = random.uniform(3, 6)
         lifetime = random.uniform(0.2, 0.45)
         self.particles.add(Particle(pos, (vx, vy), color, radius, lifetime))
 
+    def spawn_drone_trail(self, pos: tuple[float, float]):
+        self.particles.add(DroneVaporTrail(pos))
+
+    def spawn_water_splash(self, pos: tuple[float, float], count: int = 8):
+        for _ in range(count):
+            self.particles.add(WaterSplashParticle(pos))
+
     def spawn_explosion(self, pos: tuple[float, float], count: int = 25, color: tuple[int, int, int] = (250, 204, 21)):
-        """Spawns radial explosion particle bursts when a target is destroyed."""
         for _ in range(count):
             angle_speed = random.uniform(100, 350)
             angle = random.uniform(0, 6.28318)
             vx = math.cos(angle) * angle_speed
             vy = math.sin(angle) * angle_speed
-            
-            p_color = random.choice([
-                color,
-                (255, 255, 255),
-                (239, 68, 68)
-            ])
+            p_color = random.choice([color, (255, 255, 255), (239, 68, 68)])
             radius = random.uniform(2, 7)
             lifetime = random.uniform(0.3, 0.7)
             self.particles.add(Particle(pos, (vx, vy), p_color, radius, lifetime))
@@ -174,7 +308,6 @@ class ParticleManager:
         self.particles.add(EMPRing(pos))
 
     def create_evasive_sparks(self, pos: tuple[float, float]):
-        """Spawns glowing cyan and white trailing sparks during Evasive Barrel Roll."""
         for _ in range(3):
             vx = random.uniform(-180, 180)
             vy = random.uniform(-100, 100)
@@ -185,21 +318,18 @@ class ParticleManager:
 
     def spawn_weather(self, weather_type: str):
         if weather_type == "rain":
-            if len(self.weather_particles) < 70:
-                self.weather_particles.add(RainStreak())
+            if len(self.weather_particles) < 70: self.weather_particles.add(RainStreak())
+        elif weather_type == "sparks":
+            if len(self.weather_particles) < 40: self.weather_particles.add(SparkParticle())
+        elif weather_type == "stardust":
+            if len(self.weather_particles) < 50: self.weather_particles.add(StardustParticle())
+        elif weather_type == "sea_storm":
+            if len(self.weather_particles) < 80: self.weather_particles.add(SeaWaveParticle())
+        elif weather_type == "sandstorm":
+            if len(self.weather_particles) < 70: self.weather_particles.add(SandDustParticle())
 
     def spawn_celebration(self, screen_width: int, screen_height: int):
-        """Spawns vibrant celebration fireworks confetti particles across the screen."""
-        colors = [
-            (56, 189, 248),   # Cyan
-            (250, 204, 21),   # Gold
-            (236, 72, 153),   # Magenta
-            (52, 211, 153),   # Emerald
-            (168, 85, 247),   # Purple
-            (255, 255, 255)   # White
-        ]
-
-        # Fireworks Confetti Particles
+        colors = [(56, 189, 248), (250, 204, 21), (236, 72, 153), (52, 211, 153), (168, 85, 247), (255, 255, 255)]
         for _ in range(90):
             pos_x = random.uniform(100, screen_width - 100)
             pos_y = random.uniform(50, screen_height * 0.45)

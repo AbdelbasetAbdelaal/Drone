@@ -1,283 +1,391 @@
+"""
+================================================================================
+                    DRONE HUNTER - PROCEDURAL AUDIO MODULE
+================================================================================
+Zero-dependency procedural sound synthesizer & synthwave background music sequencer.
+Supports both 2D and 3D engine interfaces + Environmental Ambient Audio.
+"""
+
 import math
 import random
 import pygame
 
+bgm_beat_timer = 0.0
+bgm_step = 0
+BASS_FREQS = [110, 110, 146, 130, 110, 110, 164, 146]
+
+ambient_timer = 0.0
+
+def play_synth_laser():
+    try:
+        sample_rate = 44100
+        dur = 0.12
+        n_samples = int(sample_rate * dur)
+        buf = bytearray(n_samples * 2)
+        for i in range(n_samples):
+            t = i / sample_rate
+            freq = 900 - 650 * (t / dur)
+            val = int(math.sin(2 * math.pi * freq * t) * 12000 * (1.0 - t/dur))
+            val = max(-32768, min(32767, val))
+            buf[i*2:i*2+2] = val.to_bytes(2, byteorder='little', signed=True)
+        snd = pygame.mixer.Sound(buffer=bytes(buf))
+        snd.set_volume(0.25)
+        snd.play()
+    except Exception: pass
+
+def play_synth_explosion():
+    try:
+        sample_rate = 44100
+        dur = 0.35
+        n_samples = int(sample_rate * dur)
+        buf = bytearray(n_samples * 2)
+        for i in range(n_samples):
+            t = i / sample_rate
+            val = int((random.random() * 2 - 1) * 18000 * (1.0 - t/dur)**1.8)
+            val = max(-32768, min(32767, val))
+            buf[i*2:i*2+2] = val.to_bytes(2, byteorder='little', signed=True)
+        snd = pygame.mixer.Sound(buffer=bytes(buf))
+        snd.set_volume(0.4)
+        snd.play()
+    except Exception: pass
+
+def play_synth_mine_explosion():
+    try:
+        sample_rate = 44100
+        dur = 0.55
+        n_samples = int(sample_rate * dur)
+        buf = bytearray(n_samples * 2)
+        for i in range(n_samples):
+            t = i / sample_rate
+            val = int((random.random() * 2 - 1) * 24000 * (1.0 - t/dur)**1.5)
+            val = max(-32768, min(32767, val))
+            buf[i*2:i*2+2] = val.to_bytes(2, byteorder='little', signed=True)
+        snd = pygame.mixer.Sound(buffer=bytes(buf))
+        snd.set_volume(0.55)
+        snd.play()
+    except Exception: pass
+
+def play_synth_roll():
+    try:
+        sample_rate = 44100
+        dur = 0.25
+        n_samples = int(sample_rate * dur)
+        buf = bytearray(n_samples * 2)
+        for i in range(n_samples):
+            t = i / sample_rate
+            freq = 300 + 500 * math.sin(t * 20.0)
+            val = int(math.sin(2 * math.pi * freq * t) * 14000 * (1.0 - t/dur))
+            val = max(-32768, min(32767, val))
+            buf[i*2:i*2+2] = val.to_bytes(2, byteorder='little', signed=True)
+        snd = pygame.mixer.Sound(buffer=bytes(buf))
+        snd.set_volume(0.3)
+        snd.play()
+    except Exception: pass
+
+def play_synth_powerup():
+    try:
+        sample_rate = 44100
+        dur = 0.20
+        n_samples = int(sample_rate * dur)
+        buf = bytearray(n_samples * 2)
+        for i in range(n_samples):
+            t = i / sample_rate
+            freq = 500 + 700 * (t / dur)
+            val = int(math.sin(2 * math.pi * freq * t) * 13000 * (1.0 - t/dur))
+            val = max(-32768, min(32767, val))
+            buf[i*2:i*2+2] = val.to_bytes(2, byteorder='little', signed=True)
+        snd = pygame.mixer.Sound(buffer=bytes(buf))
+        snd.set_volume(0.35)
+        snd.play()
+    except Exception: pass
+
+def play_synth_emp():
+    try:
+        sample_rate = 44100
+        dur = 0.45
+        n_samples = int(sample_rate * dur)
+        buf = bytearray(n_samples * 2)
+        for i in range(n_samples):
+            t = i / sample_rate
+            freq = 1200 - 950 * (t / dur)
+            val = int((math.sin(2 * math.pi * freq * t) + (random.random() * 0.3)) * 15000 * (1.0 - t/dur))
+            val = max(-32768, min(32767, val))
+            buf[i*2:i*2+2] = val.to_bytes(2, byteorder='little', signed=True)
+        snd = pygame.mixer.Sound(buffer=bytes(buf))
+        snd.set_volume(0.4)
+        snd.play()
+    except Exception: pass
+
+def play_synth_thrust():
+    try:
+        sample_rate = 44100
+        dur = 0.08
+        n_samples = int(sample_rate * dur)
+        buf = bytearray(n_samples * 2)
+        for i in range(n_samples):
+            t = i / sample_rate
+            val = int((random.random() * 2 - 1) * 8000 * (1.0 - t/dur))
+            val = max(-32768, min(32767, val))
+            buf[i*2:i*2+2] = val.to_bytes(2, byteorder='little', signed=True)
+        snd = pygame.mixer.Sound(buffer=bytes(buf))
+        snd.set_volume(0.15)
+        snd.play()
+    except Exception: pass
+
+def play_synth_buy():
+    try:
+        sample_rate = 44100
+        dur = 0.18
+        n_samples = int(sample_rate * dur)
+        buf = bytearray(n_samples * 2)
+        for i in range(n_samples):
+            t = i / sample_rate
+            freq = 587 if t < dur / 2 else 880
+            val = int(math.sin(2 * math.pi * freq * t) * 12000 * (1.0 - t/dur))
+            val = max(-32768, min(32767, val))
+            buf[i*2:i*2+2] = val.to_bytes(2, byteorder='little', signed=True)
+        snd = pygame.mixer.Sound(buffer=bytes(buf))
+        snd.set_volume(0.3)
+        snd.play()
+    except Exception: pass
+
+def play_synth_fanfare():
+    try:
+        sample_rate = 44100
+        dur = 0.50
+        n_samples = int(sample_rate * dur)
+        buf = bytearray(n_samples * 2)
+        notes = [523.25, 659.25, 783.99, 1046.50]
+        for i in range(n_samples):
+            t = i / sample_rate
+            note_idx = min(3, int((t / dur) * 4))
+            freq = notes[note_idx]
+            val = int(math.sin(2 * math.pi * freq * t) * 14000 * (1.0 - t/dur))
+            val = max(-32768, min(32767, val))
+            buf[i*2:i*2+2] = val.to_bytes(2, byteorder='little', signed=True)
+        snd = pygame.mixer.Sound(buffer=bytes(buf))
+        snd.set_volume(0.35)
+        snd.play()
+    except Exception: pass
+
+def play_synth_gameover():
+    try:
+        sample_rate = 44100
+        dur = 0.60
+        n_samples = int(sample_rate * dur)
+        buf = bytearray(n_samples * 2)
+        for i in range(n_samples):
+            t = i / sample_rate
+            freq = 400 - 300 * (t / dur)
+            val = int((math.sin(2 * math.pi * freq * t) + 0.3 * math.sin(2 * math.pi * (freq * 0.5) * t)) * 16000 * (1.0 - t/dur))
+            val = max(-32768, min(32767, val))
+            buf[i*2:i*2+2] = val.to_bytes(2, byteorder='little', signed=True)
+        snd = pygame.mixer.Sound(buffer=bytes(buf))
+        snd.set_volume(0.4)
+        snd.play()
+    except Exception: pass
+
+def play_synth_shield():
+    try:
+        sample_rate = 44100
+        dur = 0.25
+        n_samples = int(sample_rate * dur)
+        buf = bytearray(n_samples * 2)
+        for i in range(n_samples):
+            t = i / sample_rate
+            freq = 600 + 600 * (t / dur)
+            val = int(math.sin(2 * math.pi * freq * t) * 12000 * (1.0 - t/dur))
+            val = max(-32768, min(32767, val))
+            buf[i*2:i*2+2] = val.to_bytes(2, byteorder='little', signed=True)
+        snd = pygame.mixer.Sound(buffer=bytes(buf))
+        snd.set_volume(0.3)
+        snd.play()
+    except Exception: pass
+
+def play_synth_recharge():
+    try:
+        sample_rate = 44100
+        dur = 0.15
+        n_samples = int(sample_rate * dur)
+        buf = bytearray(n_samples * 2)
+        for i in range(n_samples):
+            t = i / sample_rate
+            freq = 700 + 300 * math.sin(t * 40.0)
+            val = int(math.sin(2 * math.pi * freq * t) * 10000 * (1.0 - t/dur))
+            val = max(-32768, min(32767, val))
+            buf[i*2:i*2+2] = val.to_bytes(2, byteorder='little', signed=True)
+        snd = pygame.mixer.Sound(buffer=bytes(buf))
+        snd.set_volume(0.25)
+        snd.play()
+    except Exception: pass
+
+def play_synth_missile():
+    try:
+        sample_rate = 44100
+        dur = 0.22
+        n_samples = int(sample_rate * dur)
+        buf = bytearray(n_samples * 2)
+        for i in range(n_samples):
+            t = i / sample_rate
+            freq = 250 + 650 * (t / dur)
+            val = int((math.sin(2 * math.pi * freq * t) + random.random()*0.2) * 14000 * (1.0 - t/dur))
+            val = max(-32768, min(32767, val))
+            buf[i*2:i*2+2] = val.to_bytes(2, byteorder='little', signed=True)
+        snd = pygame.mixer.Sound(buffer=bytes(buf))
+        snd.set_volume(0.35)
+        snd.play()
+    except Exception: pass
+
+def play_synth_beam():
+    try:
+        sample_rate = 44100
+        dur = 0.06
+        n_samples = int(sample_rate * dur)
+        buf = bytearray(n_samples * 2)
+        for i in range(n_samples):
+            t = i / sample_rate
+            freq = 1100 + 200 * math.sin(t * 80.0)
+            val = int(math.sin(2 * math.pi * freq * t) * 9000)
+            val = max(-32768, min(32767, val))
+            buf[i*2:i*2+2] = val.to_bytes(2, byteorder='little', signed=True)
+        snd = pygame.mixer.Sound(buffer=bytes(buf))
+        snd.set_volume(0.20)
+        snd.play()
+    except Exception: pass
+
+def play_synth_cloak():
+    try:
+        sample_rate = 44100
+        dur = 0.35
+        n_samples = int(sample_rate * dur)
+        buf = bytearray(n_samples * 2)
+        for i in range(n_samples):
+            t = i / sample_rate
+            freq = 950 - 550 * (t / dur)
+            val = int(math.sin(2 * math.pi * freq * t) * 10000 * (1.0 - t/dur))
+            val = max(-32768, min(32767, val))
+            buf[i*2:i*2+2] = val.to_bytes(2, byteorder='little', signed=True)
+        snd = pygame.mixer.Sound(buffer=bytes(buf))
+        snd.set_volume(0.30)
+        snd.play()
+    except Exception: pass
+
+def play_synth_ocean_wave():
+    """Ambient ocean storm wave roaring sound."""
+    try:
+        sample_rate = 44100
+        dur = 0.40
+        n_samples = int(sample_rate * dur)
+        buf = bytearray(n_samples * 2)
+        for i in range(n_samples):
+            t = i / sample_rate
+            val = int((random.random() * 2 - 1) * 7000 * math.sin(math.pi * (t / dur)))
+            val = max(-32768, min(32767, val))
+            buf[i*2:i*2+2] = val.to_bytes(2, byteorder='little', signed=True)
+        snd = pygame.mixer.Sound(buffer=bytes(buf))
+        snd.set_volume(0.18)
+        snd.play()
+    except Exception: pass
+
+def play_synth_desert_wind():
+    """Ambient desert sand wind howl sound."""
+    try:
+        sample_rate = 44100
+        dur = 0.45
+        n_samples = int(sample_rate * dur)
+        buf = bytearray(n_samples * 2)
+        for i in range(n_samples):
+            t = i / sample_rate
+            freq = 140 + 80 * math.sin(t * 12.0)
+            val = int((math.sin(2 * math.pi * freq * t) + random.random() * 0.4) * 6000 * math.sin(math.pi * (t / dur)))
+            val = max(-32768, min(32767, val))
+            buf[i*2:i*2+2] = val.to_bytes(2, byteorder='little', signed=True)
+        snd = pygame.mixer.Sound(buffer=bytes(buf))
+        snd.set_volume(0.16)
+        snd.play()
+    except Exception: pass
+
+def play_synth_factory_hum():
+    """Ambient industrial factory mechanical hum sound."""
+    try:
+        sample_rate = 44100
+        dur = 0.30
+        n_samples = int(sample_rate * dur)
+        buf = bytearray(n_samples * 2)
+        for i in range(n_samples):
+            t = i / sample_rate
+            val = int((math.sin(2 * math.pi * 60.0 * t) * 5000 + math.sin(2 * math.pi * 120.0 * t) * 3000))
+            val = max(-32768, min(32767, val))
+            buf[i*2:i*2+2] = val.to_bytes(2, byteorder='little', signed=True)
+        snd = pygame.mixer.Sound(buffer=bytes(buf))
+        snd.set_volume(0.15)
+        snd.play()
+    except Exception: pass
+
+def play_synthwave_bgm_tick(dt):
+    global bgm_beat_timer, bgm_step
+    bgm_beat_timer += dt
+    if bgm_beat_timer >= 0.16:
+        bgm_beat_timer = 0.0
+        bgm_step = (bgm_step + 1) % 8
+        try:
+            sample_rate = 44100
+            dur = 0.12
+            n_samples = int(sample_rate * dur)
+            buf = bytearray(n_samples * 2)
+            freq = BASS_FREQS[bgm_step]
+            for i in range(n_samples):
+                t = i / sample_rate
+                val = int((math.sin(2 * math.pi * freq * t) + 0.5 * math.sin(2 * math.pi * (freq*2) * t)) * 4500 * (1.0 - t/dur))
+                val = max(-32768, min(32767, val))
+                buf[i*2:i*2+2] = val.to_bytes(2, byteorder='little', signed=True)
+            snd = pygame.mixer.Sound(buffer=bytes(buf))
+            snd.set_volume(0.12)
+            snd.play()
+        except Exception: pass
+
 class AudioManager:
-    """
-    Manages realistic audio synthesis for gunfire/shooting, deep explosive booms,
-    EMP blasts, forcefield shields, celebration fanfare, and thrusters.
-    """
+    """Audio Manager wrapping procedural sound synthesizer for Drone Hunter 2D & 3D."""
     def __init__(self):
-        self.audio_enabled = False
-        try:
-            if not pygame.mixer.get_init():
-                pygame.mixer.init(frequency=22050, size=-8, channels=2, buffer=512)
-            self.audio_enabled = True
-        except Exception:
-            self.audio_enabled = False
-
-        # Generate Procedural Sound Effects
-        self.laser_sfx = self._create_laser_sound()
-        self.explosion_sfx = self._create_explosion_sound()
-        self.thrust_sfx = self._create_thrust_sound()
-        self.levelup_sfx = self._create_levelup_sound()
-        self.recharge_sfx = self._create_recharge_sound()
-        self.emp_sfx = self._create_emp_sound()
-        self.shield_sfx = self._create_shield_sound()
-        self.celebration_sfx = self._create_celebration_cheer_sound()
-        self.gameover_sfx = self._create_gameover_sound()
-
-    def _create_laser_sound(self) -> pygame.mixer.Sound | None:
-        """Thunderous Heavy Bomb Blast sound effect."""
-        if not self.audio_enabled:
-            return None
-        try:
-            sample_rate = 22050
-            duration = 0.38
-            num_samples = int(sample_rate * duration)
-            buf = bytearray()
-            for i in range(num_samples):
-                t = i / sample_rate
-                progress = i / num_samples
-                
-                # 1. Initial Bomb Detonation Shockwave (First 35ms explosive blast noise)
-                bomb_detonation = random.randint(-127, 127) if progress < 0.10 else random.randint(-40, 40)
-                
-                # 2. Thunderous 35Hz Sub-Bass Bomb Boom
-                sub_bomb_boom = math.sin(2 * math.pi * 35.0 * t) * 120.0
-                
-                # 3. Explosive Shockwave Frequency Pitch Drop (350Hz down to 45Hz)
-                freq = 350.0 * math.exp(-15.0 * progress) + 45.0
-                shockwave_pulse = math.sin(2 * math.pi * freq * t) * 75.0
-                
-                # 4. Heavy Bomb Reverb & Decay Envelope
-                decay = math.exp(-5.5 * progress)
-                
-                # Combined Heavy Bomb Blast
-                combined = (bomb_detonation * (1.0 - progress * 0.5) + sub_bomb_boom + shockwave_pulse) * decay
-                sample_val = int(128 + max(-127, min(127, combined)))
-                buf.append(max(0, min(255, sample_val)))
-            return pygame.mixer.Sound(buffer=bytes(buf))
-        except Exception:
-            return None
-
-    def _create_explosion_sound(self) -> pygame.mixer.Sound | None:
-        """Realistic deep explosion boom with sub-bass rumble and shockwave crackle."""
-        if not self.audio_enabled:
-            return None
-        try:
-            sample_rate = 22050
-            duration = 0.48
-            num_samples = int(sample_rate * duration)
-            buf = bytearray()
-            for i in range(num_samples):
-                t = i / sample_rate
-                progress = i / num_samples
-                
-                noise = random.randint(-110, 110)
-                bass_freq = 60.0 * (1.0 - progress) + 30.0
-                bass_tone = math.sin(2 * math.pi * bass_freq * t)
-                decay = math.exp(-4.5 * progress)
-                shockwave = random.randint(-80, 80) if progress < 0.05 else 0
-                
-                combined = (noise * 0.45 + bass_tone * 90.0 + shockwave) * decay
-                sample_val = int(128 + combined)
-                buf.append(max(0, min(255, sample_val)))
-            return pygame.mixer.Sound(buffer=bytes(buf))
-        except Exception:
-            return None
-
-    def _create_thrust_sound(self) -> pygame.mixer.Sound | None:
-        if not self.audio_enabled:
-            return None
-        try:
-            sample_rate = 22050
-            duration = 0.09
-            num_samples = int(sample_rate * duration)
-            buf = bytearray()
-            for i in range(num_samples):
-                t = i / sample_rate
-                noise = random.randint(-35, 35)
-                freq = 110.0 + 25.0 * math.sin(2 * math.pi * 14 * t)
-                tone = math.sin(2 * math.pi * freq * t)
-                sample_val = int(128 + (tone * 40.0 + noise) * 0.8)
-                buf.append(max(0, min(255, sample_val)))
-            return pygame.mixer.Sound(buffer=bytes(buf))
-        except Exception:
-            return None
-
-    def _create_recharge_sound(self) -> pygame.mixer.Sound | None:
-        """Synthesizes an uplifting high-tech battery recharge chime."""
-        if not self.audio_enabled:
-            return None
-        try:
-            sample_rate = 22050
-            duration = 0.28
-            num_samples = int(sample_rate * duration)
-            buf = bytearray()
-            for i in range(num_samples):
-                t = i / sample_rate
-                freq = 400.0 + (800.0 * (i / num_samples))
-                decay = 1.0 - (i / num_samples) * 0.4
-                sample_val = int(128 + 127 * 0.35 * decay * math.sin(2 * math.pi * freq * t))
-                buf.append(max(0, min(255, sample_val)))
-            return pygame.mixer.Sound(buffer=bytes(buf))
-        except Exception:
-            return None
-
-    def _create_emp_sound(self) -> pygame.mixer.Sound | None:
-        """Synthesizes a blinding electric EMP shockwave discharge blast."""
-        if not self.audio_enabled:
-            return None
-        try:
-            sample_rate = 22050
-            duration = 0.5
-            num_samples = int(sample_rate * duration)
-            buf = bytearray()
-            for i in range(num_samples):
-                t = i / sample_rate
-                progress = i / num_samples
-                freq = 1200.0 * math.exp(-12.0 * progress) + 80.0
-                zap_noise = random.randint(-120, 120)
-                decay = math.exp(-4.0 * progress)
-                sample_val = int(128 + (127 * 0.4 * math.sin(2 * math.pi * freq * t) + zap_noise * 0.5) * decay)
-                buf.append(max(0, min(255, sample_val)))
-            return pygame.mixer.Sound(buffer=bytes(buf))
-        except Exception:
-            return None
-
-    def _create_shield_sound(self) -> pygame.mixer.Sound | None:
-        """Synthesizes a forcefield shield activation chime."""
-        if not self.audio_enabled:
-            return None
-        try:
-            sample_rate = 22050
-            duration = 0.35
-            num_samples = int(sample_rate * duration)
-            buf = bytearray()
-            for i in range(num_samples):
-                t = i / sample_rate
-                freq = 600.0 + (600.0 * (i / num_samples))
-                decay = 1.0 - (i / num_samples) * 0.3
-                sample_val = int(128 + 127 * 0.35 * decay * math.sin(2 * math.pi * freq * t))
-                buf.append(max(0, min(255, sample_val)))
-            return pygame.mixer.Sound(buffer=bytes(buf))
-        except Exception:
-            return None
-
-    def _create_levelup_sound(self) -> pygame.mixer.Sound | None:
-        if not self.audio_enabled:
-            return None
-        try:
-            sample_rate = 22050
-            duration = 0.6
-            num_samples = int(sample_rate * duration)
-            buf = bytearray()
-            for i in range(num_samples):
-                t = i / sample_rate
-                if t < 0.1:
-                    freq = 523.25
-                elif t < 0.2:
-                    freq = 659.25
-                elif t < 0.3:
-                    freq = 783.99
-                elif t < 0.4:
-                    freq = 1046.50
-                else:
-                    freq = 1318.51
-                decay = 1.0 - (i / num_samples)
-                sample = int(128 + 127 * 0.45 * decay * math.sin(2 * math.pi * freq * t))
-                buf.append(max(0, min(255, sample)))
-            return pygame.mixer.Sound(buffer=bytes(buf))
-        except Exception:
-            return None
-
-    def _create_celebration_cheer_sound(self) -> pygame.mixer.Sound | None:
-        if not self.audio_enabled:
-            return None
-        try:
-            sample_rate = 22050
-            duration = 0.85
-            num_samples = int(sample_rate * duration)
-            buf = bytearray()
-            for i in range(num_samples):
-                t = i / sample_rate
-                progress = i / num_samples
-                if t < 0.2:
-                    f1, f2 = 523.25, 659.25
-                elif t < 0.4:
-                    f1, f2 = 659.25, 783.99
-                elif t < 0.6:
-                    f1, f2 = 783.99, 1046.50
-                else:
-                    f1, f2 = 1046.50, 1318.51
-                cheer_swell = math.sin(math.pi * progress) * random.randint(-40, 40)
-                decay = 1.0 - progress
-                s1 = math.sin(2 * math.pi * f1 * t)
-                s2 = math.sin(2 * math.pi * f2 * t)
-                sample_val = int(128 + (127 * 0.35 * (s1 + s2) + cheer_swell) * decay)
-                buf.append(max(0, min(255, sample_val)))
-            return pygame.mixer.Sound(buffer=bytes(buf))
-        except Exception:
-            return None
-
-    def _create_gameover_sound(self) -> pygame.mixer.Sound | None:
-        if not self.audio_enabled:
-            return None
-        try:
-            sample_rate = 22050
-            duration = 0.55
-            num_samples = int(sample_rate * duration)
-            buf = bytearray()
-            for i in range(num_samples):
-                t = i / sample_rate
-                freq = 240.0 - (170.0 * (i / num_samples))
-                decay = 1.0 - (i / num_samples)
-                sample = int(128 + 127 * 0.45 * decay * math.sin(2 * math.pi * freq * t))
-                buf.append(max(0, min(255, sample)))
-            return pygame.mixer.Sound(buffer=bytes(buf))
-        except Exception:
-            return None
+        self.sound_enabled = True
 
     def play_laser(self):
-        if self.laser_sfx:
-            self.laser_sfx.play()
-
+        if self.sound_enabled: play_synth_laser()
     def play_explosion(self):
-        if self.explosion_sfx:
-            self.explosion_sfx.play()
-
-    def play_thrust(self):
-        if self.thrust_sfx:
-            self.thrust_sfx.play()
-
-    def play_levelup(self):
-        if self.levelup_sfx:
-            self.levelup_sfx.play()
-
-    def play_celebration_fanfare(self):
-        if self.celebration_sfx:
-            self.celebration_sfx.play()
-        elif self.levelup_sfx:
-            self.levelup_sfx.play()
-
+        if self.sound_enabled: play_synth_explosion()
+    def play_mine_explosion(self):
+        if self.sound_enabled: play_synth_mine_explosion()
+    def play_roll(self):
+        if self.sound_enabled: play_synth_roll()
+    def play_powerup(self):
+        if self.sound_enabled: play_synth_powerup()
     def play_emp(self):
-        if self.emp_sfx:
-            self.emp_sfx.play()
-
-    def play_shield(self):
-        if self.shield_sfx:
-            self.shield_sfx.play()
-
+        if self.sound_enabled: play_synth_emp()
+    def play_thrust(self):
+        if self.sound_enabled: play_synth_thrust()
     def play_buy(self):
-        if self.levelup_sfx:
-            self.levelup_sfx.play()
-
-    def play_recharge(self):
-        if self.recharge_sfx:
-            self.recharge_sfx.play()
-
+        if self.sound_enabled: play_synth_buy()
+    def play_celebration_fanfare(self):
+        if self.sound_enabled: play_synth_fanfare()
     def play_gameover(self):
-        if self.gameover_sfx:
-            self.gameover_sfx.play()
+        if self.sound_enabled: play_synth_gameover()
+    def play_shield(self):
+        if self.sound_enabled: play_synth_shield()
+    def play_recharge(self):
+        if self.sound_enabled: play_synth_recharge()
+    def play_missile(self):
+        if self.sound_enabled: play_synth_missile()
+    def play_beam(self):
+        if self.sound_enabled: play_synth_beam()
+    def play_cloak(self):
+        if self.sound_enabled: play_synth_cloak()
 
+    def play_sector_ambient(self, sector_idx: int):
+        if not self.sound_enabled: return
+        if sector_idx == 3: play_synth_ocean_wave()
+        elif sector_idx == 4: play_synth_desert_wind()
+        elif sector_idx == 1: play_synth_factory_hum()
+
+    def update_bgm(self, dt: float = 0.016):
+        if self.sound_enabled:
+            play_synthwave_bgm_tick(dt)

@@ -1,0 +1,91 @@
+================================================================================
+                    DRONE HUNTER 2D: ULTIMATE SCI-FI ARCADE EDITION
+================================================================================
+
+Welcome to Drone Hunter 2D, a high-octane tactical drone flight-shooter featuring 
+procedural synthwave audio, environmental hazards, dynamic 4-phase escalation waves, 
+boss dreadnought rage modes, and 15 progressive campaign stages!
+
+--------------------------------------------------------------------------------
+1. FLIGHT CONTROLS & TACTICAL KEYBINDINGS
+--------------------------------------------------------------------------------
+  * PILOT FLIGHT & STEERING :  W, A, S, D  or  ARROW KEYS
+  * RETICLE AIM & TARGETING :  MOUSE POINTER
+  * PRIMARY CANNON FIRE     :  LEFT MOUSE BUTTON (Hold for continuous fire)
+  * EMP SHOCKWAVE BLAST     :  RIGHT MOUSE BUTTON  or  [ E ] KEY
+  * CYCLE WEAPON LOADOUT    :  [ TAB ] KEY (Pulse / Scatter / Missile / Laser)
+  * EVASIVE BARREL ROLL     :  [ LEFT SHIFT ] KEY (Invulnerable dodging roll)
+  * TACTICAL CLOAKING UNIT  :  [ C ] KEY  or  [ K ] KEY (Invisibility stealth)
+  * PAUSE & SETTINGS PANEL  :  [ P ] KEY  or  [ ESC ] KEY
+  * CRT SCANLINES FILTER    :  [ F2 ] KEY
+  * QUICK EXIT GAME         :  [ Q ] KEY
+
+--------------------------------------------------------------------------------
+2. CAMPAIGN SECTORS & 15 PROGRESSIVE STAGES
+--------------------------------------------------------------------------------
+The campaign spans 5 unique environment sectors, each featuring 3 progressive 
+sub-level stages (Recon, Assault, and Boss Dreadnought Climax):
+
+  [SECTOR 1] MEGACITY SKYLINE (Neon Rooftops & Airborne Chasers)
+    * Stage 1-1: Recon Patrol (Goal: 1,800 PTS)
+    * Stage 1-2: Laser Grid Assault (Goal: 3,500 PTS)
+    * Stage 1-3: Sky Dreadnought Boss ☠️ (Goal: 6,000 PTS)
+
+  [SECTOR 2] CYBER FACTORY CORE (Industrial Foundry & Molten Hazards)
+    * Stage 2-1: Foundry Gates (Goal: 3,000 PTS)
+    * Stage 2-2: Furnace Breach (Goal: 6,000 PTS)
+    * Stage 2-3: Overlord Core Boss ☠️ (Goal: 10,000 PTS)
+
+  [SECTOR 3] ORBITAL SPACE CITADEL (Meteor Storms & Gravity Anomalies)
+    * Stage 3-1: Asteroid Field (Goal: 5,000 PTS)
+    * Stage 3-2: Citadel Defense Grid (Goal: 9,500 PTS)
+    * Stage 3-3: Flagship Dreadnought Boss ☠️ (Goal: 15,000 PTS)
+
+  [SECTOR 4] STORMY OCEAN BATTLESCAPE (Ocean Tempests & Spiked Sea Mines)
+    * Stage 4-1: Tempest Swells (Goal: 7,500 PTS)
+    * Stage 4-2: Naval Fleet Siege (Goal: 14,000 PTS)
+    * Stage 4-3: Leviathan Warship Boss ☠️ (Goal: 22,000 PTS)
+
+  [SECTOR 5] NEON SUN DESERT WASTELAND (Cyber Pyramids & Sandstorm Turrets)
+    * Stage 5-1: Dune Canyons (Goal: 10,000 PTS)
+    * Stage 5-2: Monolith Ruins (Goal: 18,000 PTS)
+    * Stage 5-3: Colossus Titan Mech Boss ☠️ (Goal: 30,000 PTS)
+
+--------------------------------------------------------------------------------
+3. WEAPONS BAY & ARMORY LOADOUTS
+--------------------------------------------------------------------------------
+  1. PULSE CANNON      : High-rate dual energy bolts. (Unlocked default)
+  2. SCATTER SHOTGUN   : 5-bolt widespread salvo for crowd control.
+  3. HOMING MISSILES   : Self-guided tracking rockets for heavy targets.
+  4. HIGH-LEVEL LASER  : Electric cyan-white thermal plasma beam with high damage output.
+
+--------------------------------------------------------------------------------
+4. DRONE HANGAR SHOP UPGRADES
+--------------------------------------------------------------------------------
+Earn Gold Scrap ($) by destroying drones and bosses to upgrade your Quadcopter:
+  * Max Battery Capacity      : Increases maximum health (HP).
+  * Thruster Agility          : Enhances horizontal flight movement speed.
+  * Cannon Fire-Rate          : Accelerates primary weapon firing rate.
+  * EMP Shockwave Charger     : Speeds up EMP recharge rate.
+  * Wingman Support Drones    : Deploys up to 2 autonomous escort minidrones.
+  * Tactical Cloaking Unit    : Unlocks 4-second stealth cloak ability.
+
+--------------------------------------------------------------------------------
+5. DIFFICULTY MODES & PAUSE SETTINGS MENU
+--------------------------------------------------------------------------------
+Press [P] or [ESC] during play to access the interactive Settings Menu:
+  * EASY 🟢     : Reduced enemy damage (-40%) & slower enemy bullets.
+  * NORMAL 🔵   : Balanced standard arcade experience.
+  * HARD ⚠️     : Fast salvos (+30% speed) & high target health.
+  * NIGHTMARE ☠️: Extreme bullet-hell difficulty & fast boss rage salvos!
+
+--------------------------------------------------------------------------------
+6. GRAND VICTORY & ENDLESS NIGHTMARE MODE
+--------------------------------------------------------------------------------
+Clearing Stage 5-3 (Desert Colossus Titan Mech) unlocks the Grand Campaign 
+Victory Champion Screen and unlocks Endless Nightmare Survival Mode for 
+unlimited high-score challenges!
+
+================================================================================
+                         PRODUCER: GOOGLE ANTIGRAVITY AI
+================================================================================
