@@ -14,60 +14,72 @@ Option B: Run from Python Source
       python main.py
 
 ------------------------------------------------------------------------
-2. CONTROLS
+2. CONTROLS & PAUSE MENU EDIT ACCESS
 ------------------------------------------------------------------------
+   MOVEMENT & COMBAT CONTROLS:
   [ W / Up Arrow / Spacebar ] - Fly / Thrust Upward
   [ S / Down Arrow ]         - Fast Descent / Dive Downward
   [ A / D / Left / Right ]   - Move Left / Right
+  [ Shift Key ]              - EVASIVE BARREL ROLL (360° Spin Dodge with i-frames)
   [ Mouse Cursor ]           - Aim Tactical Cannons (360 degrees)
-  [ Left Mouse Click ]       - Fire Laser Cannon (Hold for auto-fire)
-  [ E / Right Mouse Click ]  - EMP Shockwave Blast (Clears screen & damages bosses)
+  [ Left Mouse Click ]       - Fire Laser Cannons (Hold for continuous fire)
+  [ E Key / Right Click ]    - EMP Shockwave Blast (Clears screen & damages bosses)
   [ P Key / [⏸ PAUSE] HUD ]  - Pause / Resume Game
-  [ H Key / [🛒 SHOP] HUD ]   - Visit Drone Hangar Shop & Purchase Upgrades
-  [ Space / Enter / S ]      - Start Next Level on Mission Complete Screen
-  [ R / Space / S ]          - Restart Game on Defeat Screen
+
+   PAUSE MENU & GENERAL SHORTCUTS:
+  [ H Key ]                  - Visit Hangar Shop & Upgrades (Accessible anytime & from PAUSE!)
+  [ D Key ]                  - Cycle Difficulty Mode (NORMAL ➔ HARDCORE ⚠️ ➔ NIGHTMARE ☠️)
+  [ 1 / 2 / 3 / 4 Keys ]     - Quick-Buy Upgrades (Battery, Speed, Fire-Rate, EMP Charger)
+  [ F11 / F Key ]            - Toggle Fullscreen Mode
+  [ F2 / F3 / F4 Keys ]      - Change Resolution (F2: 720p | F3: 900p | F4: 1080p)
+  [ M Key ]                  - Quit to Main Menu from Pause
+  [ R / Space / S ]          - Restart Fresh on Defeat Screen
   [ ESC ]                    - Exit / Back to Menu
 
 ------------------------------------------------------------------------
-3. DRONE HANGAR SHOP & PERMANENT UPGRADES
+3. DIFFICULTY MODES
+------------------------------------------------------------------------
+Toggle anytime with [D] on the Main Menu or Pause Screen:
+  1. NORMAL      : Balanced arcade speed and enemy wave density.
+  2. HARDCORE ⚠️ : Enemies move +25% faster, enemy plasma bullets fly +35% faster.
+  3. NIGHTMARE ☠️: Enemy velocities +60% faster, maximum wave density, active thrusting
+                   continuously consumes battery health (-1.8%/sec).
+
+------------------------------------------------------------------------
+4. DRONE HANGAR SHOP & PERMANENT UPGRADES
 ------------------------------------------------------------------------
 Collect Gold Scrap ($) from destroyed targets and floating coins.
-Press [H] or click cards directly to buy permanent upgrades:
+Press [H] anytime or while PAUSED to access upgrades:
   1. Max Battery Capacity       : Increases max drone battery health (+20% / level)
   2. Thruster Agility           : Increases flight speed & maneuverability (+15% / level)
   3. Cannon Fire-Rate           : Decreases laser firing cooldown (-12% / level)
   4. EMP Shockwave Charger      : Reduces EMP recharge time (-2.5s / level)
 
 ------------------------------------------------------------------------
-4. GAMEPLAY, POWER-UPS & HAZARDS
+5. HEAVY TARGETS, SMART AI & INTERACTIVE COMBAT
 ------------------------------------------------------------------------
-- WEAPON TIERS PER LEVEL:
-    * Level 1  : Single Cannon
-    * Level 2  : Double Twin Cannons
-    * Level 3+ : TRIPLE SPREAD CANNONS (3 Beams Simultaneously!)
+- HEAVY ENEMY TARGETS (High Durability):
+    * Boss Dreadnought (Level 3+)   : 65 to 125+ HP, rotating shields, Phase 2 Enrage!
+    * Target Vehicle (Ground Rover) : 14 to 26+ HP, Neon Red lock-on target crosshairs
+    * Ground Turrets (Rooftops)     : 12 to 18+ HP, Predictive Triple AA Flak Salvos
+    * Armored Heavy Drones          : 10 to 19+ HP, heavy crimson plate armor
+    * Hunter Shooter Drones         : 4 HP, Predictive Dual Plasma Bursts
+    * Chaser Drones                 : 3 HP, Erratic sine-wave tracking pursuit
 
-- POWER-UP PICKUPS:
-    * 🔋 Battery Charge     : Recharges +30% Battery Health
-    * 🛡️ Forcefield Shield  : Absorbs 2 hits with a protective bubble
-    * ⚡ Overclock Booster  : Grants 5s 2x fire-rate & +40% speed
-    * ⌛ Time-Dilation      : 6s 60% Slow Motion for enemies & enemy bullets
-    * 🪙 Gold Scrap Coins   : +$25 Gold Coins
+- SMART AI BEHAVIOR:
+    * Predictive Aiming : Turrets & Shooters aim ahead of your flight vector.
+    * Reactive Dodging  : Fast/Shooter drones evade incoming laser fire.
+    * Boss Enrage       : Enters Phase 2 Rage mode under 50% HP with super salvos.
 
-- ENEMY TARGET VARIANTS:
-    * Standard Target (Red Ring)    : 1 HP, +10 pts
-    * Fast Target (Magenta/Cyan)    : High Speed, 1 HP, +25 pts
-    * Armored Target (Crimson/Gold) : Heavy Armor, 3-5 HP, +50 pts
-    * Hunter Drone (Shooter)        : Fires plasma bullets, 2 HP, +40 pts
-    * Boss Dreadnought (Level 3+)   : 20+ HP, dual cannons, rotating shield, +250 pts
-
-- DYNAMIC WEATHER HAZARDS:
-    * 🌧️ Stormy Rain : Rain particles + lightning thunder flashes
-    * 💨 Gusty Wind  : Heavy wind gusts pushing the drone laterally
+- INTERACTIVE COMBAT MECHANICS:
+    * 💥 Explosive Barrels     : Shoot floating canisters for a 250px chain explosion!
+    * ⚡ Near-Miss Dodge       : Rolling close to bullets triggers 0.35s Bullet-Time (+100 PTS).
 
 ------------------------------------------------------------------------
-5. HOW TO REBUILD THE STANDALONE .EXE
+6. SCORE RESET RULES
 ------------------------------------------------------------------------
-Double-click `build_exe.bat` or run in Command Prompt:
-    python -m PyInstaller --noconfirm --onefile --windowed --name "DroneHunterSingle" main.py
+When a player loses (Game Over), all current run scores (Level Score, Total Score,
+Level Progression) reset to ZERO on restart to guarantee every new game starts fresh!
+Profile High Score is updated if you broke your previous record.
 
 ========================================================================

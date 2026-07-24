@@ -29,6 +29,8 @@ class PowerupItem(pygame.sprite.Sprite):
             self.color = COLOR_SLOWMO
         elif ptype == "coin":
             self.color = COLOR_COIN
+        elif ptype == "barrel":
+            self.color = (249, 115, 22)  # Glowing Explosive Hazard Orange
         else: # battery
             self.color = COLOR_EMERALD
 
@@ -37,7 +39,7 @@ class PowerupItem(pygame.sprite.Sprite):
         # Spawning Position
         if pos is None:
             spawn_x = SCREEN_WIDTH + self.width
-            spawn_y = random.randint(50, SCREEN_HEIGHT - 50)
+            spawn_y = random.randint(50, SCREEN_HEIGHT - 100) if ptype != "barrel" else SCREEN_HEIGHT - 70
             self.pos = pygame.Vector2(spawn_x, spawn_y)
         else:
             self.pos = pygame.Vector2(pos)
@@ -77,6 +79,13 @@ class PowerupItem(pygame.sprite.Sprite):
             font = pygame.font.SysFont("Arial", 12, bold=True)
             c_txt = font.render("$", True, (15, 23, 42))
             self.image.blit(c_txt, c_txt.get_rect(center=center))
+        elif self.ptype == "barrel":
+            # Explosive Energy Barrel
+            pygame.draw.rect(self.image, (249, 115, 22), (10, 8, 16, 20), border_radius=4)
+            pygame.draw.rect(self.image, (255, 255, 255), (12, 14, 12, 8))
+            font = pygame.font.SysFont("Arial", 10, bold=True)
+            b_txt = font.render("💥", True, (15, 23, 42))
+            self.image.blit(b_txt, b_txt.get_rect(center=center))
         else:
             # Battery Icon
             pygame.draw.rect(self.image, COLOR_EMERALD, (12, 10, 12, 16), 2)

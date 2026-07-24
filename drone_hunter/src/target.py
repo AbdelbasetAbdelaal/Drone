@@ -28,45 +28,46 @@ class Target(pygame.sprite.Sprite):
         self.shield_angle = 0.0
         self.shoot_timer = random.uniform(0.5, 1.8)
         
-        # Attribute configuration based on type & level
+        # Attribute configuration based on type & level (Dramatically higher HP for heavy targets)
         if target_type == TARGET_TYPE_BOSS:
-            boss_hp = 20 + (level - 1) * 8
+            boss_hp = 65 + (level - 1) * 30
             self.hp = boss_hp
             self.max_hp = boss_hp
-            self.points = 250
+            self.points = 450
             size = 110
-            base_speed = 70.0
+            base_speed = 65.0
             color_outer = (225, 29, 72)  # Heavy Rose Crimson
             color_inner = (250, 204, 21) # Gold Core
         elif target_type == TARGET_TYPE_VEHICLE:
-            v_hp = 4 + (level // 2)
+            v_hp = 14 + (level * 4)
             self.hp = v_hp
             self.max_hp = v_hp
-            self.points = 70
-            size = 72
-            base_speed = (TARGET_SPEED - 30.0)
+            self.points = 120
+            size = 76
+            base_speed = (TARGET_SPEED - 40.0)
             color_outer = COLOR_NEON_RED
             color_inner = (255, 255, 255)
         elif target_type == TARGET_TYPE_TURRET:
-            self.hp = 3
-            self.max_hp = 3
-            self.points = 45
-            size = 54
+            t_hp = 12 + (level * 2)
+            self.hp = t_hp
+            self.max_hp = t_hp
+            self.points = 85
+            size = 56
             base_speed = 100.0  # Matches background parallax
             color_outer = (100, 116, 139) # Metallic Slate
             color_inner = COLOR_NEON_RED
         elif target_type == TARGET_TYPE_CHASER:
-            self.hp = 2
-            self.max_hp = 2
-            self.points = 35
+            self.hp = 3
+            self.max_hp = 3
+            self.points = 45
             size = 38
             base_speed = (TARGET_SPEED + 80.0)
             color_outer = COLOR_MAGENTA
             color_inner = COLOR_CYAN
         elif target_type == TARGET_TYPE_SHOOTER:
-            self.hp = 2
-            self.max_hp = 2
-            self.points = 40
+            self.hp = 4
+            self.max_hp = 4
+            self.points = 60
             size = 46
             base_speed = (TARGET_SPEED + 40.0)
             color_outer = (244, 63, 94)  # Rose Coral
@@ -80,10 +81,10 @@ class Target(pygame.sprite.Sprite):
             color_outer = COLOR_MAGENTA
             color_inner = (56, 189, 248) # Cyan core
         elif target_type == TARGET_TYPE_ARMORED:
-            armor_hp = 3 + max(0, level - 3)
+            armor_hp = 10 + (level * 3)
             self.hp = armor_hp
             self.max_hp = armor_hp
-            self.points = 50 + (level - 1) * 10
+            self.points = 90 + (level - 1) * 15
             size = random.randint(58, 72)
             base_speed = (TARGET_SPEED - 20.0)
             color_outer = COLOR_CRIMSON
@@ -198,51 +199,87 @@ class Target(pygame.sprite.Sprite):
         self._render_sprite()
         return False
 
-    def update(self, dt: float, player_pos: tuple[float, float] = (200, 360), slowmo_factor: float = 1.0) -> list[EnemyBullet]:
+    def update(self, dt: float, player_pos: tuple[float, float] = (200, 360), slowmo_factor: float = 1.0, player_vel: tuple[float, float] = (0, 0), bullet_group=None) -> list[EnemyBullet]:
         effective_dt = dt * slowmo_factor
         self.time_accum += effective_dt
         new_enemy_bullets = []
 
-        # Handle Enemy Firing Logic
+        # Smart Predictive Aiming (predict where player is flying)
+        pred_aim_x = player_pos[0] + player_vel[0] * 0.35
+        pred_aim_y = player_pos[1] + player_vel[1] * 0.35
+        pred_aim = (pred_aim_x, pred_aim_y)
+
+        # Check for Boss Enrage Phase 2 (< 50% HP)
+        is_enraged = self.target_type == TARGET_TYPE_BOSS and (self.hp <= self.max_hp // 2)
+
+        # Smart Reactive Bullet Dodging for Fast & Shooter Drones
+        if self.target_type in (TARGET_TYPE_FAST, TARGET_TYPE_SHOOTER) and bullet_group:
+            for b in bullet_group:
+                if 0 < (b.pos.x - self.pos.x) < 130 and abs(b.pos.y - self.pos.y) < 45:
+                    dodge_dir = -1.0 if b.pos.y > self.pos.y else 1.0
+                    self.pos.y += dodge_dir * 220.0 * effective_dt
+
+        # Handle Enemy Firing Logic (Predictive & Salvo Spread)
         if self.target_type in (TARGET_TYPE_SHOOTER, TARGET_TYPE_TURRET, TARGET_TYPE_BOSS):
             self.shoot_timer -= effective_dt
             if self.shoot_timer <= 0:
                 if self.target_type == TARGET_TYPE_TURRET:
-                    self.shoot_timer = random.uniform(1.8, 2.8)
-                    # AA Flak salvo firing upward at player angle
-                    new_enemy_bullets.append(EnemyBullet(self.rect.center, player_pos, speed=480.0))
+                    self.shoot_timer = random.uniform(1.2, 1.9)
+                    # Predictive Triple AA Flak Salvo
+                    new_enemy_bullets.append(EnemyBullet(self.rect.center, pred_aim, speed=520.0, angle_offset_deg=-14.0))
+                    new_enemy_bullets.append(EnemyBullet(self.rect.center, pred_aim, speed=540.0, angle_offset_deg=0.0))
+                    new_enemy_bullets.append(EnemyBullet(self.rect.center, pred_aim, speed=520.0, angle_offset_deg=14.0))
                 elif self.target_type == TARGET_TYPE_SHOOTER:
-                    self.shoot_timer = random.uniform(2.2, 3.2)
-                    new_enemy_bullets.append(EnemyBullet(self.rect.center, player_pos))
+                    self.shoot_timer = random.uniform(1.6, 2.3)
+                    # Predictive Dual Plasma Burst
+                    new_enemy_bullets.append(EnemyBullet(self.rect.center, pred_aim, speed=480.0, angle_offset_deg=-7.0))
+                    new_enemy_bullets.append(EnemyBullet(self.rect.center, pred_aim, speed=480.0, angle_offset_deg=7.0))
                 elif self.target_type == TARGET_TYPE_BOSS:
-                    self.shoot_timer = 2.4
+                    self.shoot_timer = 1.4 if is_enraged else 1.9
                     cx, cy = self.rect.center
-                    new_enemy_bullets.append(EnemyBullet((cx, cy - 25), player_pos, speed=420.0))
-                    new_enemy_bullets.append(EnemyBullet((cx, cy + 25), player_pos, speed=420.0))
+                    offsets = [-28.0, -18.0, -8.0, 8.0, 18.0, 28.0] if is_enraged else [-22.0, -11.0, 0.0, 11.0, 22.0]
+                    b_speed = 520.0 if is_enraged else 440.0
+                    for offset in offsets:
+                        new_enemy_bullets.append(EnemyBullet((cx, cy), pred_aim, speed=b_speed, angle_offset_deg=offset))
 
         if self.target_type == TARGET_TYPE_BOSS:
-            self.shield_angle = (self.shield_angle + 2.0 * effective_dt) % 6.28318
+            rot_speed = 6.0 if is_enraged else 2.5
+            self.shield_angle = (self.shield_angle + rot_speed * effective_dt) % 6.28318
             self._render_sprite()
 
             target_x = SCREEN_WIDTH - 180
             if self.pos.x > target_x:
                 self.pos.x -= self.speed * effective_dt
             else:
-                self.pos.x = target_x + math.sin(self.time_accum * 1.5) * 15.0
-                self.pos.y = (SCREEN_HEIGHT // 2) + math.sin(self.time_accum * 2.2) * 140.0
+                h_freq = 3.2 if is_enraged else 1.8
+                self.pos.x = target_x + math.sin(self.time_accum * h_freq) * (30.0 if is_enraged else 20.0)
+                self.pos.y = (SCREEN_HEIGHT // 2) + math.sin(self.time_accum * (3.0 if is_enraged else 2.5)) * 170.0
             
             self.rect.center = (round(self.pos.x), round(self.pos.y))
+
         elif self.target_type == TARGET_TYPE_CHASER:
-            # Active tracking towards player position
+            # Wild Erratic Tracking towards player altitude with sine-wave zigzag
             self.pos.x -= self.speed * effective_dt
             dy = player_pos[1] - self.pos.y
-            self.pos.y += math.copysign(min(abs(dy), 140.0 * effective_dt), dy)
+            tracking_step = math.copysign(min(abs(dy), 190.0 * effective_dt), dy)
+            zigzag = math.sin(self.time_accum * 8.0) * 140.0 * effective_dt
+            self.pos.y += tracking_step + zigzag
             self.rect.center = (round(self.pos.x), round(self.pos.y))
 
             if self.rect.right < 0:
                 self.kill()
+
+        elif self.target_type in (TARGET_TYPE_STANDARD, TARGET_TYPE_FAST):
+            # Wild Weaving Movement for airborne targets
+            self.pos.x -= self.speed * effective_dt
+            self.pos.y += math.sin(self.time_accum * 3.8) * 75.0 * effective_dt
+            self.rect.center = (round(self.pos.x), round(self.pos.y))
+
+            if self.rect.right < 0:
+                self.kill()
+
         else:
-            # Normal Enemies & Vehicles move leftwards
+            # Vehicle & Armored Targets move leftwards along ground
             self.pos.x -= self.speed * effective_dt
             self.rect.centerx = round(self.pos.x)
 

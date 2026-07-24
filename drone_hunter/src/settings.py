@@ -49,6 +49,12 @@ ROLL_DURATION = 0.40       # Roll duration in seconds
 ROLL_COOLDOWN = 2.0        # Roll recharge cooldown in seconds
 ROLL_SPEED_BOOST = 1.8     # Movement speed multiplier during roll
 
+# Difficulty Mode Settings
+DIFFICULTY_NORMAL = 0
+DIFFICULTY_HARDCORE = 1
+DIFFICULTY_NIGHTMARE = 2
+DIFFICULTY_NAMES = ["NORMAL", "HARDCORE ⚠️", "NIGHTMARE ☠️"]
+
 # Target Types Parameters
 TARGET_TYPE_STANDARD = "standard"
 TARGET_TYPE_FAST = "fast"

@@ -11,7 +11,7 @@ from src.settings import (
     COLOR_CYAN, COLOR_EMERALD, COLOR_GOLD, COLOR_MAGENTA, COLOR_CRIMSON,
     COLOR_SHIELD, COLOR_OVERCLOCK, COLOR_SLOWMO, COLOR_COIN, COLOR_NEON_RED,
     TARGET_TYPE_BOSS, TARGET_TYPE_VEHICLE, TARGET_TYPE_TURRET, TARGET_TYPE_CHASER,
-    UPGRADES, ROLL_COOLDOWN
+    UPGRADES, ROLL_COOLDOWN, DIFFICULTY_NAMES
 )
 from src.player import Player
 from src.target import Spawner, Target
@@ -54,9 +54,15 @@ def main():
     pygame.init()
     pygame.font.init()
 
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    # Window & Screen Size Control State
+    win_w, win_h = 1280, 720
+    is_fullscreen = False
+    screen = pygame.display.set_mode((win_w, win_h), pygame.RESIZABLE)
     pygame.display.set_caption(TITLE)
     clock = pygame.time.Clock()
+
+    # Virtual 1280x720 Canvas for Resolution-Independent Rendering
+    canvas = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
 
     # Core Systems
     background = ParallaxBackground()
@@ -76,9 +82,10 @@ def main():
     target_group = pygame.sprite.Group()
     powerup_group = pygame.sprite.Group()
 
-    # Save Data State
+    # Save Data & Difficulty State
     coins, highscore, upgrade_levels = load_save_data()
     game_state = STATE_MENU
+    difficulty_mode = 0 # 0=NORMAL, 1=HARDCORE, 2=NIGHTMARE
     
     current_level = 1
     level_score = 0
@@ -102,6 +109,28 @@ def main():
 
     drone = None
     spawner = None
+
+    def get_virtual_mouse_pos() -> tuple[int, int]:
+        """Translates current window mouse position to virtual (1280x720) canvas coordinates."""
+        mx, my = pygame.mouse.get_pos()
+        cw, ch = screen.get_size()
+        if cw <= 0 or ch <= 0:
+            return (mx, my)
+        return (int(mx * (SCREEN_WIDTH / cw)), int(my * (SCREEN_HEIGHT / ch)))
+
+    def toggle_fullscreen():
+        nonlocal is_fullscreen, screen
+        is_fullscreen = not is_fullscreen
+        if is_fullscreen:
+            screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        else:
+            screen = pygame.display.set_mode((win_w, win_h), pygame.RESIZABLE)
+
+    def set_resolution(w: int, h: int):
+        nonlocal win_w, win_h, is_fullscreen, screen
+        win_w, win_h = w, h
+        is_fullscreen = False
+        screen = pygame.display.set_mode((win_w, win_h), pygame.RESIZABLE)
 
     def trigger_shake(intensity: float = 6.0, duration: float = 0.25):
         nonlocal screen_shake_intensity, screen_shake_time
@@ -222,6 +251,8 @@ def main():
         nonlocal game_state
         if shop_return_state == STATE_LEVEL_CLEAR:
             start_next_level()
+        elif shop_return_state in (STATE_PAUSED, STATE_PLAYING):
+            game_state = STATE_PLAYING
         else:
             reset_game()
             game_state = STATE_PLAYING
@@ -281,6 +312,35 @@ def main():
                     else:
                         running = False
 
+                # Fullscreen & Resolution Controls
+                if event.key in (pygame.K_F11, pygame.K_f) and not (game_state == STATE_PLAYING and event.key == pygame.K_f):
+                    toggle_fullscreen()
+                elif event.key == pygame.K_F2:
+                    set_resolution(1280, 720)
+                elif event.key == pygame.K_F3:
+                    set_resolution(1600, 900)
+                elif event.key == pygame.K_F4:
+                    set_resolution(1920, 1080)
+
+                # Difficulty Toggle with 'D' Key
+                if event.key == pygame.K_d and game_state in (STATE_MENU, STATE_PAUSED):
+                    difficulty_mode = (difficulty_mode + 1) % 3
+                    audio_manager.play_buy()
+
+                # Pause Menu Access & Controls (Hangar Shop, Quick Upgrades)
+                if game_state == STATE_PAUSED:
+                    if event.key == pygame.K_h:
+                        shop_return_state = STATE_PAUSED
+                        game_state = STATE_HANGAR
+                    elif event.key in (pygame.K_1, pygame.K_KP1):
+                        buy_upgrade("battery")
+                    elif event.key in (pygame.K_2, pygame.K_KP2):
+                        buy_upgrade("speed")
+                    elif event.key in (pygame.K_3, pygame.K_KP3):
+                        buy_upgrade("fire_rate")
+                    elif event.key in (pygame.K_4, pygame.K_KP4):
+                        buy_upgrade("emp_recharge")
+
                 # Pause Toggle with 'P' Key
                 if event.key == pygame.K_p:
                     if game_state == STATE_PLAYING:
@@ -334,9 +394,9 @@ def main():
                         reset_game()
                         game_state = STATE_PLAYING
 
-            # Mouse Click Events (Pause button check, Shop card clicks, & Shooting)
+            # Mouse Click Events (scaled to virtual 1280x720 canvas)
             if event.type == pygame.MOUSEBUTTONDOWN:
-                m_pos = pygame.mouse.get_pos()
+                m_pos = get_virtual_mouse_pos()
                 
                 if game_state == STATE_HANGAR:
                     if launch_btn_rect.collidepoint(m_pos):
@@ -345,8 +405,6 @@ def main():
                         for rect, name in card_rects:
                             if rect.collidepoint(m_pos):
                                 buy_upgrade(name)
-
-                # Handle Pause Button Click on HUD
 
                 elif game_state == STATE_PLAYING and pause_btn_rect.collidepoint(m_pos):
                     game_state = STATE_PAUSED
@@ -363,11 +421,18 @@ def main():
                         execute_emp_blast()
 
         # Update Logic per State
-
         if game_state == STATE_PLAYING:
-            points_per_level = 200 + (current_level - 1) * 100
+            points_per_level = 1500 + (current_level - 1) * 1700
             slowmo_active = drone.slowmo_timer > 0
             slowmo_factor = 0.4 if slowmo_active else 1.0
+
+            # Difficulty speed & interval multipliers
+            diff_speed_mult = 1.0 + (difficulty_mode * 0.25)
+            spawner_dt_mult = 1.0 + (difficulty_mode * 0.35)
+
+            # Continuous thrust battery drain in Nightmare difficulty mode
+            if difficulty_mode == 2 and drone.is_thrusting:
+                drone.health = max(0.0, drone.health - 1.8 * dt)
 
             # Combo Multiplier decay timer
             if combo_timer > 0:
@@ -375,35 +440,73 @@ def main():
                 if combo_timer <= 0:
                     combo_count = 1
 
-            # Continuous automatic fire when holding left click
-            if pygame.mouse.get_pressed()[0] and not pause_btn_rect.collidepoint(pygame.mouse.get_pos()):
-                new_bullets = drone.shoot(pygame.mouse.get_pos(), level=current_level)
+            # Continuous automatic fire when holding left click (virtual mouse position)
+            v_mpos = get_virtual_mouse_pos()
+            if pygame.mouse.get_pressed()[0] and not pause_btn_rect.collidepoint(v_mpos):
+                new_bullets = drone.shoot(v_mpos, level=current_level)
                 if new_bullets:
                     for b in new_bullets:
                         bullet_group.add(b)
                     audio_manager.play_laser()
 
-            # Periodic Powerup Spawner (Every 7.5s)
+            # Periodic Powerup & Explosive Barrel Spawner (Every 6.5s)
             battery_timer += dt
-            if battery_timer >= 7.5:
+            if battery_timer >= 6.5:
                 battery_timer = 0.0
-                ptype = random.choice(["battery", "shield", "overclock", "slowmo", "coin"])
+                ptype = random.choice(["battery", "shield", "overclock", "slowmo", "coin", "barrel"])
                 powerup_group.add(PowerupItem(ptype=ptype))
 
             # Update Entities
             drone.update(dt, particle_manager, audio_manager, wind_force=wind_force)
             bullet_group.update(dt)
-            enemy_bullet_group.update(dt, slowmo_factor=slowmo_factor)
+            enemy_bullet_group.update(dt, slowmo_factor=slowmo_factor * diff_speed_mult)
 
-            # Update Targets & Enemy Bullet Firing
+            # Update Targets & Enemy Bullet Firing with Predictive Aiming & Dodging
             for target in list(target_group):
-                enemy_shots = target.update(dt, player_pos=drone.pos, slowmo_factor=slowmo_factor)
+                enemy_shots = target.update(
+                    dt, player_pos=drone.pos, slowmo_factor=slowmo_factor * diff_speed_mult,
+                    player_vel=drone.velocity, bullet_group=bullet_group
+                )
                 if enemy_shots:
                     for eb in enemy_shots:
                         enemy_bullet_group.add(eb)
 
             powerup_group.update(dt)
-            spawner.update(dt * slowmo_factor, target_group, level_score, points_per_level)
+            spawner.update(dt * slowmo_factor * spawner_dt_mult, target_group, level_score, points_per_level)
+
+            # Smart Near-Miss Bullet-Time Dodge Detection
+            if drone and drone.is_rolling:
+                for eb in enemy_bullet_group:
+                    d_dist = math.hypot(eb.pos.x - drone.pos.x, eb.pos.y - drone.pos.y)
+                    if 28.0 < d_dist < 52.0:
+                        drone.activate_slowmo(0.35)
+                        level_score += 100
+                        total_score += 100
+                        particle_manager.spawn_floating_text(drone.pos, "⚡ NEAR MISS DODGE! +100 PTS", COLOR_CYAN, 24)
+                        trigger_shake(5.0, 0.15)
+                        break
+
+            # Player Bullet vs Powerup/Barrel Collisions (Explosive Barrels!)
+            barrel_hits = pygame.sprite.groupcollide(bullet_group, powerup_group, True, False, pygame.sprite.collide_circle)
+            for bullet, p_list in barrel_hits.items():
+                for item in p_list:
+                    if item.ptype == "barrel":
+                        item.kill()
+                        audio_manager.play_explosion()
+                        trigger_shake(12.0, 0.35)
+                        particle_manager.spawn_explosion(item.rect.center, count=55, color=(249, 115, 22))
+                        particle_manager.spawn_floating_text(item.rect.center, "💥 BARREL CHAIN EXPLOSION!", (249, 115, 22), 30)
+                        
+                        # Chain explosion wipes nearby bullets and damages targets!
+                        enemy_bullet_group.empty()
+                        for target in list(target_group):
+                            if math.hypot(target.pos.x - item.pos.x, target.pos.y - item.pos.y) < 260:
+                                destroyed = target.take_damage(12)
+                                particle_manager.spawn_explosion(target.rect.center, count=20, color=target.color_outer)
+                                if destroyed:
+                                    target.kill()
+                                    level_score += target.points
+                                    total_score += target.points
 
             # Player Bullet vs Target Collisions
             hits = pygame.sprite.groupcollide(bullet_group, target_group, True, False, pygame.sprite.collide_circle)
@@ -432,7 +535,7 @@ def main():
 
                         # Powerup Drop Chance
                         if random.random() < 0.35:
-                            ptype = random.choice(["battery", "shield", "overclock", "slowmo", "coin"])
+                            ptype = random.choice(["battery", "shield", "overclock", "slowmo", "coin", "barrel"])
                             powerup_group.add(PowerupItem(ptype=ptype, pos=target.rect.center))
 
                         # Save Data
@@ -487,6 +590,14 @@ def main():
                         audio_manager.play_recharge()
                         particle_manager.spawn_floating_text(drone.pos, "🪙 +$25 GOLD SCRAP!", COLOR_COIN, 26)
                         save_game_data(coins, highscore, upgrade_levels)
+                    elif item.ptype == "barrel":
+                        # Accidentally touching a barrel detonates it!
+                        particle_manager.spawn_explosion(drone.rect.center, count=25, color=(249, 115, 22))
+                        audio_manager.play_explosion()
+                        dead = drone.take_damage(20)
+                        if dead:
+                            game_state = STATE_GAME_OVER
+                            audio_manager.play_gameover()
                     else: # battery
                         drone.recharge_battery(30)
                         audio_manager.play_recharge()
@@ -541,7 +652,7 @@ def main():
 
             # --- HUD Overlay ---
             current_fps = int(clock.get_fps())
-            points_per_level = 200 + (current_level - 1) * 100
+            points_per_level = 1500 + (current_level - 1) * 1700
             
             lvl_surf = font_hud.render(f"LEVEL {current_level}", True, COLOR_GOLD)
             prog_surf = font_hud.render(f"Progress: {level_score}/{points_per_level} pts", True, COLOR_HUD)
@@ -588,6 +699,11 @@ def main():
             roll_surf = font_hud.render(roll_status_txt, True, roll_color)
             canvas.blit(roll_surf, (180, 72))
 
+            # Difficulty Indicator on HUD
+            diff_color = COLOR_GOLD if difficulty_mode == 1 else ((239, 68, 68) if difficulty_mode == 2 else COLOR_CYAN)
+            diff_surf = font_hud.render(f"MODE: {DIFFICULTY_NAMES[difficulty_mode]}", True, diff_color)
+            canvas.blit(diff_surf, (SCREEN_WIDTH - 340, 48))
+
             # Weather Hazard Indicator
             if weather_type != "clear":
                 w_str = "🌧️ STORMY RAIN" if weather_type == "rain" else f"💨 GUSTY WIND ({'EAST' if wind_force > 0 else 'WEST'})"
@@ -616,22 +732,29 @@ def main():
 
         # --- PAUSED SCREEN OVERLAY ---
         if game_state == STATE_PAUSED:
-            p_box_w, p_box_h = 600, 260
+            p_box_w, p_box_h = 740, 330
             p_box_x = (SCREEN_WIDTH - p_box_w) // 2
             p_box_y = (SCREEN_HEIGHT - p_box_h) // 2
 
             p_dialog = pygame.Surface((p_box_w, p_box_h), pygame.SRCALPHA)
-            p_dialog.fill((15, 23, 42, 230))
+            p_dialog.fill((15, 23, 42, 240))
             pygame.draw.rect(p_dialog, COLOR_CYAN, (0, 0, p_box_w, p_box_h), 3)
+            pygame.draw.rect(p_dialog, COLOR_GOLD, (4, 4, p_box_w - 8, p_box_h - 8), 1)
             canvas.blit(p_dialog, (p_box_x, p_box_y))
 
-            p_title = font_banner.render("⏸️ GAME PAUSED", True, COLOR_CYAN)
-            p_sub1 = font_banner.render("Press 'P' or Click Anywhere to Resume", True, COLOR_EMERALD)
-            p_sub2 = font_hud.render("Press 'M' to Quit to Main Menu", True, COLOR_HUD)
+            p_title = font_banner.render("⏸️ GAME PAUSED — TACTICAL COMMAND", True, COLOR_CYAN)
+            p_resume = font_banner.render("Press 'P' or Click Anywhere to Resume", True, COLOR_EMERALD)
+            p_shop = font_hud.render("🛸 Press [H]: Visit Hangar Shop & Upgrade Drone", True, COLOR_COIN)
+            p_diff = font_hud.render(f"☠️ Press [D]: Cycle Difficulty  (Mode: {DIFFICULTY_NAMES[difficulty_mode]})", True, COLOR_GOLD)
+            p_upg = font_hud.render("⚡ Quick Upgrades: [1] Battery | [2] Speed | [3] Fire-Rate | [4] EMP", True, COLOR_HUD)
+            p_screen = font_hud.render("📺 F11/F: Fullscreen | F2: 720p | F3: 900p | F4: 1080p | [M]: Main Menu", True, (186, 230, 253))
 
-            canvas.blit(p_title, p_title.get_rect(center=(SCREEN_WIDTH // 2, p_box_y + 55)))
-            canvas.blit(p_sub1, p_sub1.get_rect(center=(SCREEN_WIDTH // 2, p_box_y + 125)))
-            canvas.blit(p_sub2, p_sub2.get_rect(center=(SCREEN_WIDTH // 2, p_box_y + 195)))
+            canvas.blit(p_title, p_title.get_rect(center=(SCREEN_WIDTH // 2, p_box_y + 40)))
+            canvas.blit(p_resume, p_resume.get_rect(center=(SCREEN_WIDTH // 2, p_box_y + 90)))
+            canvas.blit(p_shop, p_shop.get_rect(center=(SCREEN_WIDTH // 2, p_box_y + 140)))
+            canvas.blit(p_diff, p_diff.get_rect(center=(SCREEN_WIDTH // 2, p_box_y + 185)))
+            canvas.blit(p_upg, p_upg.get_rect(center=(SCREEN_WIDTH // 2, p_box_y + 230)))
+            canvas.blit(p_screen, p_screen.get_rect(center=(SCREEN_WIDTH // 2, p_box_y + 275)))
 
         # --- Hangar / Shop Screen ---
         elif game_state == STATE_HANGAR:
@@ -645,7 +768,7 @@ def main():
             canvas.blit(coin_display, coin_display.get_rect(center=(SCREEN_WIDTH // 2, 120)))
             canvas.blit(sub_txt, sub_txt.get_rect(center=(SCREEN_WIDTH // 2, 165)))
 
-            m_pos = pygame.mouse.get_pos()
+            m_pos = get_virtual_mouse_pos()
             upg_keys_str = ["1", "2", "3", "4"]
 
 
@@ -728,7 +851,7 @@ def main():
 
         # --- Celebration Screen (Level Clear / Level Finished Notification) ---
         elif game_state == STATE_LEVEL_CLEAR:
-            points_per_level = 200 + (current_level - 1) * 100
+            points_per_level = 1500 + (current_level - 1) * 1700
             
             box_w, box_h = 820, 340
             box_x = (SCREEN_WIDTH - box_w) // 2
@@ -757,16 +880,23 @@ def main():
         # --- Menu Screens ---
         elif game_state == STATE_MENU:
             title_surf = font_title.render("DRONE HUNTER", True, COLOR_CYAN)
-            subtitle_surf = font_hud.render("Sci-Fi 2D Arcade Side-Scroller", True, (148, 163, 184))
+            subtitle_surf = font_hud.render("Sci-Fi 2D Tactical Arcade Side-Scroller", True, (148, 163, 184))
             high_surf = font_banner.render(f"HIGH SCORE: {highscore}   |   GOLD SCRAP: ${coins}", True, COLOR_GOLD)
+            
+            diff_color = COLOR_GOLD if difficulty_mode == 1 else ((239, 68, 68) if difficulty_mode == 2 else COLOR_CYAN)
+            diff_menu_surf = font_banner.render(f"DIFFICULTY: {DIFFICULTY_NAMES[difficulty_mode]}  [Press 'D' to Cycle]", True, diff_color)
+
             start_surf = font_banner.render("Press SPACE to Play   |   Press 'H' for Hangar Shop", True, COLOR_EMERALD)
             controls_surf = font_hud.render("WASD/Arrows: Flight | Shift: Evasive Roll | Left-Click: Shoot | E: EMP | P: Pause", True, COLOR_HUD)
+            screen_guide_surf = font_hud.render("📺 F11/F: Fullscreen | F2: 720p | F3: 900p | F4: 1080p | Resizable Window", True, (186, 230, 253))
 
-            canvas.blit(title_surf, title_surf.get_rect(center=(SCREEN_WIDTH // 2, 200)))
-            canvas.blit(subtitle_surf, subtitle_surf.get_rect(center=(SCREEN_WIDTH // 2, 270)))
-            canvas.blit(high_surf, high_surf.get_rect(center=(SCREEN_WIDTH // 2, 350)))
+            canvas.blit(title_surf, title_surf.get_rect(center=(SCREEN_WIDTH // 2, 170)))
+            canvas.blit(subtitle_surf, subtitle_surf.get_rect(center=(SCREEN_WIDTH // 2, 235)))
+            canvas.blit(diff_menu_surf, diff_menu_surf.get_rect(center=(SCREEN_WIDTH // 2, 300)))
+            canvas.blit(high_surf, high_surf.get_rect(center=(SCREEN_WIDTH // 2, 365)))
             canvas.blit(start_surf, start_surf.get_rect(center=(SCREEN_WIDTH // 2, 450)))
-            canvas.blit(controls_surf, controls_surf.get_rect(center=(SCREEN_WIDTH // 2, 560)))
+            canvas.blit(controls_surf, controls_surf.get_rect(center=(SCREEN_WIDTH // 2, 545)))
+            canvas.blit(screen_guide_surf, screen_guide_surf.get_rect(center=(SCREEN_WIDTH // 2, 595)))
 
         # --- GAME OVER / DEFEAT SCREEN ---
         elif game_state == STATE_GAME_OVER:
@@ -781,18 +911,22 @@ def main():
             canvas.blit(go_dialog, (go_box_x, go_box_y))
 
             over_surf = font_gameover.render("☠️ MISSION FAILED - DRONE DESTROYED ☠️", True, (239, 68, 68))
-            stats_surf = font_banner.render(f"Final Level: {current_level}   |   Total Score: {total_score}", True, COLOR_GOLD)
+            stats_surf = font_banner.render(f"Final Level: {current_level}   |   Final Score: {total_score}", True, COLOR_GOLD)
+            reset_note_surf = font_hud.render("⚠️ Run Scores & Level Progress Reset to Zero for Next Game", True, (239, 68, 68))
             coins_stat_surf = font_hud.render(f"Gold Scrap Coins Saved: ${coins}   |   High Score: {highscore}", True, COLOR_HUD)
-            restart_surf = font_banner.render("👉 Press [R], [SPACE], or [S] to Restart Mission 👈", True, COLOR_CYAN)
+            restart_surf = font_banner.render("👉 Press [R], [SPACE], or [S] to Restart Fresh 👈", True, COLOR_CYAN)
 
-            canvas.blit(over_surf, over_surf.get_rect(center=(SCREEN_WIDTH // 2, go_box_y + 55)))
-            canvas.blit(stats_surf, stats_surf.get_rect(center=(SCREEN_WIDTH // 2, go_box_y + 120)))
-            canvas.blit(coins_stat_surf, coins_stat_surf.get_rect(center=(SCREEN_WIDTH // 2, go_box_y + 175)))
-            canvas.blit(restart_surf, restart_surf.get_rect(center=(SCREEN_WIDTH // 2, go_box_y + 240)))
+            canvas.blit(over_surf, over_surf.get_rect(center=(SCREEN_WIDTH // 2, go_box_y + 45)))
+            canvas.blit(stats_surf, stats_surf.get_rect(center=(SCREEN_WIDTH // 2, go_box_y + 100)))
+            canvas.blit(reset_note_surf, reset_note_surf.get_rect(center=(SCREEN_WIDTH // 2, go_box_y + 145)))
+            canvas.blit(coins_stat_surf, coins_stat_surf.get_rect(center=(SCREEN_WIDTH // 2, go_box_y + 185)))
+            canvas.blit(restart_surf, restart_surf.get_rect(center=(SCREEN_WIDTH // 2, go_box_y + 245)))
 
-        # Render Canvas with EMP Screen Shake offset
-        screen.fill((0, 0, 0))
-        screen.blit(canvas, (shake_offset_x, shake_offset_y))
+        # Render Virtual Canvas onto Window Display with smooth scaling
+        cur_w, cur_h = screen.get_size()
+        if cur_w > 0 and cur_h > 0:
+            scaled_canvas = pygame.transform.smoothscale(canvas, (cur_w, cur_h))
+            screen.blit(scaled_canvas, (shake_offset_x, shake_offset_y))
         pygame.display.flip()
 
     pygame.quit()

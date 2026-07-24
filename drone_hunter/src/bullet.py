@@ -52,9 +52,9 @@ class Bullet(pygame.sprite.Sprite):
 
 class EnemyBullet(pygame.sprite.Sprite):
     """
-    Red plasma bullet fired by Shooting Enemies and Boss Dreadnoughts toward the player.
+    Red plasma bullet fired by Shooting Enemies, Turrets and Boss Dreadnoughts toward the player.
     """
-    def __init__(self, start_pos: tuple[float, float], target_pos: tuple[float, float], speed: float = ENEMY_BULLET_SPEED):
+    def __init__(self, start_pos: tuple[float, float], target_pos: tuple[float, float], speed: float = ENEMY_BULLET_SPEED, angle_offset_deg: float = 0.0):
         super().__init__()
         
         self.original_image = pygame.Surface((16, 6), pygame.SRCALPHA)
@@ -63,13 +63,12 @@ class EnemyBullet(pygame.sprite.Sprite):
         
         dx = target_pos[0] - start_pos[0]
         dy = target_pos[1] - start_pos[1]
-        dist = math.hypot(dx, dy) or 1.0
-        
-        self.velocity_x = (dx / dist) * speed
-        self.velocity_y = (dy / dist) * speed
-        
-        angle_rad = math.atan2(dy, dx)
+        base_angle_rad = math.atan2(dy, dx)
+        angle_rad = base_angle_rad + math.radians(angle_offset_deg)
         angle_deg = math.degrees(-angle_rad)
+        
+        self.velocity_x = math.cos(angle_rad) * speed
+        self.velocity_y = math.sin(angle_rad) * speed
         
         self.image = pygame.transform.rotate(self.original_image, angle_deg)
         self.pos = pygame.Vector2(start_pos)
