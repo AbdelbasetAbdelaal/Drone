@@ -1,10 +1,10 @@
 {
-  "coins": 438,
+  "coins": 321,
   "highscore": 16990,
   "upgrades": {
     "battery": 5,
-    "speed": 4,
-    "fire_rate": 3,
+    "speed": 5,
+    "fire_rate": 4,
     "emp_recharge": 2
   }
 }
