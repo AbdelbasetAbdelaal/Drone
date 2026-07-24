@@ -4,7 +4,8 @@ import pygame
 from src.settings import (
     SCREEN_WIDTH, SCREEN_HEIGHT, TARGET_SPEED,
     TARGET_TYPE_STANDARD, TARGET_TYPE_FAST, TARGET_TYPE_ARMORED, TARGET_TYPE_SHOOTER, TARGET_TYPE_BOSS,
-    COLOR_TARGET, COLOR_MAGENTA, COLOR_CRIMSON, COLOR_CYAN
+    TARGET_TYPE_TURRET, TARGET_TYPE_VEHICLE, TARGET_TYPE_CHASER,
+    COLOR_TARGET, COLOR_MAGENTA, COLOR_CRIMSON, COLOR_CYAN, COLOR_NEON_RED
 )
 from src.bullet import EnemyBullet
 
@@ -15,7 +16,10 @@ class Target(pygame.sprite.Sprite):
     - Fast: High speed, small size, 1 HP, 25 pts
     - Armored: Heavy shield, large size, 3+ HP, 50 pts
     - Shooter: Fires plasma bullets at player, 2 HP, 40 pts
-    - Boss: Giant Dreadnought Cruiser, 20+ HP, 250 pts, hovers & fires dual bursts
+    - Boss: Giant Dreadnought Cruiser, 20+ HP, 250 pts
+    - Ground Turret: Roof turret firing anti-air salvos upward, 3 HP, 45 pts
+    - Target Vehicle: Armored ground rover with glowing neon red crosshairs, 4 HP, 70 pts
+    - Chaser Drone: Aggressive pursuing drone tracking player position, 2 HP, 35 pts
     """
     def __init__(self, target_type: str = TARGET_TYPE_STANDARD, speed_bonus: float = 0.0, level: int = 1):
         super().__init__()
@@ -34,6 +38,31 @@ class Target(pygame.sprite.Sprite):
             base_speed = 70.0
             color_outer = (225, 29, 72)  # Heavy Rose Crimson
             color_inner = (250, 204, 21) # Gold Core
+        elif target_type == TARGET_TYPE_VEHICLE:
+            v_hp = 4 + (level // 2)
+            self.hp = v_hp
+            self.max_hp = v_hp
+            self.points = 70
+            size = 72
+            base_speed = (TARGET_SPEED - 30.0)
+            color_outer = COLOR_NEON_RED
+            color_inner = (255, 255, 255)
+        elif target_type == TARGET_TYPE_TURRET:
+            self.hp = 3
+            self.max_hp = 3
+            self.points = 45
+            size = 54
+            base_speed = 100.0  # Matches background parallax
+            color_outer = (100, 116, 139) # Metallic Slate
+            color_inner = COLOR_NEON_RED
+        elif target_type == TARGET_TYPE_CHASER:
+            self.hp = 2
+            self.max_hp = 2
+            self.points = 35
+            size = 38
+            base_speed = (TARGET_SPEED + 80.0)
+            color_outer = COLOR_MAGENTA
+            color_inner = COLOR_CYAN
         elif target_type == TARGET_TYPE_SHOOTER:
             self.hp = 2
             self.max_hp = 2
@@ -73,13 +102,18 @@ class Target(pygame.sprite.Sprite):
         self.color_inner = color_inner
 
         self.image = pygame.Surface((size, size), pygame.SRCALPHA)
-        self._render_sprite()
-
+        
         # Spawning Position
         spawn_x = SCREEN_WIDTH + size
-        spawn_y = random.randint(size, SCREEN_HEIGHT - size) if target_type != TARGET_TYPE_BOSS else SCREEN_HEIGHT // 2
+        if target_type == TARGET_TYPE_BOSS:
+            spawn_y = SCREEN_HEIGHT // 2
+        elif target_type in (TARGET_TYPE_VEHICLE, TARGET_TYPE_TURRET):
+            spawn_y = SCREEN_HEIGHT - 65
+        else:
+            spawn_y = random.randint(size, SCREEN_HEIGHT - 120)
         
         self.pos = pygame.Vector2(spawn_x, spawn_y)
+        self._render_sprite()
         self.rect = self.image.get_rect(center=(round(self.pos.x), round(self.pos.y)))
         
         # Collision Radius
@@ -97,7 +131,6 @@ class Target(pygame.sprite.Sprite):
             pygame.draw.circle(self.image, self.color_outer, center, self.size // 2, 4)
             pygame.draw.circle(self.image, self.color_inner, center, self.size // 4)
             
-            # Rotating Outer Shield Segment Lines
             for i in range(4):
                 ang = self.shield_angle + i * (math.pi / 2)
                 x1 = center[0] + math.cos(ang) * (self.size // 2 - 8)
@@ -106,35 +139,56 @@ class Target(pygame.sprite.Sprite):
                 y2 = center[1] + math.sin(ang) * (self.size // 2)
                 pygame.draw.line(self.image, (56, 189, 248), (x1, y1), (x2, y2), 4)
 
-            # Boss Health Bar on top
             bar_w = self.size - 12
             bar_h = 6
-            bar_x = 6
-            bar_y = 4
-            pygame.draw.rect(self.image, (51, 65, 85), (bar_x, bar_y, bar_w, bar_h))
+            pygame.draw.rect(self.image, (51, 65, 85), (6, 4, bar_w, bar_h))
             fill_w = max(0, int(bar_w * (self.hp / self.max_hp)))
-            pygame.draw.rect(self.image, (239, 68, 68), (bar_x, bar_y, fill_w, bar_h))
+            pygame.draw.rect(self.image, (239, 68, 68), (6, 4, fill_w, bar_h))
+
+        elif self.target_type == TARGET_TYPE_VEHICLE:
+            # Armored Tactical Rover Chassis
+            pygame.draw.rect(self.image, (30, 41, 59), (4, 16, self.size - 8, 28), border_radius=6)
+            pygame.draw.rect(self.image, COLOR_NEON_RED, (4, 16, self.size - 8, 28), 2, border_radius=6)
+            # Wheels
+            pygame.draw.rect(self.image, (15, 23, 42), (8, 38, 14, 8))
+            pygame.draw.rect(self.image, (15, 23, 42), (self.size - 22, 38, 14, 8))
+            # Sensor Turret Top
+            pygame.draw.circle(self.image, COLOR_NEON_RED, (center[0], 22), 8)
+
+        elif self.target_type == TARGET_TYPE_TURRET:
+            # Roof Defense Turret Structure
+            pygame.draw.polygon(self.image, (51, 65, 85), [(4, self.size - 4), (self.size - 4, self.size - 4), (center[0] + 10, 18), (center[0] - 10, 18)])
+            pygame.draw.circle(self.image, (100, 116, 139), (center[0], 22), 14)
+            pygame.draw.circle(self.image, COLOR_NEON_RED, (center[0], 22), 6)
+            # Dual Anti-Air Cannon Tubes
+            pygame.draw.rect(self.image, (226, 232, 240), (center[0] - 8, 4, 4, 16))
+            pygame.draw.rect(self.image, (226, 232, 240), (center[0] + 4, 4, 4, 16))
+
+        elif self.target_type == TARGET_TYPE_CHASER:
+            # Interceptor Chaser Drone Tri-wing
+            pygame.draw.polygon(self.image, COLOR_MAGENTA, [
+                (4, center[1]), (self.size - 6, 6), (self.size - 14, center[1]), (self.size - 6, self.size - 6)
+            ])
+            pygame.draw.circle(self.image, COLOR_CYAN, (self.size - 18, center[1]), 5)
+
         elif self.target_type == TARGET_TYPE_SHOOTER:
-            # Hunter Drone Shooter Visual
             pygame.draw.polygon(self.image, self.color_outer, [
                 (self.size, center[1]), (8, 4), (16, center[1]), (8, self.size - 4)
             ])
             pygame.draw.circle(self.image, self.color_inner, center, 6)
+
         else:
-            # Outer Ring & Inner Core Visual
             pygame.draw.circle(self.image, self.color_outer, center, self.size // 2)
-            pygame.draw.circle(self.image, (15, 23, 42), center, int(self.size // 2 * 0.75)) # Inner dark ring
+            pygame.draw.circle(self.image, (15, 23, 42), center, int(self.size // 2 * 0.75))
             pygame.draw.circle(self.image, self.color_inner, center, self.size // 4)
 
-            # Render Armor Health bar if HP > 1
-            if self.max_hp > 1:
-                bar_w = self.size - 8
-                bar_h = 4
-                bar_x = 4
-                bar_y = 2
-                pygame.draw.rect(self.image, (51, 65, 85), (bar_x, bar_y, bar_w, bar_h))
-                fill_w = int(bar_w * (self.hp / self.max_hp))
-                pygame.draw.rect(self.image, (250, 204, 21), (bar_x, bar_y, fill_w, bar_h))
+        # Armor Bar for multihit enemies
+        if self.max_hp > 1 and self.target_type not in (TARGET_TYPE_BOSS,):
+            bar_w = self.size - 8
+            bar_h = 4
+            pygame.draw.rect(self.image, (51, 65, 85), (4, 2, bar_w, bar_h))
+            fill_w = int(bar_w * (self.hp / self.max_hp))
+            pygame.draw.rect(self.image, (250, 204, 21), (4, 2, fill_w, bar_h))
 
     def take_damage(self, amount: int = 1) -> bool:
         """Applies damage to target. Returns True if destroyed."""
@@ -150,10 +204,14 @@ class Target(pygame.sprite.Sprite):
         new_enemy_bullets = []
 
         # Handle Enemy Firing Logic
-        if self.target_type in (TARGET_TYPE_SHOOTER, TARGET_TYPE_BOSS):
+        if self.target_type in (TARGET_TYPE_SHOOTER, TARGET_TYPE_TURRET, TARGET_TYPE_BOSS):
             self.shoot_timer -= effective_dt
             if self.shoot_timer <= 0:
-                if self.target_type == TARGET_TYPE_SHOOTER:
+                if self.target_type == TARGET_TYPE_TURRET:
+                    self.shoot_timer = random.uniform(1.8, 2.8)
+                    # AA Flak salvo firing upward at player angle
+                    new_enemy_bullets.append(EnemyBullet(self.rect.center, player_pos, speed=480.0))
+                elif self.target_type == TARGET_TYPE_SHOOTER:
                     self.shoot_timer = random.uniform(2.2, 3.2)
                     new_enemy_bullets.append(EnemyBullet(self.rect.center, player_pos))
                 elif self.target_type == TARGET_TYPE_BOSS:
@@ -163,11 +221,9 @@ class Target(pygame.sprite.Sprite):
                     new_enemy_bullets.append(EnemyBullet((cx, cy + 25), player_pos, speed=420.0))
 
         if self.target_type == TARGET_TYPE_BOSS:
-            # Rotate Boss Shield
             self.shield_angle = (self.shield_angle + 2.0 * effective_dt) % 6.28318
             self._render_sprite()
 
-            # Boss Entrance & Hover Behavior
             target_x = SCREEN_WIDTH - 180
             if self.pos.x > target_x:
                 self.pos.x -= self.speed * effective_dt
@@ -176,8 +232,17 @@ class Target(pygame.sprite.Sprite):
                 self.pos.y = (SCREEN_HEIGHT // 2) + math.sin(self.time_accum * 2.2) * 140.0
             
             self.rect.center = (round(self.pos.x), round(self.pos.y))
+        elif self.target_type == TARGET_TYPE_CHASER:
+            # Active tracking towards player position
+            self.pos.x -= self.speed * effective_dt
+            dy = player_pos[1] - self.pos.y
+            self.pos.y += math.copysign(min(abs(dy), 140.0 * effective_dt), dy)
+            self.rect.center = (round(self.pos.x), round(self.pos.y))
+
+            if self.rect.right < 0:
+                self.kill()
         else:
-            # Normal Enemies move leftwards
+            # Normal Enemies & Vehicles move leftwards
             self.pos.x -= self.speed * effective_dt
             self.rect.centerx = round(self.pos.x)
 
@@ -215,13 +280,13 @@ class Spawner:
 
     def _select_target_type(self) -> str:
         if self.level == 1:
-            return TARGET_TYPE_STANDARD
+            return random.choices([TARGET_TYPE_STANDARD, TARGET_TYPE_VEHICLE], weights=[70, 30], k=1)[0]
         elif self.level == 2:
-            return random.choices([TARGET_TYPE_STANDARD, TARGET_TYPE_FAST, TARGET_TYPE_SHOOTER], weights=[50, 30, 20], k=1)[0]
+            return random.choices([TARGET_TYPE_STANDARD, TARGET_TYPE_FAST, TARGET_TYPE_SHOOTER, TARGET_TYPE_VEHICLE, TARGET_TYPE_TURRET], weights=[35, 25, 15, 15, 10], k=1)[0]
         elif self.level == 3:
-            return random.choices([TARGET_TYPE_STANDARD, TARGET_TYPE_FAST, TARGET_TYPE_ARMORED, TARGET_TYPE_SHOOTER], weights=[35, 30, 20, 15], k=1)[0]
+            return random.choices([TARGET_TYPE_STANDARD, TARGET_TYPE_FAST, TARGET_TYPE_ARMORED, TARGET_TYPE_SHOOTER, TARGET_TYPE_TURRET, TARGET_TYPE_VEHICLE, TARGET_TYPE_CHASER], weights=[20, 20, 15, 15, 10, 10, 10], k=1)[0]
         else: # Level 4+
-            return random.choices([TARGET_TYPE_STANDARD, TARGET_TYPE_FAST, TARGET_TYPE_ARMORED, TARGET_TYPE_SHOOTER], weights=[15, 35, 25, 25], k=1)[0]
+            return random.choices([TARGET_TYPE_STANDARD, TARGET_TYPE_FAST, TARGET_TYPE_ARMORED, TARGET_TYPE_SHOOTER, TARGET_TYPE_TURRET, TARGET_TYPE_VEHICLE, TARGET_TYPE_CHASER], weights=[10, 25, 20, 15, 10, 10, 10], k=1)[0]
 
     def update(self, dt: float, target_group: pygame.sprite.Group, level_score: int, points_per_level: int) -> Target | None:
         # Spawn Boss Dreadnought at 65% level progress on Level 3, Level 6, etc.

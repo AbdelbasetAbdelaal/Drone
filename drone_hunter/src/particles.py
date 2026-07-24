@@ -173,9 +173,19 @@ class ParticleManager:
     def spawn_emp_ring(self, pos: tuple[float, float]):
         self.particles.add(EMPRing(pos))
 
+    def create_evasive_sparks(self, pos: tuple[float, float]):
+        """Spawns glowing cyan and white trailing sparks during Evasive Barrel Roll."""
+        for _ in range(3):
+            vx = random.uniform(-180, 180)
+            vy = random.uniform(-100, 100)
+            color = random.choice([(56, 189, 248), (255, 255, 255), (14, 165, 233)])
+            radius = random.uniform(2.0, 5.0)
+            lifetime = random.uniform(0.15, 0.35)
+            self.particles.add(Particle(pos, (vx, vy), color, radius, lifetime))
+
     def spawn_weather(self, weather_type: str):
         if weather_type == "rain":
-            if len(self.weather_particles) < 40:
+            if len(self.weather_particles) < 70:
                 self.weather_particles.add(RainStreak())
 
     def spawn_celebration(self, screen_width: int, screen_height: int):

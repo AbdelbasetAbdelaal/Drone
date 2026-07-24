@@ -180,6 +180,12 @@ def main():
                 highscore = total_score
             save_game_data(coins, highscore, upgrade_levels)
 
+    def execute_barrel_roll():
+        if drone and drone.trigger_roll(dir_x=1.0):
+            audio_manager.play_thrust()
+            trigger_shake(4.0, 0.18)
+            particle_manager.spawn_floating_text(drone.pos, "🌀 EVASIVE ROLL!", COLOR_CYAN, 22)
+
     def buy_upgrade(name: str) -> bool:
 
         nonlocal coins
@@ -286,6 +292,10 @@ def main():
                 # EMP Shockwave Blast on 'E' Key
                 if game_state == STATE_PLAYING and event.key == pygame.K_e:
                     execute_emp_blast()
+
+                # Evasive Barrel Roll on Shift key
+                if game_state == STATE_PLAYING and event.key in (pygame.K_LSHIFT, pygame.K_RSHIFT):
+                    execute_barrel_roll()
 
                 # State Transitions & Hangar Shop Interactions
                 if game_state == STATE_MENU:
@@ -504,6 +514,16 @@ def main():
             powerup_group.draw(canvas)
             particle_manager.draw(canvas)
 
+            # Draw Glowing Neon Red Target Lock-on Crosshairs over Target Vehicles
+            for target in target_group:
+                if target.target_type == TARGET_TYPE_VEHICLE:
+                    cx, cy = target.rect.centerx, target.rect.top - 24
+                    pulse_r = 16 + int(math.sin(pygame.time.get_ticks() * 0.012) * 3)
+                    pygame.draw.circle(canvas, COLOR_NEON_RED, (cx, cy), pulse_r, 2)
+                    pygame.draw.circle(canvas, (255, 255, 255), (cx, cy), 3)
+                    pygame.draw.line(canvas, COLOR_NEON_RED, (cx - pulse_r - 4, cy), (cx + pulse_r + 4, cy), 2)
+                    pygame.draw.line(canvas, COLOR_NEON_RED, (cx, cy - pulse_r - 4), (cx, cy + pulse_r + 4), 2)
+
             # Slow Motion Visual Overlay Tint
             if drone and drone.slowmo_timer > 0:
                 slowmo_overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
@@ -552,18 +572,24 @@ def main():
             hp_txt = font_hud.render(f"BATTERY: {int(drone.health)}/{int(drone.max_health)}", True, COLOR_HUD)
             canvas.blit(hp_txt, (bar_x + bar_w + 12, bar_y - 2))
 
-            # EMP Ability HUD Cooldown Indicator
+            # EMP & Evasive Roll Ability HUD Indicators
             emp_pct = max(0.0, 1.0 - (drone.emp_cooldown / drone.emp_cooldown_max))
             emp_color = COLOR_CYAN if emp_pct >= 1.0 else (100, 116, 139)
-            emp_status_txt = "EMP READY [E / R-Click]" if emp_pct >= 1.0 else f"EMP CHARGING {int(emp_pct*100)}%"
+            emp_status_txt = "EMP READY [E]" if emp_pct >= 1.0 else f"EMP {int(emp_pct*100)}%"
             emp_surf = font_hud.render(emp_status_txt, True, emp_color)
             canvas.blit(emp_surf, (20, 72))
+
+            roll_pct = max(0.0, 1.0 - (drone.roll_cooldown / 2.0))
+            roll_color = COLOR_EMERALD if roll_pct >= 1.0 else (100, 116, 139)
+            roll_status_txt = "ROLL READY [SHIFT]" if roll_pct >= 1.0 else f"ROLL {int(roll_pct*100)}%"
+            roll_surf = font_hud.render(roll_status_txt, True, roll_color)
+            canvas.blit(roll_surf, (180, 72))
 
             # Weather Hazard Indicator
             if weather_type != "clear":
                 w_str = "🌧️ STORMY RAIN" if weather_type == "rain" else f"💨 GUSTY WIND ({'EAST' if wind_force > 0 else 'WEST'})"
                 w_surf = font_hud.render(w_str, True, (186, 230, 253))
-                canvas.blit(w_surf, (300, 72))
+                canvas.blit(w_surf, (360, 72))
 
             # Combo Multiplier Indicator
             if combo_count > 1:
@@ -731,7 +757,7 @@ def main():
             subtitle_surf = font_hud.render("Sci-Fi 2D Arcade Side-Scroller", True, (148, 163, 184))
             high_surf = font_banner.render(f"HIGH SCORE: {highscore}   |   GOLD SCRAP: ${coins}", True, COLOR_GOLD)
             start_surf = font_banner.render("Press SPACE to Play   |   Press 'H' for Hangar Shop", True, COLOR_EMERALD)
-            controls_surf = font_hud.render("WASD/Arrows: Flight | Left-Click: Shoot | E / Right-Click: EMP | P: Pause", True, COLOR_HUD)
+            controls_surf = font_hud.render("WASD/Arrows: Flight | Shift: Evasive Roll | Left-Click: Shoot | E: EMP | P: Pause", True, COLOR_HUD)
 
             canvas.blit(title_surf, title_surf.get_rect(center=(SCREEN_WIDTH // 2, 200)))
             canvas.blit(subtitle_surf, subtitle_surf.get_rect(center=(SCREEN_WIDTH // 2, 270)))

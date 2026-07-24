@@ -30,6 +30,7 @@ COLOR_SHIELD = (99, 102, 241)     # Forcefield Indigo
 COLOR_OVERCLOCK = (245, 158, 11)  # Overclock Speed Amber
 COLOR_SLOWMO = (14, 165, 233)     # Time Dilation Electric Blue
 COLOR_COIN = (234, 179, 8)        # Gold Currency Coin
+COLOR_NEON_RED = (255, 30, 60)     # Neon Red Crosshair Target lock-on
 COLOR_HUD = (226, 232, 240)
 COLOR_TEXT_DIM = (148, 163, 184)
 
@@ -43,12 +44,20 @@ ENEMY_BULLET_SPEED = 400.0 # Enemy bullet velocity
 TARGET_SPEED = 180.0       # Base target movement speed (pixels / s)
 SHOOT_COOLDOWN = 0.14      # Fire rate cooldown (seconds)
 
+# Evasive Roll Settings
+ROLL_DURATION = 0.40       # Roll duration in seconds
+ROLL_COOLDOWN = 2.0        # Roll recharge cooldown in seconds
+ROLL_SPEED_BOOST = 1.8     # Movement speed multiplier during roll
+
 # Target Types Parameters
 TARGET_TYPE_STANDARD = "standard"
 TARGET_TYPE_FAST = "fast"
 TARGET_TYPE_ARMORED = "armored"
 TARGET_TYPE_SHOOTER = "shooter"
 TARGET_TYPE_BOSS = "boss"
+TARGET_TYPE_TURRET = "turret"
+TARGET_TYPE_VEHICLE = "vehicle"
+TARGET_TYPE_CHASER = "chaser"
 
 # Player Settings
 MAX_HEALTH = 100

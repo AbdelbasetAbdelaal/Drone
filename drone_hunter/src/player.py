@@ -5,7 +5,7 @@ import pygame
 from src.settings import (
     SCREEN_WIDTH, SCREEN_HEIGHT, GRAVITY, THRUST_FORCE,
     MAX_FALL_SPEED, HORIZONTAL_SPEED, COLOR_DRONE, SHOOT_COOLDOWN, MAX_HEALTH,
-    EMP_COOLDOWN_MAX, COLOR_SHIELD
+    EMP_COOLDOWN_MAX, COLOR_SHIELD, ROLL_DURATION, ROLL_COOLDOWN, ROLL_SPEED_BOOST
 )
 from src.bullet import Bullet
 
@@ -13,7 +13,7 @@ class Player(pygame.sprite.Sprite):
     """
     Realistic Tactical Quadcopter Drone sprite featuring animated spinning rotors,
     carbon-fiber frame arms, optical camera sensor pod, dual cannon barrels,
-    EMP Shockwave ability, Forcefield Shield, and Rotational Sprite Caching.
+    EMP Shockwave ability, Forcefield Shield, Evasive Barrel Roll, and Rotational Sprite Caching.
     """
     def __init__(self, pos: tuple[float, float]):
         super().__init__()
@@ -30,6 +30,13 @@ class Player(pygame.sprite.Sprite):
         self.overclock_timer = 0.0   # Overclock speed boost remaining
         self.slowmo_timer = 0.0      # Time Dilation Slow Motion remaining
         self.shoot_timer = 0.0
+
+        # Evasive Barrel Roll Mechanics
+        self.is_rolling = False
+        self.roll_timer = 0.0
+        self.roll_cooldown = 0.0
+        self.roll_angle = 0.0
+        self.roll_dir = 1.0
 
         # Surface Dimensions (68x44 for a clear, high-detail drone)
         self.width = 68
@@ -113,16 +120,37 @@ class Player(pygame.sprite.Sprite):
             pygame.draw.ellipse(self.original_image, (99, 102, 241, 180), (2, 2, self.width - 4, self.height - 4), 3)
             pygame.draw.ellipse(self.original_image, (165, 180, 252, 100), (4, 4, self.width - 8, self.height - 8), 1)
 
+    def trigger_roll(self, dir_x: float = 1.0) -> bool:
+        """Triggers Evasive Barrel Roll with i-frame invulnerability if ready."""
+        if self.roll_cooldown <= 0.0 and not self.is_rolling:
+            self.is_rolling = True
+            self.roll_timer = ROLL_DURATION
+            self.roll_cooldown = ROLL_COOLDOWN
+            self.roll_dir = dir_x if dir_x != 0 else 1.0
+            return True
+        return False
+
     def update(self, dt: float, particle_manager=None, audio_manager=None, wind_force: float = 0.0):
         # Update cooldown timers
         self.shoot_timer = max(0.0, self.shoot_timer - dt)
         self.emp_cooldown = max(0.0, self.emp_cooldown - dt)
         self.overclock_timer = max(0.0, self.overclock_timer - dt)
         self.slowmo_timer = max(0.0, self.slowmo_timer - dt)
+        self.roll_cooldown = max(0.0, self.roll_cooldown - dt)
 
         # Animate Propellers continuously
         self.rotor_angle = (self.rotor_angle + 25.0 * dt) % 6.28318
         self._render_drone_sprite()
+
+        # Update Barrel Roll duration & animation
+        if self.is_rolling:
+            self.roll_timer -= dt
+            self.roll_angle = (self.roll_angle + self.roll_dir * 1800.0 * dt) % 360.0
+            if particle_manager and random.random() < 0.6:
+                particle_manager.create_evasive_sparks((self.pos.x, self.pos.y))
+            if self.roll_timer <= 0.0:
+                self.is_rolling = False
+                self.roll_angle = 0.0
 
         # 1. Physics: Apply continuous gravity & environmental wind force
         keys = pygame.key.get_pressed()
@@ -142,8 +170,13 @@ class Player(pygame.sprite.Sprite):
         self.pos += self.velocity * dt
         self._clamp_to_screen()
 
-        # 4. Aiming: Rotate surface toward mouse position using cache
-        self._aim_towards_mouse()
+        # 4. Aiming: Rotate surface toward mouse position or spin during barrel roll
+        if self.is_rolling:
+            rot_surf = pygame.transform.rotate(self.original_image, self.roll_angle)
+            self.image = rot_surf
+            self.rect = self.image.get_rect(center=(round(self.pos.x), round(self.pos.y)))
+        else:
+            self._aim_towards_mouse()
 
     def _handle_movement_input(self, dt: float, particle_manager=None, audio_manager=None, move_down: bool = False):
         keys = pygame.key.get_pressed()
@@ -151,6 +184,8 @@ class Player(pygame.sprite.Sprite):
 
         self.is_thrusting = move_up
         speed_mult = (1.4 if self.overclock_timer > 0 else 1.0) * self.agility_mult
+        if self.is_rolling:
+            speed_mult *= ROLL_SPEED_BOOST
 
         if move_up:
             self.velocity.y += THRUST_FORCE * speed_mult * dt
@@ -167,6 +202,9 @@ class Player(pygame.sprite.Sprite):
             move_x -= 1
         if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
             move_x += 1
+
+        if self.is_rolling and move_x == 0:
+            move_x = self.roll_dir
 
         self.velocity.x = move_x * HORIZONTAL_SPEED * speed_mult
 
@@ -225,6 +263,10 @@ class Player(pygame.sprite.Sprite):
         self.slowmo_timer = duration
 
     def take_damage(self, amount: int = 25) -> bool:
+        # Invulnerable during Evasive Barrel Roll!
+        if self.is_rolling:
+            return False
+
         # Forcefield Shield absorbs hit first!
         if self.shield_hits > 0:
             self.shield_hits -= 1
