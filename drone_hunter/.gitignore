@@ -3,6 +3,13 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Buildozer & Android build outputs
+.buildozer/
+bin/
+build/
+dist/
+*.spec.bak
+
 # Environments
 .venv/
 env/
