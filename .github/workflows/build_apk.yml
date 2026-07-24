@@ -20,7 +20,7 @@ jobs:
       - name: Install System Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libssl-dev libffi-dev libsqlite3-dev build-essential
+          sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libssl-dev libffi-dev libsqlite3-dev build-essential libltdl-dev cmake
 
       - name: Install Buildozer & Cython
         run: |
@@ -30,7 +30,11 @@ jobs:
       - name: Build APK with Buildozer
         run: |
           cd drone_hunter
-          buildozer android debug
+          yes | buildozer -v android debug || true
+          if [ ! -f bin/*.apk ]; then
+            echo "Retrying Buildozer build..."
+            yes | buildozer -v android debug
+          fi
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4

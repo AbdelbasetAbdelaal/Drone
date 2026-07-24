@@ -19,7 +19,6 @@ source.include_exts = py,png,jpg,kv,atlas,json,txt
 version = 1.0.0
 
 # (list) Application requirements
-# comma separated e.g. requirements = sqlite3,kivy
 requirements = python3,pygame-ce
 
 # (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
@@ -39,6 +38,9 @@ android.minapi = 21
 
 # (str) Android NDK version
 android.ndk = 25b
+
+# (bool) Automatically accept SDK license agreements
+android.accept_sdk_licenses = True
 
 # (bool) Use --private data storage (True) or --dir public storage (False)
 android.private_storage = True
