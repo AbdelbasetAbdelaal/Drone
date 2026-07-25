@@ -582,68 +582,75 @@ def draw_pause_settings_ui(canvas: pygame.Surface, difficulty_mode: int, show_cr
     }
 
 
-def draw_virtual_touch_controls(canvas: pygame.Surface, joystick_center=(140, 580), joystick_pos=None, is_touch_active=False) -> dict[str, pygame.Rect]:
-    """Renders high-tech translucent virtual touch controls for Android mobile touchscreens."""
+def draw_virtual_touch_controls(canvas: pygame.Surface, joystick_center=(140, 580), joystick_pos=None, is_touch_active=False, active_button=None) -> dict[str, pygame.Rect]:
+    """Renders high-tech translucent virtual touch controls for Android mobile touchscreens with safe-area margins."""
     controls = {}
     
-    # 1. Virtual Joystick Base (Left side)
+    # 1. Virtual Joystick Base (Left side - Floating Pivot Support)
     jx, jy = joystick_center
-    pygame.draw.circle(canvas, (15, 23, 42), (jx, jy), 65)
-    pygame.draw.circle(canvas, COLOR_CYAN, (jx, jy), 65, width=2)
+    pygame.draw.circle(canvas, (15, 23, 42, 180), (jx, jy), 70)
+    pygame.draw.circle(canvas, COLOR_CYAN if is_touch_active else (56, 189, 248, 120), (jx, jy), 70, width=3)
+    pygame.draw.circle(canvas, (30, 41, 59, 100), (jx, jy), 30, width=1)
     
     # Inner Knob
     knob_x, knob_y = joystick_pos if joystick_pos else (jx, jy)
-    pygame.draw.circle(canvas, COLOR_CYAN if is_touch_active else COLOR_HUD, (knob_x, knob_y), 30)
-    pygame.draw.circle(canvas, COLOR_WHITE, (knob_x, knob_y), 30, width=2)
+    knob_color = (125, 211, 252) if is_touch_active else COLOR_HUD
+    pygame.draw.circle(canvas, knob_color, (knob_x, knob_y), 32)
+    pygame.draw.circle(canvas, COLOR_WHITE, (knob_x, knob_y), 32, width=3)
 
-    # 2. Action Buttons (Right side)
-    # Fire Button
-    btn_fire = pygame.Rect(SCREEN_WIDTH - 125, SCREEN_HEIGHT - 125, 95, 95)
-    pygame.draw.ellipse(canvas, (239, 68, 68), btn_fire)
-    pygame.draw.ellipse(canvas, COLOR_WHITE, btn_fire, width=3)
-    lbl_fire = font_hud.render("FIRE", True, COLOR_WHITE)
+    # 2. Action Buttons (Right side - Ergonomic Thumb Arc)
+    # Fire Button (Main Primary Touch)
+    btn_fire = pygame.Rect(SCREEN_WIDTH - 145, SCREEN_HEIGHT - 145, 115, 115)
+    is_f_active = (active_button == "fire")
+    pygame.draw.ellipse(canvas, (255, 80, 80) if is_f_active else (225, 29, 72), btn_fire)
+    pygame.draw.ellipse(canvas, COLOR_WHITE if is_f_active else (255, 200, 200), btn_fire, width=4 if is_f_active else 2)
+    lbl_fire = font_title.render("FIRE 🎯", True, COLOR_WHITE)
     canvas.blit(lbl_fire, lbl_fire.get_rect(center=btn_fire.center))
     controls["fire"] = btn_fire
 
     # EMP Button
-    btn_emp = pygame.Rect(SCREEN_WIDTH - 235, SCREEN_HEIGHT - 95, 75, 75)
-    pygame.draw.ellipse(canvas, (56, 189, 248), btn_emp)
-    pygame.draw.ellipse(canvas, COLOR_CYAN, btn_emp, width=2)
-    lbl_emp = font_card.render("EMP", True, COLOR_WHITE)
+    btn_emp = pygame.Rect(SCREEN_WIDTH - 270, SCREEN_HEIGHT - 110, 85, 85)
+    is_e_active = (active_button == "emp")
+    pygame.draw.ellipse(canvas, (56, 189, 248) if is_e_active else (14, 165, 233), btn_emp)
+    pygame.draw.ellipse(canvas, COLOR_WHITE if is_e_active else COLOR_CYAN, btn_emp, width=3 if is_e_active else 2)
+    lbl_emp = font_hud.render("EMP ⚡", True, COLOR_WHITE)
     canvas.blit(lbl_emp, lbl_emp.get_rect(center=btn_emp.center))
     controls["emp"] = btn_emp
 
     # Roll Button
-    btn_roll = pygame.Rect(SCREEN_WIDTH - 125, SCREEN_HEIGHT - 230, 75, 75)
-    pygame.draw.ellipse(canvas, (52, 211, 153), btn_roll)
-    pygame.draw.ellipse(canvas, COLOR_EMERALD, btn_roll, width=2)
-    lbl_roll = font_card.render("ROLL", True, COLOR_WHITE)
+    btn_roll = pygame.Rect(SCREEN_WIDTH - 145, SCREEN_HEIGHT - 260, 85, 85)
+    is_r_active = (active_button == "roll")
+    pygame.draw.ellipse(canvas, (52, 211, 153) if is_r_active else (16, 185, 129), btn_roll)
+    pygame.draw.ellipse(canvas, COLOR_WHITE if is_r_active else COLOR_EMERALD, btn_roll, width=3 if is_r_active else 2)
+    lbl_roll = font_hud.render("ROLL 🌀", True, COLOR_WHITE)
     canvas.blit(lbl_roll, lbl_roll.get_rect(center=btn_roll.center))
     controls["roll"] = btn_roll
 
     # Cloak Button
-    btn_cloak = pygame.Rect(SCREEN_WIDTH - 235, SCREEN_HEIGHT - 195, 75, 75)
-    pygame.draw.ellipse(canvas, (217, 70, 239), btn_cloak)
-    pygame.draw.ellipse(canvas, COLOR_MAGENTA, btn_cloak, width=2)
-    lbl_cloak = font_card.render("CLOAK", True, COLOR_WHITE)
+    btn_cloak = pygame.Rect(SCREEN_WIDTH - 270, SCREEN_HEIGHT - 220, 85, 85)
+    is_c_active = (active_button == "cloak")
+    pygame.draw.ellipse(canvas, (217, 70, 239) if is_c_active else (168, 85, 247), btn_cloak)
+    pygame.draw.ellipse(canvas, COLOR_WHITE if is_c_active else COLOR_MAGENTA, btn_cloak, width=3 if is_c_active else 2)
+    lbl_cloak = font_hud.render("CLOAK 👻", True, COLOR_WHITE)
     canvas.blit(lbl_cloak, lbl_cloak.get_rect(center=btn_cloak.center))
     controls["cloak"] = btn_cloak
 
     # Weapon Cycle Button (Top Right)
-    btn_weapon = pygame.Rect(SCREEN_WIDTH - 150, 15, 135, 42)
-    pygame.draw.rect(canvas, (30, 41, 59), btn_weapon, border_radius=8)
-    pygame.draw.rect(canvas, COLOR_GOLD, btn_weapon, 2, border_radius=8)
-    lbl_wpn = font_card.render("WEAPON ⇄", True, COLOR_GOLD)
+    btn_weapon = pygame.Rect(SCREEN_WIDTH - 175, 20, 155, 48)
+    is_w_active = (active_button == "weapon")
+    pygame.draw.rect(canvas, (250, 204, 21) if is_w_active else (30, 41, 59), btn_weapon, border_radius=8)
+    pygame.draw.rect(canvas, COLOR_WHITE if is_w_active else COLOR_GOLD, btn_weapon, 3 if is_w_active else 2, border_radius=8)
+    lbl_wpn = font_card.render("WEAPON ⇄", True, (15, 23, 42) if is_w_active else COLOR_GOLD)
     canvas.blit(lbl_wpn, lbl_wpn.get_rect(center=btn_weapon.center))
     controls["weapon"] = btn_weapon
 
     # Pause Button (Top Left)
-    btn_pause = pygame.Rect(15, 15, 50, 50)
-    pygame.draw.rect(canvas, (30, 41, 59), btn_pause, border_radius=8)
-    pygame.draw.rect(canvas, COLOR_CYAN, btn_pause, 2, border_radius=8)
-    lbl_p = font_hud.render("PAUSE", True, COLOR_CYAN)
-    canvas.blit(lbl_p, lbl_p.get_rect(center=btn_pause.center))
+    btn_pause = pygame.Rect(20, 20, 95, 48)
+    is_p_active = (active_button == "pause")
+    pygame.draw.rect(canvas, (56, 189, 248) if is_p_active else (30, 41, 59), btn_pause, border_radius=8)
+    pygame.draw.rect(canvas, COLOR_WHITE if is_p_active else COLOR_CYAN, btn_pause, 3 if is_p_active else 2, border_radius=8)
+    lbl_pause = font_card.render("PAUSE ⏸", True, (15, 23, 42) if is_p_active else COLOR_CYAN)
+    canvas.blit(lbl_pause, lbl_pause.get_rect(center=btn_pause.center))
     controls["pause"] = btn_pause
 
     return controls
-

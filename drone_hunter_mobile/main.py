@@ -583,26 +583,35 @@ def main():
                                 game_state = STATE_MENU
 
                 elif game_state == STATE_PLAYING:
+                    active_touch_btn = None
                     touch_ctrls = draw_virtual_touch_controls(canvas, joystick_center, joystick_knob, is_touch_active)
                     if touch_ctrls["pause"].collidepoint(mx, my):
+                        active_touch_btn = "pause"
                         game_state = STATE_PAUSED
                     elif touch_ctrls["weapon"].collidepoint(mx, my):
+                        active_touch_btn = "weapon"
                         if drone: drone.cycle_weapon()
                     elif touch_ctrls["emp"].collidepoint(mx, my):
+                        active_touch_btn = "emp"
                         execute_emp_blast()
                     elif touch_ctrls["roll"].collidepoint(mx, my):
+                        active_touch_btn = "roll"
                         execute_barrel_roll()
                     elif touch_ctrls["cloak"].collidepoint(mx, my):
+                        active_touch_btn = "cloak"
                         execute_cloak()
                     elif touch_ctrls["fire"].collidepoint(mx, my):
+                        active_touch_btn = "fire"
                         touch_fire = True
                     elif mx < SCREEN_WIDTH // 2:
                         is_touch_active = True
+                        joystick_center = (mx, my)
                         joystick_knob = (mx, my)
 
             elif event.type in (pygame.MOUSEBUTTONUP, pygame.FINGERUP):
                 touch_fire = False
                 is_touch_active = False
+                joystick_center = (140, 580)
                 joystick_knob = joystick_center
 
             elif event.type in (pygame.MOUSEMOTION, pygame.FINGERMOTION):
@@ -614,8 +623,7 @@ def main():
                 touch_aim_pos = (mx, my)
 
                 if is_touch_active and game_state == STATE_PLAYING:
-                    if mx < SCREEN_WIDTH // 2:
-                        joystick_knob = (mx, my)
+                    joystick_knob = (mx, my)
 
         if game_state == STATE_PLAYING and drone:
             # Handle touch joystick movement on mobile
