@@ -1,9 +1,0 @@
-'Player' object has no attribute 'speed'
-Traceback (most recent call last):
-  File "D:\AI_Projects\drone_hunter\main.py", line 874, in <module>
-    main()
-    ~~~~^^
-  File "D:\AI_Projects\drone_hunter\main.py", line 631, in main
-    drone.velocity.x += nx * drone.speed * 3.5 * dt
-                             ^^^^^^^^^^^
-AttributeError: 'Player' object has no attribute 'speed'

@@ -1,9 +1,0 @@
-'Player' object has no attribute 'spawn_wingman'
-Traceback (most recent call last):
-  File "D:\AI_Projects\drone_hunter_mobile\main.py", line 889, in <module>
-    main()
-    ~~~~^^
-  File "D:\AI_Projects\drone_hunter_mobile\main.py", line 804, in main
-    drone.spawn_wingman()
-    ^^^^^^^^^^^^^^^^^^^
-AttributeError: 'Player' object has no attribute 'spawn_wingman'. Did you mean: 'draw_wingmen'?
