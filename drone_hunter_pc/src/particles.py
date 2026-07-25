@@ -155,6 +155,7 @@ class WaterSplashParticle(pygame.sprite.Sprite):
         self.max_lifetime = self.lifetime
         self.radius = random.uniform(2.5, 6.0)
         self.image = pygame.Surface((12, 12), pygame.SRCALPHA)
+        pygame.draw.circle(self.image, (186, 230, 253, 255), (6, 6), int(self.radius))
         self.rect = self.image.get_rect(center=pos)
 
     def update(self, dt: float):
@@ -166,8 +167,7 @@ class WaterSplashParticle(pygame.sprite.Sprite):
         self.pos += self.velocity * dt
         self.rect.center = (round(self.pos.x), round(self.pos.y))
         alpha = int(240 * (self.lifetime / self.max_lifetime))
-        self.image.fill((0, 0, 0, 0))
-        pygame.draw.circle(self.image, (186, 230, 253, alpha), (6, 6), int(self.radius))
+        self.image.set_alpha(alpha)
 
 
 class DroneVaporTrail(pygame.sprite.Sprite):
@@ -180,6 +180,7 @@ class DroneVaporTrail(pygame.sprite.Sprite):
         self.max_lifetime = 0.25
         self.radius = 4.0
         self.image = pygame.Surface((10, 10), pygame.SRCALPHA)
+        pygame.draw.circle(self.image, (56, 189, 248, 255), (5, 5), int(self.radius))
         self.rect = self.image.get_rect(center=pos)
 
     def update(self, dt: float):
@@ -190,9 +191,7 @@ class DroneVaporTrail(pygame.sprite.Sprite):
         self.pos += self.velocity * dt
         self.rect.center = (round(self.pos.x), round(self.pos.y))
         alpha = int(220 * (self.lifetime / self.max_lifetime))
-        r = max(1.0, self.radius * (self.lifetime / self.max_lifetime))
-        self.image.fill((0, 0, 0, 0))
-        pygame.draw.circle(self.image, (56, 189, 248, alpha), (5, 5), int(r))
+        self.image.set_alpha(alpha)
 
 
 class SandDustParticle(pygame.sprite.Sprite):
@@ -207,6 +206,7 @@ class SandDustParticle(pygame.sprite.Sprite):
         self.radius = random.uniform(2, 5)
         
         self.image = pygame.Surface((12, 12), pygame.SRCALPHA)
+        pygame.draw.circle(self.image, (217, 119, 6, 255), (6, 6), int(self.radius))
         self.rect = self.image.get_rect(center=self.pos)
 
     def update(self, dt: float):
@@ -217,8 +217,7 @@ class SandDustParticle(pygame.sprite.Sprite):
         self.pos += pygame.Vector2(self.speed_x, self.speed_y) * dt
         self.rect.center = (round(self.pos.x), round(self.pos.y))
         alpha = int(200 * (self.lifetime / self.max_lifetime))
-        self.image.fill((0, 0, 0, 0))
-        pygame.draw.circle(self.image, (217, 119, 6, alpha), (6, 6), int(self.radius))
+        self.image.set_alpha(alpha)
 
 
 class SparkParticle(pygame.sprite.Sprite):

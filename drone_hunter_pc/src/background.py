@@ -13,7 +13,11 @@ class CloudLayer:
             speed = random.uniform(15, 35)
             w = random.randint(140, 280)
             h = random.randint(40, 80)
-            self.clouds.append([x, y, speed, w, h])
+            surf = pygame.Surface((w, h), pygame.SRCALPHA)
+            color = (255, 255, 255, 30)
+            pygame.draw.ellipse(surf, color, (0, 0, w, h))
+            pygame.draw.ellipse(surf, color, (int(w * 0.2), int(-h * 0.2), int(w * 0.6), int(h * 0.8)))
+            self.clouds.append([x, y, speed, w, h, surf])
 
     def update(self, dt: float):
         for c in self.clouds:
@@ -23,11 +27,8 @@ class CloudLayer:
                 c[1] = random.randint(20, 220)
 
     def draw(self, surface: pygame.Surface, color: tuple[int, int, int] = (255, 255, 255, 30)):
-        for x, y, speed, w, h in self.clouds:
-            cloud_surf = pygame.Surface((w, h), pygame.SRCALPHA)
-            pygame.draw.ellipse(cloud_surf, color, (0, 0, w, h))
-            pygame.draw.ellipse(cloud_surf, color, (w * 0.2, -h * 0.2, w * 0.6, h * 0.8))
-            surface.blit(cloud_surf, (x, y))
+        for c in self.clouds:
+            surface.blit(c[5], (c[0], c[1]))
 
 
 class ParallaxBackground:
