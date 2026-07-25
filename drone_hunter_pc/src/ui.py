@@ -148,6 +148,34 @@ def draw_hud(canvas: pygame.Surface, player, sector_idx: int, level_score: int, 
     cloak_avail = player.has_cloak_upgrade and player.cloak_cooldown <= 0.0
     _pill(bar_x + 436, "CLOAK", "READY" if cloak_avail else "N/A", cloak_avail, (168, 85, 247))
 
+    # Ultimate Overdrive pill
+    ult_ready = player.ultimate_charge >= 100.0
+    _pill(bar_x + 538, "ULT", "100%" if ult_ready else f"{int(player.ultimate_charge)}%", ult_ready, (250, 204, 21))
+
+    # Advanced Stage Weather Hazard Banner (Stages 2 & 3 only)
+    if sub_level in (2, 3):
+        haz_name = "🌩️ ELECTROMAGNETIC STORM" if sector_idx >= 2 else "☄️ DEBRIS SHOWER"
+        txt_haz = font_card.render(f"ADVANCED HAZARD: {haz_name}", True, COLOR_OVERCLOCK)
+        canvas.blit(txt_haz, (bar_x + 640, 36))
+
+
+def draw_boss_health_bar(canvas: pygame.Surface, boss_target):
+    """Renders top AAA Boss Health Bar with danger alarm flashing border."""
+    if not boss_target or not boss_target.alive:
+        return
+    hp_pct = max(0.0, min(1.0, boss_target.hp / boss_target.max_hp))
+    bar_w = 420
+    bar_rect = pygame.Rect(SCREEN_WIDTH // 2 - bar_w // 2, 72, bar_w, 22)
+    
+    pygame.draw.rect(canvas, (15, 23, 42, 240), bar_rect, border_radius=6)
+    fill_w = int(bar_w * hp_pct)
+    if fill_w > 0:
+        pygame.draw.rect(canvas, COLOR_CRIMSON, (bar_rect.left, bar_rect.top, fill_w, 22), border_radius=6)
+    pygame.draw.rect(canvas, COLOR_WHITE, bar_rect, 2, border_radius=6)
+    
+    lbl = font_hud.render(f"DREADNOUGHT BOSS: {int(hp_pct * 100)}%", True, COLOR_WHITE)
+    canvas.blit(lbl, lbl.get_rect(center=bar_rect.center))
+
     # Combo pill
     if combo_mult > 1:
         _pill(bar_x + 538, "COMBO", f"x{combo_mult}", True, (255, 100, 20))
@@ -532,6 +560,28 @@ def draw_virtual_touch_controls(canvas: pygame.Surface, dpad_state: dict = None,
     canvas.blit(lbl_c, (ccx - lbl_c.get_width() // 2, ccy + 16))
     controls["cloak"] = btn_cloak
 
+    # ── AUTO-LOCK TARGET ASSIST Button ───────────────────────────────────────
+    btn_lock = pygame.Rect(SCREEN_WIDTH - 165, SCREEN_HEIGHT - 365, 140, 56)
+    is_l_active = (active_button == "autolock")
+    bg_l = (16, 185, 129) if is_l_active else (30, 41, 59)
+    pygame.draw.rect(canvas, bg_l, btn_lock, border_radius=12)
+    pygame.draw.rect(canvas, COLOR_WHITE if is_l_active else COLOR_EMERALD, btn_lock, 3 if is_l_active else 2, border_radius=12)
+    lbl_lock = font_card.render("LOCK ON" if is_l_active else "AUTO LOCK", True, COLOR_WHITE)
+    canvas.blit(lbl_lock, lbl_lock.get_rect(center=btn_lock.center))
+    controls["autolock"] = btn_lock
+
+    # ── ULTIMATE OVERDRIVE Button (90x90) ────────────────────────────────────
+    btn_ult = pygame.Rect(SCREEN_WIDTH - 290, SCREEN_HEIGHT - 445, 90, 90)
+    is_u_active = (active_button == "ultimate")
+    pygame.draw.ellipse(canvas, (250, 204, 21) if is_u_active else (147, 51, 234), btn_ult)
+    pygame.draw.ellipse(canvas, COLOR_WHITE if is_u_active else COLOR_GOLD, btn_ult, width=4 if is_u_active else 2)
+    ucx, ucy = btn_ult.center
+    pygame.draw.circle(canvas, COLOR_WHITE, (ucx, ucy - 6), 14, 2)
+    pygame.draw.circle(canvas, COLOR_GOLD, (ucx, ucy - 6), 5)
+    lbl_u = font_card.render("ULTIMATE", True, COLOR_WHITE)
+    canvas.blit(lbl_u, (ucx - lbl_u.get_width() // 2, ucy + 16))
+    controls["ultimate"] = btn_ult
+
     # ── PAUSE Button (top-left standalone) ───────────────────────────────────
     btn_pause = pygame.Rect(12, 10, 100, 60)
     is_p_active = (active_button == "pause")
@@ -735,8 +785,16 @@ def draw_hangar_shop_ui(canvas: pygame.Surface, coins: int, current_sector: int,
         if fill_w > 0:
             pygame.draw.rect(canvas, color, (cx + 20, cy + 72, fill_w, 12), border_radius=3)
 
+    # Skin Theme Selector Button in Hangar Header
+    skin_btn_rect = pygame.Rect(SCREEN_WIDTH - 600, 30, 240, 42)
+    hov_s = skin_btn_rect.collidepoint(mx, my)
+    pygame.draw.rect(canvas, (16, 185, 129) if hov_s else (30, 41, 59), skin_btn_rect, border_radius=8)
+    pygame.draw.rect(canvas, COLOR_WHITE if hov_s else COLOR_EMERALD, skin_btn_rect, 2, border_radius=8)
+    lbl_skin = font_card.render("🎨 CHANGE DRONE SKIN", True, COLOR_WHITE)
+    canvas.blit(lbl_skin, lbl_skin.get_rect(center=skin_btn_rect.center))
+
     exit_btn_rect = draw_exit_button(canvas)
-    return exit_btn_rect
+    return exit_btn_rect, skin_btn_rect
 
 
 def draw_campaign_victory_ui(canvas: pygame.Surface, total_score: int, highscore: int, coins: int):

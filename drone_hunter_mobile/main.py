@@ -42,7 +42,7 @@ from src.ui import (
     draw_hud, draw_radar_minimap, draw_crt_scanlines, draw_crosshair,
     draw_sector_select_ui, draw_hangar_shop_ui, draw_exit_button,
     draw_campaign_victory_ui, draw_pause_settings_ui, draw_virtual_touch_controls,
-    draw_nav_buttons, draw_game_over_screen
+    draw_nav_buttons, draw_game_over_screen, draw_boss_health_bar
 )
 
 def load_save_data():
@@ -541,26 +541,31 @@ def main():
                                     break
 
                 elif game_state == STATE_HANGAR:
-                    upg_keys = ["battery", "speed", "fire_rate", "emp_recharge", "wingman", "cloak", "missiles", "beam"]
-                    h_start_x, h_start_y = 44, 95
-                    h_card_w, h_card_h = 280, 115
-                    bought = False
-                    for u_i, u_key in enumerate(upg_keys):
-                        u_col = u_i % 4
-                        u_row = u_i // 4
-                        u_rect = pygame.Rect(h_start_x + u_col * 300, h_start_y + u_row * 130, h_card_w, h_card_h)
-                        if u_rect.collidepoint(mx, my):
-                            buy_upgrade(u_key)
-                            bought = True
-                            break
+                    exit_r, skin_r = draw_hangar_shop_ui(canvas, coins, current_sector_idx, upgrade_levels)
+                    if skin_r.collidepoint(mx, my):
+                        if drone: drone.cycle_skin()
+                        audio_manager.play_powerup()
+                    else:
+                        upg_keys = ["battery", "speed", "fire_rate", "emp_recharge", "wingman", "cloak", "missiles", "beam"]
+                        h_start_x, h_start_y = 44, 95
+                        h_card_w, h_card_h = 280, 115
+                        bought = False
+                        for u_i, u_key in enumerate(upg_keys):
+                            u_col = u_i % 4
+                            u_row = u_i // 4
+                            u_rect = pygame.Rect(h_start_x + u_col * 300, h_start_y + u_row * 130, h_card_w, h_card_h)
+                            if u_rect.collidepoint(mx, my):
+                                buy_upgrade(u_key)
+                                bought = True
+                                break
 
-                    if not bought:
-                        h_nav = draw_nav_buttons(canvas, mode="hangar")
-                        if "map" in h_nav and h_nav["map"].collidepoint(mx, my):
-                            game_state = STATE_SECTOR_SELECT
-                        elif "play" in h_nav and h_nav["play"].collidepoint(mx, my):
-                            reset_game()
-                            game_state = STATE_PLAYING
+                        if not bought:
+                            h_nav = draw_nav_buttons(canvas, mode="hangar")
+                            if "map" in h_nav and h_nav["map"].collidepoint(mx, my):
+                                game_state = STATE_SECTOR_SELECT
+                            elif "play" in h_nav and h_nav["play"].collidepoint(mx, my):
+                                reset_game()
+                                game_state = STATE_PLAYING
 
                 elif game_state == STATE_PAUSED:
                     pause_btns = draw_pause_settings_ui(canvas, difficulty_mode, show_crt, audio_manager.sound_enabled, is_diff_open=is_diff_dropdown_open)
@@ -616,6 +621,12 @@ def main():
                     elif touch_ctrls["cloak"].collidepoint(mx, my):
                         active_touch_btn = "cloak"
                         execute_cloak()
+                    elif "autolock" in touch_ctrls and touch_ctrls["autolock"].collidepoint(mx, my):
+                        active_touch_btn = "autolock"
+                        if drone: drone.toggle_auto_lock()
+                    elif "ultimate" in touch_ctrls and touch_ctrls["ultimate"].collidepoint(mx, my):
+                        active_touch_btn = "ultimate"
+                        if drone: drone.trigger_ultimate(target_group, particle_manager, audio_manager, trigger_shake)
                     elif touch_ctrls["fire"].collidepoint(mx, my):
                         active_touch_btn = "fire"
                         touch_fire = True
@@ -748,6 +759,7 @@ def main():
                         total_score += pts
                         combo_count = min(99, combo_count + 1)
                         combo_timer = 4.0
+                        if drone: drone.add_ultimate_charge(15.0)
                         
                         if total_score > highscore:
                             highscore = total_score
@@ -820,6 +832,22 @@ def main():
                         wpn_name = str(drone.active_weapon)
                         particle_manager.spawn_floating_text(p.rect.center, f"WEAPON: {wpn_name.upper()}", COLOR_GOLD, 22)
 
+            # Advanced Stage Environmental Hazards & Repair Drops (Stages 2 & 3 only)
+            if game_state == STATE_PLAYING and current_sub_level in (2, 3):
+                if random.random() < 0.008:
+                    if current_sector_idx >= 2:
+                        lx = random.randint(100, SCREEN_WIDTH - 100)
+                        particle_manager.spawn_spark((lx, SCREEN_HEIGHT // 2), count=18, color=COLOR_CYAN)
+                        if drone and abs(drone.pos.x - lx) < 60:
+                            drone.take_damage(10)
+                            audio_manager.play_hit()
+                    else:
+                        dx = random.randint(100, SCREEN_WIDTH - 100)
+                        particle_manager.spawn_explosion((dx, 100), count=10, color=COLOR_GOLD)
+                        if drone and abs(drone.pos.x - dx) < 50:
+                            drone.take_damage(8)
+                            audio_manager.play_hit()
+
             # Check Stage Clearing
             if game_state == STATE_PLAYING and wave_manager.is_stage_complete(level_score):
                 game_state = STATE_LEVEL_CLEAR
@@ -867,6 +895,12 @@ def main():
             draw_hud(canvas, drone, current_sector_idx, level_score, total_score, coins, DIFFICULTY_NAMES[difficulty_mode], combo_mult=combo_count, show_crt=show_crt, current_wave=cur_wave, sub_level=current_sub_level)
             draw_radar_minimap(canvas, drone, target_group, wingmen_group=drone.wingmen if drone else None)
             draw_crosshair(canvas)
+
+            # Draw Boss Health Bar when in Boss Wave
+            if cur_wave == 4:
+                boss_targets = [t for t in target_group if getattr(t, "target_type", "") == "boss"]
+                if boss_targets:
+                    draw_boss_health_bar(canvas, boss_targets[0])
 
             if game_state == STATE_PLAYING:
                 active_wpn3 = drone.active_weapon if drone else "pulse"

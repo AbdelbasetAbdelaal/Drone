@@ -56,10 +56,46 @@ class WingmanDrone(pygame.sprite.Sprite):
         return bullets
 
 
+SKIN_THEMES = {
+    0: {
+        "name": "PLATINUM",
+        "body": (241, 245, 249),
+        "accent1": (250, 204, 21),
+        "accent2": (6, 182, 212),
+        "glow": (56, 189, 248, 160),
+        "motors": (236, 72, 153),
+    },
+    1: {
+        "name": "CYBERNEON",
+        "body": (15, 23, 42),
+        "accent1": (236, 72, 153),
+        "accent2": (56, 189, 248),
+        "glow": (236, 72, 153, 180),
+        "motors": (56, 189, 248),
+    },
+    2: {
+        "name": "SOVEREIGN",
+        "body": (250, 204, 21),
+        "accent1": (30, 41, 59),
+        "accent2": (245, 158, 11),
+        "glow": (250, 204, 21, 180),
+        "motors": (217, 119, 6),
+    },
+    3: {
+        "name": "CRIMSON",
+        "body": (225, 29, 72),
+        "accent1": (15, 23, 42),
+        "accent2": (255, 120, 120),
+        "glow": (239, 68, 68, 180),
+        "motors": (168, 85, 247),
+    }
+}
+
 class Player(pygame.sprite.Sprite):
     """
     Tactical Quadcopter Drone with multi-weapon loadouts, Wingman escort minidrones,
-    Tactical Cloaking, EMP shockwave, Evasive Barrel Roll, and Forcefield Shield.
+    Tactical Cloaking, EMP shockwave, Evasive Barrel Roll, Forcefield Shield,
+    Auto-Lock Target Assist, Ultimate Overdrive Strike, and Skin Color Customization.
     """
     def __init__(self, pos: tuple[float, float]):
         super().__init__()
@@ -79,6 +115,11 @@ class Player(pygame.sprite.Sprite):
         self.dpad_right = False
         self.slowmo_timer = 0.0
         self.shoot_timer = 0.0
+
+        # Auto-Lock & Ultimate Overdrive
+        self.auto_lock_enabled = False
+        self.ultimate_charge = 0.0
+        self.skin_theme = 0
 
         # Weapon System & Loadouts
         self.available_weapons = [WEAPON_PULSE, WEAPON_SCATTER]
@@ -102,9 +143,9 @@ class Player(pygame.sprite.Sprite):
         self.roll_angle = 0.0
         self.roll_dir = 1.0
 
-        # Surface Dimensions
-        self.width = 68
-        self.height = 44
+        # Surface Dimensions (Enlarged to 118x76px with high-contrast hero armor styling)
+        self.width = 118
+        self.height = 76
         self.original_image = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
 
         self.rotor_angle = 0.0
@@ -403,6 +444,36 @@ class Player(pygame.sprite.Sprite):
             self.emp_cooldown = self.emp_cooldown_max
             return True
         return False
+
+    def add_ultimate_charge(self, amount: float = 10.0):
+        self.ultimate_charge = min(100.0, self.ultimate_charge + amount)
+
+    def trigger_ultimate(self, targets_group=None, particle_manager=None, audio_manager=None, trigger_shake_fn=None) -> bool:
+        """Unleashes screen-clearing Orbital Beam Strike when ultimate meter is 100% full."""
+        if self.ultimate_charge >= 100.0:
+            self.ultimate_charge = 0.0
+            if audio_manager:
+                audio_manager.play_emp()
+            if trigger_shake_fn:
+                trigger_shake_fn(16.0, 0.6)
+            if particle_manager:
+                particle_manager.spawn_shockwave((SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2), max_r=600, color=(250, 204, 21))
+                particle_manager.spawn_spark((SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2), count=60, color=(56, 189, 248))
+            if targets_group:
+                for t in targets_group:
+                    t.take_damage(500)
+            return True
+        return False
+
+    def toggle_auto_lock(self) -> bool:
+        self.auto_lock_enabled = not self.auto_lock_enabled
+        return self.auto_lock_enabled
+
+    def cycle_skin(self):
+        self.skin_theme = (self.skin_theme + 1) % len(SKIN_THEMES)
+        self._rotation_cache.clear()
+        self._render_drone_sprite()
+        return self.skin_theme
 
     def activate_shield(self, charges: int = 2):
         self.shield_hits = max(self.shield_hits, charges)
