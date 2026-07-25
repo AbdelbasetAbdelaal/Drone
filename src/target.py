@@ -171,6 +171,10 @@ class Target(pygame.sprite.Sprite):
         self.speed = base_speed + speed_bonus
         self.time_accum = 0.0
 
+    @property
+    def score_value(self) -> int:
+        return getattr(self, 'points', 100)
+
     def _render_sprite(self):
         self.image.fill((0, 0, 0, 0))
         center = (self.size // 2, self.size // 2)

@@ -384,6 +384,10 @@ class AudioManager:
         if self.sound_enabled: play_synth_beam()
     def play_cloak(self):
         if self.sound_enabled: play_synth_cloak()
+    def play_hit(self):
+        if self.sound_enabled: play_synth_laser()
+    def play_impact(self):
+        if self.sound_enabled: play_synth_laser()
 
     def play_sector_ambient(self, sector_idx: int):
         if not self.sound_enabled: return
