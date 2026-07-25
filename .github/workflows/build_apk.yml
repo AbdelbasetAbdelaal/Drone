@@ -28,12 +28,8 @@ jobs:
           pip install buildozer cython
 
       - name: Build APK with Buildozer
-        env:
-          DISABLE_PYGAME_DOCS: "1"
-          BUILD_DOCS: "0"
         run: |
           cd drone_hunter
-          (while true; do find .buildozer -type d \( -name "docs" -o -name "tests" \) -exec rm -rf {} + 2>/dev/null; sleep 2; done) &
           yes | buildozer -v android debug
 
       - name: Upload APK Artifact

@@ -21,11 +21,8 @@ source.exclude_patterns = license, .git, .buildozer, *.pyc, *.pyo, docs/*, tests
 # (str) Application versioning
 version = 1.0.0
 
-# (list) Application requirements
-requirements = python3,sdl2,sdl2_image,sdl2_mixer,sdl2_ttf,pygame-ce
-
-# (str) Extra arguments to pass to python-for-android to force ARM C cross-compilation
-p4a.extra_args = --no-binary pygame-ce
+# (list) Application requirements (Use official python-for-android pygame recipe)
+requirements = python3,pygame
 
 # (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
 orientation = landscape
