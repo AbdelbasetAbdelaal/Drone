@@ -41,7 +41,7 @@ from src.hazard import LaserGridFence, GravityAnomaly
 from src.ui import (
     draw_hud, draw_radar_minimap, draw_crt_scanlines, draw_crosshair,
     draw_sector_select_ui, draw_hangar_shop_ui, draw_exit_button,
-    draw_campaign_victory_ui, draw_pause_settings_ui
+    draw_campaign_victory_ui, draw_pause_settings_ui, draw_virtual_touch_controls
 )
 
 def load_save_data():
@@ -174,6 +174,25 @@ def main():
     drone = None
     spawner = None
     wave_manager = None
+
+    def get_canvas_pos(raw_pos):
+        try:
+            real_w, real_h = screen.get_size()
+            if real_w <= 0 or real_h <= 0:
+                return raw_pos
+            cx = int(raw_pos[0] * SCREEN_WIDTH / real_w)
+            cy = int(raw_pos[1] * SCREEN_HEIGHT / real_h)
+            return (cx, cy)
+        except Exception:
+            return raw_pos
+
+    # Touch Controls State Variables for Android Mobile
+    joystick_center = (140, 580)
+    joystick_knob = (140, 580)
+    is_touch_active = False
+    touch_move_vector = pygame.Vector2(0, 0)
+    touch_fire = False
+    touch_aim_pos = (SCREEN_WIDTH - 200, SCREEN_HEIGHT // 2)
 
     def trigger_shake(intensity: float = 6.0, duration: float = 0.25):
         nonlocal screen_shake_intensity, screen_shake_time
@@ -446,9 +465,28 @@ def main():
                             reset_game()
                             game_state = STATE_PLAYING
 
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                mx, my = pygame.mouse.get_pos()
-                if game_state in (STATE_MENU, STATE_SECTOR_SELECT, STATE_HANGAR, STATE_VICTORY):
+            elif event.type in (pygame.MOUSEBUTTONDOWN, pygame.FINGERDOWN):
+                raw_p = (event.x * screen.get_width(), event.y * screen.get_height()) if event.type == pygame.FINGERDOWN else pygame.mouse.get_pos()
+                mx, my = get_canvas_pos(raw_p)
+
+                if game_state == STATE_MENU:
+                    game_state = STATE_SECTOR_SELECT
+
+                elif game_state == STATE_LEVEL_CLEAR:
+                    start_next_stage()
+
+                elif game_state == STATE_GAME_OVER:
+                    reset_game()
+                    game_state = STATE_PLAYING
+
+                elif game_state == STATE_VICTORY:
+                    difficulty_mode = DIFFICULTY_NIGHTMARE
+                    current_sector_idx = 4
+                    current_sub_level = 3
+                    reset_game()
+                    game_state = STATE_PLAYING
+
+                elif game_state in (STATE_SECTOR_SELECT, STATE_HANGAR):
                     exit_rect = pygame.Rect(SCREEN_WIDTH - 140, SCREEN_HEIGHT - 55, 120, 40)
                     if exit_rect.collidepoint(mx, my):
                         running = False
@@ -493,6 +531,25 @@ def main():
                                 game_state = STATE_PLAYING
                                 break
 
+                elif game_state == STATE_HANGAR:
+                    upg_keys = ["battery", "speed", "fire_rate", "emp_recharge", "wingman", "cloak", "missiles", "beam"]
+                    h_start_x, h_start_y = 44, 95
+                    h_card_w, h_card_h = 280, 115
+                    for u_i, u_key in enumerate(upg_keys):
+                        u_col = u_i % 4
+                        u_row = u_i // 4
+                        u_rect = pygame.Rect(h_start_x + u_col * 300, h_start_y + u_row * 130, h_card_w, h_card_h)
+                        if u_rect.collidepoint(mx, my):
+                            buy_upgrade(u_key)
+
+                    h_map_btn = pygame.Rect(44, SCREEN_HEIGHT - 65, 200, 48)
+                    h_start_btn = pygame.Rect(260, SCREEN_HEIGHT - 65, 300, 48)
+                    if h_map_btn.collidepoint(mx, my):
+                        game_state = STATE_SECTOR_SELECT
+                    elif h_start_btn.collidepoint(mx, my):
+                        reset_game()
+                        game_state = STATE_PLAYING
+
                 elif game_state == STATE_PAUSED:
                     pause_btns = draw_pause_settings_ui(canvas, difficulty_mode, show_crt, audio_manager.sound_enabled, is_diff_open=is_diff_dropdown_open)
                     
@@ -525,19 +582,65 @@ def main():
                         elif pause_btns["exit"].collidepoint(mx, my):
                             running = False
 
-                if game_state == STATE_PLAYING:
-                    if event.button == 3:
+                elif game_state == STATE_PLAYING:
+                    touch_ctrls = draw_virtual_touch_controls(canvas, joystick_center, joystick_knob, is_touch_active)
+                    if touch_ctrls["pause"].collidepoint(mx, my):
+                        game_state = STATE_PAUSED
+                    elif touch_ctrls["weapon"].collidepoint(mx, my):
+                        if drone: drone.cycle_weapon()
+                    elif touch_ctrls["emp"].collidepoint(mx, my):
                         execute_emp_blast()
+                    elif touch_ctrls["roll"].collidepoint(mx, my):
+                        execute_barrel_roll()
+                    elif touch_ctrls["cloak"].collidepoint(mx, my):
+                        execute_cloak()
+                    elif touch_ctrls["fire"].collidepoint(mx, my):
+                        touch_fire = True
+                    elif mx < SCREEN_WIDTH // 2:
+                        is_touch_active = True
+                        joystick_knob = (mx, my)
+
+            elif event.type in (pygame.MOUSEBUTTONUP, pygame.FINGERUP):
+                touch_fire = False
+                is_touch_active = False
+                joystick_knob = joystick_center
+
+            elif event.type in (pygame.MOUSEMOTION, pygame.FINGERMOTION):
+                if event.type == pygame.FINGERMOTION:
+                    raw_p = (event.x * screen.get_width(), event.y * screen.get_height())
+                else:
+                    raw_p = pygame.mouse.get_pos()
+                mx, my = get_canvas_pos(raw_p)
+                touch_aim_pos = (mx, my)
+
+                if is_touch_active and game_state == STATE_PLAYING:
+                    if mx < SCREEN_WIDTH // 2:
+                        joystick_knob = (mx, my)
 
         if game_state == STATE_PLAYING and drone:
+            # Handle touch joystick movement on mobile
+            if is_touch_active:
+                jx, jy = joystick_center
+                kx, ky = joystick_knob
+                dx = kx - jx
+                dy = ky - jy
+                dist = math.hypot(dx, dy)
+                if dist > 5:
+                    nx = dx / max(dist, 65.0)
+                    ny = dy / max(dist, 65.0)
+                    drone.velocity.x += nx * drone.speed * 3.5 * dt
+                    drone.velocity.y += ny * drone.speed * 3.5 * dt
+
             particle_manager.spawn_drone_trail((drone.pos.x - 22, drone.pos.y))
             wm_bullets = drone.update(dt, particle_manager, audio_manager, targets_group=target_group)
             for wb in wm_bullets:
                 bullet_group.add(wb)
 
             mouse_pressed = pygame.mouse.get_pressed()
-            if mouse_pressed[0] and drone.can_shoot():
-                mx, my = pygame.mouse.get_pos()
+            should_shoot = touch_fire or mouse_pressed[0]
+            if should_shoot and drone.can_shoot():
+                raw_m = pygame.mouse.get_pos()
+                mx, my = get_canvas_pos(raw_m) if not touch_fire else touch_aim_pos
                 fired_bullets = drone.shoot((mx, my), level=current_sub_level, targets_group=target_group)
                 for b in fired_bullets:
                     bullet_group.add(b)
@@ -733,7 +836,10 @@ def main():
             draw_radar_minimap(canvas, drone, target_group, wingmen_group=drone.wingmen if drone else None)
             draw_crosshair(canvas)
 
-            if game_state == STATE_PAUSED:
+            if game_state == STATE_PLAYING:
+                draw_virtual_touch_controls(canvas, joystick_center, joystick_knob, is_touch_active)
+
+            elif game_state == STATE_PAUSED:
                 draw_pause_settings_ui(canvas, difficulty_mode, show_crt, audio_manager.sound_enabled, is_diff_open=is_diff_dropdown_open)
 
             elif game_state == STATE_LEVEL_CLEAR:
