@@ -46,7 +46,7 @@ from src.ui import (
 )
 
 def load_save_data():
-    """Loads coins, highscore, upgrade levels, sector unlocks, and sub-level stage unlocks from save file."""
+    """Loads coins, highscore, upgrade levels, sector unlocks, sub-level stage unlocks, and skin theme from save file."""
     default_upgrades = {"battery": 0, "speed": 0, "fire_rate": 0, "emp_recharge": 0, "wingman": 0, "cloak": 0, "missiles": 0, "beam": 0}
     default_sectors = [True, False, False, False, False]
     default_stages = [True] + [False] * 14
@@ -64,12 +64,13 @@ def load_save_data():
                 while len(stages) < 15:
                     stages.append(False)
                 show_crt = data.get("show_crt", False)
-                return coins, highscore, upgrades, sectors, stages, show_crt
+                skin_theme = data.get("skin_theme", 0)
+                return coins, highscore, upgrades, sectors, stages, show_crt, skin_theme
         except Exception:
-            return 0, 0, default_upgrades, default_sectors, default_stages, False
-    return 0, 0, default_upgrades, default_sectors, default_stages, False
+            return 0, 0, default_upgrades, default_sectors, default_stages, False, 0
+    return 0, 0, default_upgrades, default_sectors, default_stages, False, 0
 
-def save_game_data(coins: int, highscore: int, upgrades: dict[str, int], sectors: list[bool], show_crt: bool = False, stages: list[bool] = None):
+def save_game_data(coins: int, highscore: int, upgrades: dict[str, int], sectors: list[bool], show_crt: bool = False, stages: list[bool] = None, skin_theme: int = 0):
     """Saves progress state to JSON file."""
     if stages is None:
         stages = [True] + [False] * 14
@@ -80,7 +81,8 @@ def save_game_data(coins: int, highscore: int, upgrades: dict[str, int], sectors
             "upgrades": upgrades,
             "sectors": sectors,
             "stages": stages,
-            "show_crt": show_crt
+            "show_crt": show_crt,
+            "skin_theme": skin_theme
         }
         with open(SAVE_FILE, "w") as f:
             json.dump(data, f, indent=2)
@@ -132,7 +134,7 @@ def main():
     powerup_group = pygame.sprite.Group()
 
     # Save Data & Game State
-    coins, highscore, upgrade_levels, unlocked_sectors, unlocked_stages, show_crt = load_save_data()
+    coins, highscore, upgrade_levels, unlocked_sectors, unlocked_stages, show_crt, current_skin_theme = load_save_data()
     game_state = STATE_MENU
     difficulty_mode = 0
     is_diff_dropdown_open = False
@@ -199,6 +201,9 @@ def main():
         particle_manager.floating_texts.empty()
         
         drone = Player((200, SCREEN_HEIGHT // 2))
+        drone.skin_theme = current_skin_theme
+        drone._rotation_cache.clear()
+        drone._render_drone_sprite()
         drone.apply_shop_upgrades(upgrade_levels)
         player_group.add(drone)
         
@@ -496,10 +501,8 @@ def main():
                     diff_rect = pygame.Rect(480, 24, 220, 36)
                     hangar_btn_r = pygame.Rect(SCREEN_WIDTH // 2 - 110, SCREEN_HEIGHT - 58, 220, 46)
                     if exit_rect.collidepoint(mx, my):
-                        if not IS_ANDROID:
-                            running = False
-                        else:
-                            game_state = STATE_MENU
+                        save_game_data(coins, highscore, upgrade_levels, unlocked_sectors, show_crt, unlocked_stages, current_skin_theme)
+                        running = False
                     elif diff_rect.collidepoint(mx, my):
                         difficulty_mode = (difficulty_mode + 1) % 4
                     elif hangar_btn_r.collidepoint(mx, my):
@@ -541,17 +544,25 @@ def main():
                                     break
 
                 elif game_state == STATE_HANGAR:
-                    cur_skin = drone.skin_theme if drone else 0
-                    upg_rects, exit_r, skin_r = draw_hangar_shop_ui(canvas, coins, current_sector_idx, upgrade_levels, drone_skin=cur_skin)
+                    upg_rects, exit_r, skin_r = draw_hangar_shop_ui(canvas, coins, current_sector_idx, upgrade_levels, drone_skin=current_skin_theme)
                     if skin_r.collidepoint(mx, my):
-                        if drone: drone.cycle_skin()
+                        current_skin_theme = (current_skin_theme + 1) % 4
+                        if drone:
+                            drone.skin_theme = current_skin_theme
+                            drone._rotation_cache.clear()
+                            drone._render_drone_sprite()
+                        save_game_data(coins, highscore, upgrade_levels, unlocked_sectors, show_crt, unlocked_stages, current_skin_theme)
                         audio_manager.play_powerup()
+                    elif exit_r.collidepoint(mx, my):
+                        save_game_data(coins, highscore, upgrade_levels, unlocked_sectors, show_crt, unlocked_stages, current_skin_theme)
+                        running = False
                     else:
                         bought = False
                         for u_key, u_rect in upg_rects.items():
                             if u_rect.collidepoint(mx, my):
                                 buy_upgrade(u_key)
                                 bought = True
+                                save_game_data(coins, highscore, upgrade_levels, unlocked_sectors, show_crt, unlocked_stages, current_skin_theme)
                                 break
 
                         if not bought:

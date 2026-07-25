@@ -1,11 +1,11 @@
 {
-  "coins": 59,
+  "coins": 25,
   "highscore": 10915,
   "upgrades": {
-    "battery": 2,
+    "battery": 3,
     "speed": 5,
     "fire_rate": 5,
-    "emp_recharge": 1,
+    "emp_recharge": 2,
     "wingman": 1,
     "cloak": 1,
     "missiles": 1,
@@ -35,5 +35,6 @@
     false,
     false
   ],
-  "show_crt": false
+  "show_crt": false,
+  "skin_theme": 0
 }
