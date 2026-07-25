@@ -1,26 +1,19 @@
 {
-  "coins": 17894,
-  "highscore": 68230,
+  "coins": 100,
+  "highscore": 5000,
   "upgrades": {
-    "battery": 5,
-    "speed": 5,
-    "fire_rate": 5,
-    "emp_recharge": 5,
-    "wingman": 2,
-    "cloak": 1,
-    "missiles": 1,
-    "beam": 1
+    "battery": 1
   },
   "sectors": [
     true,
-    true,
-    true,
-    true,
-    true
+    false,
+    false,
+    false,
+    false
   ],
   "stages": [
     true,
-    true,
+    false,
     false,
     false,
     false,
@@ -35,5 +28,5 @@
     false,
     false
   ],
-  "show_crt": true
+  "show_crt": false
 }

@@ -115,6 +115,7 @@ class Player(pygame.sprite.Sprite):
         
         self.radius = 28
         self.is_thrusting = False
+        self.emp_jammed_timer = 0.0
 
     def apply_shop_upgrades(self, upgrade_levels: dict[str, int]):
         """Applies persistent shop level upgrades to player stats, weapons, and wingmen."""
@@ -223,6 +224,7 @@ class Player(pygame.sprite.Sprite):
         self.slowmo_timer = max(0.0, self.slowmo_timer - dt)
         self.roll_cooldown = max(0.0, self.roll_cooldown - dt)
         self.cloak_cooldown = max(0.0, self.cloak_cooldown - dt)
+        self.emp_jammed_timer = max(0.0, self.emp_jammed_timer - dt)
 
         # Update Cloak timer
         if self.is_cloaked:
@@ -371,7 +373,7 @@ class Player(pygame.sprite.Sprite):
         self.health = min(self.max_health, self.health + amount)
 
     def can_shoot(self) -> bool:
-        return self.shoot_timer <= 0.0
+        return self.shoot_timer <= 0.0 and self.emp_jammed_timer <= 0.0
 
     def shoot(self, target_pos: tuple[int, int], level: int = 1, targets_group=None) -> list[pygame.sprite.Sprite]:
         if not self.can_shoot():

@@ -5,15 +5,20 @@ from src.settings import (
     SCREEN_WIDTH, SCREEN_HEIGHT, TARGET_SPEED, ENEMY_BULLET_SPEED,
     TARGET_TYPE_STANDARD, TARGET_TYPE_FAST, TARGET_TYPE_ARMORED, TARGET_TYPE_SHOOTER, TARGET_TYPE_BOSS,
     TARGET_TYPE_TURRET, TARGET_TYPE_VEHICLE, TARGET_TYPE_CHASER,
-    COLOR_TARGET, COLOR_MAGENTA, COLOR_CRIMSON, COLOR_CYAN, COLOR_NEON_RED
+    TARGET_TYPE_STEALTH_MIRAGE, TARGET_TYPE_EMP_DISRUPTER, TARGET_TYPE_TITAN_MECH,
+    COLOR_TARGET, COLOR_MAGENTA, COLOR_CRIMSON, COLOR_CYAN, COLOR_NEON_RED, COLOR_OVERCLOCK, COLOR_PURPLE, COLOR_GOLD
 )
 from src.bullet import EnemyBullet
 
 class Target(pygame.sprite.Sprite):
     """
     Target (Enemy) sprite supporting multiple enemy variants:
-    - Standard, Fast, Armored, Shooter, Boss Dreadnought, Turret, Vehicle, Chaser.
-    Supports Multi-Phase Boss encounters with 360-Degree Radial Spiral Salvos!
+    - Standard, Fast, Armored, Shooter, Turret, Vehicle, Chaser.
+    - NEW BOSS DRONES:
+      1. Sky Fortress Boss (Classic 360-Degree Radial Spiral Salvos)
+      2. Stealth Mirage Boss (Tactical Invisibility Cloak & Holographic Clones)
+      3. EMP Disrupter Boss (EMP Shockwave Wave Jammer & Barrier Orbs)
+      4. Super-Dreadnought Titan Mech (3-Phase Overclock Berserk Titan)
     """
     def __init__(self, target_type: str = TARGET_TYPE_STANDARD, speed_bonus: float = 0.0, level: int = 1, sector_idx: int = 0):
         super().__init__()
@@ -24,6 +29,20 @@ class Target(pygame.sprite.Sprite):
         self.shoot_timer = random.uniform(0.3, 1.4)
         self.rage_phase = False
         
+        # Stealth Mirage Boss specific stats
+        self.is_cloaked = False
+        self.cloak_timer = 0.0
+        self.cloak_cooldown = 3.5
+        self.is_decoy = False
+
+        # EMP Disrupter Boss specific stats
+        self.emp_pulse_timer = 4.0
+        self.emp_wave_radius = 0.0
+        self.is_emp_expanding = False
+
+        # Titan Mech Boss specific stats
+        self.boss_phase = 1
+
         sec_mult = 1.0 + (sector_idx * 0.35)
         
         if target_type == TARGET_TYPE_BOSS:
@@ -35,6 +54,37 @@ class Target(pygame.sprite.Sprite):
             base_speed = 75.0 + sector_idx * 15.0
             color_outer = (225, 29, 72)
             color_inner = (250, 204, 21)
+
+        elif target_type == TARGET_TYPE_STEALTH_MIRAGE:
+            boss_hp = int((105 + (level - 1) * 50) * sec_mult)
+            self.hp = boss_hp
+            self.max_hp = boss_hp
+            self.points = 800 + sector_idx * 250
+            size = 110
+            base_speed = 90.0 + sector_idx * 20.0
+            color_outer = COLOR_PURPLE
+            color_inner = COLOR_CYAN
+
+        elif target_type == TARGET_TYPE_EMP_DISRUPTER:
+            boss_hp = int((130 + (level - 1) * 60) * sec_mult)
+            self.hp = boss_hp
+            self.max_hp = boss_hp
+            self.points = 1000 + sector_idx * 300
+            size = 135
+            base_speed = 65.0 + sector_idx * 15.0
+            color_outer = (99, 102, 241)
+            color_inner = COLOR_GOLD
+
+        elif target_type == TARGET_TYPE_TITAN_MECH:
+            boss_hp = int((200 + (level - 1) * 90) * sec_mult)
+            self.hp = boss_hp
+            self.max_hp = boss_hp
+            self.points = 1500 + sector_idx * 400
+            size = 155
+            base_speed = 55.0 + sector_idx * 15.0
+            color_outer = (190, 18, 60)
+            color_inner = COLOR_OVERCLOCK
+
         elif target_type == TARGET_TYPE_VEHICLE:
             v_hp = int((14 + level * 4) * sec_mult)
             self.hp = v_hp
@@ -106,7 +156,7 @@ class Target(pygame.sprite.Sprite):
         self.image = pygame.Surface((size, size), pygame.SRCALPHA)
         
         spawn_x = SCREEN_WIDTH + size
-        if target_type == TARGET_TYPE_BOSS:
+        if target_type in (TARGET_TYPE_BOSS, TARGET_TYPE_STEALTH_MIRAGE, TARGET_TYPE_EMP_DISRUPTER, TARGET_TYPE_TITAN_MECH):
             spawn_y = SCREEN_HEIGHT // 2
         elif target_type in (TARGET_TYPE_VEHICLE, TARGET_TYPE_TURRET):
             spawn_y = SCREEN_HEIGHT - 65
@@ -146,6 +196,56 @@ class Target(pygame.sprite.Sprite):
             bar_fill_col = (239, 68, 68) if self.rage_phase else (250, 204, 21)
             pygame.draw.rect(self.image, bar_fill_col, (6, 4, fill_w, bar_h))
 
+        elif self.target_type == TARGET_TYPE_STEALTH_MIRAGE:
+            pygame.draw.polygon(self.image, COLOR_PURPLE, [
+                (self.size - 4, center[1]), (12, 6), (center[0], center[1]), (12, self.size - 6)
+            ])
+            c_alpha = 70 if self.is_cloaked else 255
+            pygame.draw.circle(self.image, COLOR_CYAN, center, self.size // 5)
+            self.image.set_alpha(c_alpha)
+
+            bar_w = self.size - 12
+            bar_h = 6
+            pygame.draw.rect(self.image, (51, 65, 85), (6, 4, bar_w, bar_h))
+            fill_w = max(0, int(bar_w * (self.hp / self.max_hp)))
+            pygame.draw.rect(self.image, COLOR_PURPLE, (6, 4, fill_w, bar_h))
+
+        elif self.target_type == TARGET_TYPE_EMP_DISRUPTER:
+            pygame.draw.circle(self.image, (30, 41, 59), center, self.size // 2)
+            pygame.draw.circle(self.image, (99, 102, 241), center, self.size // 2, 5)
+            pygame.draw.circle(self.image, COLOR_GOLD, center, self.size // 4)
+            
+            # EMP Expanding Ring visual
+            if self.is_emp_expanding:
+                pygame.draw.circle(self.image, COLOR_CYAN, center, int(self.emp_wave_radius % (self.size // 2)), 2)
+
+            bar_w = self.size - 12
+            bar_h = 6
+            pygame.draw.rect(self.image, (51, 65, 85), (6, 4, bar_w, bar_h))
+            fill_w = max(0, int(bar_w * (self.hp / self.max_hp)))
+            pygame.draw.rect(self.image, (99, 102, 241), (6, 4, fill_w, bar_h))
+
+        elif self.target_type == TARGET_TYPE_TITAN_MECH:
+            # Titan Super-Dreadnought Hull
+            pygame.draw.rect(self.image, (30, 41, 59), (10, 10, self.size - 20, self.size - 20), border_radius=12)
+            border_col = COLOR_OVERCLOCK if self.boss_phase == 3 else (COLOR_CRIMSON if self.boss_phase == 2 else (56, 189, 248))
+            pygame.draw.rect(self.image, border_col, (10, 10, self.size - 20, self.size - 20), 5, border_radius=12)
+            pygame.draw.circle(self.image, COLOR_OVERCLOCK, center, self.size // 4)
+
+            # Revolving Orbital Shield Orbs in Phase 1 & Phase 2
+            if self.boss_phase < 3:
+                for i in range(4):
+                    ang = self.shield_angle + i * (math.pi / 2)
+                    ox = int(center[0] + math.cos(ang) * (self.size // 2 - 12))
+                    oy = int(center[1] + math.sin(ang) * (self.size // 2 - 12))
+                    pygame.draw.circle(self.image, COLOR_CYAN, (ox, oy), 7)
+
+            bar_w = self.size - 12
+            bar_h = 8
+            pygame.draw.rect(self.image, (51, 65, 85), (6, 2, bar_w, bar_h))
+            fill_w = max(0, int(bar_w * (self.hp / self.max_hp)))
+            pygame.draw.rect(self.image, border_col, (6, 2, fill_w, bar_h))
+
         elif self.target_type == TARGET_TYPE_VEHICLE:
             pygame.draw.rect(self.image, (30, 41, 59), (4, 16, self.size - 8, 28), border_radius=6)
             pygame.draw.rect(self.image, COLOR_NEON_RED, (4, 16, self.size - 8, 28), 2, border_radius=6)
@@ -177,7 +277,7 @@ class Target(pygame.sprite.Sprite):
             pygame.draw.circle(self.image, (15, 23, 42), center, int(self.size // 2 * 0.75))
             pygame.draw.circle(self.image, self.color_inner, center, self.size // 4)
 
-        if self.max_hp > 1 and self.target_type not in (TARGET_TYPE_BOSS,):
+        if self.max_hp > 1 and self.target_type not in (TARGET_TYPE_BOSS, TARGET_TYPE_STEALTH_MIRAGE, TARGET_TYPE_EMP_DISRUPTER, TARGET_TYPE_TITAN_MECH):
             bar_w = self.size - 8
             bar_h = 4
             pygame.draw.rect(self.image, (51, 65, 85), (4, 2, bar_w, bar_h))
@@ -186,14 +286,22 @@ class Target(pygame.sprite.Sprite):
 
     def take_damage(self, amount: int = 1) -> bool:
         self.hp -= amount
+        
         if self.target_type == TARGET_TYPE_BOSS and not self.rage_phase and self.hp <= self.max_hp // 2:
             self.rage_phase = True
+
+        elif self.target_type == TARGET_TYPE_TITAN_MECH:
+            if self.hp <= self.max_hp // 3:
+                self.boss_phase = 3
+            elif self.hp <= (self.max_hp * 2) // 3:
+                self.boss_phase = 2
+
         if self.hp <= 0:
             return True
         self._render_sprite()
         return False
 
-    def update(self, dt: float, player_pos: tuple[float, float] = (200, 360), player_vel: tuple[float, float] = (0, 0), bullet_group=None) -> list[EnemyBullet]:
+    def update(self, dt: float, player_pos: tuple[float, float] = (200, 360), player_vel: tuple[float, float] = (0, 0), bullet_group=None, player_obj=None) -> list[EnemyBullet]:
         effective_dt = dt
         self.time_accum += effective_dt
         new_enemy_bullets = []
@@ -204,23 +312,50 @@ class Target(pygame.sprite.Sprite):
 
         bullet_speed = ENEMY_BULLET_SPEED + self.sector_idx * 50.0
 
-        if self.target_type in (TARGET_TYPE_SHOOTER, TARGET_TYPE_TURRET, TARGET_TYPE_BOSS):
+        # Shooting Logic
+        if self.target_type in (TARGET_TYPE_SHOOTER, TARGET_TYPE_TURRET, TARGET_TYPE_BOSS, TARGET_TYPE_STEALTH_MIRAGE, TARGET_TYPE_EMP_DISRUPTER, TARGET_TYPE_TITAN_MECH):
             self.shoot_timer -= effective_dt
             if self.shoot_timer <= 0:
+                cx, cy = self.rect.center
+
                 if self.target_type == TARGET_TYPE_TURRET:
                     self.shoot_timer = max(0.6, random.uniform(1.2, 1.8) - self.sector_idx * 0.15)
-                    new_enemy_bullets.append(EnemyBullet(self.rect.center, pred_aim, speed=bullet_speed+80, angle_offset_deg=-14.0))
-                    new_enemy_bullets.append(EnemyBullet(self.rect.center, pred_aim, speed=bullet_speed+100, angle_offset_deg=0.0))
-                    new_enemy_bullets.append(EnemyBullet(self.rect.center, pred_aim, speed=bullet_speed+80, angle_offset_deg=14.0))
+                    new_enemy_bullets.append(EnemyBullet((cx, cy), pred_aim, speed=bullet_speed+80, angle_offset_deg=-14.0))
+                    new_enemy_bullets.append(EnemyBullet((cx, cy), pred_aim, speed=bullet_speed+100, angle_offset_deg=0.0))
+                    new_enemy_bullets.append(EnemyBullet((cx, cy), pred_aim, speed=bullet_speed+80, angle_offset_deg=14.0))
+
                 elif self.target_type == TARGET_TYPE_SHOOTER:
                     self.shoot_timer = max(0.8, random.uniform(1.5, 2.2) - self.sector_idx * 0.20)
-                    new_enemy_bullets.append(EnemyBullet(self.rect.center, pred_aim, speed=bullet_speed, angle_offset_deg=-8.0))
-                    new_enemy_bullets.append(EnemyBullet(self.rect.center, pred_aim, speed=bullet_speed, angle_offset_deg=8.0))
+                    new_enemy_bullets.append(EnemyBullet((cx, cy), pred_aim, speed=bullet_speed, angle_offset_deg=-8.0))
+                    new_enemy_bullets.append(EnemyBullet((cx, cy), pred_aim, speed=bullet_speed, angle_offset_deg=8.0))
+
+                elif self.target_type == TARGET_TYPE_STEALTH_MIRAGE:
+                    self.shoot_timer = 1.2 if not self.is_cloaked else 2.5
+                    if not self.is_cloaked:
+                        new_enemy_bullets.append(EnemyBullet((cx, cy), pred_aim, speed=bullet_speed+150, angle_offset_deg=-6.0))
+                        new_enemy_bullets.append(EnemyBullet((cx, cy), pred_aim, speed=bullet_speed+150, angle_offset_deg=6.0))
+
+                elif self.target_type == TARGET_TYPE_EMP_DISRUPTER:
+                    self.shoot_timer = 1.6
+                    for offset in [-28.0, -14.0, 0.0, 14.0, 28.0]:
+                        new_enemy_bullets.append(EnemyBullet((cx, cy), pred_aim, speed=bullet_speed+60, angle_offset_deg=offset))
+
+                elif self.target_type == TARGET_TYPE_TITAN_MECH:
+                    self.shoot_timer = 0.6 if self.boss_phase == 3 else (1.0 if self.boss_phase == 2 else 1.5)
+                    if self.boss_phase == 3: # OVERCLOCK BERSERK: 360-Degree Radial Spiral
+                        for ring_i in range(16):
+                            ang_deg = ring_i * (360.0 / 16.0)
+                            rad = math.radians(ang_deg)
+                            tx = cx + math.cos(rad) * 400.0
+                            ty = cy + math.sin(rad) * 400.0
+                            new_enemy_bullets.append(EnemyBullet((cx, cy), (tx, ty), speed=bullet_speed+120))
+                    else:
+                        for offset in [-20.0, -10.0, 0.0, 10.0, 20.0]:
+                            new_enemy_bullets.append(EnemyBullet((cx, cy), pred_aim, speed=bullet_speed+90, angle_offset_deg=offset))
+
                 elif self.target_type == TARGET_TYPE_BOSS:
                     self.shoot_timer = 0.8 if self.rage_phase else 1.4
-                    cx, cy = self.rect.center
                     if self.rage_phase:
-                        # 360-Degree Radial Spiral Ring Attack Pattern!
                         for ring_i in range(12):
                             ang_deg = ring_i * (360.0 / 12.0)
                             rad = math.radians(ang_deg)
@@ -228,22 +363,50 @@ class Target(pygame.sprite.Sprite):
                             ty = cy + math.sin(rad) * 400.0
                             new_enemy_bullets.append(EnemyBullet((cx, cy), (tx, ty), speed=bullet_speed+110))
                     else:
-                        offsets = [-32.0, -18.0, 0.0, 18.0, 32.0]
-                        for offset in offsets:
+                        for offset in [-32.0, -18.0, 0.0, 18.0, 32.0]:
                             new_enemy_bullets.append(EnemyBullet((cx, cy), pred_aim, speed=bullet_speed+100, angle_offset_deg=offset))
 
-        if self.target_type == TARGET_TYPE_BOSS:
-            rot_speed = 7.5 if self.rage_phase else 3.0
-            self.shield_angle = (self.shield_angle + rot_speed * effective_dt) % 6.28318
+        # Boss Movement & Special Powers Update
+        if self.target_type == TARGET_TYPE_STEALTH_MIRAGE:
+            self.cloak_timer += effective_dt
+            if self.cloak_timer >= self.cloak_cooldown:
+                self.cloak_timer = 0.0
+                self.is_cloaked = not self.is_cloaked
+                if self.is_cloaked:
+                    # Relocate position while invisible
+                    self.pos.y = random.randint(120, SCREEN_HEIGHT - 120)
             self._render_sprite()
 
-            target_x = SCREEN_WIDTH - 190
+        elif self.target_type == TARGET_TYPE_EMP_DISRUPTER:
+            self.emp_pulse_timer -= effective_dt
+            if self.emp_pulse_timer <= 0:
+                self.emp_pulse_timer = 5.0
+                self.is_emp_expanding = True
+                self.emp_wave_radius = 0.0
+
+            if self.is_emp_expanding:
+                self.emp_wave_radius += 400.0 * effective_dt
+                if player_obj and hasattr(player_obj, 'emp_jammed_timer'):
+                    dx = player_pos[0] - self.pos.x
+                    dy = player_pos[1] - self.pos.y
+                    dist = math.hypot(dx, dy)
+                    if dist <= 320.0:
+                        player_obj.emp_jammed_timer = 1.5 # Jam player weapons!
+                if self.emp_wave_radius > 350.0:
+                    self.is_emp_expanding = False
+            self._render_sprite()
+
+        if self.target_type in (TARGET_TYPE_BOSS, TARGET_TYPE_STEALTH_MIRAGE, TARGET_TYPE_EMP_DISRUPTER, TARGET_TYPE_TITAN_MECH):
+            rot_speed = 6.0 if self.rage_phase or self.boss_phase == 3 else 3.0
+            self.shield_angle = (self.shield_angle + rot_speed * effective_dt) % 6.28318
+            
+            target_x = SCREEN_WIDTH - 200
             if self.pos.x > target_x:
                 self.pos.x -= self.speed * effective_dt
             else:
-                h_freq = 3.6 if self.rage_phase else 1.8
-                self.pos.x = target_x + math.sin(self.time_accum * h_freq) * (35.0 if self.rage_phase else 20.0)
-                self.pos.y = (SCREEN_HEIGHT // 2) + math.sin(self.time_accum * (3.5 if self.rage_phase else 2.5)) * 180.0
+                freq = 4.0 if self.boss_phase == 3 or self.rage_phase else 2.0
+                self.pos.x = target_x + math.sin(self.time_accum * freq) * 30.0
+                self.pos.y = (SCREEN_HEIGHT // 2) + math.sin(self.time_accum * freq * 0.8) * 190.0
             
             self.rect.center = (round(self.pos.x), round(self.pos.y))
 
@@ -351,7 +514,22 @@ class Spawner:
     def update(self, dt: float, target_group: pygame.sprite.Group, level_score: int, points_per_level: int, current_wave: int = 1) -> Target | None:
         if not self.boss_spawned and (current_wave == 4 or level_score >= int(points_per_level * 0.70)):
             self.boss_spawned = True
-            boss = Target(target_type=TARGET_TYPE_BOSS, level=self.level, sector_idx=self.sector_idx)
+            
+            # Select Boss type dynamically per Sector
+            if self.sector_idx == 0:
+                b_type = TARGET_TYPE_BOSS # Sky Dreadnought
+            elif self.sector_idx == 1:
+                b_type = TARGET_TYPE_EMP_DISRUPTER # Factory EMP Disrupter Boss
+            elif self.sector_idx == 2:
+                b_type = TARGET_TYPE_STEALTH_MIRAGE # Space Stealth Mirage Boss
+            elif self.sector_idx == 3:
+                b_type = TARGET_TYPE_EMP_DISRUPTER # Leviathan EMP Naval Boss
+            elif self.sector_idx == 4:
+                b_type = TARGET_TYPE_TITAN_MECH # Colossus Titan Mech Boss ☠️
+            else:
+                b_type = random.choice([TARGET_TYPE_BOSS, TARGET_TYPE_STEALTH_MIRAGE, TARGET_TYPE_EMP_DISRUPTER, TARGET_TYPE_TITAN_MECH])
+            
+            boss = Target(target_type=b_type, level=self.level, sector_idx=self.sector_idx)
             target_group.add(boss)
             return boss
 

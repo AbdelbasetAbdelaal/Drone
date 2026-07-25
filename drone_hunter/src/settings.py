@@ -81,6 +81,9 @@ TARGET_TYPE_BOSS = "boss"
 TARGET_TYPE_TURRET = "turret"
 TARGET_TYPE_VEHICLE = "vehicle"
 TARGET_TYPE_CHASER = "chaser"
+TARGET_TYPE_STEALTH_MIRAGE = "stealth_mirage"
+TARGET_TYPE_EMP_DISRUPTER = "emp_disrupter"
+TARGET_TYPE_TITAN_MECH = "titan_mech"
 
 # Player Settings
 MAX_HEALTH = 100
