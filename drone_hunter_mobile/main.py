@@ -889,7 +889,7 @@ def main():
         if IS_ANDROID:
             scaled_canvas = pygame.transform.scale(canvas, screen.get_size())
         else:
-            scaled_canvas = pygame.transform.smoothscale(canvas, (win_w, win_h))
+            scaled_canvas = pygame.transform.scale(canvas, (win_w, win_h))
         screen.blit(scaled_canvas, (shake_offset_x, shake_offset_y))
         pygame.display.flip()
 

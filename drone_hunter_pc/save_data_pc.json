@@ -1,14 +1,14 @@
 {
-  "coins": 2019,
-  "highscore": 10915,
+  "coins": 30,
+  "highscore": 460,
   "upgrades": {
-    "battery": 2,
-    "speed": 3,
-    "fire_rate": 3,
+    "battery": 0,
+    "speed": 0,
+    "fire_rate": 0,
     "emp_recharge": 0,
-    "wingman": 1,
+    "wingman": 0,
     "cloak": 0,
-    "missiles": 1,
+    "missiles": 0,
     "beam": 0
   },
   "sectors": [
@@ -20,8 +20,8 @@
   ],
   "stages": [
     true,
-    true,
-    true,
+    false,
+    false,
     false,
     false,
     false,

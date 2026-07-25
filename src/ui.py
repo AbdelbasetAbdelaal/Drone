@@ -55,11 +55,11 @@ class LazyFont:
     def size_text(self, text: str):
         return self.size(text)
 
-font_title = LazyFont("Impact", 44)
-font_banner = LazyFont("Verdana", 17, bold=True)
-font_hud = LazyFont("Consolas", 15, bold=True)
-font_card = LazyFont("Consolas", 13, bold=True)
-font_small = LazyFont("Arial", 12)
+font_title = LazyFont("Impact", 48)
+font_banner = LazyFont("Verdana", 20, bold=True)
+font_hud = LazyFont("Consolas", 18, bold=True)
+font_card = LazyFont("Consolas", 15, bold=True)
+font_small = LazyFont("Arial", 14)
 
 def wrap_text(text: str, font: pygame.font.Font, max_width: int) -> list[str]:
     """Wraps text into multiple lines fitting within max_width."""
@@ -189,11 +189,15 @@ def draw_radar_minimap(canvas: pygame.Surface, player, targets_group, wingmen_gr
         pygame.draw.circle(canvas, t_col, (tx, ty), 3 if target.target_type == "boss" else 2)
 
 
+_cached_scanline_surf = None
+
 def draw_crt_scanlines(canvas: pygame.Surface):
-    scanline_surf = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
-    for y in range(0, SCREEN_HEIGHT, 4):
-        pygame.draw.line(scanline_surf, (0, 0, 0, 35), (0, y), (SCREEN_WIDTH, y), 1)
-    canvas.blit(scanline_surf, (0, 0))
+    global _cached_scanline_surf
+    if _cached_scanline_surf is None:
+        _cached_scanline_surf = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
+        for y in range(0, SCREEN_HEIGHT, 4):
+            pygame.draw.line(_cached_scanline_surf, (0, 0, 0, 35), (0, y), (SCREEN_WIDTH, y), 1)
+    canvas.blit(_cached_scanline_surf, (0, 0))
 
 
 def draw_crosshair(canvas: pygame.Surface):
@@ -424,95 +428,118 @@ def draw_virtual_touch_controls(canvas: pygame.Surface, dpad_state: dict = None,
     cx, cy2 = r_up.centerx, r_up.centery
     controls["dpad_up"] = _dpad_btn(r_up, "up", [(cx, cy2 - 18), (cx - 14, cy2 + 10), (cx + 14, cy2 + 10)])
 
+    # ── D-PAD (left side) ─────────────────────────────────────────────────────
+    pad = 88          # enlarged button size (was 65)
+    gap = 10          # gap between buttons
+    d_cx = 160        # d-pad horizontal center
+    d_cy = SCREEN_HEIGHT - 170  # d-pad vertical center
+
+    def _dpad_btn(rect, direction, arrow_pts):
+        active = dpad_state.get(direction, False) or (active_button == direction)
+        bg = (56, 189, 248) if active else (20, 30, 50, 220)
+        border = COLOR_WHITE if active else (56, 189, 248)
+        pygame.draw.rect(canvas, bg, rect, border_radius=14)
+        pygame.draw.rect(canvas, border, rect, 3 if active else 2, border_radius=14)
+        pygame.draw.polygon(canvas, COLOR_WHITE if active else COLOR_CYAN, arrow_pts)
+        return rect
+
+    # UP
+    r_up = pygame.Rect(d_cx - pad // 2, d_cy - pad - gap, pad, pad)
+    cx, cy2 = r_up.centerx, r_up.centery
+    controls["dpad_up"] = _dpad_btn(r_up, "up", [(cx, cy2 - 24), (cx - 18, cy2 + 14), (cx + 18, cy2 + 14)])
+
     # DOWN
     r_dn = pygame.Rect(d_cx - pad // 2, d_cy + gap, pad, pad)
     cx, cy2 = r_dn.centerx, r_dn.centery
-    controls["dpad_down"] = _dpad_btn(r_dn, "down", [(cx, cy2 + 18), (cx - 14, cy2 - 10), (cx + 14, cy2 - 10)])
+    controls["dpad_down"] = _dpad_btn(r_dn, "down", [(cx, cy2 + 24), (cx - 18, cy2 - 14), (cx + 18, cy2 - 14)])
 
     # LEFT
     r_lt = pygame.Rect(d_cx - pad - gap, d_cy - pad // 2, pad, pad)
     cx, cy2 = r_lt.centerx, r_lt.centery
-    controls["dpad_left"] = _dpad_btn(r_lt, "left", [(cx - 18, cy2), (cx + 10, cy2 - 14), (cx + 10, cy2 + 14)])
+    controls["dpad_left"] = _dpad_btn(r_lt, "left", [(cx - 24, cy2), (cx + 14, cy2 - 18), (cx + 14, cy2 + 18)])
 
     # RIGHT
     r_rt = pygame.Rect(d_cx + gap, d_cy - pad // 2, pad, pad)
     cx, cy2 = r_rt.centerx, r_rt.centery
-    controls["dpad_right"] = _dpad_btn(r_rt, "right", [(cx + 18, cy2), (cx - 10, cy2 - 14), (cx - 10, cy2 + 14)])
+    controls["dpad_right"] = _dpad_btn(r_rt, "right", [(cx + 24, cy2), (cx - 14, cy2 - 18), (cx - 14, cy2 + 18)])
 
     # Center decorative pip
-    pygame.draw.circle(canvas, (30, 41, 59), (d_cx, d_cy), 18)
-    pygame.draw.circle(canvas, (56, 189, 248), (d_cx, d_cy), 18, 2)
+    pygame.draw.circle(canvas, (30, 41, 59), (d_cx, d_cy), 22)
+    pygame.draw.circle(canvas, (56, 189, 248), (d_cx, d_cy), 22, 2)
 
-    # ── FIRE BUTTON (right side, large) ──────────────────────────────────────
-    btn_fire = pygame.Rect(SCREEN_WIDTH - 130, SCREEN_HEIGHT - 155, 110, 110)
+    # ── FIRE BUTTON (right side, extra large) ─────────────────────────
+    btn_fire = pygame.Rect(SCREEN_WIDTH - 165, SCREEN_HEIGHT - 170, 140, 140)
     is_f_active = (active_button == "fire")
     fire_draw_col = tuple(min(255, c + 40) for c in fire_col) if is_f_active else fire_col
     pygame.draw.ellipse(canvas, fire_draw_col, btn_fire)
-    pygame.draw.ellipse(canvas, COLOR_WHITE if is_f_active else (200, 220, 255), btn_fire, width=4 if is_f_active else 2)
+    pygame.draw.ellipse(canvas, COLOR_WHITE if is_f_active else (200, 220, 255), btn_fire, width=5 if is_f_active else 3)
     # Crosshair icon inside FIRE
     fcx, fcy = btn_fire.center
-    pygame.draw.circle(canvas, COLOR_WHITE, (fcx, fcy - 6), 13, 2)
-    pygame.draw.circle(canvas, COLOR_WHITE, (fcx, fcy - 6), 3)
+    pygame.draw.circle(canvas, COLOR_WHITE, (fcx, fcy - 8), 16, 2)
+    pygame.draw.circle(canvas, COLOR_WHITE, (fcx, fcy - 8), 4)
     # Weapon name label
     lbl_fire = font_hud.render("FIRE", True, COLOR_WHITE)
     lbl_wpn_name = font_card.render(fire_name, True, COLOR_WHITE)
     canvas.blit(lbl_fire, (fcx - lbl_fire.get_width() // 2, fcy + 12))
-    canvas.blit(lbl_wpn_name, (fcx - lbl_wpn_name.get_width() // 2, fcy + 28))
+    canvas.blit(lbl_wpn_name, (fcx - lbl_wpn_name.get_width() // 2, fcy + 32))
     controls["fire"] = btn_fire
 
     # ── WEAPON SELECT BUTTON (above FIRE, tap to cycle) ──────────────────────
-    btn_weapon = pygame.Rect(SCREEN_WIDTH - 130, SCREEN_HEIGHT - 275, 110, 52)
+    btn_weapon = pygame.Rect(SCREEN_WIDTH - 165, SCREEN_HEIGHT - 290, 140, 60)
     is_w_active = (active_button == "weapon")
-    pygame.draw.rect(canvas, tuple(min(255, c + 30) for c in fire_col) if is_w_active else (30, 41, 59), btn_weapon, border_radius=10)
-    pygame.draw.rect(canvas, COLOR_WHITE if is_w_active else fire_col, btn_weapon, 3 if is_w_active else 2, border_radius=10)
+    pygame.draw.rect(canvas, tuple(min(255, c + 30) for c in fire_col) if is_w_active else (30, 41, 59), btn_weapon, border_radius=12)
+    pygame.draw.rect(canvas, COLOR_WHITE if is_w_active else fire_col, btn_weapon, 3 if is_w_active else 2, border_radius=12)
     # Left/right cycle arrows
     wcx, wcy = btn_weapon.center
-    pygame.draw.polygon(canvas, COLOR_WHITE, [(wcx - 42, wcy), (wcx - 30, wcy - 8), (wcx - 30, wcy + 8)])
-    pygame.draw.polygon(canvas, COLOR_WHITE, [(wcx + 42, wcy), (wcx + 30, wcy - 8), (wcx + 30, wcy + 8)])
-    lbl_wsel = font_card.render(fire_name, True, COLOR_WHITE)
+    pygame.draw.polygon(canvas, COLOR_WHITE, [(wcx - 52, wcy), (wcx - 38, wcy - 10), (wcx - 38, wcy + 10)])
+    pygame.draw.polygon(canvas, COLOR_WHITE, [(wcx + 52, wcy), (wcx + 38, wcy - 10), (wcx + 38, wcy + 10)])
+    lbl_wsel = font_banner.render(fire_name, True, COLOR_WHITE)
     canvas.blit(lbl_wsel, lbl_wsel.get_rect(center=btn_weapon.center))
     controls["weapon"] = btn_weapon
 
-    # ── EMP Button ────────────────────────────────────────────────────────────
-    btn_emp = pygame.Rect(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 120, 72, 72)
+    # ── EMP Button (90x90) ───────────────────────────────────────────────────
+    btn_emp = pygame.Rect(SCREEN_WIDTH - 290, SCREEN_HEIGHT - 130, 90, 90)
     is_e_active = (active_button == "emp")
     pygame.draw.ellipse(canvas, (56, 189, 248) if is_e_active else (14, 165, 233), btn_emp)
     pygame.draw.ellipse(canvas, COLOR_WHITE if is_e_active else COLOR_CYAN, btn_emp, width=3 if is_e_active else 2)
     ecx, ecy = btn_emp.center
-    bolt_pts = [(ecx+2, ecy-14), (ecx-7, ecy-2), (ecx-1, ecy-2), (ecx-4, ecy+12), (ecx+6, ecy), (ecx, ecy)]
+    bolt_pts = [(ecx+3, ecy-18), (ecx-9, ecy-2), (ecx-1, ecy-2), (ecx-5, ecy+16), (ecx+8, ecy), (ecx, ecy)]
     pygame.draw.polygon(canvas, COLOR_WHITE, bolt_pts)
-    canvas.blit(font_card.render("EMP", True, COLOR_WHITE), (ecx - 14, ecy + 13))
+    lbl_e = font_card.render("EMP", True, COLOR_WHITE)
+    canvas.blit(lbl_e, (ecx - lbl_e.get_width() // 2, ecy + 16))
     controls["emp"] = btn_emp
 
-    # ── ROLL Button ───────────────────────────────────────────────────────────
-    btn_roll = pygame.Rect(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 210, 72, 72)
+    # ── ROLL Button (90x90) ──────────────────────────────────────────────────
+    btn_roll = pygame.Rect(SCREEN_WIDTH - 290, SCREEN_HEIGHT - 235, 90, 90)
     is_r_active = (active_button == "roll")
     pygame.draw.ellipse(canvas, (52, 211, 153) if is_r_active else (16, 185, 129), btn_roll)
     pygame.draw.ellipse(canvas, COLOR_WHITE if is_r_active else COLOR_EMERALD, btn_roll, width=3 if is_r_active else 2)
     rcx, rcy = btn_roll.center
-    pygame.draw.arc(canvas, COLOR_WHITE, (rcx - 14, rcy - 14, 28, 28), 0.5, 5.0, 3)
-    canvas.blit(font_card.render("ROLL", True, COLOR_WHITE), (rcx - 16, rcy + 12))
+    pygame.draw.arc(canvas, COLOR_WHITE, (rcx - 16, rcy - 16, 32, 32), 0.5, 5.0, 3)
+    lbl_r = font_card.render("ROLL", True, COLOR_WHITE)
+    canvas.blit(lbl_r, (rcx - lbl_r.get_width() // 2, rcy + 16))
     controls["roll"] = btn_roll
 
-    # ── CLOAK Button ──────────────────────────────────────────────────────────
-    btn_cloak = pygame.Rect(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 300, 72, 72)
+    # ── CLOAK Button (90x90) ─────────────────────────────────────────────────
+    btn_cloak = pygame.Rect(SCREEN_WIDTH - 290, SCREEN_HEIGHT - 340, 90, 90)
     is_c_active = (active_button == "cloak")
     pygame.draw.ellipse(canvas, (217, 70, 239) if is_c_active else (168, 85, 247), btn_cloak)
     pygame.draw.ellipse(canvas, COLOR_WHITE if is_c_active else COLOR_MAGENTA, btn_cloak, width=3 if is_c_active else 2)
     ccx, ccy = btn_cloak.center
-    shield_pts = [(ccx, ccy-14), (ccx+10, ccy-8), (ccx+9, ccy+5), (ccx, ccy+12), (ccx-9, ccy+5), (ccx-10, ccy-8)]
+    shield_pts = [(ccx, ccy-16), (ccx+12, ccy-9), (ccx+11, ccy+6), (ccx, ccy+14), (ccx-11, ccy+6), (ccx-12, ccy-9)]
     pygame.draw.polygon(canvas, COLOR_WHITE, shield_pts, 2)
-    canvas.blit(font_card.render("CLOAK", True, COLOR_WHITE), (ccx - 18, ccy + 12))
+    lbl_c = font_card.render("CLOAK", True, COLOR_WHITE)
+    canvas.blit(lbl_c, (ccx - lbl_c.get_width() // 2, ccy + 16))
     controls["cloak"] = btn_cloak
 
     # ── PAUSE Button (top-left standalone) ───────────────────────────────────
-    btn_pause = pygame.Rect(12, 10, 92, 56)
+    btn_pause = pygame.Rect(12, 10, 100, 60)
     is_p_active = (active_button == "pause")
-    pygame.draw.rect(canvas, (56, 189, 248) if is_p_active else (30, 41, 59), btn_pause, border_radius=8)
-    pygame.draw.rect(canvas, COLOR_WHITE if is_p_active else COLOR_CYAN, btn_pause, 3 if is_p_active else 2, border_radius=8)
+    pygame.draw.rect(canvas, (56, 189, 248) if is_p_active else (30, 41, 59), btn_pause, border_radius=10)
+    pygame.draw.rect(canvas, COLOR_WHITE if is_p_active else COLOR_CYAN, btn_pause, 3 if is_p_active else 2, border_radius=10)
     pcx, pcy = btn_pause.center
-    pygame.draw.rect(canvas, (15, 23, 42) if is_p_active else COLOR_CYAN, (pcx - 12, pcy - 12, 8, 24), border_radius=2)
-    pygame.draw.rect(canvas, (15, 23, 42) if is_p_active else COLOR_CYAN, (pcx + 4, pcy - 12, 8, 24), border_radius=2)
+    pygame.draw.rect(canvas, (15, 23, 42) if is_p_active else COLOR_CYAN, (pcx - 14, pcy - 14, 10, 28), border_radius=3)
+    pygame.draw.rect(canvas, (15, 23, 42) if is_p_active else COLOR_CYAN, (pcx + 4, pcy - 14, 10, 28), border_radius=3)
     controls["pause"] = btn_pause
 
     return controls

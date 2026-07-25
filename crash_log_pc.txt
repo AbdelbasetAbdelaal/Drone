@@ -1,0 +1,9 @@
+'Player' object has no attribute 'shield_charge'
+Traceback (most recent call last):
+  File "D:\AI_Projects\drone_hunter_pc\main.py", line 728, in <module>
+    main()
+    ~~~~^^
+  File "D:\AI_Projects\drone_hunter_pc\main.py", line 597, in main
+    if drone.shield_charge > 0:
+       ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Player' object has no attribute 'shield_charge'
