@@ -4,10 +4,10 @@ import json
 import math
 import random
 
-# Ensure root directory is on sys.path so 'src' imports cleanly
-root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if root_dir not in sys.path:
-    sys.path.insert(0, root_dir)
+# Ensure local directory is on sys.path so local 'src' imports cleanly
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.insert(0, current_dir)
 
 import pygame
 

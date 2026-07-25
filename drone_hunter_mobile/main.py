@@ -4,12 +4,10 @@ import json
 import math
 import random
 
-# Ensure current_dir and parent_dir are on sys.path so 'src' imports cleanly on Android and PC
+# Ensure local directory is on sys.path so local 'src' imports cleanly on Android and PC
 current_dir = os.path.dirname(os.path.abspath(__file__))
-parent_dir = os.path.dirname(current_dir)
-for p in (current_dir, parent_dir):
-    if p and p not in sys.path:
-        sys.path.insert(0, p)
+if current_dir not in sys.path:
+    sys.path.insert(0, current_dir)
 
 import pygame
 
