@@ -355,7 +355,10 @@ def main():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
+                if not IS_ANDROID:
+                    running = False
+                else:
+                    game_state = STATE_PAUSED
 
             elif event.type == pygame.VIDEORESIZE:
                 win_w, win_h = event.w, event.h
