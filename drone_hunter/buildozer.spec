@@ -19,7 +19,7 @@ source.include_exts = py,png,jpg,kv,atlas,json,txt
 version = 1.0.0
 
 # (list) Application requirements
-requirements = python3,pygame-ce
+requirements = python3,pygame
 
 # (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
 orientation = landscape
