@@ -307,6 +307,19 @@ class ParticleManager:
     def spawn_emp_ring(self, pos: tuple[float, float]):
         self.particles.add(EMPRing(pos))
 
+    def spawn_spark(self, pos: tuple[float, float], count: int = 8, color: tuple[int, int, int] = (56, 189, 248)):
+        for _ in range(count):
+            angle_speed = random.uniform(80, 250)
+            angle = random.uniform(0, 6.28318)
+            vx = math.cos(angle) * angle_speed
+            vy = math.sin(angle) * angle_speed
+            radius = random.uniform(1.5, 4.0)
+            lifetime = random.uniform(0.15, 0.35)
+            self.particles.add(Particle(pos, (vx, vy), color, radius, lifetime))
+
+    def spawn_sparks(self, pos: tuple[float, float], count: int = 8, color: tuple[int, int, int] = (56, 189, 248)):
+        self.spawn_spark(pos, count, color)
+
     def create_evasive_sparks(self, pos: tuple[float, float]):
         for _ in range(3):
             vx = random.uniform(-180, 180)
