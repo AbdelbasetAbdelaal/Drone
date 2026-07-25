@@ -27,6 +27,14 @@ jobs:
           pip install --upgrade pip
           pip install buildozer cython
 
+      - name: Accept Android SDK Licenses
+        run: |
+          mkdir -p ~/.android
+          touch ~/.android/repositories.cfg
+          mkdir -p ~/.buildozer/android/platform/android-sdk/licenses
+          printf "89339e5b3af15541824707049f4531d94975561e\nd5692454113ecd7813a405e3b50c0065689729d9\n24333f8a637b3749d10739ee2797dce9b444d410\n" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
+          printf "84831b9409646a918e30573bab4c9c91346d8abd\n504667f4c0587301c9202e427f928363e72b3d37\n" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-preview-license
+
       - name: Build APK with Buildozer
         run: |
           cd drone_hunter
