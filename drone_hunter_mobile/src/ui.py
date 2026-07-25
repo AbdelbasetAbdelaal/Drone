@@ -495,8 +495,8 @@ def draw_virtual_touch_controls(canvas: pygame.Surface, dpad_state: dict = None,
     pygame.draw.circle(canvas, (30, 41, 59), (d_cx, d_cy), 22)
     pygame.draw.circle(canvas, (56, 189, 248), (d_cx, d_cy), 22, 2)
 
-    # ── FIRE BUTTON (right side, extra large) ─────────────────────────
-    btn_fire = pygame.Rect(SCREEN_WIDTH - 155, SCREEN_HEIGHT - 155, 140, 140)
+    # ── FIRE BUTTON (bottom right corner) ─────────────────────────────
+    btn_fire = pygame.Rect(SCREEN_WIDTH - 150, SCREEN_HEIGHT - 150, 135, 135)
     is_f_active = (active_button == "fire")
     fire_draw_col = tuple(min(255, c + 40) for c in fire_col) if is_f_active else fire_col
     pygame.draw.ellipse(canvas, fire_draw_col, btn_fire)
@@ -510,31 +510,34 @@ def draw_virtual_touch_controls(canvas: pygame.Surface, dpad_state: dict = None,
     canvas.blit(lbl_wpn_name, (fcx - lbl_wpn_name.get_width() // 2, fcy + 30))
     controls["fire"] = btn_fire
 
-    # ── WEAPON SELECT BUTTON (above FIRE) ──────────────────────────────────
-    btn_weapon = pygame.Rect(SCREEN_WIDTH - 155, SCREEN_HEIGHT - 225, 140, 55)
+    # ── COMBAT ASSIST BUTTONS (middle right edge) ───────────────────────────
+    # WEAPON SELECT BUTTON
+    btn_weapon = pygame.Rect(SCREEN_WIDTH - 150, SCREEN_HEIGHT - 218, 135, 52)
     is_w_active = (active_button == "weapon")
-    pygame.draw.rect(canvas, tuple(min(255, c + 30) for c in fire_col) if is_w_active else (30, 41, 59), btn_weapon, border_radius=12)
-    pygame.draw.rect(canvas, COLOR_WHITE if is_w_active else fire_col, btn_weapon, 3 if is_w_active else 2, border_radius=12)
+    pygame.draw.rect(canvas, tuple(min(255, c + 30) for c in fire_col) if is_w_active else (30, 41, 59), btn_weapon, border_radius=10)
+    pygame.draw.rect(canvas, COLOR_WHITE if is_w_active else fire_col, btn_weapon, 3 if is_w_active else 2, border_radius=10)
     wcx, wcy = btn_weapon.center
-    pygame.draw.polygon(canvas, COLOR_WHITE, [(wcx - 54, wcy), (wcx - 40, wcy - 10), (wcx - 40, wcy + 10)])
-    pygame.draw.polygon(canvas, COLOR_WHITE, [(wcx + 54, wcy), (wcx + 40, wcy - 10), (wcx + 40, wcy + 10)])
+    pygame.draw.polygon(canvas, COLOR_WHITE, [(wcx - 52, wcy), (wcx - 38, wcy - 9), (wcx - 38, wcy + 9)])
+    pygame.draw.polygon(canvas, COLOR_WHITE, [(wcx + 52, wcy), (wcx + 38, wcy - 9), (wcx + 38, wcy + 9)])
     lbl_wsel = font_card.render(fire_name, True, COLOR_WHITE)
     canvas.blit(lbl_wsel, lbl_wsel.get_rect(center=btn_weapon.center))
     controls["weapon"] = btn_weapon
 
-    # ── AUTO-LOCK TARGET ASSIST Button (above WEAPON) ────────────────────────
-    btn_lock = pygame.Rect(SCREEN_WIDTH - 155, SCREEN_HEIGHT - 290, 140, 55)
+    # AUTO-LOCK TARGET ASSIST Button
+    btn_lock = pygame.Rect(SCREEN_WIDTH - 150, SCREEN_HEIGHT - 280, 135, 52)
     is_l_active = (active_button == "autolock")
     bg_l = (16, 185, 129) if is_l_active else (30, 41, 59)
-    pygame.draw.rect(canvas, bg_l, btn_lock, border_radius=12)
-    pygame.draw.rect(canvas, COLOR_WHITE if is_l_active else COLOR_EMERALD, btn_lock, 3 if is_l_active else 2, border_radius=12)
+    pygame.draw.rect(canvas, bg_l, btn_lock, border_radius=10)
+    pygame.draw.rect(canvas, COLOR_WHITE if is_l_active else COLOR_EMERALD, btn_lock, 3 if is_l_active else 2, border_radius=10)
     lbl_lock = font_card.render("LOCK ON" if is_l_active else "AUTO LOCK", True, COLOR_WHITE)
     canvas.blit(lbl_lock, lbl_lock.get_rect(center=btn_lock.center))
     controls["autolock"] = btn_lock
 
-    # ── SPECIAL ABILITIES (Compact Ergonomic 2x2 Arc) ────────────────────────
+    # ── SPECIAL ABILITIES (Symmetric Top-Right Action Row) ────────────────────
+    top_y = 80
+    
     # EMP Button
-    btn_emp = pygame.Rect(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 135, 82, 82)
+    btn_emp = pygame.Rect(SCREEN_WIDTH - 365, top_y, 80, 80)
     is_e_active = (active_button == "emp")
     pygame.draw.ellipse(canvas, (56, 189, 248) if is_e_active else (14, 165, 233), btn_emp)
     pygame.draw.ellipse(canvas, COLOR_WHITE if is_e_active else COLOR_CYAN, btn_emp, width=3 if is_e_active else 2)
@@ -546,7 +549,7 @@ def draw_virtual_touch_controls(canvas: pygame.Surface, dpad_state: dict = None,
     controls["emp"] = btn_emp
 
     # ROLL Button
-    btn_roll = pygame.Rect(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 230, 82, 82)
+    btn_roll = pygame.Rect(SCREEN_WIDTH - 275, top_y, 80, 80)
     is_r_active = (active_button == "roll")
     pygame.draw.ellipse(canvas, (52, 211, 153) if is_r_active else (16, 185, 129), btn_roll)
     pygame.draw.ellipse(canvas, COLOR_WHITE if is_r_active else COLOR_EMERALD, btn_roll, width=3 if is_r_active else 2)
@@ -557,7 +560,7 @@ def draw_virtual_touch_controls(canvas: pygame.Surface, dpad_state: dict = None,
     controls["roll"] = btn_roll
 
     # CLOAK Button
-    btn_cloak = pygame.Rect(SCREEN_WIDTH - 345, SCREEN_HEIGHT - 135, 82, 82)
+    btn_cloak = pygame.Rect(SCREEN_WIDTH - 185, top_y, 80, 80)
     is_c_active = (active_button == "cloak")
     pygame.draw.ellipse(canvas, (217, 70, 239) if is_c_active else (168, 85, 247), btn_cloak)
     pygame.draw.ellipse(canvas, COLOR_WHITE if is_c_active else COLOR_MAGENTA, btn_cloak, width=3 if is_c_active else 2)
@@ -569,7 +572,7 @@ def draw_virtual_touch_controls(canvas: pygame.Surface, dpad_state: dict = None,
     controls["cloak"] = btn_cloak
 
     # ULTIMATE OVERDRIVE Button
-    btn_ult = pygame.Rect(SCREEN_WIDTH - 345, SCREEN_HEIGHT - 230, 82, 82)
+    btn_ult = pygame.Rect(SCREEN_WIDTH - 95, top_y, 80, 80)
     is_u_active = (active_button == "ultimate")
     pygame.draw.ellipse(canvas, (250, 204, 21) if is_u_active else (147, 51, 234), btn_ult)
     pygame.draw.ellipse(canvas, COLOR_WHITE if is_u_active else COLOR_GOLD, btn_ult, width=4 if is_u_active else 2)
