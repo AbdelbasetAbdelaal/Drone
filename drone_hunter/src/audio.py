@@ -348,6 +348,11 @@ class AudioManager:
     """Audio Manager wrapping procedural sound synthesizer for Drone Hunter 2D & 3D."""
     def __init__(self):
         self.sound_enabled = True
+        try:
+            if not pygame.mixer.get_init():
+                pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=1024)
+        except Exception:
+            self.sound_enabled = False
 
     def play_laser(self):
         if self.sound_enabled: play_synth_laser()

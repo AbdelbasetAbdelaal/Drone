@@ -100,10 +100,11 @@ def main():
     audio_manager = AudioManager()
 
     # Fonts
-    font_title = pygame.font.SysFont("Impact", 54)
-    font_hud = pygame.font.SysFont("Consolas", 18, bold=True)
-    font_banner = pygame.font.SysFont("Verdana", 24, bold=True)
-    font_gameover = pygame.font.SysFont("Impact", 52)
+    from src.ui import safe_create_font
+    font_title = safe_create_font("Impact", 54)
+    font_hud = safe_create_font("Consolas", 18, bold=True)
+    font_banner = safe_create_font("Verdana", 24, bold=True)
+    font_gameover = safe_create_font("Impact", 52)
 
     # Sprite Groups
     player_group = pygame.sprite.GroupSingle()

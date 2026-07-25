@@ -19,8 +19,7 @@ source.include_exts = py,png,jpg,kv,atlas,json,txt
 version = 1.0.0
 
 # (list) Application requirements
-# Note: 'pygame' uses python-for-android's official C/C++ SDL2 Android recipe
-requirements = python3,pygame
+requirements = python3,pygame-ce
 
 # (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
 orientation = landscape
@@ -29,7 +28,7 @@ orientation = landscape
 fullscreen = 1
 
 # (list) Permissions
-permissions = INTERNET
+permissions = INTERNET,RECORD_AUDIO
 
 # (int) Target Android API
 android.api = 33
