@@ -115,14 +115,11 @@ def main():
     
     if IS_ANDROID:
         try:
-            import android
-            android.map_key(android.KEYCODE_BACK, pygame.K_ESCAPE)
+            screen = pygame.display.set_mode((0, 0))
+            win_w, win_h = screen.get_size()
         except Exception:
-            pass
-        try:
-            screen = pygame.display.set_mode((win_w, win_h), pygame.FULLSCREEN | pygame.SCALED)
-        except Exception:
-            screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+            screen = pygame.display.set_mode((1280, 720))
+            win_w, win_h = 1280, 720
     else:
         screen = pygame.display.set_mode((win_w, win_h), pygame.RESIZABLE)
     pygame.display.set_caption(TITLE)
@@ -767,4 +764,14 @@ def main():
     sys.exit()
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        import traceback
+        log_path = os.path.join(os.environ.get('ANDROID_PRIVATE_DIR', '.'), "crash_log.txt")
+        try:
+            with open(log_path, "w") as f:
+                f.write(str(e) + "\n")
+                traceback.print_exc(file=f)
+        except Exception:
+            pass

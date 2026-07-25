@@ -6,24 +6,58 @@ from src.settings import (
     COLOR_TEXT_DIM, SECTORS, WEAPON_DEFS, UPGRADES, COLOR_MAGENTA, COLOR_WHITE
 )
 
-if not pygame.font.get_init():
-    pygame.font.init()
+_font_cache = {}
 
 def safe_create_font(name: str, size: int, bold: bool = False) -> pygame.font.Font:
     """Safe font creation with fallback for Android mobile compatibility."""
+    cache_key = (name, size, bold)
+    if cache_key in _font_cache:
+        return _font_cache[cache_key]
+    
     try:
-        f = pygame.font.SysFont(name, size, bold=bold)
-        if f:
-            return f
+        if not pygame.font.get_init():
+            pygame.font.init()
     except Exception:
         pass
-    return pygame.font.Font(None, size)
 
-font_title = safe_create_font("Impact", 44)
-font_banner = safe_create_font("Verdana", 17, bold=True)
-font_hud = safe_create_font("Consolas", 15, bold=True)
-font_card = safe_create_font("Consolas", 13, bold=True)
-font_small = safe_create_font("Arial", 12)
+    font_obj = None
+    try:
+        font_obj = pygame.font.Font(None, size)
+    except Exception:
+        try:
+            font_obj = pygame.font.SysFont(name, size, bold=bold)
+        except Exception:
+            font_obj = None
+    
+    _font_cache[cache_key] = font_obj
+    return font_obj
+
+# Global lazy font accessors
+class LazyFont:
+    def __init__(self, name: str, size: int, bold: bool = False):
+        self.name = name
+        self.size = size
+        self.bold = bold
+
+    def render(self, *args, **kwargs):
+        f = safe_create_font(self.name, self.size, self.bold)
+        if f:
+            return f.render(*args, **kwargs)
+        # Ultimate fallback dummy surface if font rendering fails
+        surf = pygame.Surface((10, 10))
+        return surf
+
+    def size_text(self, text: str):
+        f = safe_create_font(self.name, self.size, self.bold)
+        if f:
+            return f.size(text)
+        return (len(text) * 8, 16)
+
+font_title = LazyFont("Impact", 44)
+font_banner = LazyFont("Verdana", 17, bold=True)
+font_hud = LazyFont("Consolas", 15, bold=True)
+font_card = LazyFont("Consolas", 13, bold=True)
+font_small = LazyFont("Arial", 12)
 
 def wrap_text(text: str, font: pygame.font.Font, max_width: int) -> list[str]:
     """Wraps text into multiple lines fitting within max_width."""
