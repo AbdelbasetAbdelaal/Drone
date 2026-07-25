@@ -49,7 +49,7 @@ android.accept_sdk_licenses = True
 android.private_storage = True
 
 # (list) List of inclusions using pattern matching
-android.archs = arm64-v8a, armeabi-v7a
+android.archs = arm64-v8a
 
 [buildozer]
 
