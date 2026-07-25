@@ -15,6 +15,9 @@ source.dir = .
 # (list) Source files to include (let empty to include all the files)
 source.include_exts = py,png,jpg,kv,atlas,json,txt
 
+# (list) Source files to exclude
+source.exclude_patterns = license, .git, .buildozer, *.pyc, *.pyo, docs/*, tests/*, */docs/*, */tests/*
+
 # (str) Application versioning
 version = 1.0.0
 
