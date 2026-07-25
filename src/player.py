@@ -73,6 +73,10 @@ class Player(pygame.sprite.Sprite):
         self.emp_cooldown = 0.0
         self.shield_hits = 0
         self.overclock_timer = 0.0
+        self.dpad_up = False
+        self.dpad_down = False
+        self.dpad_left = False
+        self.dpad_right = False
         self.slowmo_timer = 0.0
         self.shoot_timer = 0.0
 
@@ -294,9 +298,10 @@ class Player(pygame.sprite.Sprite):
             wingman_bullets.extend(wm_b)
         return wingman_bullets
 
-    def _handle_movement_input(self, dt: float, particle_manager=None, audio_manager=None, move_down: bool = False):
+    def _handle_movement_input(self, dt: float, particle_manager=None, audio_manager=None, move_down_key: bool = False):
         keys = pygame.key.get_pressed()
-        move_up = keys[pygame.K_SPACE] or keys[pygame.K_UP] or keys[pygame.K_w]
+        move_up = keys[pygame.K_SPACE] or keys[pygame.K_UP] or keys[pygame.K_w] or self.dpad_up
+        move_down = move_down_key or keys[pygame.K_DOWN] or keys[pygame.K_s] or self.dpad_down
 
         self.is_thrusting = move_up
         speed_mult = (1.4 if self.overclock_timer > 0 else 1.0) * self.agility_mult
@@ -314,9 +319,9 @@ class Player(pygame.sprite.Sprite):
             self.velocity.y += abs(THRUST_FORCE) * 2.8 * speed_mult * dt
 
         move_x = 0
-        if keys[pygame.K_a] or keys[pygame.K_LEFT]:
+        if keys[pygame.K_a] or keys[pygame.K_LEFT] or self.dpad_left:
             move_x -= 1
-        if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
+        if keys[pygame.K_d] or keys[pygame.K_RIGHT] or self.dpad_right:
             move_x += 1
 
         if self.is_rolling and move_x == 0:
@@ -376,8 +381,21 @@ class Player(pygame.sprite.Sprite):
     def activate_overclock(self, duration: float = 5.0):
         self.overclock_timer = duration
 
+    def trigger_overclock(self, duration: float = 6.0):
+        self.activate_overclock(duration)
+
     def activate_slowmo(self, duration: float = 6.0):
         self.slowmo_timer = duration
+
+    def trigger_slowmo(self, duration: float = 6.0):
+        self.activate_slowmo(duration)
+
+    def spawn_wingman(self):
+        """Spawns an extra wingman drone escort (up to 4)."""
+        if len(self.wingmen) < 4:
+            new_idx = len(self.wingmen)
+            self.wingmen.append(WingmanDrone(new_idx))
+            self.wingman_count = len(self.wingmen)
 
     def take_damage(self, amount: int = 25) -> bool:
         if self.is_rolling or self.is_cloaked:

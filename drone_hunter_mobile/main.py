@@ -43,7 +43,8 @@ from src.hazard import LaserGridFence, GravityAnomaly
 from src.ui import (
     draw_hud, draw_radar_minimap, draw_crt_scanlines, draw_crosshair,
     draw_sector_select_ui, draw_hangar_shop_ui, draw_exit_button,
-    draw_campaign_victory_ui, draw_pause_settings_ui, draw_virtual_touch_controls
+    draw_campaign_victory_ui, draw_pause_settings_ui, draw_virtual_touch_controls,
+    draw_nav_buttons, draw_game_over_screen
 )
 
 def load_save_data():
@@ -170,11 +171,8 @@ def main():
         except Exception:
             return raw_pos
 
-    # Mobile Virtual Touch Controls State
-    joystick_center = (140, 580)
-    joystick_knob = (140, 580)
-    is_touch_active = False
-    touch_move_vector = pygame.Vector2(0, 0)
+    # Mobile Virtual Touch Controls State — D-Pad
+    dpad_state = {"up": False, "down": False, "left": False, "right": False}
     touch_fire = False
     touch_aim_pos = (SCREEN_WIDTH - 200, SCREEN_HEIGHT // 2)
 
@@ -462,25 +460,43 @@ def main():
                 mx, my = get_canvas_pos(raw_p)
 
                 if game_state == STATE_MENU:
-                    game_state = STATE_SECTOR_SELECT
+                    # Draw nav buttons to get rects, then check tap
+                    nav = draw_nav_buttons(canvas, mode="menu")
+                    if "enter" in nav and nav["enter"].collidepoint(mx, my):
+                        game_state = STATE_SECTOR_SELECT
+                    else:
+                        game_state = STATE_SECTOR_SELECT  # tap anywhere on menu works too
 
                 elif game_state == STATE_LEVEL_CLEAR:
-                    start_next_stage()
+                    nav = draw_nav_buttons(canvas, mode="level_clear")
+                    if "map" in nav and nav["map"].collidepoint(mx, my):
+                        game_state = STATE_SECTOR_SELECT
+                    else:
+                        start_next_stage()
 
                 elif game_state == STATE_GAME_OVER:
-                    reset_game()
-                    game_state = STATE_PLAYING
+                    go_nav = draw_game_over_screen(canvas, total_score, highscore, current_sector_idx, current_sub_level)
+                    if "map" in go_nav and go_nav["map"].collidepoint(mx, my):
+                        game_state = STATE_SECTOR_SELECT
+                    else:
+                        reset_game()
+                        game_state = STATE_PLAYING
 
                 elif game_state == STATE_VICTORY:
-                    difficulty_mode = DIFFICULTY_NIGHTMARE
-                    current_sector_idx = 4
-                    current_sub_level = 3
-                    reset_game()
-                    game_state = STATE_PLAYING
+                    nav = draw_nav_buttons(canvas, mode="victory")
+                    if "map" in nav and nav["map"].collidepoint(mx, my):
+                        game_state = STATE_SECTOR_SELECT
+                    else:
+                        difficulty_mode = DIFFICULTY_NIGHTMARE
+                        current_sector_idx = 4
+                        current_sub_level = 3
+                        reset_game()
+                        game_state = STATE_PLAYING
 
                 elif game_state == STATE_SECTOR_SELECT:
                     exit_rect = pygame.Rect(SCREEN_WIDTH - 140, SCREEN_HEIGHT - 55, 120, 40)
                     diff_rect = pygame.Rect(480, 24, 220, 36)
+                    hangar_btn_r = pygame.Rect(SCREEN_WIDTH // 2 - 110, SCREEN_HEIGHT - 58, 220, 46)
                     if exit_rect.collidepoint(mx, my):
                         if not IS_ANDROID:
                             running = False
@@ -488,6 +504,8 @@ def main():
                             game_state = STATE_MENU
                     elif diff_rect.collidepoint(mx, my):
                         difficulty_mode = (difficulty_mode + 1) % 4
+                    elif hangar_btn_r.collidepoint(mx, my):
+                        game_state = STATE_HANGAR
                     else:
                         card_w = 226
                         start_x = 44
@@ -539,11 +557,10 @@ def main():
                             break
 
                     if not bought:
-                        h_map_btn = pygame.Rect(44, SCREEN_HEIGHT - 65, 200, 48)
-                        h_start_btn = pygame.Rect(260, SCREEN_HEIGHT - 65, 300, 48)
-                        if h_map_btn.collidepoint(mx, my):
+                        h_nav = draw_nav_buttons(canvas, mode="hangar")
+                        if "map" in h_nav and h_nav["map"].collidepoint(mx, my):
                             game_state = STATE_SECTOR_SELECT
-                        elif h_start_btn.collidepoint(mx, my):
+                        elif "play" in h_nav and h_nav["play"].collidepoint(mx, my):
                             reset_game()
                             game_state = STATE_PLAYING
 
@@ -584,7 +601,8 @@ def main():
 
                 elif game_state == STATE_PLAYING:
                     active_touch_btn = None
-                    touch_ctrls = draw_virtual_touch_controls(canvas, joystick_center, joystick_knob, is_touch_active)
+                    active_wpn = drone.active_weapon if drone else "pulse"
+                    touch_ctrls = draw_virtual_touch_controls(canvas, dpad_state=dpad_state, active_weapon=active_wpn)
                     if touch_ctrls["pause"].collidepoint(mx, my):
                         active_touch_btn = "pause"
                         game_state = STATE_PAUSED
@@ -603,16 +621,21 @@ def main():
                     elif touch_ctrls["fire"].collidepoint(mx, my):
                         active_touch_btn = "fire"
                         touch_fire = True
-                    elif mx < SCREEN_WIDTH // 2:
-                        is_touch_active = True
-                        joystick_center = (mx, my)
-                        joystick_knob = (mx, my)
+                    elif touch_ctrls["dpad_up"].collidepoint(mx, my):
+                        dpad_state["up"] = True
+                    elif touch_ctrls["dpad_down"].collidepoint(mx, my):
+                        dpad_state["down"] = True
+                    elif touch_ctrls["dpad_left"].collidepoint(mx, my):
+                        dpad_state["left"] = True
+                    elif touch_ctrls["dpad_right"].collidepoint(mx, my):
+                        dpad_state["right"] = True
 
             elif event.type in (pygame.MOUSEBUTTONUP, pygame.FINGERUP):
                 touch_fire = False
-                is_touch_active = False
-                joystick_center = (140, 580)
-                joystick_knob = joystick_center
+                dpad_state["up"] = False
+                dpad_state["down"] = False
+                dpad_state["left"] = False
+                dpad_state["right"] = False
 
             elif event.type in (pygame.MOUSEMOTION, pygame.FINGERMOTION):
                 if event.type == pygame.FINGERMOTION:
@@ -622,22 +645,36 @@ def main():
                 mx, my = get_canvas_pos(raw_p)
                 touch_aim_pos = (mx, my)
 
-                if is_touch_active and game_state == STATE_PLAYING:
-                    joystick_knob = (mx, my)
+                # Update d-pad on slide
+                if game_state == STATE_PLAYING and mx < SCREEN_WIDTH // 2:
+                    active_wpn2 = drone.active_weapon if drone else "pulse"
+                    tc2 = draw_virtual_touch_controls(canvas, dpad_state=dpad_state, active_weapon=active_wpn2)
+                    dpad_state["up"]    = tc2["dpad_up"].collidepoint(mx, my)
+                    dpad_state["down"]  = tc2["dpad_down"].collidepoint(mx, my)
+                    dpad_state["left"]  = tc2["dpad_left"].collidepoint(mx, my)
+                    dpad_state["right"] = tc2["dpad_right"].collidepoint(mx, my)
 
         if game_state == STATE_PLAYING and drone:
-            # Handle touch joystick movement on mobile
-            if is_touch_active:
-                jx, jy = joystick_center
-                kx, ky = joystick_knob
-                dx = kx - jx
-                dy = ky - jy
-                dist = math.hypot(dx, dy)
-                if dist > 5:
-                    nx = dx / max(dist, 65.0)
-                    ny = dy / max(dist, 65.0)
-                    drone.velocity.x += nx * drone.speed * 3.5 * dt
-                    drone.velocity.y += ny * drone.speed * 3.5 * dt
+            mouse_down = pygame.mouse.get_pressed()[0]
+            if mouse_down:
+                raw_p = pygame.mouse.get_pos()
+                mx, my = get_canvas_pos(raw_p)
+                active_wpn_str = drone.active_weapon if drone else "pulse"
+                tc_rects = draw_virtual_touch_controls(canvas, dpad_state=dpad_state, active_weapon=active_wpn_str)
+                dpad_state["up"]    = tc_rects["dpad_up"].collidepoint(mx, my)
+                dpad_state["down"]  = tc_rects["dpad_down"].collidepoint(mx, my)
+                dpad_state["left"]  = tc_rects["dpad_left"].collidepoint(mx, my)
+                dpad_state["right"] = tc_rects["dpad_right"].collidepoint(mx, my)
+            else:
+                dpad_state["up"] = False
+                dpad_state["down"] = False
+                dpad_state["left"] = False
+                dpad_state["right"] = False
+
+            drone.dpad_up = dpad_state["up"]
+            drone.dpad_down = dpad_state["down"]
+            drone.dpad_left = dpad_state["left"]
+            drone.dpad_right = dpad_state["right"]
 
             particle_manager.spawn_drone_trail((drone.pos.x - 22, drone.pos.y))
             wm_bullets = drone.update(dt, particle_manager, audio_manager, targets_group=target_group)
@@ -730,8 +767,8 @@ def main():
             if drone and drone.alive and not drone.is_invulnerable and not drone.is_cloaked:
                 e_hits = pygame.sprite.spritecollide(drone, enemy_bullet_group, True)
                 for eb in e_hits:
-                    if drone.shield_charge > 0:
-                        drone.shield_charge = max(0, drone.shield_charge - 25)
+                    if drone.shield_hits > 0:
+                        drone.shield_hits = max(0, drone.shield_hits - 1)
                         audio_manager.play_hit()
                         particle_manager.spawn_spark(drone.rect.center, count=10, color=COLOR_SHIELD)
                     else:
@@ -769,10 +806,10 @@ def main():
                         drone.trigger_overclock(6.0)
                         particle_manager.spawn_floating_text(p.rect.center, "OVERCLOCK!", COLOR_OVERCLOCK, 22)
                     elif p.p_type == "shield":
-                        drone.shield_charge = 100
+                        drone.activate_shield(charges=3)
                         particle_manager.spawn_floating_text(p.rect.center, "SHIELD UP", COLOR_SHIELD, 20)
                     elif p.p_type == "slowmo":
-                        spawner.trigger_slowmo(5.0)
+                        drone.activate_slowmo(5.0)
                         particle_manager.spawn_floating_text(p.rect.center, "TIME SLOW", COLOR_SLOWMO, 20)
                     elif p.p_type == "coin":
                         coins += 50
@@ -798,10 +835,9 @@ def main():
         if game_state == STATE_MENU:
             title_surf = font_title.render("DRONE HUNTER 2D", True, COLOR_CYAN)
             sub_surf = font_banner.render("ULTIMATE SCI-FI ARCADE EDITION [MOBILE]", True, COLOR_GOLD)
-            start_surf = font_hud.render("TAP SCREEN TO ENTER SECTOR MAP", True, COLOR_HUD)
             canvas.blit(title_surf, title_surf.get_rect(center=(SCREEN_WIDTH // 2, 260)))
             canvas.blit(sub_surf, sub_surf.get_rect(center=(SCREEN_WIDTH // 2, 330)))
-            canvas.blit(start_surf, start_surf.get_rect(center=(SCREEN_WIDTH // 2, 440)))
+            draw_nav_buttons(canvas, mode="menu")
             draw_exit_button(canvas)
 
         elif game_state == STATE_SECTOR_SELECT:
@@ -809,9 +845,11 @@ def main():
 
         elif game_state == STATE_HANGAR:
             draw_hangar_shop_ui(canvas, coins, current_sector_idx, upgrade_levels)
+            draw_nav_buttons(canvas, mode="hangar")
 
         elif game_state == STATE_VICTORY:
             draw_campaign_victory_ui(canvas, total_score, highscore, coins)
+            draw_nav_buttons(canvas, mode="victory")
 
         elif game_state in (STATE_PLAYING, STATE_PAUSED, STATE_LEVEL_CLEAR, STATE_GAME_OVER):
             target_group.draw(canvas)
@@ -833,24 +871,19 @@ def main():
             draw_crosshair(canvas)
 
             if game_state == STATE_PLAYING:
-                draw_virtual_touch_controls(canvas, joystick_center, joystick_knob, is_touch_active)
+                active_wpn3 = drone.active_weapon if drone else "pulse"
+                draw_virtual_touch_controls(canvas, dpad_state=dpad_state, active_weapon=active_wpn3)
 
             elif game_state == STATE_PAUSED:
                 draw_pause_settings_ui(canvas, difficulty_mode, show_crt, audio_manager.sound_enabled, is_diff_open=is_diff_dropdown_open)
 
             elif game_state == STATE_LEVEL_CLEAR:
                 clear_surf = font_title.render(f"STAGE {current_sector_idx+1}-{current_sub_level} CLEARED!", True, COLOR_GOLD)
-                sub_surf = font_hud.render("Tap Screen to Launch Next Stage", True, COLOR_CYAN)
                 canvas.blit(clear_surf, clear_surf.get_rect(center=(SCREEN_WIDTH // 2, 300)))
-                canvas.blit(sub_surf, sub_surf.get_rect(center=(SCREEN_WIDTH // 2, 370)))
+                draw_nav_buttons(canvas, mode="level_clear")
 
             elif game_state == STATE_GAME_OVER:
-                go_surf = font_gameover.render("MISSION FAILED", True, COLOR_CRIMSON)
-                score_surf = font_banner.render(f"FINAL SCORE: {total_score}  |  HIGHSCORE: {highscore}", True, COLOR_GOLD)
-                sub_surf = font_hud.render("Tap Screen to Restart Mission", True, COLOR_HUD)
-                canvas.blit(go_surf, go_surf.get_rect(center=(SCREEN_WIDTH // 2, 280)))
-                canvas.blit(score_surf, score_surf.get_rect(center=(SCREEN_WIDTH // 2, 350)))
-                canvas.blit(sub_surf, sub_surf.get_rect(center=(SCREEN_WIDTH // 2, 420)))
+                draw_game_over_screen(canvas, total_score, highscore, current_sector_idx, current_sub_level)
 
         if show_crt:
             draw_crt_scanlines(canvas)
