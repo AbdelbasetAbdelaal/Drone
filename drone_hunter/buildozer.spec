@@ -21,8 +21,11 @@ source.exclude_patterns = license, .git, .buildozer, *.pyc, *.pyo, docs/*, tests
 # (str) Application versioning
 version = 1.0.0
 
-# (list) Application requirements (Use Pygame 2.6.0 for Python 3.11+ C compatibility)
-requirements = python3,pygame==2.6.0
+# (list) Application requirements
+requirements = python3,pygame
+
+# (str) Use latest python-for-android master branch for Python 3.11+ & Pygame 2.6+ fixes
+p4a.branch = master
 
 # (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
 orientation = landscape
