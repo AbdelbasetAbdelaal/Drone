@@ -34,24 +34,26 @@ def safe_create_font(name: str, size: int, bold: bool = False) -> pygame.font.Fo
 
 # Global lazy font accessors
 class LazyFont:
-    def __init__(self, name: str, size: int, bold: bool = False):
+    def __init__(self, name: str, font_size: int, bold: bool = False):
         self.name = name
-        self.size = size
+        self.font_size = font_size
         self.bold = bold
 
     def render(self, *args, **kwargs):
-        f = safe_create_font(self.name, self.size, self.bold)
+        f = safe_create_font(self.name, self.font_size, self.bold)
         if f:
             return f.render(*args, **kwargs)
-        # Ultimate fallback dummy surface if font rendering fails
         surf = pygame.Surface((10, 10))
         return surf
 
-    def size_text(self, text: str):
-        f = safe_create_font(self.name, self.size, self.bold)
+    def size(self, text: str):
+        f = safe_create_font(self.name, self.font_size, self.bold)
         if f:
             return f.size(text)
         return (len(text) * 8, 16)
+
+    def size_text(self, text: str):
+        return self.size(text)
 
 font_title = LazyFont("Impact", 44)
 font_banner = LazyFont("Verdana", 17, bold=True)
