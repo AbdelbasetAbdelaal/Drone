@@ -21,8 +21,8 @@ source.exclude_patterns = license, .git, .buildozer, *.pyc, *.pyo, docs/*, tests
 # (str) Application versioning
 version = 1.0.0
 
-# (list) Application requirements (Use Python 3.10.12 for full C extension & longintrepr.h header support)
-requirements = python3==3.10.12,pygame
+# (list) Application requirements (Match hostpython3 and python3 to 3.10.12 for longintrepr.h C header support)
+requirements = hostpython3==3.10.12,python3==3.10.12,pygame
 
 # (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
 orientation = landscape
