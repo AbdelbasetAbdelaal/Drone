@@ -30,6 +30,7 @@ jobs:
       - name: Build APK with Buildozer
         run: |
           cd drone_hunter
+          buildozer android clean || true
           yes | buildozer -v android debug || true
           if [ ! -f bin/*.apk ]; then
             echo "Retrying Buildozer build..."

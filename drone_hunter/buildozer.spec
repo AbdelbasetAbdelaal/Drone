@@ -19,7 +19,10 @@ source.include_exts = py,png,jpg,kv,atlas,json,txt
 version = 1.0.0
 
 # (list) Application requirements
-requirements = python3,pygame
+requirements = python3,pygame-ce
+
+# (str) Extra arguments to pass to python-for-android to force ARM C cross-compilation
+p4a.extra_args = --no-binary pygame-ce
 
 # (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
 orientation = landscape
