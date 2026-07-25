@@ -3,7 +3,22 @@ import sys
 import json
 import math
 import random
+
+# Ensure current working directory is on sys.path for Android
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.insert(0, current_dir)
+
 import pygame
+
+# Android Environment Detection
+IS_ANDROID = 'ANDROID_ARGUMENT' in os.environ or 'ANDROID_ROOT' in os.environ
+
+if IS_ANDROID:
+    save_dir = os.environ.get('ANDROID_PRIVATE_DIR', current_dir)
+    SAVE_FILE = os.path.join(save_dir, "save_data.json")
+else:
+    SAVE_FILE = "save_data.json"
 
 from src.settings import (
     SCREEN_WIDTH, SCREEN_HEIGHT, FPS, TITLE, COLOR_BG, COLOR_HUD,
@@ -28,8 +43,6 @@ from src.ui import (
     draw_sector_select_ui, draw_hangar_shop_ui, draw_exit_button,
     draw_campaign_victory_ui, draw_pause_settings_ui
 )
-
-SAVE_FILE = "save_data.json"
 
 def load_save_data():
     """Loads coins, highscore, upgrade levels, sector unlocks, and sub-level stage unlocks from save file."""
@@ -74,21 +87,44 @@ def save_game_data(coins: int, highscore: int, upgrades: dict[str, int], sectors
         pass
 
 def main():
-    pygame.init()
-    pygame.font.init()
-    pygame.joystick.init()
+    try:
+        pygame.init()
+    except Exception:
+        pass
+
+    try:
+        pygame.font.init()
+    except Exception:
+        pass
+
+    try:
+        pygame.joystick.init()
+    except Exception:
+        pass
 
     joystick = None
-    if pygame.joystick.get_count() > 0:
-        try:
+    try:
+        if pygame.joystick.get_init() and pygame.joystick.get_count() > 0:
             joystick = pygame.joystick.Joystick(0)
             joystick.init()
-        except Exception:
-            pass
+    except Exception:
+        pass
 
     win_w, win_h = 1280, 720
     is_fullscreen = False
-    screen = pygame.display.set_mode((win_w, win_h), pygame.RESIZABLE)
+    
+    if IS_ANDROID:
+        try:
+            import android
+            android.map_key(android.KEYCODE_BACK, pygame.K_ESCAPE)
+        except Exception:
+            pass
+        try:
+            screen = pygame.display.set_mode((win_w, win_h), pygame.FULLSCREEN | pygame.SCALED)
+        except Exception:
+            screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+    else:
+        screen = pygame.display.set_mode((win_w, win_h), pygame.RESIZABLE)
     pygame.display.set_caption(TITLE)
     clock = pygame.time.Clock()
 
@@ -720,7 +756,10 @@ def main():
         if show_crt:
             draw_crt_scanlines(canvas)
 
-        scaled_canvas = pygame.transform.smoothscale(canvas, (win_w, win_h))
+        if IS_ANDROID:
+            scaled_canvas = pygame.transform.scale(canvas, screen.get_size())
+        else:
+            scaled_canvas = pygame.transform.smoothscale(canvas, (win_w, win_h))
         screen.blit(scaled_canvas, (shake_offset_x, shake_offset_y))
         pygame.display.flip()
 
