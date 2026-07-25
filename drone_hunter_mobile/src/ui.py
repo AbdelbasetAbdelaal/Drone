@@ -55,11 +55,11 @@ class LazyFont:
     def size_text(self, text: str):
         return self.size(text)
 
-font_title = LazyFont("Impact", 48)
-font_banner = LazyFont("Verdana", 20, bold=True)
-font_hud = LazyFont("Consolas", 18, bold=True)
-font_card = LazyFont("Consolas", 15, bold=True)
-font_small = LazyFont("Arial", 14)
+font_title = LazyFont("Impact", 56)
+font_banner = LazyFont("Verdana", 24, bold=True)
+font_hud = LazyFont("Consolas", 20, bold=True)
+font_card = LazyFont("Consolas", 17, bold=True)
+font_small = LazyFont("Arial", 15)
 
 def wrap_text(text: str, font: pygame.font.Font, max_width: int) -> list[str]:
     """Wraps text into multiple lines fitting within max_width."""
@@ -80,77 +80,77 @@ def wrap_text(text: str, font: pygame.font.Font, max_width: int) -> list[str]:
 
 
 def draw_hud(canvas: pygame.Surface, player, sector_idx: int, level_score: int, total_score: int, coins: int, difficulty_name: str, combo_mult: int = 1, show_crt: bool = False, current_wave: int = 1, sub_level: int = 1):
-    """Renders main top HUD bar — mobile-first, no keyboard hints, colored pill badges."""
+    """Renders main top HUD bar — mobile-first high contrast, enlarged gauges and pills."""
     bar_x = 115
     bar_w = SCREEN_WIDTH - 310
-    bar_rect = pygame.Rect(bar_x, 10, bar_w, 56)
+    bar_rect = pygame.Rect(bar_x, 8, bar_w, 64)
     
-    pygame.draw.rect(canvas, (15, 23, 42, 235), bar_rect, border_radius=8)
-    pygame.draw.rect(canvas, (56, 189, 248, 140), bar_rect, 2, border_radius=8)
+    pygame.draw.rect(canvas, (15, 23, 42, 245), bar_rect, border_radius=10)
+    pygame.draw.rect(canvas, (56, 189, 248, 180), bar_rect, 2, border_radius=10)
 
     sec_info = SECTORS[sector_idx] if sector_idx < len(SECTORS) else SECTORS[0]
     stages = sec_info.get("stages", [])
     target_stg_score = stages[sub_level - 1]["score"] if (0 < sub_level <= len(stages)) else sec_info.get("base_target_score", 6000)
 
     txt_sector = font_hud.render(f"SEC {sector_idx+1}-{sub_level}: {sec_info['name'].upper()}", True, COLOR_GOLD)
-    txt_score = font_hud.render(f"SCORE: {total_score} ({level_score}/{target_stg_score})", True, COLOR_HUD)
+    txt_score = font_hud.render(f"SCORE: {total_score} ({level_score}/{target_stg_score})", True, COLOR_WHITE)
     txt_coins = font_hud.render(f"GOLD: ${coins}", True, COLOR_GOLD)
     txt_diff = font_hud.render(f"MODE: {difficulty_name}", True, COLOR_CYAN)
     txt_wave = font_hud.render(f"WAVE {current_wave}/4", True, COLOR_CRIMSON if current_wave == 4 else COLOR_EMERALD)
 
-    canvas.blit(txt_sector, (bar_x + 12, 14))
-    canvas.blit(txt_score, (bar_x + 200, 14))
-    canvas.blit(txt_coins, (bar_x + 420, 14))
-    canvas.blit(txt_diff, (bar_x + 540, 14))
-    canvas.blit(txt_wave, (bar_x + 670, 14))
+    canvas.blit(txt_sector, (bar_x + 12, 12))
+    canvas.blit(txt_score, (bar_x + 220, 12))
+    canvas.blit(txt_coins, (bar_x + 460, 12))
+    canvas.blit(txt_diff, (bar_x + 580, 12))
+    canvas.blit(txt_wave, (bar_x + 710, 12))
 
-    # Health / Battery Gauge
+    # Health / Battery Gauge (enlarged)
     hp_pct = max(0.0, min(1.0, player.health / player.max_health))
-    hp_bar_rect = pygame.Rect(bar_x + 12, 34, 110, 16)
-    pygame.draw.rect(canvas, (30, 41, 59), hp_bar_rect, border_radius=4)
+    hp_bar_rect = pygame.Rect(bar_x + 12, 36, 130, 22)
+    pygame.draw.rect(canvas, (30, 41, 59), hp_bar_rect, border_radius=5)
     if hp_pct > 0:
-        fill_w = int(110 * hp_pct)
+        fill_w = int(130 * hp_pct)
         hp_color = COLOR_EMERALD if hp_pct > 0.5 else (COLOR_OVERCLOCK if hp_pct > 0.25 else COLOR_CRIMSON)
-        pygame.draw.rect(canvas, hp_color, (bar_x + 12, 34, fill_w, 16), border_radius=4)
-    pygame.draw.rect(canvas, COLOR_HUD, hp_bar_rect, 1, border_radius=4)
+        pygame.draw.rect(canvas, hp_color, (bar_x + 12, 36, fill_w, 22), border_radius=5)
+    pygame.draw.rect(canvas, COLOR_WHITE, hp_bar_rect, 1, border_radius=5)
 
     txt_hp = font_card.render(f"BATTERY {int(hp_pct * 100)}%", True, COLOR_WHITE)
-    canvas.blit(txt_hp, (bar_x + 18, 36))
+    canvas.blit(txt_hp, (bar_x + 16, 38))
 
-    # --- Status Pill Badges (mobile: no keyboard hints, colored active/dim states) ---
+    # --- Status Pill Badges (Enlarged Mobile Pills) ---
     def _pill(x, label, value, active, active_col):
-        """Draw a colored pill badge with a status dot and label."""
-        w = 95
-        r = pygame.Rect(x, 34, w, 16)
+        """Draw a high-contrast colored pill badge with status dot and label."""
+        w = 105
+        r = pygame.Rect(x, 36, w, 22)
         bg = active_col if active else (30, 41, 59)
-        pygame.draw.rect(canvas, bg, r, border_radius=4)
-        pygame.draw.rect(canvas, active_col if active else (60, 75, 95), r, 1, border_radius=4)
+        pygame.draw.rect(canvas, bg, r, border_radius=5)
+        pygame.draw.rect(canvas, active_col if active else (80, 95, 115), r, 1, border_radius=5)
         dot = (200, 255, 200) if active else (70, 85, 100)
-        pygame.draw.circle(canvas, dot, (x + 6, 42), 3)
-        txt = font_card.render(f"{label}: {value}", True, (15, 23, 42) if active else (110, 130, 155))
-        canvas.blit(txt, (x + 13, 35))
+        pygame.draw.circle(canvas, dot, (x + 8, 47), 4)
+        txt = font_card.render(f"{label}:{value}", True, (15, 23, 42) if active else (160, 175, 195))
+        canvas.blit(txt, (x + 16, 38))
 
     # Weapon pill
     active_weapon_def = WEAPON_DEFS.get(player.active_weapon, {})
     w_name = active_weapon_def.get("name", "Pulse")
-    _pill(bar_x + 130, "WPN", w_name.upper()[:7], True, (220, 160, 10))
+    _pill(bar_x + 150, "WPN", w_name.upper()[:6], True, (250, 204, 21))
 
     # EMP pill
     emp_pct = max(0.0, min(1.0, 1.0 - (player.emp_cooldown / player.emp_cooldown_max)))
     emp_ready = emp_pct >= 1.0
-    _pill(bar_x + 232, "EMP", "READY" if emp_ready else f"{int(emp_pct*100)}%", emp_ready, (14, 165, 233))
+    _pill(bar_x + 260, "EMP", "READY" if emp_ready else f"{int(emp_pct*100)}%", emp_ready, (14, 165, 233))
 
     # Roll pill
     roll_ready = player.roll_cooldown <= 0.0
-    _pill(bar_x + 334, "ROLL", "READY" if roll_ready else "WAIT", roll_ready, (16, 185, 129))
+    _pill(bar_x + 370, "ROLL", "READY" if roll_ready else "WAIT", roll_ready, (16, 185, 129))
 
     # Cloak pill
     cloak_avail = player.has_cloak_upgrade and player.cloak_cooldown <= 0.0
-    _pill(bar_x + 436, "CLOAK", "READY" if cloak_avail else "N/A", cloak_avail, (168, 85, 247))
+    _pill(bar_x + 480, "CLOAK", "READY" if cloak_avail else "N/A", cloak_avail, (168, 85, 247))
 
     # Ultimate Overdrive pill
     ult_ready = player.ultimate_charge >= 100.0
-    _pill(bar_x + 538, "ULT", "100%" if ult_ready else f"{int(player.ultimate_charge)}%", ult_ready, (250, 204, 21))
+    _pill(bar_x + 590, "ULT", "100%" if ult_ready else f"{int(player.ultimate_charge)}%", ult_ready, (250, 204, 21))
 
     # Advanced Stage Weather Hazard Banner (Stages 2 & 3 only)
     if sub_level in (2, 3):
@@ -496,72 +496,34 @@ def draw_virtual_touch_controls(canvas: pygame.Surface, dpad_state: dict = None,
     pygame.draw.circle(canvas, (56, 189, 248), (d_cx, d_cy), 22, 2)
 
     # ── FIRE BUTTON (right side, extra large) ─────────────────────────
-    btn_fire = pygame.Rect(SCREEN_WIDTH - 165, SCREEN_HEIGHT - 170, 140, 140)
+    btn_fire = pygame.Rect(SCREEN_WIDTH - 155, SCREEN_HEIGHT - 155, 140, 140)
     is_f_active = (active_button == "fire")
     fire_draw_col = tuple(min(255, c + 40) for c in fire_col) if is_f_active else fire_col
     pygame.draw.ellipse(canvas, fire_draw_col, btn_fire)
     pygame.draw.ellipse(canvas, COLOR_WHITE if is_f_active else (200, 220, 255), btn_fire, width=5 if is_f_active else 3)
-    # Crosshair icon inside FIRE
     fcx, fcy = btn_fire.center
-    pygame.draw.circle(canvas, COLOR_WHITE, (fcx, fcy - 8), 16, 2)
-    pygame.draw.circle(canvas, COLOR_WHITE, (fcx, fcy - 8), 4)
-    # Weapon name label
+    pygame.draw.circle(canvas, COLOR_WHITE, (fcx, fcy - 10), 18, 2)
+    pygame.draw.circle(canvas, COLOR_WHITE, (fcx, fcy - 10), 5)
     lbl_fire = font_hud.render("FIRE", True, COLOR_WHITE)
     lbl_wpn_name = font_card.render(fire_name, True, COLOR_WHITE)
-    canvas.blit(lbl_fire, (fcx - lbl_fire.get_width() // 2, fcy + 12))
-    canvas.blit(lbl_wpn_name, (fcx - lbl_wpn_name.get_width() // 2, fcy + 32))
+    canvas.blit(lbl_fire, (fcx - lbl_fire.get_width() // 2, fcy + 10))
+    canvas.blit(lbl_wpn_name, (fcx - lbl_wpn_name.get_width() // 2, fcy + 30))
     controls["fire"] = btn_fire
 
-    # ── WEAPON SELECT BUTTON (above FIRE, tap to cycle) ──────────────────────
-    btn_weapon = pygame.Rect(SCREEN_WIDTH - 165, SCREEN_HEIGHT - 290, 140, 60)
+    # ── WEAPON SELECT BUTTON (above FIRE) ──────────────────────────────────
+    btn_weapon = pygame.Rect(SCREEN_WIDTH - 155, SCREEN_HEIGHT - 225, 140, 55)
     is_w_active = (active_button == "weapon")
     pygame.draw.rect(canvas, tuple(min(255, c + 30) for c in fire_col) if is_w_active else (30, 41, 59), btn_weapon, border_radius=12)
     pygame.draw.rect(canvas, COLOR_WHITE if is_w_active else fire_col, btn_weapon, 3 if is_w_active else 2, border_radius=12)
-    # Left/right cycle arrows
     wcx, wcy = btn_weapon.center
-    pygame.draw.polygon(canvas, COLOR_WHITE, [(wcx - 52, wcy), (wcx - 38, wcy - 10), (wcx - 38, wcy + 10)])
-    pygame.draw.polygon(canvas, COLOR_WHITE, [(wcx + 52, wcy), (wcx + 38, wcy - 10), (wcx + 38, wcy + 10)])
-    lbl_wsel = font_banner.render(fire_name, True, COLOR_WHITE)
+    pygame.draw.polygon(canvas, COLOR_WHITE, [(wcx - 54, wcy), (wcx - 40, wcy - 10), (wcx - 40, wcy + 10)])
+    pygame.draw.polygon(canvas, COLOR_WHITE, [(wcx + 54, wcy), (wcx + 40, wcy - 10), (wcx + 40, wcy + 10)])
+    lbl_wsel = font_card.render(fire_name, True, COLOR_WHITE)
     canvas.blit(lbl_wsel, lbl_wsel.get_rect(center=btn_weapon.center))
     controls["weapon"] = btn_weapon
 
-    # ── EMP Button (90x90) ───────────────────────────────────────────────────
-    btn_emp = pygame.Rect(SCREEN_WIDTH - 290, SCREEN_HEIGHT - 130, 90, 90)
-    is_e_active = (active_button == "emp")
-    pygame.draw.ellipse(canvas, (56, 189, 248) if is_e_active else (14, 165, 233), btn_emp)
-    pygame.draw.ellipse(canvas, COLOR_WHITE if is_e_active else COLOR_CYAN, btn_emp, width=3 if is_e_active else 2)
-    ecx, ecy = btn_emp.center
-    bolt_pts = [(ecx+3, ecy-18), (ecx-9, ecy-2), (ecx-1, ecy-2), (ecx-5, ecy+16), (ecx+8, ecy), (ecx, ecy)]
-    pygame.draw.polygon(canvas, COLOR_WHITE, bolt_pts)
-    lbl_e = font_card.render("EMP", True, COLOR_WHITE)
-    canvas.blit(lbl_e, (ecx - lbl_e.get_width() // 2, ecy + 16))
-    controls["emp"] = btn_emp
-
-    # ── ROLL Button (90x90) ──────────────────────────────────────────────────
-    btn_roll = pygame.Rect(SCREEN_WIDTH - 290, SCREEN_HEIGHT - 235, 90, 90)
-    is_r_active = (active_button == "roll")
-    pygame.draw.ellipse(canvas, (52, 211, 153) if is_r_active else (16, 185, 129), btn_roll)
-    pygame.draw.ellipse(canvas, COLOR_WHITE if is_r_active else COLOR_EMERALD, btn_roll, width=3 if is_r_active else 2)
-    rcx, rcy = btn_roll.center
-    pygame.draw.arc(canvas, COLOR_WHITE, (rcx - 16, rcy - 16, 32, 32), 0.5, 5.0, 3)
-    lbl_r = font_card.render("ROLL", True, COLOR_WHITE)
-    canvas.blit(lbl_r, (rcx - lbl_r.get_width() // 2, rcy + 16))
-    controls["roll"] = btn_roll
-
-    # ── CLOAK Button (90x90) ─────────────────────────────────────────────────
-    btn_cloak = pygame.Rect(SCREEN_WIDTH - 290, SCREEN_HEIGHT - 340, 90, 90)
-    is_c_active = (active_button == "cloak")
-    pygame.draw.ellipse(canvas, (217, 70, 239) if is_c_active else (168, 85, 247), btn_cloak)
-    pygame.draw.ellipse(canvas, COLOR_WHITE if is_c_active else COLOR_MAGENTA, btn_cloak, width=3 if is_c_active else 2)
-    ccx, ccy = btn_cloak.center
-    shield_pts = [(ccx, ccy-16), (ccx+12, ccy-9), (ccx+11, ccy+6), (ccx, ccy+14), (ccx-11, ccy+6), (ccx-12, ccy-9)]
-    pygame.draw.polygon(canvas, COLOR_WHITE, shield_pts, 2)
-    lbl_c = font_card.render("CLOAK", True, COLOR_WHITE)
-    canvas.blit(lbl_c, (ccx - lbl_c.get_width() // 2, ccy + 16))
-    controls["cloak"] = btn_cloak
-
-    # ── AUTO-LOCK TARGET ASSIST Button ───────────────────────────────────────
-    btn_lock = pygame.Rect(SCREEN_WIDTH - 165, SCREEN_HEIGHT - 365, 140, 56)
+    # ── AUTO-LOCK TARGET ASSIST Button (above WEAPON) ────────────────────────
+    btn_lock = pygame.Rect(SCREEN_WIDTH - 155, SCREEN_HEIGHT - 290, 140, 55)
     is_l_active = (active_button == "autolock")
     bg_l = (16, 185, 129) if is_l_active else (30, 41, 59)
     pygame.draw.rect(canvas, bg_l, btn_lock, border_radius=12)
@@ -570,16 +532,52 @@ def draw_virtual_touch_controls(canvas: pygame.Surface, dpad_state: dict = None,
     canvas.blit(lbl_lock, lbl_lock.get_rect(center=btn_lock.center))
     controls["autolock"] = btn_lock
 
-    # ── ULTIMATE OVERDRIVE Button (90x90) ────────────────────────────────────
-    btn_ult = pygame.Rect(SCREEN_WIDTH - 290, SCREEN_HEIGHT - 445, 90, 90)
+    # ── SPECIAL ABILITIES (Compact Ergonomic 2x2 Arc) ────────────────────────
+    # EMP Button
+    btn_emp = pygame.Rect(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 135, 82, 82)
+    is_e_active = (active_button == "emp")
+    pygame.draw.ellipse(canvas, (56, 189, 248) if is_e_active else (14, 165, 233), btn_emp)
+    pygame.draw.ellipse(canvas, COLOR_WHITE if is_e_active else COLOR_CYAN, btn_emp, width=3 if is_e_active else 2)
+    ecx, ecy = btn_emp.center
+    bolt_pts = [(ecx+3, ecy-16), (ecx-8, ecy-2), (ecx-1, ecy-2), (ecx-5, ecy+14), (ecx+7, ecy), (ecx, ecy)]
+    pygame.draw.polygon(canvas, COLOR_WHITE, bolt_pts)
+    lbl_e = font_card.render("EMP", True, COLOR_WHITE)
+    canvas.blit(lbl_e, (ecx - lbl_e.get_width() // 2, ecy + 14))
+    controls["emp"] = btn_emp
+
+    # ROLL Button
+    btn_roll = pygame.Rect(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 230, 82, 82)
+    is_r_active = (active_button == "roll")
+    pygame.draw.ellipse(canvas, (52, 211, 153) if is_r_active else (16, 185, 129), btn_roll)
+    pygame.draw.ellipse(canvas, COLOR_WHITE if is_r_active else COLOR_EMERALD, btn_roll, width=3 if is_r_active else 2)
+    rcx, rcy = btn_roll.center
+    pygame.draw.arc(canvas, COLOR_WHITE, (rcx - 14, rcy - 14, 28, 28), 0.5, 5.0, 3)
+    lbl_r = font_card.render("ROLL", True, COLOR_WHITE)
+    canvas.blit(lbl_r, (rcx - lbl_r.get_width() // 2, rcy + 14))
+    controls["roll"] = btn_roll
+
+    # CLOAK Button
+    btn_cloak = pygame.Rect(SCREEN_WIDTH - 345, SCREEN_HEIGHT - 135, 82, 82)
+    is_c_active = (active_button == "cloak")
+    pygame.draw.ellipse(canvas, (217, 70, 239) if is_c_active else (168, 85, 247), btn_cloak)
+    pygame.draw.ellipse(canvas, COLOR_WHITE if is_c_active else COLOR_MAGENTA, btn_cloak, width=3 if is_c_active else 2)
+    ccx, ccy = btn_cloak.center
+    shield_pts = [(ccx, ccy-14), (ccx+10, ccy-8), (ccx+9, ccy+5), (ccx, ccy+12), (ccx-9, ccy+5), (ccx-10, ccy-8)]
+    pygame.draw.polygon(canvas, COLOR_WHITE, shield_pts, 2)
+    lbl_c = font_card.render("CLOAK", True, COLOR_WHITE)
+    canvas.blit(lbl_c, (ccx - lbl_c.get_width() // 2, ccy + 14))
+    controls["cloak"] = btn_cloak
+
+    # ULTIMATE OVERDRIVE Button
+    btn_ult = pygame.Rect(SCREEN_WIDTH - 345, SCREEN_HEIGHT - 230, 82, 82)
     is_u_active = (active_button == "ultimate")
     pygame.draw.ellipse(canvas, (250, 204, 21) if is_u_active else (147, 51, 234), btn_ult)
     pygame.draw.ellipse(canvas, COLOR_WHITE if is_u_active else COLOR_GOLD, btn_ult, width=4 if is_u_active else 2)
     ucx, ucy = btn_ult.center
-    pygame.draw.circle(canvas, COLOR_WHITE, (ucx, ucy - 6), 14, 2)
-    pygame.draw.circle(canvas, COLOR_GOLD, (ucx, ucy - 6), 5)
-    lbl_u = font_card.render("ULTIMATE", True, COLOR_WHITE)
-    canvas.blit(lbl_u, (ucx - lbl_u.get_width() // 2, ucy + 16))
+    pygame.draw.circle(canvas, COLOR_WHITE, (ucx, ucy - 5), 12, 2)
+    pygame.draw.circle(canvas, COLOR_GOLD, (ucx, ucy - 5), 4)
+    lbl_u = font_card.render("ULT", True, COLOR_WHITE)
+    canvas.blit(lbl_u, (ucx - lbl_u.get_width() // 2, ucy + 12))
     controls["ultimate"] = btn_ult
 
     # ── PAUSE Button (top-left standalone) ───────────────────────────────────
@@ -839,125 +837,116 @@ def draw_pause_settings_ui(canvas: pygame.Surface, difficulty_mode: int, show_cr
     overlay.fill((15, 23, 42, 215))
     canvas.blit(overlay, (0, 0))
 
-    panel_h = 650 if not is_diff_open else 665
-    panel_rect = pygame.Rect(180, 25, SCREEN_WIDTH - 360, panel_h)
-    pygame.draw.rect(canvas, (15, 23, 42, 250), panel_rect, border_radius=14)
-    pygame.draw.rect(canvas, COLOR_CYAN, panel_rect, 3, border_radius=14)
+    panel_h = 580 if not is_diff_open else 610
+    panel_rect = pygame.Rect(180, 40, SCREEN_WIDTH - 360, panel_h)
+    pygame.draw.rect(canvas, (15, 23, 42, 250), panel_rect, border_radius=16)
+    pygame.draw.rect(canvas, COLOR_CYAN, panel_rect, 3, border_radius=16)
 
     txt_pause = font_title.render("PAUSED & SETTINGS", True, COLOR_GOLD)
-    canvas.blit(txt_pause, txt_pause.get_rect(center=(SCREEN_WIDTH // 2, 65)))
+    canvas.blit(txt_pause, txt_pause.get_rect(center=(SCREEN_WIDTH // 2, 85)))
 
-    # --- SECTION 1: SETTINGS DROPDOWN / TOGGLE BUTTONS ---
-    sub_sett = font_banner.render("[+] GAME OPTION SETTINGS", True, COLOR_CYAN)
-    canvas.blit(sub_sett, (220, 105))
+    # --- SECTION 1: SETTINGS TOGGLE BUTTONS ---
+    sub_sett = font_banner.render("⚙️ GAME OPTION SETTINGS", True, COLOR_CYAN)
+    canvas.blit(sub_sett, (220, 130))
 
     diff_names = ["EASY (LOW HP & SPEED)", "NORMAL (BALANCED)", "HARD (INTENSE SALVOS)", "NIGHTMARE (BULLET HELL)"]
     diff_colors = [COLOR_EMERALD, COLOR_CYAN, COLOR_OVERCLOCK, COLOR_CRIMSON]
     
-    btn_diff = pygame.Rect(220, 135, 480, 40)
+    btn_diff = pygame.Rect(220, 160, 480, 44)
     hover_diff = btn_diff.collidepoint(mx, my)
     bg_diff = (45, 60, 95) if hover_diff else (30, 41, 59)
-    border_w_diff = 3 if hover_diff else 2
-
-    pygame.draw.rect(canvas, bg_diff, btn_diff, border_radius=6)
-    pygame.draw.rect(canvas, COLOR_WHITE if hover_diff else diff_colors[difficulty_mode], btn_diff, border_w_diff, border_radius=6)
     
-    t_diff = font_hud.render(f"DIFFICULTY: {diff_names[difficulty_mode]}  [SELECT]", True, COLOR_WHITE if hover_diff else diff_colors[difficulty_mode])
+    pygame.draw.rect(canvas, bg_diff, btn_diff, border_radius=8)
+    pygame.draw.rect(canvas, COLOR_WHITE if hover_diff else diff_colors[difficulty_mode], btn_diff, 3 if hover_diff else 2, border_radius=8)
+    
+    t_diff = font_hud.render(f"DIFFICULTY: {diff_names[difficulty_mode]}", True, COLOR_WHITE if hover_diff else diff_colors[difficulty_mode])
     canvas.blit(t_diff, t_diff.get_rect(center=btn_diff.center))
 
     dropdown_item_rects = []
     if is_diff_open:
         for d_i in range(4):
-            d_rect = pygame.Rect(220, 180 + d_i * 36, 480, 32)
+            d_rect = pygame.Rect(220, 210 + d_i * 38, 480, 34)
             dropdown_item_rects.append((d_rect, d_i))
             
             h_item = d_rect.collidepoint(mx, my)
             d_bg = (56, 189, 248) if h_item else ((45, 60, 85) if d_i == difficulty_mode else (24, 32, 48))
             d_text_col = (15, 23, 42) if h_item else diff_colors[d_i]
             
-            pygame.draw.rect(canvas, d_bg, d_rect, border_radius=5)
-            pygame.draw.rect(canvas, COLOR_WHITE if h_item else diff_colors[d_i], d_rect, 2 if (d_i == difficulty_mode or h_item) else 1, border_radius=5)
+            pygame.draw.rect(canvas, d_bg, d_rect, border_radius=6)
+            pygame.draw.rect(canvas, COLOR_WHITE if h_item else diff_colors[d_i], d_rect, 2 if (d_i == difficulty_mode or h_item) else 1, border_radius=6)
             
-            check_mark = "[X] " if d_i == difficulty_mode else "[  ] "
+            check_mark = "✓ " if d_i == difficulty_mode else "  "
             t_item = font_hud.render(f"{check_mark}{diff_names[d_i]}", True, d_text_col)
-            canvas.blit(t_item, (235, 180 + d_i * 36 + 6))
+            canvas.blit(t_item, (240, 210 + d_i * 38 + 6))
 
-    offset_y = 145 if is_diff_open else 0
+    offset_y = 150 if is_diff_open else 0
 
-    btn_crt = pygame.Rect(220, 185 + offset_y, 480, 38)
+    btn_crt = pygame.Rect(220, 215 + offset_y, 480, 44)
     hover_crt = btn_crt.collidepoint(mx, my)
     bg_crt = (45, 60, 95) if hover_crt else (30, 41, 59)
     col_crt = COLOR_GOLD if show_crt else COLOR_TEXT_DIM
     
-    pygame.draw.rect(canvas, bg_crt, btn_crt, border_radius=6)
-    pygame.draw.rect(canvas, COLOR_WHITE if hover_crt else col_crt, btn_crt, 3 if hover_crt else 2, border_radius=6)
-    t_crt = font_banner.render(f"CRT RETRO FILTER:  {'[ ENABLED ]' if show_crt else '[ DISABLED ]'}  (Click/[F2])", True, COLOR_WHITE if hover_crt else (COLOR_GOLD if show_crt else COLOR_HUD))
+    pygame.draw.rect(canvas, bg_crt, btn_crt, border_radius=8)
+    pygame.draw.rect(canvas, COLOR_WHITE if hover_crt else col_crt, btn_crt, 3 if hover_crt else 2, border_radius=8)
+    t_crt = font_banner.render(f"CRT RETRO FILTER:  {'[ ENABLED ]' if show_crt else '[ DISABLED ]'}", True, COLOR_WHITE if hover_crt else (COLOR_GOLD if show_crt else COLOR_HUD))
     canvas.blit(t_crt, t_crt.get_rect(center=btn_crt.center))
 
-    btn_sfx = pygame.Rect(220, 230 + offset_y, 480, 38)
+    btn_sfx = pygame.Rect(220, 268 + offset_y, 480, 44)
     hover_sfx = btn_sfx.collidepoint(mx, my)
     bg_sfx = (45, 60, 95) if hover_sfx else (30, 41, 59)
     col_sfx = COLOR_EMERALD if sound_enabled else COLOR_CRIMSON
     
-    pygame.draw.rect(canvas, bg_sfx, btn_sfx, border_radius=6)
-    pygame.draw.rect(canvas, COLOR_WHITE if hover_sfx else col_sfx, btn_sfx, 3 if hover_sfx else 2, border_radius=6)
-    t_sfx = font_banner.render(f"SYNTH AUDIO SFX:  {'[ ENABLED ]' if sound_enabled else '[ MUTED ]'}  (Click/[S])", True, COLOR_WHITE if hover_sfx else col_sfx)
+    pygame.draw.rect(canvas, bg_sfx, btn_sfx, border_radius=8)
+    pygame.draw.rect(canvas, COLOR_WHITE if hover_sfx else col_sfx, btn_sfx, 3 if hover_sfx else 2, border_radius=8)
+    t_sfx = font_banner.render(f"SYNTH AUDIO SFX:  {'[ ENABLED ]' if sound_enabled else '[ MUTED ]'}", True, COLOR_WHITE if hover_sfx else col_sfx)
     canvas.blit(t_sfx, t_sfx.get_rect(center=btn_sfx.center))
 
-    # --- SECTION 2: CONTROLS & KEYBINDINGS CHART ---
-    sub_ctrl = font_banner.render("[>] PILOT CONTROLS & KEYBINDINGS", True, COLOR_CYAN)
-    canvas.blit(sub_ctrl, (220, 280 + offset_y))
+    # --- SECTION 2: MOBILE TOUCH CONTROLS GUIDE ---
+    sub_ctrl = font_banner.render("📱 PILOT TOUCH CONTROLS", True, COLOR_CYAN)
+    canvas.blit(sub_ctrl, (220, 322 + offset_y))
 
-    ctrl_box = pygame.Rect(220, 305 + offset_y, 480, 155)
+    ctrl_box = pygame.Rect(220, 350 + offset_y, 480, 110)
     pygame.draw.rect(canvas, (24, 32, 48), ctrl_box, border_radius=8)
     pygame.draw.rect(canvas, (56, 189, 248, 100), ctrl_box, 1, border_radius=8)
 
     controls_list = [
-        ("FLIGHT MOVEMENT:", "W A S D / ARROW KEYS"),
-        ("AIM & RETICLE:", "MOUSE POINTER"),
-        ("CANNON FIRE:", "LEFT MOUSE BUTTON"),
-        ("EMP SHOCKWAVE:", "RIGHT MOUSE / PRESS [E]"),
-        ("CYCLE WEAPON:", "PRESS [TAB] KEY"),
-        ("EVASIVE ROLL:", "PRESS [L-SHIFT] KEY"),
-        ("TACTICAL CLOAK:", "PRESS [C] / [K] KEY")
+        ("🕹️ TOUCH D-PAD:", "FLIGHT MOVEMENT (LEFT THUMB)"),
+        ("🎯 AUTO LOCK / FIRE:", "ATTACK NEAREST TARGET (RIGHT THUMB)"),
+        ("⚡ EMP / ROLL / CLOAK / ULT:", "SPECIAL TACTICAL ABILITIES")
     ]
 
     for c_i, (k_lbl, k_val) in enumerate(controls_list):
-        c_y = 312 + offset_y + c_i * 20
-        canvas.blit(font_hud.render(k_lbl, True, COLOR_HUD), (235, c_y))
-        canvas.blit(font_hud.render(k_val, True, COLOR_GOLD), (440, c_y))
+        c_y = 358 + offset_y + c_i * 32
+        canvas.blit(font_card.render(k_lbl, True, COLOR_GOLD), (235, c_y))
+        canvas.blit(font_card.render(k_val, True, COLOR_WHITE), (235, c_y + 16))
 
-    # --- SECTION 3: NAVIGATION ACTION BUTTONS WITH VIBRANT HOVER COLORS ---
-    btn_resume = pygame.Rect(220, 475 + offset_y, 230, 40)
-    btn_hangar = pygame.Rect(470, 475 + offset_y, 230, 40)
-    btn_map = pygame.Rect(220, 523 + offset_y, 230, 40)
-    btn_exit = pygame.Rect(470, 523 + offset_y, 230, 40)
+    # --- SECTION 3: NAVIGATION ACTION BUTTONS ---
+    btn_resume = pygame.Rect(220, 475 + offset_y, 230, 46)
+    btn_hangar = pygame.Rect(470, 475 + offset_y, 230, 46)
+    btn_map = pygame.Rect(220, 528 + offset_y, 230, 46)
+    btn_exit = pygame.Rect(470, 528 + offset_y, 230, 46)
 
     h_res = btn_resume.collidepoint(mx, my)
     h_hang = btn_hangar.collidepoint(mx, my)
     h_map = btn_map.collidepoint(mx, my)
     h_ex = btn_exit.collidepoint(mx, my)
 
-    # Resume Button Hover Style (Emerald -> Bright Mint Cyan)
-    pygame.draw.rect(canvas, (52, 211, 153) if not h_res else (110, 231, 183), btn_resume, border_radius=6)
-    pygame.draw.rect(canvas, COLOR_WHITE if h_res else COLOR_EMERALD, btn_resume, 3 if h_res else 1, border_radius=6)
+    pygame.draw.rect(canvas, (52, 211, 153) if not h_res else (110, 231, 183), btn_resume, border_radius=8)
+    pygame.draw.rect(canvas, COLOR_WHITE if h_res else COLOR_EMERALD, btn_resume, 3 if h_res else 1, border_radius=8)
 
-    # Hangar Button Hover Style (Slate -> Cyan Glow)
-    pygame.draw.rect(canvas, (56, 189, 248) if h_hang else (30, 41, 59), btn_hangar, border_radius=6)
-    pygame.draw.rect(canvas, COLOR_WHITE if h_hang else COLOR_CYAN, btn_hangar, 3 if h_hang else 2, border_radius=6)
+    pygame.draw.rect(canvas, (56, 189, 248) if h_hang else (30, 41, 59), btn_hangar, border_radius=8)
+    pygame.draw.rect(canvas, COLOR_WHITE if h_hang else COLOR_CYAN, btn_hangar, 3 if h_hang else 2, border_radius=8)
 
-    # Map Button Hover Style (Slate -> Gold Glow)
-    pygame.draw.rect(canvas, (250, 204, 21) if h_map else (30, 41, 59), btn_map, border_radius=6)
-    pygame.draw.rect(canvas, COLOR_WHITE if h_map else COLOR_GOLD, btn_map, 3 if h_map else 2, border_radius=6)
+    pygame.draw.rect(canvas, (250, 204, 21) if h_map else (30, 41, 59), btn_map, border_radius=8)
+    pygame.draw.rect(canvas, COLOR_WHITE if h_map else COLOR_GOLD, btn_map, 3 if h_map else 2, border_radius=8)
 
-    # Exit Button Hover Style (Red -> Neon Crimson Glow)
-    pygame.draw.rect(canvas, (255, 60, 60) if h_ex else (239, 68, 68), btn_exit, border_radius=6)
-    pygame.draw.rect(canvas, COLOR_WHITE if h_ex else (255, 200, 200), btn_exit, 3 if h_ex else 1, border_radius=6)
+    pygame.draw.rect(canvas, (255, 60, 60) if h_ex else (239, 68, 68), btn_exit, border_radius=8)
+    pygame.draw.rect(canvas, COLOR_WHITE if h_ex else (255, 200, 200), btn_exit, 3 if h_ex else 1, border_radius=8)
 
-    t_res = font_banner.render("[>] RESUME [P]", True, (15, 23, 42))
-    t_hang = font_banner.render("HANGAR SHOP [H]", True, (15, 23, 42) if h_hang else COLOR_CYAN)
-    t_map = font_banner.render("SECTOR MAP [M]", True, (15, 23, 42) if h_map else COLOR_GOLD)
-    t_ex = font_banner.render("EXIT GAME [Q]", True, (255, 255, 255))
+    t_res = font_banner.render("▶ RESUME", True, (15, 23, 42))
+    t_hang = font_banner.render("🛒 HANGAR SHOP", True, (15, 23, 42) if h_hang else COLOR_CYAN)
+    t_map = font_banner.render("🗺️ SECTOR MAP", True, (15, 23, 42) if h_map else COLOR_GOLD)
+    t_ex = font_banner.render("❌ EXIT GAME", True, (255, 255, 255))
 
     canvas.blit(t_res, t_res.get_rect(center=btn_resume.center))
     canvas.blit(t_hang, t_hang.get_rect(center=btn_hangar.center))
