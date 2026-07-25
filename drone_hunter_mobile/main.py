@@ -369,7 +369,10 @@ def main():
                     save_game_data(coins, highscore, upgrade_levels, unlocked_sectors, show_crt, unlocked_stages)
 
                 if event.key == pygame.K_q and game_state in (STATE_MENU, STATE_SECTOR_SELECT, STATE_HANGAR, STATE_VICTORY):
-                    running = False
+                    if not IS_ANDROID:
+                        running = False
+                    else:
+                        game_state = STATE_MENU
 
                 if game_state == STATE_MENU:
                     if event.key in (pygame.K_SPACE, pygame.K_RETURN):
@@ -429,7 +432,10 @@ def main():
                     elif event.key == pygame.K_m:
                         game_state = STATE_SECTOR_SELECT
                     elif event.key in (pygame.K_q, pygame.K_ESCAPE):
-                        running = False
+                        if not IS_ANDROID:
+                            running = False
+                        else:
+                            game_state = STATE_MENU
 
                 elif game_state == STATE_VICTORY:
                     if event.key in (pygame.K_SPACE, pygame.K_RETURN):
@@ -473,8 +479,14 @@ def main():
                     game_state = STATE_PLAYING
 
                 elif game_state == STATE_SECTOR_SELECT:
+                    exit_rect = pygame.Rect(SCREEN_WIDTH - 140, SCREEN_HEIGHT - 55, 120, 40)
                     diff_rect = pygame.Rect(480, 24, 220, 36)
-                    if diff_rect.collidepoint(mx, my):
+                    if exit_rect.collidepoint(mx, my):
+                        if not IS_ANDROID:
+                            running = False
+                        else:
+                            game_state = STATE_MENU
+                    elif diff_rect.collidepoint(mx, my):
                         difficulty_mode = (difficulty_mode + 1) % 4
                     else:
                         card_w = 226

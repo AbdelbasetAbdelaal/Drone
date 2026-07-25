@@ -1,0 +1,9 @@
+'Player' object has no attribute 'is_invulnerable'
+Traceback (most recent call last):
+  File "D:\AI_Projects\drone_hunter_mobile\main.py", line 846, in <module>
+    main()
+    ~~~~^^
+  File "D:\AI_Projects\drone_hunter_mobile\main.py", line 707, in main
+    if drone and drone.alive and not drone.is_invulnerable and not drone.is_cloaked:
+                                     ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Player' object has no attribute 'is_invulnerable'

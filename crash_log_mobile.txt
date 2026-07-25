@@ -1,0 +1,9 @@
+'WaveManager' object has no attribute 'is_stage_complete'
+Traceback (most recent call last):
+  File "D:\AI_Projects\drone_hunter_mobile\main.py", line 849, in <module>
+    main()
+    ~~~~^^
+  File "D:\AI_Projects\drone_hunter_mobile\main.py", line 768, in main
+    if game_state == STATE_PLAYING and wave_manager.is_stage_complete(level_score):
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'WaveManager' object has no attribute 'is_stage_complete'
