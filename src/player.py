@@ -202,45 +202,58 @@ class Player(pygame.sprite.Sprite):
         self.original_image.fill((0, 0, 0, 0))
         cx, cy = self.width // 2, self.height // 2
 
-        # 1. Carbon Fiber Chassis Body
-        pygame.draw.ellipse(self.original_image, (30, 41, 59), (cx - 24, cy - 13, 48, 26))
-        drone_color = (148, 163, 184, 100) if self.is_cloaked else COLOR_DRONE
-        pygame.draw.ellipse(self.original_image, drone_color, (cx - 19, cy - 9, 38, 18), 3)
+        # 0. Outer High-Visibility Cyan Silhouette Glow (Stands out against ANY dark background)
+        pygame.draw.ellipse(self.original_image, (56, 189, 248, 160), (cx - 34, cy - 18, 68, 36), 3)
+        pygame.draw.ellipse(self.original_image, (255, 255, 255, 220), (cx - 32, cy - 16, 64, 32), 1)
 
-        # 2. Front Optical Camera Sensor Lens
-        pygame.draw.circle(self.original_image, (15, 23, 42), (cx + 19, cy), 7)
-        pygame.draw.circle(self.original_image, (56, 189, 248), (cx + 19, cy), 4)
+        # 1. Premium Platinum & Cyan Armor Chassis Body
+        pygame.draw.ellipse(self.original_image, (15, 23, 42), (cx - 30, cy - 15, 60, 30))
+        drone_color = (148, 163, 184, 100) if self.is_cloaked else (241, 245, 249) # Platinum White Body
+        pygame.draw.ellipse(self.original_image, drone_color, (cx - 26, cy - 12, 52, 24))
+        # Gold & Cyan Cyberpunk Accents
+        pygame.draw.ellipse(self.original_image, (250, 204, 21), (cx - 16, cy - 8, 32, 16), 2)
+        pygame.draw.ellipse(self.original_image, (6, 182, 212), (cx - 10, cy - 5, 20, 10))
 
-        # 3. Dual Laser Cannon Barrels
-        pygame.draw.rect(self.original_image, (148, 163, 184), (cx + 13, cy - 12, 18, 4))
-        pygame.draw.rect(self.original_image, (148, 163, 184), (cx + 13, cy + 8, 18, 4))
+        # 2. Front Optical Camera Sensor Lens (Glowing Cyan + Diamond White Core)
+        pygame.draw.circle(self.original_image, (15, 23, 42), (cx + 25, cy), 9)
+        pygame.draw.circle(self.original_image, (56, 189, 248), (cx + 25, cy), 6)
+        pygame.draw.circle(self.original_image, (255, 255, 255), (cx + 25, cy), 3)
+
+        # 3. Dual Gold & Chrome Laser Cannon Barrels
+        pygame.draw.rect(self.original_image, (250, 204, 21), (cx + 16, cy - 15, 24, 5), border_radius=2)
+        pygame.draw.rect(self.original_image, (250, 204, 21), (cx + 16, cy + 10, 24, 5), border_radius=2)
+        pygame.draw.rect(self.original_image, (255, 255, 255), (cx + 22, cy - 14, 16, 3))
+        pygame.draw.rect(self.original_image, (255, 255, 255), (cx + 22, cy + 11, 16, 3))
 
         # 4. Carbon Fiber Rotor Arms
         rotors = [
-            (cx - 27, cy - 19),
-            (cx + 27, cy - 19),
-            (cx - 27, cy + 19),
-            (cx + 27, cy + 19)
+            (cx - 36, cy - 25),
+            (cx + 36, cy - 25),
+            (cx - 36, cy + 25),
+            (cx + 36, cy + 25)
         ]
         for rx, ry in rotors:
-            pygame.draw.line(self.original_image, (71, 85, 105), (cx, cy), (rx, ry), 4)
+            pygame.draw.line(self.original_image, (30, 41, 59), (cx, cy), (rx, ry), 6)
+            pygame.draw.line(self.original_image, (56, 189, 248), (cx, cy), (rx, ry), 2)
 
-        # 5. Animated Propellers & Navigation Lights
-        blade_length = 17
+        # 5. Animated Propellers & Navigation Strobes
+        blade_length = 22
         blade_dx = int(math.cos(self.rotor_angle) * blade_length)
         blade_dy = int(math.sin(self.rotor_angle) * blade_length)
 
         for idx, (rx, ry) in enumerate(rotors):
-            pygame.draw.circle(self.original_image, (15, 23, 42), (rx, ry), 7)
-            pygame.draw.ellipse(self.original_image, (148, 163, 184, 140), (rx - 18, ry - 7, 36, 14), 1)
-            pygame.draw.line(self.original_image, (226, 232, 240, 200), (rx - blade_dx, ry - blade_dy), (rx + blade_dx, ry + blade_dy), 3)
+            pygame.draw.circle(self.original_image, (15, 23, 42), (rx, ry), 9)
+            pygame.draw.circle(self.original_image, (250, 204, 21), (rx, ry), 5)
+            # Glowing Spinning Disc
+            pygame.draw.ellipse(self.original_image, (34, 211, 238, 160), (rx - 23, ry - 9, 46, 18), 2)
+            pygame.draw.line(self.original_image, (255, 255, 255, 230), (rx - blade_dx, ry - blade_dy), (rx + blade_dx, ry + blade_dy), 4)
             strobe_color = (52, 211, 153) if idx % 2 == 1 else (239, 68, 68)
-            pygame.draw.circle(self.original_image, strobe_color, (rx, ry), 3)
+            pygame.draw.circle(self.original_image, strobe_color, (rx, ry), 4)
 
         # 6. Render Forcefield Shield Bubble if Active
         if self.shield_hits > 0:
-            pygame.draw.ellipse(self.original_image, (99, 102, 241, 180), (2, 2, self.width - 4, self.height - 4), 3)
-            pygame.draw.ellipse(self.original_image, (165, 180, 252, 100), (4, 4, self.width - 8, self.height - 8), 1)
+            pygame.draw.ellipse(self.original_image, (99, 102, 241, 200), (2, 2, self.width - 4, self.height - 4), 4)
+            pygame.draw.ellipse(self.original_image, (165, 180, 252, 140), (5, 5, self.width - 10, self.height - 10), 2)
 
     def update(self, dt: float, particle_manager=None, audio_manager=None, wind_force: float = 0.0, targets_group=None) -> list[Bullet]:
         self.shoot_timer = max(0.0, self.shoot_timer - dt)
