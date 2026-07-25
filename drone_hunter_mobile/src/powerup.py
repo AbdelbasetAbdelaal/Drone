@@ -32,7 +32,7 @@ class PowerupItem(pygame.sprite.Sprite):
         self.height = 36
         self.type = self.ptype # Alias for compatibility
         self.image = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        
+
         if self.ptype == "shield":
             self.color = COLOR_SHIELD
         elif self.ptype == "overclock":
@@ -60,6 +60,10 @@ class PowerupItem(pygame.sprite.Sprite):
         self.radius = 18
         self.speed = 140.0
         self.time_accum = random.uniform(0, 6.28)
+
+    @property
+    def p_type(self) -> str:
+        return self.ptype
 
     def _render_powerup(self):
         self.image.fill((0, 0, 0, 0))

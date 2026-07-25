@@ -307,6 +307,9 @@ class ParticleManager:
     def spawn_emp_ring(self, pos: tuple[float, float]):
         self.particles.add(EMPRing(pos))
 
+    def spawn_emp_shockwave(self, pos: tuple[float, float]):
+        self.particles.add(EMPRing(pos))
+
     def spawn_spark(self, pos: tuple[float, float], count: int = 8, color: tuple[int, int, int] = (56, 189, 248)):
         for _ in range(count):
             angle_speed = random.uniform(80, 250)

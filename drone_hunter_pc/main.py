@@ -215,7 +215,7 @@ def main():
             game_state = STATE_PLAYING
 
     def execute_emp_blast():
-        nonlocal coins, level_score, total_score, combo_count, combo_timer
+        nonlocal coins, level_score, total_score, combo_count, combo_timer, highscore
         if drone and drone.trigger_emp():
             audio_manager.play_emp()
             trigger_shake(12.0, 0.45)
