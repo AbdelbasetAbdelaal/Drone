@@ -469,69 +469,68 @@ def main():
                     reset_game()
                     game_state = STATE_PLAYING
 
-                elif game_state in (STATE_SECTOR_SELECT, STATE_HANGAR):
-                    exit_rect = pygame.Rect(SCREEN_WIDTH - 140, SCREEN_HEIGHT - 55, 120, 40)
-                    if exit_rect.collidepoint(mx, my):
-                        running = False
-
-                if game_state == STATE_SECTOR_SELECT:
+                elif game_state == STATE_SECTOR_SELECT:
                     diff_rect = pygame.Rect(480, 24, 220, 36)
                     if diff_rect.collidepoint(mx, my):
                         difficulty_mode = (difficulty_mode + 1) % 4
+                    else:
+                        card_w = 226
+                        start_x = 44
+                        gap = 18
+                        for idx in range(len(SECTORS)):
+                            cx = start_x + idx * (card_w + gap)
+                            card_r = pygame.Rect(cx, 85, card_w, 530)
+                            
+                            stage_y_start = 85 + 345
+                            selected_stage = False
+                            for stg_i in range(3):
+                                stg_r = pygame.Rect(cx + 10, stage_y_start + stg_i * 38, card_w - 20, 34)
+                                if stg_r.collidepoint(mx, my):
+                                    flat_idx = idx * 3 + stg_i
+                                    stg_unlocked = unlocked_stages[flat_idx] if flat_idx < len(unlocked_stages) else (flat_idx == 0)
+                                    if stg_unlocked:
+                                        current_sector_idx = idx
+                                        current_sub_level = stg_i + 1
+                                        reset_game()
+                                        game_state = STATE_PLAYING
+                                        selected_stage = True
+                                        break
 
-                    card_w = 226
-                    start_x = 44
-                    gap = 18
-                    for idx in range(len(SECTORS)):
-                        cx = start_x + idx * (card_w + gap)
-                        card_r = pygame.Rect(cx, 85, card_w, 530)
-                        
-                        stage_y_start = 85 + 345
-                        selected_stage = False
-                        for stg_i in range(3):
-                            stg_r = pygame.Rect(cx + 10, stage_y_start + stg_i * 38, card_w - 20, 34)
-                            if stg_r.collidepoint(mx, my):
-                                flat_idx = idx * 3 + stg_i
-                                stg_unlocked = unlocked_stages[flat_idx] if flat_idx < len(unlocked_stages) else (flat_idx == 0)
-                                if stg_unlocked:
+                            if selected_stage:
+                                break
+
+                            if card_r.collidepoint(mx, my):
+                                first_stg_idx = idx * 3
+                                is_unlocked = unlocked_stages[first_stg_idx] if first_stg_idx < len(unlocked_stages) else (idx == 0)
+                                if is_unlocked:
                                     current_sector_idx = idx
-                                    current_sub_level = stg_i + 1
+                                    current_sub_level = 1
                                     reset_game()
                                     game_state = STATE_PLAYING
-                                    selected_stage = True
                                     break
-
-                        if selected_stage:
-                            break
-
-                        if card_r.collidepoint(mx, my):
-                            first_stg_idx = idx * 3
-                            is_unlocked = unlocked_stages[first_stg_idx] if first_stg_idx < len(unlocked_stages) else (idx == 0)
-                            if is_unlocked:
-                                current_sector_idx = idx
-                                current_sub_level = 1
-                                reset_game()
-                                game_state = STATE_PLAYING
-                                break
 
                 elif game_state == STATE_HANGAR:
                     upg_keys = ["battery", "speed", "fire_rate", "emp_recharge", "wingman", "cloak", "missiles", "beam"]
                     h_start_x, h_start_y = 44, 95
                     h_card_w, h_card_h = 280, 115
+                    bought = False
                     for u_i, u_key in enumerate(upg_keys):
                         u_col = u_i % 4
                         u_row = u_i // 4
                         u_rect = pygame.Rect(h_start_x + u_col * 300, h_start_y + u_row * 130, h_card_w, h_card_h)
                         if u_rect.collidepoint(mx, my):
                             buy_upgrade(u_key)
+                            bought = True
+                            break
 
-                    h_map_btn = pygame.Rect(44, SCREEN_HEIGHT - 65, 200, 48)
-                    h_start_btn = pygame.Rect(260, SCREEN_HEIGHT - 65, 300, 48)
-                    if h_map_btn.collidepoint(mx, my):
-                        game_state = STATE_SECTOR_SELECT
-                    elif h_start_btn.collidepoint(mx, my):
-                        reset_game()
-                        game_state = STATE_PLAYING
+                    if not bought:
+                        h_map_btn = pygame.Rect(44, SCREEN_HEIGHT - 65, 200, 48)
+                        h_start_btn = pygame.Rect(260, SCREEN_HEIGHT - 65, 300, 48)
+                        if h_map_btn.collidepoint(mx, my):
+                            game_state = STATE_SECTOR_SELECT
+                        elif h_start_btn.collidepoint(mx, my):
+                            reset_game()
+                            game_state = STATE_PLAYING
 
                 elif game_state == STATE_PAUSED:
                     pause_btns = draw_pause_settings_ui(canvas, difficulty_mode, show_crt, audio_manager.sound_enabled, is_diff_open=is_diff_dropdown_open)
@@ -563,7 +562,10 @@ def main():
                             is_diff_dropdown_open = False
                             game_state = STATE_SECTOR_SELECT
                         elif pause_btns["exit"].collidepoint(mx, my):
-                            running = False
+                            if not IS_ANDROID:
+                                running = False
+                            else:
+                                game_state = STATE_MENU
 
                 elif game_state == STATE_PLAYING:
                     touch_ctrls = draw_virtual_touch_controls(canvas, joystick_center, joystick_knob, is_touch_active)
