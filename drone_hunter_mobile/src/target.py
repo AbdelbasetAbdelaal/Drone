@@ -472,6 +472,9 @@ class WaveManager:
     def get_wave_title(self) -> str:
         return self.wave_names[self.current_wave - 1]
 
+    def is_stage_complete(self, level_score: int) -> bool:
+        return level_score >= self.target_score
+
 
 class Spawner:
     """

@@ -122,6 +122,10 @@ class Player(pygame.sprite.Sprite):
     def is_invulnerable(self) -> bool:
         return self.is_rolling or self.invulnerable_timer > 0.0
 
+    @property
+    def speed(self) -> float:
+        return HORIZONTAL_SPEED * self.agility_mult
+
     def apply_shop_upgrades(self, upgrade_levels: dict[str, int]):
         """Applies persistent shop level upgrades to player stats, weapons, and wingmen."""
         bat_lvl = upgrade_levels.get("battery", 0)
