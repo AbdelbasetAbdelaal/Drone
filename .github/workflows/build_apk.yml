@@ -29,11 +29,11 @@ jobs:
 
       - name: Build APK with Buildozer
         run: |
-          cd drone_hunter
+          cd drone_hunter_mobile
           yes | buildozer -v android debug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: DroneHunter-Android-APK
-          path: drone_hunter/bin/*.apk
+          path: drone_hunter_mobile/bin/*.apk
