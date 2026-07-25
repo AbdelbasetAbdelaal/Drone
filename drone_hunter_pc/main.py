@@ -645,7 +645,8 @@ def main():
                         drone.spawn_wingman()
                         particle_manager.spawn_floating_text(p.rect.center, "+WINGMAN DRONE", COLOR_CYAN, 20)
                     elif p.p_type == "weapon":
-                        wpn_name = drone.cycle_weapon()
+                        drone.cycle_weapon()
+                        wpn_name = str(drone.active_weapon)
                         particle_manager.spawn_floating_text(p.rect.center, f"WEAPON: {wpn_name.upper()}", COLOR_GOLD, 22)
 
             # Check Stage Clearing

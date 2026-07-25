@@ -126,6 +126,18 @@ class Player(pygame.sprite.Sprite):
     def speed(self) -> float:
         return HORIZONTAL_SPEED * self.agility_mult
 
+    @property
+    def energy(self) -> float:
+        return self.health
+
+    @energy.setter
+    def energy(self, value: float):
+        self.health = value
+
+    @property
+    def max_energy(self) -> float:
+        return self.max_health
+
     def apply_shop_upgrades(self, upgrade_levels: dict[str, int]):
         """Applies persistent shop level upgrades to player stats, weapons, and wingmen."""
         bat_lvl = upgrade_levels.get("battery", 0)

@@ -4,11 +4,11 @@ import pygame
 
 os.environ["SDL_AUDIODRIVER"] = "dummy"
 
-print("--- RUNNING 2000-FRAME ALL-INCLUSIVE SYSTEM STRESS TEST ON drone_hunter_mobile/main.py ---")
+print("--- RUNNING 3000-FRAME ULTRA-INTENSIVE SYSTEM & BOSS STRESS TEST ON drone_hunter_mobile/main.py ---")
 
 real_event_get = pygame.event.get
 step_count = 0
-max_steps = 2000
+max_steps = 3000
 
 def simulated_event_get(eventtype=None):
     global step_count
@@ -27,32 +27,27 @@ def simulated_event_get(eventtype=None):
         events.append(pygame.event.Event(pygame.MOUSEBUTTONDOWN, {'pos': (100, 200), 'button': 1}))
         events.append(pygame.event.Event(pygame.MOUSEBUTTONUP, {'pos': (100, 200), 'button': 1}))
 
-    # 3. Frame 50 to 1950: Intensive loop
-    elif 50 <= step_count <= 1950:
-        if step_count % 50 == 0:
-            print(f"[TEST EVENT] Frame {step_count}: Joystick movement & Weapon Stream")
-            events.append(pygame.event.Event(pygame.FINGERDOWN, {'x': 0.15, 'y': 0.70}))
+    # 3. Frame 50 to 2950: Intensive loop
+    elif 50 <= step_count <= 2950:
+        if step_count % 40 == 0:
+            events.append(pygame.event.Event(pygame.FINGERDOWN, {'x': 0.18, 'y': 0.65}))
             events.append(pygame.event.Event(pygame.MOUSEBUTTONDOWN, {'pos': (1200, 640), 'button': 1}))
-        elif step_count % 120 == 0:
-            print(f"[TEST EVENT] Frame {step_count}: Cycle Weapon (Pulse -> Scatter -> Missile -> Beam)")
+        elif step_count % 90 == 0:
             events.append(pygame.event.Event(pygame.MOUSEBUTTONDOWN, {'pos': (1200, 35), 'button': 1}))
             events.append(pygame.event.Event(pygame.MOUSEBUTTONUP, {'pos': (1200, 35), 'button': 1}))
-        elif step_count % 180 == 0:
-            print(f"[TEST EVENT] Frame {step_count}: EMP Blast")
+        elif step_count % 140 == 0:
             events.append(pygame.event.Event(pygame.MOUSEBUTTONDOWN, {'pos': (1045, 625), 'button': 1}))
             events.append(pygame.event.Event(pygame.MOUSEBUTTONUP, {'pos': (1045, 625), 'button': 1}))
-        elif step_count % 220 == 0:
-            print(f"[TEST EVENT] Frame {step_count}: Barrel Roll")
+        elif step_count % 180 == 0:
             events.append(pygame.event.Event(pygame.MOUSEBUTTONDOWN, {'pos': (1155, 490), 'button': 1}))
             events.append(pygame.event.Event(pygame.MOUSEBUTTONUP, {'pos': (1155, 490), 'button': 1}))
-        elif step_count % 260 == 0:
-            print(f"[TEST EVENT] Frame {step_count}: Tactical Cloak")
+        elif step_count % 220 == 0:
             events.append(pygame.event.Event(pygame.MOUSEBUTTONDOWN, {'pos': (1045, 525), 'button': 1}))
             events.append(pygame.event.Event(pygame.MOUSEBUTTONUP, {'pos': (1045, 525), 'button': 1}))
 
-    # 4. Frame 2000: Quit cleanly
+    # 4. Frame 3000: Quit cleanly
     elif step_count >= max_steps:
-        print(f"[TEST EVENT] Frame {step_count}: 2000 Frames Reached! Sending QUIT.")
+        print(f"[TEST EVENT] Frame {step_count}: 3000 Frames Reached! Sending QUIT.")
         events.append(pygame.event.Event(pygame.QUIT))
 
     return events
@@ -62,7 +57,7 @@ pygame.event.get = simulated_event_get
 try:
     from drone_hunter_mobile.main import main
     main()
-    print("✅ 2000-FRAME ALL-INCLUSIVE SYSTEM STRESS TEST PASSED PERFECTLY!")
+    print("✅ 3000-FRAME ULTRA-INTENSIVE STRESS TEST PASSED PERFECTLY!")
 except Exception as e:
     import traceback
     print(f"❌ CRASH DETECTED AT FRAME {step_count}: {e}")
