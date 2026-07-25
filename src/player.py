@@ -116,6 +116,11 @@ class Player(pygame.sprite.Sprite):
         self.radius = 28
         self.is_thrusting = False
         self.emp_jammed_timer = 0.0
+        self.invulnerable_timer = 0.0
+
+    @property
+    def is_invulnerable(self) -> bool:
+        return self.is_rolling or self.invulnerable_timer > 0.0
 
     def apply_shop_upgrades(self, upgrade_levels: dict[str, int]):
         """Applies persistent shop level upgrades to player stats, weapons, and wingmen."""
