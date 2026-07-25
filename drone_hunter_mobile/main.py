@@ -541,19 +541,14 @@ def main():
                                     break
 
                 elif game_state == STATE_HANGAR:
-                    exit_r, skin_r = draw_hangar_shop_ui(canvas, coins, current_sector_idx, upgrade_levels)
+                    cur_skin = drone.skin_theme if drone else 0
+                    upg_rects, exit_r, skin_r = draw_hangar_shop_ui(canvas, coins, current_sector_idx, upgrade_levels, drone_skin=cur_skin)
                     if skin_r.collidepoint(mx, my):
                         if drone: drone.cycle_skin()
                         audio_manager.play_powerup()
                     else:
-                        upg_keys = ["battery", "speed", "fire_rate", "emp_recharge", "wingman", "cloak", "missiles", "beam"]
-                        h_start_x, h_start_y = 44, 95
-                        h_card_w, h_card_h = 280, 115
                         bought = False
-                        for u_i, u_key in enumerate(upg_keys):
-                            u_col = u_i % 4
-                            u_row = u_i // 4
-                            u_rect = pygame.Rect(h_start_x + u_col * 300, h_start_y + u_row * 130, h_card_w, h_card_h)
+                        for u_key, u_rect in upg_rects.items():
                             if u_rect.collidepoint(mx, my):
                                 buy_upgrade(u_key)
                                 bought = True
@@ -870,7 +865,8 @@ def main():
             draw_sector_select_ui(canvas, unlocked_sectors, coins, difficulty_mode=difficulty_mode, unlocked_stages=unlocked_stages)
 
         elif game_state == STATE_HANGAR:
-            draw_hangar_shop_ui(canvas, coins, current_sector_idx, upgrade_levels)
+            cur_skin = drone.skin_theme if drone else 0
+            draw_hangar_shop_ui(canvas, coins, current_sector_idx, upgrade_levels, drone_skin=cur_skin)
             draw_nav_buttons(canvas, mode="hangar")
 
         elif game_state == STATE_VICTORY:

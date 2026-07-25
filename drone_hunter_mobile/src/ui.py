@@ -725,38 +725,55 @@ def draw_sector_select_ui(canvas: pygame.Surface, unlocked_sectors: list[bool], 
     return card_rects, exit_btn_rect, diff_rect, hangar_btn
 
 
-def draw_hangar_shop_ui(canvas: pygame.Surface, coins: int, current_sector: int, upgrade_levels: dict[str, int]) -> pygame.Rect:
+def draw_hangar_shop_ui(canvas: pygame.Surface, coins: int, current_sector: int, upgrade_levels: dict[str, int], drone_skin: int = 0) -> tuple[dict[str, pygame.Rect], pygame.Rect, pygame.Rect]:
+    """Renders high-tech mobile Drone Hangar Shop with explicit touch buttons & exact collision rects."""
     canvas.fill((10, 15, 26))
 
-    header_rect = pygame.Rect(30, 20, SCREEN_WIDTH - 60, 60)
-    pygame.draw.rect(canvas, (15, 23, 42), header_rect, border_radius=6)
-    pygame.draw.rect(canvas, COLOR_CYAN, header_rect, 2, border_radius=6)
+    skin_names = ["PLATINUM", "CYBERNEON", "SOVEREIGN", "CRIMSON"]
+
+    # Header Bar
+    header_rect = pygame.Rect(30, 15, SCREEN_WIDTH - 60, 65)
+    pygame.draw.rect(canvas, (15, 23, 42), header_rect, border_radius=10)
+    pygame.draw.rect(canvas, COLOR_CYAN, header_rect, 2, border_radius=10)
     
-    t_hdr = font_title.render("DRONE HANGAR & WEAPONS BAY", True, COLOR_CYAN)
-    coin_hdr = font_banner.render(f"GOLD SCRAP: ${coins}", True, COLOR_GOLD)
-    canvas.blit(t_hdr, (50, 28))
-    canvas.blit(coin_hdr, (SCREEN_WIDTH - 320, 36))
+    t_hdr = font_title.render("DRONE HANGAR", True, COLOR_CYAN)
+    canvas.blit(t_hdr, (45, 22))
 
-    items = [
-        ("1", "battery", "Max Battery Capacity", COLOR_EMERALD),
-        ("2", "speed", "Thruster Agility", COLOR_CYAN),
-        ("3", "fire_rate", "Cannon Fire-Rate", COLOR_GOLD),
-        ("4", "emp_recharge", "EMP Shockwave Charger", COLOR_PURPLE),
-        ("5", "wingman", "Wingman Support Minidrones", COLOR_EMERALD),
-        ("6", "cloak", "Tactical Cloaking Unit", COLOR_CYAN),
-        ("7", "missiles", "Homing Missile Ordnance", COLOR_MISSILE),
-        ("8", "beam", "Thermal Laser Beam Cannon", COLOR_BEAM)
-    ]
-
-    card_w, card_h = 560, 110
     mx, my = pygame.mouse.get_pos()
 
-    for idx, (key_num, upg_id, upg_name, color) in enumerate(items):
+    # Skin Theme Selector Button in Header (centered cleanly without overlap)
+    skin_btn_rect = pygame.Rect(440, 24, 250, 46)
+    hov_s = skin_btn_rect.collidepoint(mx, my)
+    pygame.draw.rect(canvas, (16, 185, 129) if hov_s else (30, 41, 59), skin_btn_rect, border_radius=8)
+    pygame.draw.rect(canvas, COLOR_WHITE if hov_s else COLOR_EMERALD, skin_btn_rect, 2, border_radius=8)
+    cur_skin_name = skin_names[drone_skin % len(skin_names)]
+    lbl_skin = font_card.render(f"🎨 SKIN: {cur_skin_name}", True, COLOR_WHITE)
+    canvas.blit(lbl_skin, lbl_skin.get_rect(center=skin_btn_rect.center))
+
+    # Gold Scrap Display
+    coin_hdr = font_banner.render(f"GOLD: ${coins:,}", True, COLOR_GOLD)
+    canvas.blit(coin_hdr, (SCREEN_WIDTH - 270, 30))
+
+    items = [
+        ("⚡", "battery", "Max Battery Capacity", COLOR_EMERALD),
+        ("🚀", "speed", "Thruster Agility", COLOR_CYAN),
+        ("💥", "fire_rate", "Cannon Fire-Rate", COLOR_GOLD),
+        ("🛡️", "emp_recharge", "EMP Shockwave Charger", COLOR_PURPLE),
+        ("🤖", "wingman", "Wingman Support Drones", COLOR_EMERALD),
+        ("👤", "cloak", "Tactical Cloaking Unit", COLOR_CYAN),
+        ("🚀", "missiles", "Homing Missile Ordnance", COLOR_MISSILE),
+        ("⚡", "beam", "Thermal Laser Beam", COLOR_BEAM)
+    ]
+
+    card_w, card_h = 570, 112
+    upg_rects = {}
+
+    for idx, (icon, upg_id, upg_name, color) in enumerate(items):
         col_idx = idx % 2
         row_idx = idx // 2
         
         cx = 40 + col_idx * 600
-        cy = 95 + row_idx * 125
+        cy = 92 + row_idx * 124
         
         upg_def = UPGRADES.get(upg_id, {})
         lvl = upgrade_levels.get(upg_id, 0)
@@ -766,36 +783,52 @@ def draw_hangar_shop_ui(canvas: pygame.Surface, coins: int, current_sector: int,
         cost = int(base_cost * (cost_mult ** lvl))
 
         card_rect = pygame.Rect(cx, cy, card_w, card_h)
+        upg_rects[upg_id] = card_rect
         is_hover = card_rect.collidepoint(mx, my)
 
-        bg_col = (20, 30, 52, 240) if is_hover else (15, 23, 42, 240)
-        pygame.draw.rect(canvas, bg_col, card_rect, border_radius=8)
-        pygame.draw.rect(canvas, COLOR_WHITE if is_hover else color, card_rect, 3 if is_hover else 2, border_radius=8)
+        bg_col = (20, 30, 52, 245) if is_hover else (15, 23, 42, 245)
+        pygame.draw.rect(canvas, bg_col, card_rect, border_radius=10)
+        pygame.draw.rect(canvas, COLOR_WHITE if is_hover else color, card_rect, 3 if is_hover else 2, border_radius=10)
 
-        lbl = font_banner.render(f"[{key_num}] {upg_name}", True, COLOR_WHITE if is_hover else color)
-        canvas.blit(lbl, (cx + 20, cy + 15))
+        # Title & Icon
+        lbl = font_banner.render(f"{icon} {upg_name}", True, COLOR_WHITE if is_hover else color)
+        canvas.blit(lbl, (cx + 18, cy + 12))
 
+        # Level indicator text
         if lvl >= max_lvl:
-            txt_lvl = font_card.render(f"LEVEL {lvl}/{max_lvl} - MAX LEVEL", True, COLOR_EMERALD)
+            txt_lvl = font_card.render(f"LEVEL {lvl}/{max_lvl} (MAX)", True, COLOR_EMERALD)
         else:
-            txt_lvl = font_card.render(f"LEVEL {lvl}/{max_lvl} - Upgrade Cost: ${cost}", True, COLOR_HUD)
-        canvas.blit(txt_lvl, (cx + 20, cy + 45))
+            txt_lvl = font_card.render(f"LEVEL {lvl}/{max_lvl}", True, COLOR_HUD)
+        canvas.blit(txt_lvl, (cx + 18, cy + 44))
 
-        pygame.draw.rect(canvas, (30, 41, 59), (cx + 20, cy + 72, 500, 12), border_radius=3)
-        fill_w = int(500 * (lvl / max_lvl))
+        # Progress Gauge Bar
+        pygame.draw.rect(canvas, (30, 41, 59), (cx + 18, cy + 72, 330, 16), border_radius=4)
+        fill_w = int(330 * (lvl / max_lvl))
         if fill_w > 0:
-            pygame.draw.rect(canvas, color, (cx + 20, cy + 72, fill_w, 12), border_radius=3)
+            pygame.draw.rect(canvas, color, (cx + 18, cy + 72, fill_w, 16), border_radius=4)
+        pygame.draw.rect(canvas, (60, 75, 95), (cx + 18, cy + 72, 330, 16), 1, border_radius=4)
 
-    # Skin Theme Selector Button in Hangar Header
-    skin_btn_rect = pygame.Rect(SCREEN_WIDTH - 600, 30, 240, 42)
-    hov_s = skin_btn_rect.collidepoint(mx, my)
-    pygame.draw.rect(canvas, (16, 185, 129) if hov_s else (30, 41, 59), skin_btn_rect, border_radius=8)
-    pygame.draw.rect(canvas, COLOR_WHITE if hov_s else COLOR_EMERALD, skin_btn_rect, 2, border_radius=8)
-    lbl_skin = font_card.render("🎨 CHANGE DRONE SKIN", True, COLOR_WHITE)
-    canvas.blit(lbl_skin, lbl_skin.get_rect(center=skin_btn_rect.center))
+        # Explicit Upgrade Touch Button (Right side of card)
+        btn_u_rect = pygame.Rect(cx + 365, cy + 30, 185, 52)
+        can_afford = (coins >= cost) and (lvl < max_lvl)
+        
+        if lvl >= max_lvl:
+            pygame.draw.rect(canvas, (30, 41, 59), btn_u_rect, border_radius=8)
+            pygame.draw.rect(canvas, COLOR_EMERALD, btn_u_rect, 2, border_radius=8)
+            u_lbl = font_card.render("MAXED OUT", True, COLOR_EMERALD)
+        elif can_afford:
+            pygame.draw.rect(canvas, (16, 185, 129) if is_hover else (30, 41, 59), btn_u_rect, border_radius=8)
+            pygame.draw.rect(canvas, COLOR_WHITE if is_hover else COLOR_GOLD, btn_u_rect, 3 if is_hover else 2, border_radius=8)
+            u_lbl = font_card.render(f"UPGRADE ${cost}", True, COLOR_WHITE if is_hover else COLOR_GOLD)
+        else:
+            pygame.draw.rect(canvas, (24, 32, 48), btn_u_rect, border_radius=8)
+            pygame.draw.rect(canvas, (60, 75, 95), btn_u_rect, 1, border_radius=8)
+            u_lbl = font_card.render(f"${cost} NEEDED", True, COLOR_TEXT_DIM)
+            
+        canvas.blit(u_lbl, u_lbl.get_rect(center=btn_u_rect.center))
 
     exit_btn_rect = draw_exit_button(canvas)
-    return exit_btn_rect, skin_btn_rect
+    return upg_rects, exit_btn_rect, skin_btn_rect
 
 
 def draw_campaign_victory_ui(canvas: pygame.Surface, total_score: int, highscore: int, coins: int):

@@ -1,0 +1,12 @@
+'ParticleManager' object has no attribute 'spawn_shockwave'
+Traceback (most recent call last):
+  File "D:\AI_Projects\drone_hunter_mobile\main.py", line 935, in <module>
+    main()
+    ~~~~^^
+  File "D:\AI_Projects\drone_hunter_mobile\main.py", line 629, in main
+    if drone: drone.trigger_ultimate(target_group, particle_manager, audio_manager, trigger_shake)
+              ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\AI_Projects\drone_hunter_mobile\src\player.py", line 460, in trigger_ultimate
+    particle_manager.spawn_shockwave((SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2), max_r=600, color=(250, 204, 21))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ParticleManager' object has no attribute 'spawn_shockwave'. Did you mean: 'spawn_emp_shockwave'?
