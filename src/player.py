@@ -236,17 +236,20 @@ class Player(pygame.sprite.Sprite):
             pygame.draw.line(self.original_image, (30, 41, 59), (cx, cy), (rx, ry), 6)
             pygame.draw.line(self.original_image, (56, 189, 248), (cx, cy), (rx, ry), 2)
 
-        # 5. Animated Propellers & Navigation Strobes
+        # 5. Animated Propellers, High-Contrast Neon Motors & Navigation Strobes
         blade_length = 22
         blade_dx = int(math.cos(self.rotor_angle) * blade_length)
         blade_dy = int(math.sin(self.rotor_angle) * blade_length)
 
         for idx, (rx, ry) in enumerate(rotors):
-            pygame.draw.circle(self.original_image, (15, 23, 42), (rx, ry), 9)
-            pygame.draw.circle(self.original_image, (250, 204, 21), (rx, ry), 5)
-            # Glowing Spinning Disc
-            pygame.draw.ellipse(self.original_image, (34, 211, 238, 160), (rx - 23, ry - 9, 46, 18), 2)
-            pygame.draw.line(self.original_image, (255, 255, 255, 230), (rx - blade_dx, ry - blade_dy), (rx + blade_dx, ry + blade_dy), 4)
+            # Vibrant Neon Magenta Motor Housing Pods (Distinct from White Body)
+            pygame.draw.circle(self.original_image, (236, 72, 153), (rx, ry), 10)
+            pygame.draw.circle(self.original_image, (250, 204, 21), (rx, ry), 6, 2)
+            pygame.draw.circle(self.original_image, (255, 255, 255), (rx, ry), 3)
+
+            # Glowing Electric Cyan Spinning Disc
+            pygame.draw.ellipse(self.original_image, (34, 211, 238, 180), (rx - 23, ry - 9, 46, 18), 2)
+            pygame.draw.line(self.original_image, (255, 255, 255, 240), (rx - blade_dx, ry - blade_dy), (rx + blade_dx, ry + blade_dy), 4)
             strobe_color = (52, 211, 153) if idx % 2 == 1 else (239, 68, 68)
             pygame.draw.circle(self.original_image, strobe_color, (rx, ry), 4)
 
@@ -284,7 +287,7 @@ class Player(pygame.sprite.Sprite):
 
         # Physics
         keys = pygame.key.get_pressed()
-        move_down = keys[pygame.K_DOWN] or keys[pygame.K_s]
+        move_down = keys[pygame.K_DOWN] or keys[pygame.K_s] or self.dpad_down
         
         self.velocity.y += GRAVITY * dt
         self.velocity.x += wind_force * dt
@@ -300,14 +303,13 @@ class Player(pygame.sprite.Sprite):
         if self.is_rolling:
             rot_surf = pygame.transform.rotate(self.original_image, self.roll_angle)
             self.image = rot_surf
-            self.rect = self.image.get_rect(center=(round(self.pos.x), round(self.pos.y)))
         else:
             self._aim_towards_mouse()
 
         # Update Wingmen and collect their fired bullets
         wingman_bullets = []
         for wm in self.wingmen:
-            wm_b = wm.update(dt, self.pos, targets_group)
+            wm_b = wm.update(dt, self.pos, targets_group=targets_group)
             wingman_bullets.extend(wm_b)
         return wingman_bullets
 
@@ -316,26 +318,40 @@ class Player(pygame.sprite.Sprite):
         move_up = keys[pygame.K_SPACE] or keys[pygame.K_UP] or keys[pygame.K_w] or self.dpad_up
         move_down = move_down_key or keys[pygame.K_DOWN] or keys[pygame.K_s] or self.dpad_down
 
-        self.is_thrusting = move_up
-        speed_mult = (1.4 if self.overclock_timer > 0 else 1.0) * self.agility_mult
-        if self.is_rolling:
-            speed_mult *= ROLL_SPEED_BOOST
-
-        if move_up:
-            self.velocity.y += THRUST_FORCE * speed_mult * dt
-            if particle_manager:
-                particle_manager.spawn_thrust_smoke((self.pos.x - 22, self.pos.y + 6))
-            if audio_manager and random.random() < 0.2:
-                audio_manager.play_thrust()
-
-        if move_down:
-            self.velocity.y += abs(THRUST_FORCE) * 2.8 * speed_mult * dt
-
         move_x = 0
         if keys[pygame.K_a] or keys[pygame.K_LEFT] or self.dpad_left:
             move_x -= 1
         if keys[pygame.K_d] or keys[pygame.K_RIGHT] or self.dpad_right:
             move_x += 1
+
+        self.is_thrusting = move_up
+        speed_mult = (1.4 if self.overclock_timer > 0 else 1.0) * self.agility_mult
+        if self.is_rolling:
+            speed_mult *= ROLL_SPEED_BOOST
+
+        # Play sound effect & spawn particles on ANY arrow/movement input!
+        is_any_moving = move_up or move_down or (move_x != 0)
+
+        if move_up:
+            self.velocity.y += THRUST_FORCE * speed_mult * dt
+            if particle_manager:
+                particle_manager.spawn_thrust_smoke((self.pos.x - 30, self.pos.y + 8))
+
+        if move_down:
+            self.velocity.y += abs(THRUST_FORCE) * 2.8 * speed_mult * dt
+            if particle_manager:
+                particle_manager.spawn_thrust_smoke((self.pos.x - 30, self.pos.y - 8))
+
+        if move_x < 0:
+            if particle_manager:
+                particle_manager.spawn_thrust_smoke((self.pos.x + 25, self.pos.y))
+
+        if move_x > 0:
+            if particle_manager:
+                particle_manager.spawn_thrust_smoke((self.pos.x - 35, self.pos.y))
+
+        if is_any_moving and audio_manager and random.random() < 0.30:
+            audio_manager.play_thrust()
 
         if self.is_rolling and move_x == 0:
             move_x = self.roll_dir
