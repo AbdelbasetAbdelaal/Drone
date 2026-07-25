@@ -17,7 +17,7 @@ import pygame
 IS_ANDROID = 'ANDROID_ARGUMENT' in os.environ or 'ANDROID_ROOT' in os.environ
 
 if IS_ANDROID:
-    save_dir = os.environ.get('ANDROID_PRIVATE_DIR', root_dir)
+    save_dir = os.environ.get('ANDROID_PRIVATE_DIR', current_dir)
     SAVE_FILE = os.path.join(save_dir, "save_data_mobile.json")
 else:
     SAVE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "save_data_mobile.json")
