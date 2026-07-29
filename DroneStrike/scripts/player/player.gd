@@ -8,6 +8,7 @@ const ZERO_VECTOR: Vector2 = Vector2.ZERO
 @export var friction: float = 900.0
 
 var _direction: Vector2 = Vector2.ZERO
+@onready var _weapon_component: Node = $WeaponComponent
 
 func _physics_process(delta: float) -> void:
     # Reuse a single Vector2 to avoid allocating a new direction every frame.
@@ -20,5 +21,8 @@ func _physics_process(delta: float) -> void:
         rotation = _direction.angle() + ROTATION_OFFSET
     else:
         velocity = velocity.move_toward(ZERO_VECTOR, friction * delta)
+
+    if Input.is_action_just_pressed("fire") and _weapon_component:
+        _weapon_component.fire()
 
     move_and_slide()
