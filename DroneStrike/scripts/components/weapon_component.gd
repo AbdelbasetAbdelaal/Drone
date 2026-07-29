@@ -58,6 +58,8 @@ func _start_burst() -> void:
     _try_fire_single()
     _cooldown = _get_cooldown_duration()
 
+const ROTATION_OFFSET: float = deg_to_rad(90.0)
+
 func _fire_projectile() -> void:
     if projectile_scene == null:
         return
@@ -65,21 +67,22 @@ func _fire_projectile() -> void:
     var projectile = projectile_scene.instantiate()
     var spawn_parent := _get_spawn_parent()
     if projectile is Node2D:
-        var spawn_position := _get_muzzle_position()
-        if spawn_position != null:
-            projectile.global_position = spawn_position
+        var muzzle = _get_muzzle_node()
+        if muzzle:
+            projectile.global_position = muzzle.global_position
+            projectile.global_rotation = muzzle.global_rotation - ROTATION_OFFSET
     spawn_parent.add_child(projectile)
 
 func _get_spawn_parent() -> Node:
     return get_parent() if get_parent() else get_tree().get_current_scene() if get_tree().get_current_scene() else self
 
-func _get_muzzle_position() -> Vector2:
+func _get_muzzle_node() -> Node2D:
     if muzzle_path == NodePath():
         return null
     var muzzle = get_node_or_null(muzzle_path)
     if muzzle is Node2D:
-        return muzzle.global_position
+        return muzzle
     return null
 
 func _get_cooldown_duration() -> float:
-    return fire_rate > 0.0 ? 1.0 / fire_rate : 0.0
+    return 1.0 / fire_rate if fire_rate > 0.0 else 0.0

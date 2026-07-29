@@ -1,6 +1,15 @@
-﻿[application]
+[application]
 config/name="DroneStrike"
 run/main_scene="res://scenes/levels/Level01.tscn"
+config/icon=""
+config/caption="DroneStrike"
+config/version/major=4
+config/version/minor=3
+run/disable_stdout=false
+run/disable_stderr=false
+run/disable_3d=false
+run/disable_2d=false
+run/disable_audio=false
 
 [input]
 move_up={"deadzone":0.5,"events":[]}

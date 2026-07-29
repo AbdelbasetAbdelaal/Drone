@@ -1,5 +1,6 @@
 [gd_scene load_steps=4 format=3]
 [ext_resource path="res://scripts/weapons/missile.gd" type="Script" id=1]
+[ext_resource path="res://assets/weapons/missile.png" type="Texture2D" id=2]
 
 [node name="Missile" type="Area2D"]
 script = ExtResource( 1 )
@@ -10,6 +11,8 @@ shape = CircleShape2D {
 }
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = null
+texture = ExtResource( 2 )
+centered = true
+rotation = -1.57079632679
 region_enabled = false
 region_rect = Rect2( 0, 0, 0, 0 )
