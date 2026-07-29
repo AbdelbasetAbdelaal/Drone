@@ -42,7 +42,7 @@ from src.ui import (
     draw_hud, draw_radar_minimap, draw_crt_scanlines, draw_crosshair,
     draw_sector_select_ui, draw_hangar_shop_ui, draw_exit_button,
     draw_campaign_victory_ui, draw_pause_settings_ui, draw_virtual_touch_controls,
-    draw_nav_buttons, draw_game_over_screen, draw_boss_health_bar
+    draw_nav_buttons, draw_game_over_screen, draw_boss_health_bar, draw_combo_banner
 )
 
 def load_save_data():
@@ -175,6 +175,8 @@ def main():
     dpad_state = {"up": False, "down": False, "left": False, "right": False}
     touch_fire = False
     touch_aim_pos = (SCREEN_WIDTH - 200, SCREEN_HEIGHT // 2)
+    auto_fire_enabled = False
+    damage_flash_timer = 0.0
 
     def trigger_shake(intensity: float = 6.0, duration: float = 0.25):
         nonlocal screen_shake_intensity, screen_shake_time
@@ -611,10 +613,13 @@ def main():
                 elif game_state == STATE_PLAYING:
                     active_touch_btn = None
                     active_wpn = drone.active_weapon if drone else "pulse"
-                    touch_ctrls = draw_virtual_touch_controls(canvas, dpad_state=dpad_state, active_weapon=active_wpn)
+                    touch_ctrls = draw_virtual_touch_controls(canvas, dpad_state=dpad_state, active_weapon=active_wpn, auto_fire_enabled=auto_fire_enabled)
                     if touch_ctrls["pause"].collidepoint(mx, my):
                         active_touch_btn = "pause"
                         game_state = STATE_PAUSED
+                    elif "auto_fire" in touch_ctrls and touch_ctrls["auto_fire"].collidepoint(mx, my):
+                        auto_fire_enabled = not auto_fire_enabled
+                        audio_manager.play_powerup()
                     elif touch_ctrls["weapon"].collidepoint(mx, my):
                         active_touch_btn = "weapon"
                         if drone: drone.cycle_weapon()
@@ -697,7 +702,9 @@ def main():
                 bullet_group.add(wb)
 
             mouse_pressed = pygame.mouse.get_pressed()
-            should_shoot = touch_fire or mouse_pressed[0]
+            # Auto-fire: also fire when Space is held (PC) or auto_fire_enabled is on (Mobile)
+            space_held = pygame.key.get_pressed()[pygame.K_SPACE]
+            should_shoot = touch_fire or mouse_pressed[0] or (auto_fire_enabled) or space_held
             if should_shoot and drone.can_shoot():
                 raw_m = pygame.mouse.get_pos()
                 mx, my = get_canvas_pos(raw_m) if not touch_fire else touch_aim_pos
@@ -708,6 +715,9 @@ def main():
                 elif drone.active_weapon == "scatter": audio_manager.play_laser()
                 elif drone.active_weapon == "missile": audio_manager.play_missile()
                 elif drone.active_weapon == "beam": audio_manager.play_beam()
+
+            # Tick damage flash timer
+            damage_flash_timer = max(0.0, damage_flash_timer - dt)
 
             sec_info = SECTORS[current_sector_idx]
             stages = sec_info.get("stages", [])
@@ -772,7 +782,14 @@ def main():
                         
                         save_game_data(coins, highscore, upgrade_levels, unlocked_sectors, show_crt, unlocked_stages)
                         
-                        particle_manager.spawn_explosion(target.rect.center, count=25)
+                        # Enhanced death explosion — boss vs regular enemy
+                        t_type = getattr(target, "enemy_type", "standard")
+                        t_color = getattr(target, "color", (250, 204, 21))
+                        if t_type in ("boss", "titan_mech"):
+                            particle_manager.spawn_boss_explosion(target.rect.center)
+                            trigger_shake(14.0, 0.6)
+                        else:
+                            particle_manager.spawn_enemy_death(target.rect.center, t_color)
                         particle_manager.spawn_floating_text(target.rect.center, f"+{pts}", COLOR_GOLD, 20)
                         
                         if random.random() < 0.30:
@@ -790,6 +807,7 @@ def main():
                     else:
                         drone.energy = max(0.0, drone.energy - 20.0)
                         trigger_shake(8.0, 0.25)
+                        damage_flash_timer = 0.18   # ❤️ Red screen flash
                         audio_manager.play_explosion()
                         particle_manager.spawn_explosion(drone.rect.center, count=20, color=COLOR_CRIMSON)
                         if drone.energy <= 0.0:
@@ -911,7 +929,20 @@ def main():
 
             if game_state == STATE_PLAYING:
                 active_wpn3 = drone.active_weapon if drone else "pulse"
-                draw_virtual_touch_controls(canvas, dpad_state=dpad_state, active_weapon=active_wpn3)
+                tc = draw_virtual_touch_controls(canvas, dpad_state=dpad_state, active_weapon=active_wpn3, auto_fire_enabled=auto_fire_enabled)
+                # Auto-fire touch toggle
+                if pygame.mouse.get_just_pressed()[0] if hasattr(pygame.mouse, 'get_just_pressed') else False:
+                    pass  # handled in event loop below
+
+                # Draw combo banner
+                draw_combo_banner(canvas, combo_count, combo_timer)
+
+                # Red damage flash overlay
+                if damage_flash_timer > 0:
+                    flash_alpha = int(110 * (damage_flash_timer / 0.18))
+                    flash_surf = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
+                    flash_surf.fill((239, 68, 68, flash_alpha))
+                    canvas.blit(flash_surf, (0, 0))
 
             elif game_state == STATE_PAUSED:
                 draw_pause_settings_ui(canvas, difficulty_mode, show_crt, audio_manager.sound_enabled, is_diff_open=is_diff_dropdown_open)

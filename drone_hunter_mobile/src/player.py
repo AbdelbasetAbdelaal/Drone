@@ -394,6 +394,21 @@ class Player(pygame.sprite.Sprite):
         if is_any_moving and audio_manager and random.random() < 0.30:
             audio_manager.play_thrust()
 
+        # Plasma trail: emit skin-colored trail from back of drone while moving
+        if is_any_moving and particle_manager and hasattr(particle_manager, "spawn_plasma_trail"):
+            # skin_theme maps to trail colors matching each drone skin
+            trail_colors = [
+                (56, 189, 248),    # 0: PLATINUM — electric cyan
+                (168, 85, 247),    # 1: CYBERNEON — neon purple
+                (250, 204, 21),    # 2: SOVEREIGN — gold
+                (239, 68, 68),     # 3: CRIMSON — red fire
+            ]
+            trail_color = trail_colors[getattr(self, "skin_theme", 0) % len(trail_colors)]
+            # Emit from the rear of the drone (offset -30px behind direction of travel)
+            trail_x = self.pos.x - 28 - move_x * 8
+            trail_y = self.pos.y + random.uniform(-6, 6)
+            particle_manager.spawn_plasma_trail((trail_x, trail_y), trail_color)
+
         if self.is_rolling and move_x == 0:
             move_x = self.roll_dir
 

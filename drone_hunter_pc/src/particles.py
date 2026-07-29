@@ -300,6 +300,57 @@ class ParticleManager:
             lifetime = random.uniform(0.3, 0.7)
             self.particles.add(Particle(pos, (vx, vy), p_color, radius, lifetime))
 
+    def spawn_enemy_death(self, pos: tuple[float, float], color: tuple[int, int, int] = (250, 204, 21)):
+        """Satisfying 40-particle enemy death explosion with multi-color layers."""
+        colors = [color, (255, 255, 255), (239, 68, 68), (250, 204, 21)]
+        for _ in range(40):
+            speed = random.uniform(80, 450)
+            angle = random.uniform(0, 6.28318)
+            vx = math.cos(angle) * speed
+            vy = math.sin(angle) * speed
+            p_color = random.choice(colors)
+            radius = random.uniform(2.5, 8.0)
+            lifetime = random.uniform(0.35, 0.85)
+            self.particles.add(Particle(pos, (vx, vy), p_color, radius, lifetime))
+        # Inner hot-core bright flash burst (small fast sparks)
+        for _ in range(12):
+            speed = random.uniform(300, 700)
+            angle = random.uniform(0, 6.28318)
+            vx = math.cos(angle) * speed
+            vy = math.sin(angle) * speed
+            radius = random.uniform(1.5, 4.0)
+            lifetime = random.uniform(0.12, 0.30)
+            self.particles.add(Particle(pos, (vx, vy), (255, 255, 220), radius, lifetime))
+
+    def spawn_boss_explosion(self, pos: tuple[float, float]):
+        """Massive 80-particle multi-stage boss death explosion with EMP ring."""
+        layers = [
+            ((239, 68, 68),   80, 600, 0.4, 1.0),   # Red outer ring
+            ((250, 204, 21),  50, 400, 0.3, 0.7),   # Gold mid burst
+            ((255, 255, 255), 30, 700, 0.1, 0.3),   # White shockwave sparks
+            ((168, 85, 247),  25, 250, 0.5, 1.1),   # Purple debris
+            ((56, 189, 248),  20, 500, 0.2, 0.5),   # Cyan energy fragments
+        ]
+        for p_color, count, max_spd, min_lt, max_lt in layers:
+            for _ in range(count):
+                speed = random.uniform(max_spd * 0.3, max_spd)
+                angle = random.uniform(0, 6.28318)
+                vx = math.cos(angle) * speed
+                vy = math.sin(angle) * speed
+                radius = random.uniform(3.0, 10.0)
+                lifetime = random.uniform(min_lt, max_lt)
+                self.particles.add(Particle(pos, (vx, vy), p_color, radius, lifetime))
+        # EMP shockwave ring
+        self.particles.add(EMPRing(pos))
+
+    def spawn_plasma_trail(self, pos: tuple[float, float], color: tuple[int, int, int] = (56, 189, 248)):
+        """Short-lived plasma trail particle emitted from drone's back while moving."""
+        vx = random.uniform(-60, 60)
+        vy = random.uniform(-40, 40)
+        radius = random.uniform(2.5, 5.0)
+        lifetime = random.uniform(0.12, 0.28)
+        self.particles.add(Particle(pos, (vx, vy), color, radius, lifetime))
+
     def spawn_floating_text(self, pos: tuple[float, float], text: str, color: tuple[int, int, int] = (250, 204, 21), font_size: int = 24):
         self.floating_texts.add(FloatingText(pos, text, color, font_size))
 
@@ -366,3 +417,4 @@ class ParticleManager:
         self.weather_particles.draw(surface)
         self.particles.draw(surface)
         self.floating_texts.draw(surface)
+

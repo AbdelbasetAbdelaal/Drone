@@ -79,6 +79,51 @@ def wrap_text(text: str, font: pygame.font.Font, max_width: int) -> list[str]:
     return lines
 
 
+def draw_combo_banner(canvas: pygame.Surface, combo_count: int, combo_timer: float):
+    """Renders glowing animated kill streak combo banner when combo > 1."""
+    if combo_count <= 1 or combo_timer <= 0:
+        return
+
+    if combo_count >= 20:
+        color = (236, 72, 153)
+        tier_label = f"LEGENDARY x{combo_count}!"
+    elif combo_count >= 10:
+        color = (250, 204, 21)
+        tier_label = f"OVERKILL x{combo_count}!"
+    elif combo_count >= 5:
+        color = (168, 85, 247)
+        tier_label = f"RAMPAGE x{combo_count}!"
+    elif combo_count >= 3:
+        color = (56, 189, 248)
+        tier_label = f"MULTI-KILL x{combo_count}!"
+    else:
+        color = (52, 211, 153)
+        tier_label = f"DOUBLE KILL x{combo_count}!"
+
+    fade_alpha = min(255, int(255 * min(1.0, combo_timer / 0.8)))
+    pulse = 1.0 + 0.08 * abs((combo_timer % 0.4) - 0.2) / 0.2
+    combo_font_size = int(34 * pulse)
+    combo_font = safe_create_font("Impact", combo_font_size)
+    if combo_font is None:
+        return
+
+    glow_surf = pygame.Surface((500, 60), pygame.SRCALPHA)
+    glow_surf.fill((0, 0, 0, 0))
+    glow_col = (*color[:3], max(0, fade_alpha // 3))
+    pygame.draw.rect(glow_surf, glow_col, (0, 0, 500, 60), border_radius=12)
+    canvas.blit(glow_surf, (SCREEN_WIDTH // 2 - 250, SCREEN_HEIGHT // 2 - 80))
+
+    txt = combo_font.render(tier_label, True, color)
+    txt.set_alpha(fade_alpha)
+    canvas.blit(txt, txt.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 55)))
+
+    sub_font = safe_create_font("Consolas", 18, bold=True)
+    if sub_font:
+        sub_txt = sub_font.render(f"x{combo_count} SCORE MULTIPLIER ACTIVE!", True, (255, 255, 255))
+        sub_txt.set_alpha(max(0, fade_alpha - 60))
+        canvas.blit(sub_txt, sub_txt.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 28)))
+
+
 def draw_hud(canvas: pygame.Surface, player, sector_idx: int, level_score: int, total_score: int, coins: int, difficulty_name: str, combo_mult: int = 1, show_crt: bool = False, current_wave: int = 1, sub_level: int = 1):
     """Renders main top HUD bar — mobile-first, no keyboard hints, colored pill badges."""
     bar_x = 115

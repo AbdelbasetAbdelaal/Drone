@@ -34,7 +34,7 @@ from src.hazard import LaserGridFence, GravityAnomaly
 from src.ui import (
     draw_hud, draw_radar_minimap, draw_crt_scanlines, draw_crosshair,
     draw_sector_select_ui, draw_hangar_shop_ui, draw_exit_button,
-    draw_campaign_victory_ui, draw_pause_settings_ui
+    draw_campaign_victory_ui, draw_pause_settings_ui, draw_combo_banner
 )
 
 def load_save_data():
@@ -137,6 +137,7 @@ def main():
     total_score = 0
     combo_count = 1
     combo_timer = 0.0
+    damage_flash_timer = 0.0
 
     obstacle_timer = 0.0
     next_obstacle_spawn = random.uniform(3.0, 6.0)
@@ -583,7 +584,14 @@ def main():
                         
                         save_game_data(coins, highscore, upgrade_levels, unlocked_sectors, show_crt, unlocked_stages)
                         
-                        particle_manager.spawn_explosion(target.rect.center, count=25)
+                        # Enhanced death explosion — boss vs regular enemy
+                        t_type = getattr(target, "enemy_type", "standard")
+                        t_color = getattr(target, "color", (250, 204, 21))
+                        if t_type in ("boss", "titan_mech"):
+                            particle_manager.spawn_boss_explosion(target.rect.center)
+                            trigger_shake(14.0, 0.6)
+                        else:
+                            particle_manager.spawn_enemy_death(target.rect.center, t_color)
                         particle_manager.spawn_floating_text(target.rect.center, f"+{pts}", COLOR_GOLD, 20)
                         
                         if random.random() < 0.30:
@@ -601,6 +609,7 @@ def main():
                     else:
                         drone.energy = max(0.0, drone.energy - 20.0)
                         trigger_shake(8.0, 0.25)
+                        damage_flash_timer = 0.18   # Red screen flash
                         audio_manager.play_explosion()
                         particle_manager.spawn_explosion(drone.rect.center, count=20, color=COLOR_CRIMSON)
                         if drone.energy <= 0.0:
@@ -696,7 +705,19 @@ def main():
             draw_radar_minimap(canvas, drone, target_group, wingmen_group=drone.wingmen if drone else None)
             draw_crosshair(canvas)
 
-            if game_state == STATE_PAUSED:
+            if game_state == STATE_PLAYING:
+                # Draw combo kill streak banner
+                draw_combo_banner(canvas, combo_count, combo_timer)
+
+                # Red damage flash overlay
+                if damage_flash_timer > 0:
+                    damage_flash_timer = max(0.0, damage_flash_timer - dt)
+                    flash_alpha = int(110 * (damage_flash_timer / 0.18))
+                    flash_surf = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
+                    flash_surf.fill((239, 68, 68, flash_alpha))
+                    canvas.blit(flash_surf, (0, 0))
+
+            elif game_state == STATE_PAUSED:
                 draw_pause_settings_ui(canvas, difficulty_mode, show_crt, audio_manager.sound_enabled, is_diff_open=is_diff_dropdown_open)
 
             elif game_state == STATE_LEVEL_CLEAR:

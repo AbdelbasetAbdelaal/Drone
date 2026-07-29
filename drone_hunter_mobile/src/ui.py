@@ -413,7 +413,59 @@ def draw_game_over_screen(canvas: pygame.Surface, total_score: int, highscore: i
 
 
 
-def draw_virtual_touch_controls(canvas: pygame.Surface, dpad_state: dict = None, active_weapon: str = "pulse", active_button: str = None) -> dict[str, pygame.Rect]:
+def draw_combo_banner(canvas: pygame.Surface, combo_count: int, combo_timer: float):
+    """Renders glowing animated kill streak combo banner when combo > 1."""
+    if combo_count <= 1 or combo_timer <= 0:
+        return
+
+    # Tier-based color & label
+    if combo_count >= 20:
+        color = (236, 72, 153)   # Magenta — LEGENDARY
+        tier_label = f"LEGENDARY x{combo_count}!"
+    elif combo_count >= 10:
+        color = (250, 204, 21)   # Gold — OVERKILL
+        tier_label = f"OVERKILL x{combo_count}!"
+    elif combo_count >= 5:
+        color = (168, 85, 247)   # Purple — RAMPAGE
+        tier_label = f"RAMPAGE x{combo_count}!"
+    elif combo_count >= 3:
+        color = (56, 189, 248)   # Cyan — MULTI-KILL
+        tier_label = f"MULTI-KILL x{combo_count}!"
+    else:
+        color = (52, 211, 153)   # Emerald — DOUBLE KILL
+        tier_label = f"DOUBLE KILL x{combo_count}!"
+
+    # Pulsing alpha based on remaining timer (fades out in last 0.8s)
+    fade_alpha = min(255, int(255 * min(1.0, combo_timer / 0.8)))
+    # Scale pulse effect
+    pulse = 1.0 + 0.08 * abs((combo_timer % 0.4) - 0.2) / 0.2
+
+    combo_font_size = int(34 * pulse)
+    combo_font = safe_create_font("Impact", combo_font_size)
+    if combo_font is None:
+        return
+
+    # Glow backdrop
+    glow_surf = pygame.Surface((500, 60), pygame.SRCALPHA)
+    glow_surf.fill((0, 0, 0, 0))
+    glow_col = (*color[:3], max(0, fade_alpha // 3))
+    pygame.draw.rect(glow_surf, glow_col, (0, 0, 500, 60), border_radius=12)
+    canvas.blit(glow_surf, (SCREEN_WIDTH // 2 - 250, SCREEN_HEIGHT // 2 - 80))
+
+    # Main combo text
+    txt = combo_font.render(tier_label, True, color)
+    txt.set_alpha(fade_alpha)
+    canvas.blit(txt, txt.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 55)))
+
+    # Sub-label score multiplier pill
+    sub_font = safe_create_font("Consolas", 18, bold=True)
+    if sub_font:
+        sub_txt = sub_font.render(f"x{combo_count} SCORE MULTIPLIER ACTIVE!", True, (255, 255, 255))
+        sub_txt.set_alpha(max(0, fade_alpha - 60))
+        canvas.blit(sub_txt, sub_txt.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 28)))
+
+
+def draw_virtual_touch_controls(canvas: pygame.Surface, dpad_state: dict = None, active_weapon: str = "pulse", active_button: str = None, auto_fire_enabled: bool = False) -> dict[str, pygame.Rect]:
     """
     Renders D-pad (4 arrow buttons) on the left for movement,
     large selectable FIRE button on the right, plus EMP/ROLL/CLOAK/PAUSE buttons.
@@ -592,6 +644,16 @@ def draw_virtual_touch_controls(canvas: pygame.Surface, dpad_state: dict = None,
     pygame.draw.rect(canvas, (15, 23, 42) if is_p_active else COLOR_CYAN, (pcx - 14, pcy - 14, 10, 28), border_radius=3)
     pygame.draw.rect(canvas, (15, 23, 42) if is_p_active else COLOR_CYAN, (pcx + 4, pcy - 14, 10, 28), border_radius=3)
     controls["pause"] = btn_pause
+
+    # ── AUTO-FIRE Toggle Button (bottom right, above FIRE button) ─────────────
+    btn_auto = pygame.Rect(SCREEN_WIDTH - 150, SCREEN_HEIGHT - 295, 135, 40)
+    auto_bg = (16, 185, 129) if auto_fire_enabled else (30, 41, 59)
+    auto_border = COLOR_WHITE if auto_fire_enabled else COLOR_EMERALD
+    pygame.draw.rect(canvas, auto_bg, btn_auto, border_radius=8)
+    pygame.draw.rect(canvas, auto_border, btn_auto, 3 if auto_fire_enabled else 2, border_radius=8)
+    auto_label = font_card.render("AUTO FIRE ON" if auto_fire_enabled else "AUTO FIRE", True, COLOR_WHITE)
+    canvas.blit(auto_label, auto_label.get_rect(center=btn_auto.center))
+    controls["auto_fire"] = btn_auto
 
     return controls
 

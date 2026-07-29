@@ -40,15 +40,15 @@ COLOR_PURPLE = (168, 85, 247)     # Neon Violet Singularity
 COLOR_OCEAN_BLUE = (14, 116, 144) # Stormy Sea Blue
 COLOR_DESERT_AMBER = (217, 119, 6) # Desert Sunset Amber
 
-# Game Physics settings
+# Game Physics settings (Boosted for Mobile Speed & Hyper-Responsiveness)
 GRAVITY = 90.0             # Ultra-gentle downward gravity (pixels / s^2)
-THRUST_FORCE = -350.0      # Soft upward thrust force
-MAX_FALL_SPEED = 70.0      # Very slow, graceful free-fall speed (pixels / s)
-HORIZONTAL_SPEED = 420.0   # Horizontal flight speed
-BULLET_SPEED = 950.0       # Bullet velocity
-ENEMY_BULLET_SPEED = 400.0 # Enemy bullet velocity
-TARGET_SPEED = 180.0       # Base target movement speed (pixels / s)
-SHOOT_COOLDOWN = 0.14      # Fire rate cooldown (seconds)
+THRUST_FORCE = -520.0      # Snappy upward thrust force
+MAX_FALL_SPEED = 90.0      # Graceful free-fall speed (pixels / s)
+HORIZONTAL_SPEED = 560.0   # Fast horizontal flight speed (pixels / s)
+BULLET_SPEED = 1250.0      # Hyper-fast bullet velocity
+ENEMY_BULLET_SPEED = 460.0 # Enemy bullet velocity
+TARGET_SPEED = 220.0       # Dynamic target movement speed (pixels / s)
+SHOOT_COOLDOWN = 0.10      # Fast fire rate cooldown (seconds)
 
 # Evasive Roll & Tactical Cloaking
 ROLL_DURATION = 0.40       # Roll duration in seconds
