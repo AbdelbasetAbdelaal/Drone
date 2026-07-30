@@ -3,9 +3,9 @@ extends CharacterBody2D
 const ROTATION_OFFSET: float = deg_to_rad(90.0)
 const ZERO_VECTOR: Vector2 = Vector2.ZERO
 
-@export var max_speed: float = 250.0
-@export var acceleration: float = 800.0
-@export var friction: float = 900.0
+@export var max_speed: float = 500.0
+@export var acceleration: float = 1500.0
+@export var friction: float = 1200.0
 
 var _direction: Vector2 = Vector2.ZERO
 @onready var _weapon_component: Node = $WeaponComponent

@@ -2,9 +2,9 @@ extends Area2D
 
 signal hit(body)
 
-@export var speed: float = 400.0
+@export var speed: float = 600.0
 @export var damage: float = 25.0
-@export var lifetime: float = 2.0
+@export var lifetime: float = 8.0
 
 var _lifetime_timer: SceneTreeTimer
 

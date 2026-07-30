@@ -1,18 +1,18 @@
-[gd_scene load_steps=4 format=3]
-[ext_resource path="res://scripts/weapons/missile.gd" type="Script" id=1]
-[ext_resource path="res://assets/weapons/missile.png" type="Texture2D" id=2]
+[gd_scene load_steps=4 format=3 uid="uid://cs2prsgjruck6"]
+
+[ext_resource type="Script" path="res://scripts/weapons/missile.gd" id="1_5lrif"]
+[ext_resource type="Texture2D" uid="uid://dia8db4f3t6ri" path="res://assets/weapons/missile.png" id="2_l78mi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wnwrq"]
+radius = 8.0
 
 [node name="Missile" type="Area2D"]
-script = ExtResource( 1 )
+script = ExtResource("1_5lrif")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = CircleShape2D {
-    radius = 8.0
-}
+shape = SubResource("CircleShape2D_wnwrq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource( 2 )
-centered = true
-rotation = -1.57079632679
-region_enabled = false
-region_rect = Rect2( 0, 0, 0, 0 )
+scale = Vector2(0.15, 0.15)
+rotation = -1.5708
+texture = ExtResource("2_l78mi")

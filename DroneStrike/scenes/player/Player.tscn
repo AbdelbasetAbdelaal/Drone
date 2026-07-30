@@ -1,26 +1,26 @@
-[gd_scene load_steps=4 format=3]
-[ext_resource path="res://scripts/player/player.gd" type="Script" id=1]
-[ext_resource path="res://scenes/components/WeaponComponent.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/weapons/Missile.tscn" type="PackedScene" id=3]
-[ext_resource path="res://assets/drones/drone_attack.png" type="Texture2D" id=4]
+[gd_scene load_steps=6 format=3 uid="uid://bsg5fw6da2d2w"]
+
+[ext_resource type="Texture2D" uid="uid://bxacaq8m5r14o" path="res://assets/drones/drone_attack.png" id="1_cf8rb"]
+[ext_resource type="PackedScene" path="res://scenes/components/WeaponComponent.tscn" id="2_j5o08"]
+[ext_resource type="PackedScene" uid="uid://cs2prsgjruck6" path="res://scenes/weapons/Missile.tscn" id="3_wt33q"]
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="4_bm2jn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_it0uf"]
+radius = 16.0
 
 [node name="Player" type="CharacterBody2D"]
-script = ExtResource( 1 )
+script = ExtResource("4_bm2jn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = CircleShape2D {
-    radius = 16.0
-}
+shape = SubResource("CircleShape2D_it0uf")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource( 4 )
-centered = true
-scale = Vector2(0.06, 0.06)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("1_cf8rb")
 
 [node name="MissileSpawn" type="Marker2D" parent="."]
 position = Vector2(0, -24)
 
-[node name="WeaponComponent" parent="."]
-instance = ExtResource( 2 )
-projectile_scene = ExtResource( 3 )
+[node name="WeaponComponent" parent="." instance=ExtResource("2_j5o08")]
+projectile_scene = ExtResource("3_wt33q")
 muzzle_path = NodePath("../MissileSpawn")

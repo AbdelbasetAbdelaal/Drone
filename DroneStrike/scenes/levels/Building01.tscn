@@ -1,13 +1,14 @@
-[gd_scene load_steps=3 format=3]
-[ext_resource path="res://assets/buildings/building_01.png" type="Texture2D" id=1]
+[gd_scene load_steps=3 format=3 uid="uid://ddsfde1n2nj65"]
+
+[ext_resource type="Texture2D" uid="uid://bvblchlbofg2t" path="res://assets/buildings/building_01.png" id="1_jscqh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jcgrs"]
+size = Vector2(1200, 1200)
 
 [node name="Building01" type="StaticBody2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource( 1 )
-centered = true
+texture = ExtResource("1_jscqh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = RectangleShape2D {
-    size = Vector2(1200, 1200)
-}
+shape = SubResource("RectangleShape2D_jcgrs")

@@ -6,7 +6,7 @@ enum FireMode {
     AUTO
 }
 
-@export var fire_rate: float = 1.0
+@export var fire_rate: float = 6.0
 @export var projectile_scene: PackedScene
 @export var muzzle_path: NodePath = NodePath()
 @export var fire_mode: FireMode = FireMode.SINGLE
