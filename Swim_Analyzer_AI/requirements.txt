@@ -1,0 +1,8 @@
+streamlit>=1.30.0
+opencv-python>=4.8.0
+mediapipe==0.10.35
+numpy>=1.26.0
+pandas>=2.1.0
+matplotlib>=3.8.0
+reportlab>=4.0.0
+PyYAML>=6.0.0
