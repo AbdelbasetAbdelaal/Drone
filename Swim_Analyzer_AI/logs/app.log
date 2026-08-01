@@ -1416,3 +1416,509 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 2026-08-02 01:13:06,029 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
 2026-08-02 01:13:07,681 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
 2026-08-02 01:13:07,681 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:23:38,229 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:23:38,229 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:05,515 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:05,515 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:08,675 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:08,675 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:14,414 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:14,414 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:20,819 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:20,819 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:23,275 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:23,275 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:25,611 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:25,611 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:27,920 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:27,920 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:31,619 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:31,619 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:33,647 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:33,647 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:40,131 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:40,131 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:40,157 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785591171583.mp4
+2026-08-02 01:24:40,157 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785591171583.mp4
+2026-08-02 01:24:44,553 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:44,553 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:44,580 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785591171583.mp4
+2026-08-02 01:24:44,580 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785591171583.mp4
+2026-08-02 01:24:44,835 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:44,835 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:44,888 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785591171583.mp4
+2026-08-02 01:24:44,888 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785591171583.mp4
+2026-08-02 01:24:45,034 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-02 01:24:45,034 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-02 01:24:45,467 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_7eb3a2f472f34fcb97355e83072360e3.mp4
+2026-08-02 01:24:45,467 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_7eb3a2f472f34fcb97355e83072360e3.mp4
+2026-08-02 01:24:52,819 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-02 01:24:52,819 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-02 01:24:52,971 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:52,971 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:24:53,004 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785591171583.mp4
+2026-08-02 01:24:53,004 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785591171583.mp4
+2026-08-02 01:24:53,122 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-02 01:24:53,122 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-02 01:24:53,124 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_7eb3a2f472f34fcb97355e83072360e3.mp4 (Effective FPS: 30.0)
+2026-08-02 01:24:53,124 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_7eb3a2f472f34fcb97355e83072360e3.mp4 (Effective FPS: 30.0)
+2026-08-02 01:24:53,163 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-02 01:24:53,163 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-02 01:24:53,505 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_7eb3a2f472f34fcb97355e83072360e3.mp4 (720x1280 @ 30.0fps)
+2026-08-02 01:24:53,505 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_7eb3a2f472f34fcb97355e83072360e3.mp4 (720x1280 @ 30.0fps)
+2026-08-02 01:24:53,539 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_7eb3a2f472f34fcb97355e83072360e3.mp4 (720x1280 @ 30.0fps)
+2026-08-02 01:24:53,539 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_7eb3a2f472f34fcb97355e83072360e3.mp4 (720x1280 @ 30.0fps)
+2026-08-02 01:24:53,542 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_7eb3a2f472f34fcb97355e83072360e3.mp4 (Codec: mp4v)
+2026-08-02 01:24:53,542 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_7eb3a2f472f34fcb97355e83072360e3.mp4 (Codec: mp4v)
+2026-08-02 01:24:54,269 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 3
+Timestamp 100ms
+Unknown -> Pull
+Confidence: 1.00
+Reason:
+Wrist is under body between shoulder and hip
+
+2026-08-02 01:24:54,269 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 3
+Timestamp 100ms
+Unknown -> Pull
+Confidence: 1.00
+Reason:
+Wrist is under body between shoulder and hip
+
+2026-08-02 01:25:03,232 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 55
+Timestamp 1833ms
+Pull -> Entry
+Confidence: 1.00
+Reason:
+Wrist entered water in front of shoulder
+
+2026-08-02 01:25:03,232 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 55
+Timestamp 1833ms
+Pull -> Entry
+Confidence: 1.00
+Reason:
+Wrist entered water in front of shoulder
+
+2026-08-02 01:25:10,256 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 99
+Timestamp 3300ms
+Entry -> Pull
+Confidence: 1.00
+Reason:
+Wrist is under body between shoulder and hip
+
+2026-08-02 01:25:10,256 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 99
+Timestamp 3300ms
+Entry -> Pull
+Confidence: 1.00
+Reason:
+Wrist is under body between shoulder and hip
+
+2026-08-02 01:25:19,699 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 160
+Timestamp 5333ms
+Pull -> Recovery
+Confidence: 1.00
+Reason:
+Wrist is high and moving forward
+
+2026-08-02 01:25:19,699 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 160
+Timestamp 5333ms
+Pull -> Recovery
+Confidence: 1.00
+Reason:
+Wrist is high and moving forward
+
+2026-08-02 01:25:21,505 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 171
+Timestamp 5700ms
+Recovery -> Pull
+Confidence: 1.00
+Reason:
+Wrist is under body between shoulder and hip
+
+2026-08-02 01:25:21,505 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 171
+Timestamp 5700ms
+Recovery -> Pull
+Confidence: 1.00
+Reason:
+Wrist is under body between shoulder and hip
+
+2026-08-02 01:25:24,871 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 193
+Timestamp 6433ms
+Pull -> Recovery
+Confidence: 1.00
+Reason:
+Wrist is significantly above shoulder
+
+2026-08-02 01:25:24,871 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 193
+Timestamp 6433ms
+Pull -> Recovery
+Confidence: 1.00
+Reason:
+Wrist is significantly above shoulder
+
+2026-08-02 01:25:27,323 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 209
+Timestamp 6966ms
+Recovery -> Entry
+Confidence: 1.00
+Reason:
+Wrist entered water in front of shoulder
+
+2026-08-02 01:25:27,323 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 209
+Timestamp 6966ms
+Recovery -> Entry
+Confidence: 1.00
+Reason:
+Wrist entered water in front of shoulder
+
+2026-08-02 01:25:29,005 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 220
+Timestamp 7333ms
+Entry -> Pull
+Confidence: 1.00
+Reason:
+Wrist is under body between shoulder and hip
+
+2026-08-02 01:25:29,005 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 220
+Timestamp 7333ms
+Entry -> Pull
+Confidence: 1.00
+Reason:
+Wrist is under body between shoulder and hip
+
+2026-08-02 01:25:31,637 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 237
+Timestamp 7900ms
+Pull -> Recovery
+Confidence: 1.00
+Reason:
+Wrist is high and moving forward
+
+2026-08-02 01:25:31,637 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 237
+Timestamp 7900ms
+Pull -> Recovery
+Confidence: 1.00
+Reason:
+Wrist is high and moving forward
+
+2026-08-02 01:25:32,596 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 243
+Timestamp 8100ms
+Recovery -> Pull
+Confidence: 1.00
+Reason:
+Wrist is under body between shoulder and hip
+
+2026-08-02 01:25:32,596 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 243
+Timestamp 8100ms
+Recovery -> Pull
+Confidence: 1.00
+Reason:
+Wrist is under body between shoulder and hip
+
+2026-08-02 01:25:34,266 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 253
+Timestamp 8433ms
+Pull -> Recovery
+Confidence: 1.00
+Reason:
+Wrist is high and moving forward
+
+2026-08-02 01:25:34,266 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 253
+Timestamp 8433ms
+Pull -> Recovery
+Confidence: 1.00
+Reason:
+Wrist is high and moving forward
+
+2026-08-02 01:25:38,125 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 275
+Timestamp 9166ms
+Recovery -> Pull
+Confidence: 1.00
+Reason:
+Wrist is under body between shoulder and hip
+
+2026-08-02 01:25:38,125 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 275
+Timestamp 9166ms
+Recovery -> Pull
+Confidence: 1.00
+Reason:
+Wrist is under body between shoulder and hip
+
+2026-08-02 01:25:40,743 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 287
+Timestamp 9566ms
+Pull -> Recovery
+Confidence: 1.00
+Reason:
+Wrist is high and moving forward
+
+2026-08-02 01:25:40,743 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 287
+Timestamp 9566ms
+Pull -> Recovery
+Confidence: 1.00
+Reason:
+Wrist is high and moving forward
+
+2026-08-02 01:25:41,288 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 290
+Timestamp 9666ms
+Recovery -> Pull
+Confidence: 1.00
+Reason:
+Wrist is under body between shoulder and hip
+
+2026-08-02 01:25:41,288 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 290
+Timestamp 9666ms
+Recovery -> Pull
+Confidence: 1.00
+Reason:
+Wrist is under body between shoulder and hip
+
+2026-08-02 01:25:46,931 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 323
+Timestamp 10766ms
+Pull -> Entry
+Confidence: 1.00
+Reason:
+Wrist entered water in front of shoulder
+
+2026-08-02 01:25:46,931 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 323
+Timestamp 10766ms
+Pull -> Entry
+Confidence: 1.00
+Reason:
+Wrist entered water in front of shoulder
+
+2026-08-02 01:25:48,282 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 332
+Timestamp 11066ms
+Entry -> Pull
+Confidence: 1.00
+Reason:
+Wrist is under body between shoulder and hip
+
+2026-08-02 01:25:48,282 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 332
+Timestamp 11066ms
+Entry -> Pull
+Confidence: 1.00
+Reason:
+Wrist is under body between shoulder and hip
+
+2026-08-02 01:25:48,763 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 335
+Timestamp 11166ms
+Pull -> Entry
+Confidence: 1.00
+Reason:
+Wrist entered water in front of shoulder
+
+2026-08-02 01:25:48,763 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 335
+Timestamp 11166ms
+Pull -> Entry
+Confidence: 1.00
+Reason:
+Wrist entered water in front of shoulder
+
+2026-08-02 01:25:54,864 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 375
+Timestamp 12500ms
+Entry -> Push
+Confidence: 0.20
+Reason:
+Wrist is pushing past hip (Violates sequential transition from Entry)
+
+2026-08-02 01:25:54,864 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 375
+Timestamp 12500ms
+Entry -> Push
+Confidence: 0.20
+Reason:
+Wrist is pushing past hip (Violates sequential transition from Entry)
+
+2026-08-02 01:26:01,737 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 412
+Timestamp 13733ms
+Push -> Pull
+Confidence: 1.00
+Reason:
+Wrist is under body between shoulder and hip
+
+2026-08-02 01:26:01,737 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 412
+Timestamp 13733ms
+Push -> Pull
+Confidence: 1.00
+Reason:
+Wrist is under body between shoulder and hip
+
+2026-08-02 01:26:04,636 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 430
+Timestamp 14333ms
+Pull -> Push
+Confidence: 1.00
+Reason:
+Wrist is pushing past hip
+
+2026-08-02 01:26:04,636 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 430
+Timestamp 14333ms
+Pull -> Push
+Confidence: 1.00
+Reason:
+Wrist is pushing past hip
+
+2026-08-02 01:26:07,108 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 444
+Timestamp 14800ms
+Push -> Pull
+Confidence: 1.00
+Reason:
+Wrist is under body between shoulder and hip
+
+2026-08-02 01:26:07,108 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 444
+Timestamp 14800ms
+Push -> Pull
+Confidence: 1.00
+Reason:
+Wrist is under body between shoulder and hip
+
+2026-08-02 01:26:12,652 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 481
+Timestamp 16033ms
+Pull -> Push
+Confidence: 1.00
+Reason:
+Wrist is pushing past hip
+
+2026-08-02 01:26:12,652 - analysis.strategies.freestyle_stroke_analyzer - INFO - [SYSTEM] 
+Frame 481
+Timestamp 16033ms
+Pull -> Push
+Confidence: 1.00
+Reason:
+Wrist is pushing past hip
+
+2026-08-02 01:26:13,813 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 492 frames.
+2026-08-02 01:26:13,813 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 492 frames.
+2026-08-02 01:26:13,815 - services.analysis_service - INFO - [ANALYSIS] Performance - Time: 80.15s, Peak RAM: 422.8MB, Peak CPU: 178.3%
+2026-08-02 01:26:13,815 - services.analysis_service - INFO - [ANALYSIS] Performance - Time: 80.15s, Peak RAM: 422.8MB, Peak CPU: 178.3%
+2026-08-02 01:26:13,825 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-02 01:26:13,825 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-02 01:26:13,826 - services.analysis_service - INFO - [ANALYSIS] === Stroke Detection Summary ===
+2026-08-02 01:26:13,826 - services.analysis_service - INFO - [ANALYSIS] === Stroke Detection Summary ===
+2026-08-02 01:26:13,827 - services.analysis_service - INFO - [ANALYSIS] Completed Stroke Cycles: 5
+2026-08-02 01:26:13,827 - services.analysis_service - INFO - [ANALYSIS] Completed Stroke Cycles: 5
+2026-08-02 01:26:13,827 - services.analysis_service - INFO - [ANALYSIS] Average Cycle Duration: 3280.0ms
+2026-08-02 01:26:13,827 - services.analysis_service - INFO - [ANALYSIS] Average Cycle Duration: 3280.0ms
+2026-08-02 01:26:13,828 - services.analysis_service - INFO - [ANALYSIS] Average Phase Confidence: 0.95
+2026-08-02 01:26:13,828 - services.analysis_service - INFO - [ANALYSIS] Average Phase Confidence: 0.95
+2026-08-02 01:26:13,829 - services.analysis_service - INFO - [ANALYSIS] =================================
+2026-08-02 01:26:13,829 - services.analysis_service - INFO - [ANALYSIS] =================================
+2026-08-02 01:26:13,869 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-02 01:26:13,869 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-02 01:26:13,869 - services.analysis_service - INFO - [ANALYSIS] Performance report generated with score: 76.77999493256586
+2026-08-02 01:26:13,869 - services.analysis_service - INFO - [ANALYSIS] Performance report generated with score: 76.77999493256586
+2026-08-02 01:26:14,356 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_7eb3a2f472f34fcb97355e83072360e3.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_7eb3a2f472f34fcb97355e83072360e3.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_7eb3a2f472f34fcb97355e83072360e3.json
+2026-08-02 01:26:14,356 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_7eb3a2f472f34fcb97355e83072360e3.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_7eb3a2f472f34fcb97355e83072360e3.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_7eb3a2f472f34fcb97355e83072360e3.json
+2026-08-02 01:27:03,430 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_7eb3a2f472f34fcb97355e83072360e3.mp4
+2026-08-02 01:27:03,430 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_7eb3a2f472f34fcb97355e83072360e3.mp4
+2026-08-02 01:27:03,501 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 15.59 MB, Frames: 492, Duration: 16.40s
+2026-08-02 01:27:03,501 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 15.59 MB, Frames: 492, Duration: 16.40s
+2026-08-02 01:27:03,523 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-02 01:27:03,523 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-02 01:27:03,524 - services.analysis_service - INFO - [ANALYSIS] Finished processing. Output video path: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_7eb3a2f472f34fcb97355e83072360e3.mp4
+2026-08-02 01:27:03,524 - services.analysis_service - INFO - [ANALYSIS] Finished processing. Output video path: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_7eb3a2f472f34fcb97355e83072360e3.mp4
+2026-08-02 01:27:03,531 - services.analysis_service - INFO - [ANALYSIS] raw_landmarks cleared from all frames to prevent C extension GC crash.
+2026-08-02 01:27:03,531 - services.analysis_service - INFO - [ANALYSIS] raw_landmarks cleared from all frames to prevent C extension GC crash.
+2026-08-02 01:27:03,533 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-02 01:27:03,533 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-02 01:27:03,918 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:27:03,918 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:27:03,948 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785591171583.mp4
+2026-08-02 01:27:03,948 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785591171583.mp4
+2026-08-02 01:27:04,017 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-02 01:27:04,017 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-02 01:27:04,027 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-02 01:27:04,027 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-02 01:27:04,029 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-02 01:27:04,029 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-02 01:27:04,037 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-02 01:27:04,037 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-02 01:27:04,042 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-02 01:27:04,042 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-02 01:27:04,044 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-02 01:27:04,044 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-02 01:27:04,065 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-02 01:27:04,065 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-02 01:27:04,069 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-02 01:27:04,069 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-02 01:27:04,070 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-02 01:27:04,070 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-02 01:27:04,156 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-02 01:27:04,156 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-02 01:27:04,161 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-02 01:27:04,161 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-02 01:27:04,178 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-02 01:27:04,178 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-02 01:27:04,181 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-02 01:27:04,181 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-02 01:27:04,202 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-02 01:27:04,202 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-02 01:27:07,166 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-02 01:27:07,166 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-02 01:27:07,171 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-02 01:27:07,171 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-02 01:27:07,573 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-02 01:27:07,573 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-02 01:27:07,578 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-02 01:27:07,578 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-02 01:27:07,907 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-02 01:27:07,907 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-02 01:27:07,913 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-02 01:27:07,913 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-02 01:27:07,922 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-02 01:27:07,922 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-02 01:27:07,924 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-02 01:27:07,924 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-02 01:27:54,805 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:27:54,805 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:28:03,338 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:28:03,338 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:28:06,196 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:28:06,196 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:28:11,745 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:28:11,745 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:28:14,245 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:28:14,245 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:28:16,376 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:28:16,376 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:28:16,612 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:28:16,612 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:28:22,818 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:28:22,818 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:28:48,945 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-02 01:28:48,945 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN

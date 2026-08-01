@@ -86,7 +86,7 @@ def render_dashboard_page():
             coloraxis_showscale=False
         )
         fig.update_traces(textposition='outside')
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
     else:
         st.info("No analysis data available yet to display the leaderboard.")
         
@@ -98,7 +98,7 @@ def render_dashboard_page():
     
     st.dataframe(
         df_table,
-        use_container_width=True,
+        width="stretch",
         column_config={
             "Latest Score": st.column_config.ProgressColumn(
                 "Latest Score",

@@ -312,7 +312,7 @@ def render_athletes_page():
                         st.markdown(f"### 👤 {p.full_name}")
                         st.markdown(f"**Level:** {p.swimming_level} | **Stroke:** {p.preferred_stroke}")
                     with col_btn:
-                        if st.button("View Profile", key=f"view_{p.athlete_id}", use_container_width=True):
+                        if st.button("View Profile", key=f"view_{p.athlete_id}", width="stretch"):
                             st.session_state.viewing_athlete_id = p.athlete_id
                             st.rerun()
 
@@ -393,7 +393,7 @@ def render_athlete_profile_page():
                 file_name=os.path.basename(pdf_path),
                 mime='application/pdf',
                 type="primary",
-                use_container_width=True
+                width="stretch"
             )
         except Exception as e:
             st.error(f"PDF Error: {e}")
@@ -462,12 +462,12 @@ def render_athlete_profile_page():
             
             c_trend1, c_trend2 = st.columns(2)
             with c_trend1:
-                st.plotly_chart(create_performance_trend_chart(df), use_container_width=True)
+                st.plotly_chart(create_performance_trend_chart(df), width="stretch")
             with c_trend2:
-                st.plotly_chart(create_cycles_trend_chart(df), use_container_width=True)
+                st.plotly_chart(create_cycles_trend_chart(df), width="stretch")
             st.markdown("---")
             
-        st.dataframe(history_data, use_container_width=True)
+        st.dataframe(history_data, width="stretch")
         
         # --- PHASE 7: Session Comparison ---
         if len(history) >= 2:
@@ -625,7 +625,7 @@ def render_history_page():
             "Proc. Time (s)": round(s.processing_time_seconds, 1)
         })
         
-    st.dataframe(history_data, use_container_width=True)
+    st.dataframe(history_data, width="stretch")
 
 
 def main():
