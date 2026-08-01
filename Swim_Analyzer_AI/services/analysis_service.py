@@ -27,7 +27,7 @@ class AnalysisService:
         
     def process_video(self, input_video_path: str, effective_fps: float, visualization_mode: str = "User Mode", 
                       progress_callback = None, vqa_callback = None, trajectory_duration_sec: float = 2.0,
-                      stroke_detection: StrokeDetectionResult = None) -> Tuple[str, str, str, AnalysisResult]:
+                      stroke_detection: StrokeDetectionResult = None, athlete_id: str = None) -> Tuple[str, str, str, AnalysisResult]:
         """
         Process a video file to detect poses, calculate angles, and generate an output video.
         
@@ -38,6 +38,8 @@ class AnalysisService:
             progress_callback: A function to call per frame with debug data.
             vqa_callback: A function to call with the VQAResult before processing starts.
             trajectory_duration_sec: Length of hand trajectory tail in seconds.
+            stroke_detection: StrokeDetectionResult from the pre-analysis phase.
+            athlete_id: Optional UUID of the athlete to associate with this analysis.
         """
         logger.info(f"Starting video processing for: {input_video_path} (Effective FPS: {effective_fps})")
         
@@ -63,7 +65,8 @@ class AnalysisService:
             analysis_timestamp=datetime.now().isoformat(),
             swimming_style=stroke_type.value,
             stroke_detection=stroke_detection,
-            calibration_mode=calibration_engine.mode_name
+            calibration_mode=calibration_engine.mode_name,
+            athlete_id=athlete_id
         )
         
         try:

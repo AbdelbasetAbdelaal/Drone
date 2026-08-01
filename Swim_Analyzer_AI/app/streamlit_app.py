@@ -14,7 +14,10 @@ import streamlit as st
 from core.config import config
 from core.constants import APP_TITLE
 from services.analysis_service import AnalysisService
+from services.athlete_service import AthleteService
+from models.athlete_profile import AthleteProfile
 from core.logger import setup_logger
+
 
 logger = setup_logger(__name__)
 
@@ -281,6 +284,72 @@ def render_raw_data_tab(analysis_result):
         st.info("No biomechanical data was successfully extracted.")
     safe_log("[TRACE] EXIT render_raw_data_tab")
 
+def render_athlete_management():
+    st.title("👥 Athlete Management")
+    st.markdown("Create and manage athlete profiles for longitudinal tracking and personalized analysis.")
+    
+    athlete_service = AthleteService()
+    profiles = athlete_service.get_all_profiles()
+    
+    tab1, tab2 = st.tabs(["Athlete Directory", "Create New Athlete"])
+    
+    with tab1:
+        if not profiles:
+            st.info("No athlete profiles found. Create one in the next tab.")
+        else:
+            for p in profiles:
+                with st.expander(f"{p.full_name} ({p.swimming_level} - {p.preferred_stroke})"):
+                    # We will implement editing in the future, for now just show details and delete.
+                    col1, col2 = st.columns(2)
+                    col1.markdown(f"**Age:** {p.age}")
+                    col1.markdown(f"**Gender:** {p.gender}")
+                    col2.markdown(f"**Height:** {p.height_cm} cm")
+                    col2.markdown(f"**Weight:** {p.weight_kg} kg")
+                    if p.notes:
+                        st.markdown(f"**Notes:** {p.notes}")
+                    
+                    if st.button("Delete Athlete", key=f"del_{p.athlete_id}"):
+                        athlete_service.delete_profile(p.athlete_id)
+                        st.rerun()
+
+    with tab2:
+        with st.form("create_athlete_form"):
+            st.subheader("New Athlete Profile")
+            full_name = st.text_input("Full Name *")
+            
+            col1, col2 = st.columns(2)
+            age = col1.number_input("Age *", min_value=1, max_value=150, value=25)
+            gender = col2.selectbox("Gender *", ["Male", "Female", "Other"])
+            
+            col3, col4 = st.columns(2)
+            height = col3.number_input("Height (cm) *", min_value=50.0, max_value=300.0, value=175.0)
+            weight = col4.number_input("Weight (kg) *", min_value=20.0, max_value=200.0, value=70.0)
+            
+            col5, col6 = st.columns(2)
+            level = col5.selectbox("Swimming Level *", ["Beginner", "Intermediate", "Advanced", "Elite"])
+            stroke = col6.selectbox("Preferred Stroke *", ["Freestyle", "Backstroke", "Breaststroke", "Butterfly"])
+            
+            notes = st.text_area("Notes")
+            
+            submitted = st.form_submit_button("Create Profile")
+            if submitted:
+                if not full_name.strip():
+                    st.error("Full Name is required.")
+                else:
+                    athlete_service.create_profile(
+                        full_name=full_name.strip(),
+                        age=age,
+                        gender=gender,
+                        height_cm=height,
+                        weight_kg=weight,
+                        swimming_level=level,
+                        preferred_stroke=stroke,
+                        notes=notes
+                    )
+                    st.success(f"Athlete profile for '{full_name}' created successfully!")
+                    st.rerun()
+
+
 
 def main():
     safe_log("STREAMLIT APP RERUN")
@@ -290,17 +359,58 @@ def main():
         initial_sidebar_state="expanded",
     )
 
+    # --- Navigation ---
+    st.sidebar.markdown("### Navigation")
+    app_mode = st.sidebar.radio("Go to:", ["🏊‍♂️ Analysis Dashboard", "👥 Athlete Management"], label_visibility="collapsed")
+    st.sidebar.markdown("---")
+    
+    if app_mode == "👥 Athlete Management":
+        render_athlete_management()
+        return
+
     st.title(f"🏊‍♂️ {APP_TITLE}")
     st.markdown("### Professional Swimming Performance Analysis Platform")
     st.markdown("Upload a recorded swimming video to generate a biomechanical analysis overlay.")
 
-    # Sidebar for controls
-    with st.sidebar:
-        st.header("Controls")
-        uploaded_file = st.file_uploader(
+    # Sidebar: Current Athlete
+    st.sidebar.markdown("### Current Athlete")
+    athlete_service = AthleteService()
+    profiles = athlete_service.get_all_profiles()
+    
+    athlete_options = {"None": "Guest Session"}
+    for p in profiles:
+        athlete_options[p.athlete_id] = f"{p.full_name} ({p.swimming_level})"
+        
+    selected_athlete_id = st.sidebar.selectbox(
+        "Select Profile", 
+        options=list(athlete_options.keys()), 
+        format_func=lambda x: athlete_options[x],
+        label_visibility="collapsed"
+    )
+    st.sidebar.markdown("---")
+
+    # Main UI: Athlete Summary Card
+    if selected_athlete_id == "None":
+        st.info("ℹ️ **Guest Session:** Analysis will not be linked to an athlete profile.")
+    else:
+        # Find the selected profile
+        selected_profile = next((p for p in profiles if p.athlete_id == selected_athlete_id), None)
+        if selected_profile:
+            with st.container(border=True):
+                st.markdown(f"#### 👤 Active Athlete: {selected_profile.full_name}")
+                col1, col2, col3, col4 = st.columns(4)
+                col1.metric("Age", selected_profile.age)
+                col2.metric("Height", f"{selected_profile.height_cm} cm")
+                col3.metric("Level", selected_profile.swimming_level)
+                col4.metric("Preferred Stroke", selected_profile.preferred_stroke)
+
+    # Sidebar: Video Upload
+    st.sidebar.markdown("### Video Upload")
+    uploaded_file = st.sidebar.file_uploader(
             "Upload Swimming Video", 
-            type=["mp4", "mov", "avi"]
-        )
+        type=["mp4", "mov", "avi"],
+        label_visibility="collapsed"
+    )
 
     if uploaded_file is not None:
         safe_log(f"VIDEO UPLOADED: {uploaded_file.name}")
@@ -518,7 +628,8 @@ def main():
                         progress_callback=debug_callback,
                         vqa_callback=vqa_callback,
                         trajectory_duration_sec=trajectory_duration_sec,
-                        stroke_detection=st.session_state.stroke_result
+                        stroke_detection=st.session_state.stroke_result,
+                        athlete_id=selected_athlete_id if selected_athlete_id != "None" else None
                     )
                     safe_log("EXIT: process_video")
                     progress_bar.progress(100, text="✅ Analysis complete!")

@@ -66,6 +66,7 @@ class VideoMetadata:
     calibration_mode: str = "Unknown"
     confidence_statistics: dict = field(default_factory=dict)
     software_version: str = "1.0.0"
+    athlete_id: Optional[str] = None
 
 @dataclass
 class VQACriterionResult:

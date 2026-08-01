@@ -1,0 +1,48 @@
+from dataclasses import dataclass, field
+from typing import Optional
+import uuid
+
+@dataclass
+class AthleteProfile:
+    full_name: str
+    age: int
+    gender: str
+    height_cm: float
+    weight_kg: float
+    swimming_level: str
+    preferred_stroke: str
+    athlete_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    shoulder_width_cm: Optional[float] = None
+    notes: str = ""
+    schema_version: str = "1.0"
+
+    def to_dict(self) -> dict:
+        return {
+            "schema_version": self.schema_version,
+            "athlete_id": self.athlete_id,
+            "full_name": self.full_name,
+            "age": self.age,
+            "gender": self.gender,
+            "height_cm": self.height_cm,
+            "weight_kg": self.weight_kg,
+            "shoulder_width_cm": self.shoulder_width_cm,
+            "swimming_level": self.swimming_level,
+            "preferred_stroke": self.preferred_stroke,
+            "notes": self.notes
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict) -> 'AthleteProfile':
+        return cls(
+            athlete_id=data.get("athlete_id", str(uuid.uuid4())),
+            full_name=data["full_name"],
+            age=data["age"],
+            gender=data["gender"],
+            height_cm=data["height_cm"],
+            weight_kg=data["weight_kg"],
+            shoulder_width_cm=data.get("shoulder_width_cm"),
+            swimming_level=data["swimming_level"],
+            preferred_stroke=data["preferred_stroke"],
+            notes=data.get("notes", ""),
+            schema_version=data.get("schema_version", "1.0")
+        )
