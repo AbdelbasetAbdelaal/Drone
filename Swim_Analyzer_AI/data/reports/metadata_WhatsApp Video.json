@@ -1,0 +1,18 @@
+{
+    "filename": "WhatsApp Video.mp4",
+    "resolution_width": 848,
+    "resolution_height": 478,
+    "duration_seconds": 11.878244444444444,
+    "total_frames": 356,
+    "detected_fps": 29.9707588663495,
+    "effective_fps": 29.9707588663495,
+    "analysis_timestamp": "2026-07-31T02:09:06.665039",
+    "swimming_style": "Freestyle",
+    "calibration_mode": "Relative (Body Height)",
+    "confidence_statistics": {
+        "valid_frames": 244,
+        "invalid_frames": 112,
+        "validity_ratio": 0.6853932584269663
+    },
+    "software_version": "1.0.0"
+}

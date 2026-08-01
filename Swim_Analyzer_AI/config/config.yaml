@@ -1,0 +1,31 @@
+analysis:
+  fps_override: null
+  confidence_threshold: 0.6
+  confidence_penalty: 0.20
+  default_fps: 30.0
+
+scoring:
+  elbow_weight: 0.25
+  shoulder_weight: 0.20
+  hip_weight: 0.20
+  knee_weight: 0.15
+  symmetry_weight: 0.20
+
+calibration:
+  mode: relative
+  shoulder_width_m: 0.40
+
+logging:
+  debug_mode: true
+  level: INFO
+
+vqa:
+  blur_threshold: 15.0
+  brightness_min: 40.0
+  brightness_max: 220.0
+  reflection_threshold: 0.10
+  early_halt_frames: 40
+
+video:
+  downscale_width: 854
+  downscale_height: 480

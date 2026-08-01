@@ -1,0 +1,2702 @@
+[
+    {
+        "Frame": 0,
+        "Timestamp": 0,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 1,
+        "Timestamp": 33,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 2,
+        "Timestamp": 66,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 3,
+        "Timestamp": 100,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 4,
+        "Timestamp": 133,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 5,
+        "Timestamp": 166,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 6,
+        "Timestamp": 200,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 7,
+        "Timestamp": 233,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 8,
+        "Timestamp": 266,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 9,
+        "Timestamp": 300,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 10,
+        "Timestamp": 333,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 11,
+        "Timestamp": 366,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 12,
+        "Timestamp": 400,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 13,
+        "Timestamp": 433,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 14,
+        "Timestamp": 466,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 15,
+        "Timestamp": 500,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 16,
+        "Timestamp": 533,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 17,
+        "Timestamp": 566,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 18,
+        "Timestamp": 600,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 19,
+        "Timestamp": 633,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 20,
+        "Timestamp": 666,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 21,
+        "Timestamp": 700,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 22,
+        "Timestamp": 733,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 23,
+        "Timestamp": 766,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 24,
+        "Timestamp": 800,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 25,
+        "Timestamp": 833,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 26,
+        "Timestamp": 866,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 27,
+        "Timestamp": 900,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 28,
+        "Timestamp": 933,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 29,
+        "Timestamp": 966,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 30,
+        "Timestamp": 1000,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 31,
+        "Timestamp": 1033,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 32,
+        "Timestamp": 1066,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 33,
+        "Timestamp": 1100,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 34,
+        "Timestamp": 1133,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 35,
+        "Timestamp": 1166,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 36,
+        "Timestamp": 1200,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 37,
+        "Timestamp": 1233,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 38,
+        "Timestamp": 1266,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 39,
+        "Timestamp": 1300,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 40,
+        "Timestamp": 1333,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 41,
+        "Timestamp": 1366,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 42,
+        "Timestamp": 1400,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 43,
+        "Timestamp": 1433,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 44,
+        "Timestamp": 1466,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 45,
+        "Timestamp": 1500,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 46,
+        "Timestamp": 1533,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 47,
+        "Timestamp": 1566,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 48,
+        "Timestamp": 1600,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 49,
+        "Timestamp": 1633,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 50,
+        "Timestamp": 1666,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 51,
+        "Timestamp": 1700,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 52,
+        "Timestamp": 1733,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 53,
+        "Timestamp": 1766,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 54,
+        "Timestamp": 1800,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 55,
+        "Timestamp": 1833,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 56,
+        "Timestamp": 1866,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 57,
+        "Timestamp": 1900,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 58,
+        "Timestamp": 1933,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 59,
+        "Timestamp": 1966,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 60,
+        "Timestamp": 2000,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 61,
+        "Timestamp": 2033,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 62,
+        "Timestamp": 2066,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 63,
+        "Timestamp": 2100,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 64,
+        "Timestamp": 2133,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 65,
+        "Timestamp": 2166,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 66,
+        "Timestamp": 2200,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 67,
+        "Timestamp": 2233,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 68,
+        "Timestamp": 2266,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 69,
+        "Timestamp": 2300,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 70,
+        "Timestamp": 2333,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 71,
+        "Timestamp": 2366,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 72,
+        "Timestamp": 2400,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 73,
+        "Timestamp": 2433,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 74,
+        "Timestamp": 2466,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 75,
+        "Timestamp": 2500,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 76,
+        "Timestamp": 2533,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 77,
+        "Timestamp": 2566,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 78,
+        "Timestamp": 2600,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 79,
+        "Timestamp": 2633,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 80,
+        "Timestamp": 2666,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 81,
+        "Timestamp": 2700,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 82,
+        "Timestamp": 2733,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 83,
+        "Timestamp": 2766,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 84,
+        "Timestamp": 2800,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 85,
+        "Timestamp": 2833,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 86,
+        "Timestamp": 2866,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 87,
+        "Timestamp": 2900,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 88,
+        "Timestamp": 2933,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 89,
+        "Timestamp": 2966,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 90,
+        "Timestamp": 3000,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 91,
+        "Timestamp": 3033,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 92,
+        "Timestamp": 3066,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 93,
+        "Timestamp": 3100,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 94,
+        "Timestamp": 3133,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 95,
+        "Timestamp": 3166,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 96,
+        "Timestamp": 3200,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 97,
+        "Timestamp": 3233,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 98,
+        "Timestamp": 3266,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 99,
+        "Timestamp": 3300,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 100,
+        "Timestamp": 3333,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 101,
+        "Timestamp": 3366,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 102,
+        "Timestamp": 3400,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 103,
+        "Timestamp": 3433,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 104,
+        "Timestamp": 3466,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 105,
+        "Timestamp": 3500,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 106,
+        "Timestamp": 3533,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 107,
+        "Timestamp": 3566,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 108,
+        "Timestamp": 3600,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 109,
+        "Timestamp": 3633,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 110,
+        "Timestamp": 3666,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 111,
+        "Timestamp": 3700,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 112,
+        "Timestamp": 3733,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 113,
+        "Timestamp": 3766,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 114,
+        "Timestamp": 3800,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 115,
+        "Timestamp": 3833,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 116,
+        "Timestamp": 3866,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 117,
+        "Timestamp": 3900,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 118,
+        "Timestamp": 3933,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 119,
+        "Timestamp": 3966,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 120,
+        "Timestamp": 4000,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 121,
+        "Timestamp": 4033,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 122,
+        "Timestamp": 4066,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 123,
+        "Timestamp": 4100,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 124,
+        "Timestamp": 4133,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 125,
+        "Timestamp": 4166,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 126,
+        "Timestamp": 4200,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 127,
+        "Timestamp": 4233,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 128,
+        "Timestamp": 4266,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 129,
+        "Timestamp": 4300,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 130,
+        "Timestamp": 4333,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 131,
+        "Timestamp": 4366,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 132,
+        "Timestamp": 4400,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 133,
+        "Timestamp": 4433,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 134,
+        "Timestamp": 4466,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 135,
+        "Timestamp": 4500,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 136,
+        "Timestamp": 4533,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 137,
+        "Timestamp": 4566,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 138,
+        "Timestamp": 4600,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 139,
+        "Timestamp": 4633,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 140,
+        "Timestamp": 4666,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 141,
+        "Timestamp": 4700,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 142,
+        "Timestamp": 4733,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 143,
+        "Timestamp": 4766,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 144,
+        "Timestamp": 4800,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 145,
+        "Timestamp": 4833,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 146,
+        "Timestamp": 4866,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 147,
+        "Timestamp": 4900,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 148,
+        "Timestamp": 4933,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    },
+    {
+        "Frame": 149,
+        "Timestamp": 4966,
+        "Stroke_Phase": "Unknown",
+        "Joint_Angles": {
+            "left_elbow": null,
+            "right_elbow": null,
+            "left_knee": null,
+            "right_knee": null,
+            "left_shoulder": null,
+            "right_shoulder": null,
+            "left_hip": null,
+            "right_hip": null,
+            "body_roll": null
+        },
+        "Confidence": 0.0,
+        "Detected_Errors": []
+    }
+]

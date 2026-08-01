@@ -11,6 +11,7 @@ from core.logger import setup_logger
 from core.config import config
 from core.constants import COLOR_RED, COLOR_GREEN, COLOR_WHITE, THICKNESS_LANDMARK, THICKNESS_CONNECTION
 from models.data_models import JointAngles
+from analysis.landmark_smoother import LandmarkSmoother
 
 logger = setup_logger(__name__)
 
@@ -25,44 +26,50 @@ POSE_CONNECTIONS = [
 
 class PoseDetector:
     """
-    Encapsulates MediaPipe pose estimation logic using the Tasks API.
-    Provides methods to detect pose landmarks on an image and draw them.
+    Wrapper for MediaPipe Pose Landmarker using the new Tasks API.
+    Handles initialization, detection, confidence checking, temporal smoothing, and drawing.
     """
-    
     def __init__(self):
-        base_options = python.BaseOptions(model_asset_path=str(config.pose_model_path))
+        logger.info(f"Initializing PoseDetector with model: {config.pose_model_path}")
         
-        # We process videos frame by frame, so we use VIDEO mode
+        base_options = python.BaseOptions(model_asset_path=str(config.pose_model_path))
         options = vision.PoseLandmarkerOptions(
             base_options=base_options,
-            running_mode=vision.RunningMode.VIDEO,
+            running_mode=vision.RunningMode.IMAGE,
             min_pose_detection_confidence=config.pose_min_detection_confidence,
             min_pose_presence_confidence=config.pose_min_tracking_confidence,
-            min_tracking_confidence=config.pose_min_tracking_confidence,
+            output_segmentation_masks=False
         )
         self.detector = vision.PoseLandmarker.create_from_options(options)
-        self.frame_timestamp_ms = 0
-        logger.info(f"PoseDetector initialized with model: {config.pose_model_path}")
+        self.smoother = LandmarkSmoother(alpha=0.4)
         
-    def detect_pose(self, frame: np.ndarray) -> Optional[Any]:
+    def detect_pose(self, frame: np.ndarray) -> Tuple[Any, bool]:
         """
-        Process a single BGR frame and detect pose.
+        Detects poses in a single BGR frame.
         
-        Args:
-            frame: A numpy array representing a BGR image.
-            
         Returns:
-            The raw pose landmarks object (or None if not found).
+            Tuple[Any, bool]: The smoothed landmarks, and a boolean indicating if confidence is high enough.
         """
-        image_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=image_rgb)
+        # Convert BGR (OpenCV) to RGB (MediaPipe)
+        rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_frame)
         
-        detection_result = self.detector.detect_for_video(mp_image, self.frame_timestamp_ms)
-        self.frame_timestamp_ms += int(1000 / 30)
+        result = self.detector.detect(mp_image)
         
-        if detection_result.pose_landmarks:
-            return detection_result.pose_landmarks[0]
-        return None
+        is_valid = False
+        smoothed_landmarks = None
+        
+        if result.pose_landmarks and len(result.pose_landmarks) > 0:
+            raw_landmarks = result.pose_landmarks[0]
+            
+            # Check average confidence
+            avg_confidence = sum(lm.visibility for lm in raw_landmarks) / len(raw_landmarks)
+            is_valid = avg_confidence >= config.landmark_confidence_threshold
+            
+            # Smooth the landmarks
+            smoothed_landmarks = self.smoother.smooth(raw_landmarks)
+            
+        return smoothed_landmarks, is_valid
         
     def draw_pose(self, frame: np.ndarray, landmarks: Any, angles: Optional[JointAngles] = None) -> np.ndarray:
         """

@@ -37,3 +37,5 @@ Run the Streamlit application:
 ```bash
 streamlit run app/streamlit_app.py
 ```
+venv\Scripts\activate
+streamlit run app/streamlit_app.py

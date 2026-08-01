@@ -1,0 +1,38 @@
+{
+    "filename": "WhatsApp_Video_2026-07-31_at_11.55.18_AM.mp4",
+    "resolution_width": 360,
+    "resolution_height": 640,
+    "duration_seconds": 7.0,
+    "total_frames": 210,
+    "detected_fps": 30.0,
+    "effective_fps": 30.0,
+    "analysis_timestamp": "2026-08-01T01:10:21.203943",
+    "swimming_style": "Freestyle",
+    "stroke_detection": {
+        "predicted_stroke": "Freestyle",
+        "confidence": 0.91,
+        "predictions": {
+            "Freestyle": 0.91,
+            "Backstroke": 0.05,
+            "Breaststroke": 0.03,
+            "Butterfly": 0.01
+        },
+        "selected_stroke": "Freestyle",
+        "manual_override": false,
+        "is_inconsistent": false
+    },
+    "processing_time_sec": 24.360445499420166,
+    "peak_ram_mb": 260.6953125,
+    "peak_cpu_percent": 223.3,
+    "average_processing_fps": 8.620532001559598,
+    "calibration_mode": "Relative (Body Height)",
+    "confidence_statistics": {
+        "valid_frames": 99,
+        "invalid_frames": 111,
+        "validity_ratio": 0.4714285714285714
+    },
+    "software_version": "1.0.0",
+    "consistency_score": 0.0,
+    "analysis_reliability": 70.0,
+    "phase_confidence": 0.9381443298969072
+}
