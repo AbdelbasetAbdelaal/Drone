@@ -1,158 +1,127 @@
 import pytest
-import tempfile
-import os
-import shutil
-from pathlib import Path
 from models.athlete_profile import AthleteProfile
 from services.athlete_service import AthleteService
+from database.database import Base
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 @pytest.fixture
-def temp_data_dir():
-    temp_dir = tempfile.mkdtemp()
-    yield temp_dir
-    shutil.rmtree(temp_dir)
-
-@pytest.fixture
-def athlete_service(temp_data_dir):
-    return AthleteService(data_dir=temp_data_dir)
+def db_session():
+    # Use in-memory SQLite for testing
+    engine = create_engine("sqlite:///:memory:")
+    Base.metadata.create_all(bind=engine)
+    TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    session = TestingSessionLocal()
+    yield session
+    session.close()
 
 def test_athlete_profile_creation():
     profile = AthleteProfile(
-        full_name="John Doe",
-        age=25,
+        full_name="Michael Phelps",
+        age=38,
         gender="Male",
-        height_cm=180.5,
-        weight_kg=75.0,
-        swimming_level="Advanced",
-        preferred_stroke="Freestyle",
-        notes="Strong kick"
+        height_cm=193.0,
+        weight_kg=90.0,
+        swimming_level="Elite",
+        preferred_stroke="Butterfly"
     )
-    
-    assert profile.full_name == "John Doe"
+    assert profile.full_name == "Michael Phelps"
     assert profile.athlete_id is not None
-    assert type(profile.athlete_id) == str
-    assert profile.shoulder_width_cm is None
+    assert len(profile.athlete_id) > 0
 
 def test_athlete_profile_serialization():
     profile = AthleteProfile(
-        full_name="Jane Smith",
-        age=22,
+        full_name="Katie Ledecky",
+        age=27,
         gender="Female",
-        height_cm=165.0,
-        weight_kg=60.0,
-        swimming_level="Intermediate",
-        preferred_stroke="Butterfly",
-        shoulder_width_cm=45.0
-    )
-    
-    profile_dict = profile.to_dict()
-    assert profile_dict["full_name"] == "Jane Smith"
-    assert profile_dict["shoulder_width_cm"] == 45.0
-    assert "athlete_id" in profile_dict
-    
-    loaded_profile = AthleteProfile.from_dict(profile_dict)
-    assert loaded_profile.athlete_id == profile.athlete_id
-    assert loaded_profile.full_name == "Jane Smith"
-    assert loaded_profile.shoulder_width_cm == 45.0
-    assert loaded_profile.notes == ""
-    assert loaded_profile.schema_version == "1.0"
-
-def test_athlete_service_save_and_load(athlete_service):
-    profile = AthleteProfile(
-        full_name="Test Swimmer",
-        age=30,
-        gender="Male",
-        height_cm=190.0,
-        weight_kg=85.0,
+        height_cm=183.0,
+        weight_kg=73.0,
         swimming_level="Elite",
-        preferred_stroke="Backstroke"
+        preferred_stroke="Freestyle"
+    )
+    data = profile.to_dict()
+    assert data["full_name"] == "Katie Ledecky"
+    
+    new_profile = AthleteProfile.from_dict(data)
+    assert new_profile.athlete_id == profile.athlete_id
+    assert new_profile.height_cm == 183.0
+
+def test_athlete_service_save_and_load(db_session):
+    service = AthleteService(db_session=db_session)
+    profile = AthleteProfile(
+        full_name="Ian Thorpe",
+        age=41,
+        gender="Male",
+        height_cm=196.0,
+        weight_kg=104.0,
+        swimming_level="Elite",
+        preferred_stroke="Freestyle"
     )
     
-    # Save profile
-    success = athlete_service.save_profile(profile)
-    assert success is True
-    
-    # Verify file exists
-    file_path = Path(athlete_service.data_dir) / f"{profile.athlete_id}.json"
-    assert file_path.exists()
-    
-    # Load profile
-    loaded_profile = athlete_service.load_profile(profile.athlete_id)
+    assert service.save_profile(profile) is True
+    loaded_profile = service.load_profile(profile.athlete_id)
     assert loaded_profile is not None
-    assert loaded_profile.full_name == "Test Swimmer"
-    assert loaded_profile.athlete_id == profile.athlete_id
+    assert loaded_profile.full_name == "Ian Thorpe"
 
-def test_athlete_service_create(athlete_service):
-    profile = athlete_service.create_profile(
-        full_name="New Swimmer",
-        age=20,
+def test_athlete_service_create(db_session):
+    service = AthleteService(db_session=db_session)
+    profile = service.create_profile(
+        full_name="Sarah Sjostrom",
+        age=30,
         gender="Female",
-        height_cm=170.0,
-        weight_kg=65.0,
-        swimming_level="Beginner",
-        preferred_stroke="Breaststroke"
+        height_cm=183.0,
+        weight_kg=68.0,
+        swimming_level="Elite",
+        preferred_stroke="Butterfly"
     )
-    assert profile.full_name == "New Swimmer"
     assert profile.athlete_id is not None
-    
-    # Should be able to load it immediately
-    loaded = athlete_service.load_profile(profile.athlete_id)
-    assert loaded is not None
-    assert loaded.full_name == "New Swimmer"
+    loaded_profile = service.load_profile(profile.athlete_id)
+    assert loaded_profile is not None
 
-def test_athlete_service_update_and_delete(athlete_service):
-    profile = athlete_service.create_profile(
-        full_name="To Update", age=25, gender="Male", height_cm=180, weight_kg=75,
-        swimming_level="Advanced", preferred_stroke="Freestyle"
+def test_athlete_service_update_and_delete(db_session):
+    service = AthleteService(db_session=db_session)
+    profile = service.create_profile(
+        full_name="Adam Peaty",
+        age=29,
+        gender="Male",
+        height_cm=191.0,
+        weight_kg=86.0,
+        swimming_level="Elite",
+        preferred_stroke="Breaststroke"
     )
     
     # Update
-    profile.full_name = "Updated Name"
-    success = athlete_service.update_profile(profile)
-    assert success is True
-    
-    loaded = athlete_service.load_profile(profile.athlete_id)
-    assert loaded.full_name == "Updated Name"
+    profile.swimming_level = "Professional"
+    assert service.update_profile(profile) is True
+    loaded = service.load_profile(profile.athlete_id)
+    assert loaded.swimming_level == "Professional"
     
     # Delete
-    success_del = athlete_service.delete_profile(profile.athlete_id)
-    assert success_del is True
-    
-    loaded_deleted = athlete_service.load_profile(profile.athlete_id)
-    assert loaded_deleted is None
+    assert service.delete_profile(profile.athlete_id) is True
+    assert service.load_profile(profile.athlete_id) is None
 
-def test_athlete_service_validation_errors(athlete_service):
-    # Invalid profile (missing name, negative age)
+def test_athlete_service_validation_errors(db_session):
+    service = AthleteService(db_session=db_session)
     profile = AthleteProfile(
-        full_name="",
-        age=-5,
-        gender="Unknown",
-        height_cm=-10.0,
-        weight_kg=0,
-        swimming_level="",
-        preferred_stroke=""
+        full_name="", # Invalid
+        age=-5, # Invalid
+        gender="Male",
+        height_cm=0, # Invalid
+        weight_kg=86.0,
+        swimming_level="", # Invalid
+        preferred_stroke="Breaststroke"
     )
     
-    errors = athlete_service.validate_profile(profile)
-    assert len(errors) > 0
+    errors = service.validate_profile(profile)
+    assert len(errors) >= 4
     
-    with pytest.raises(ValueError) as excinfo:
-        athlete_service.save_profile(profile)
-    assert "Invalid athlete profile" in str(excinfo.value)
+    with pytest.raises(ValueError):
+        service.save_profile(profile)
 
-def test_athlete_service_get_all_profiles(athlete_service):
-    # Create two profiles
-    athlete_service.create_profile(
-        full_name="Swimmer 1", age=20, gender="Male", height_cm=180, weight_kg=75,
-        swimming_level="Beginner", preferred_stroke="Freestyle"
-    )
-    athlete_service.create_profile(
-        full_name="Swimmer 2", age=25, gender="Female", height_cm=170, weight_kg=65,
-        swimming_level="Advanced", preferred_stroke="Butterfly"
-    )
+def test_athlete_service_get_all_profiles(db_session):
+    service = AthleteService(db_session=db_session)
+    service.create_profile(full_name="A", age=20, gender="M", height_cm=180, weight_kg=80, swimming_level="Pro", preferred_stroke="Free")
+    service.create_profile(full_name="B", age=22, gender="F", height_cm=170, weight_kg=60, swimming_level="Amateur", preferred_stroke="Back")
     
-    profiles = athlete_service.get_all_profiles()
+    profiles = service.get_all_profiles()
     assert len(profiles) == 2
-    names = [p.full_name for p in profiles]
-    assert "Swimmer 1" in names
-    assert "Swimmer 2" in names

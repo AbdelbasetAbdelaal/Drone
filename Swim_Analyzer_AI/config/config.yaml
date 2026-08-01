@@ -16,7 +16,7 @@ calibration:
   shoulder_width_m: 0.40
 
 logging:
-  debug_mode: true
+  debug_mode: false
   level: INFO
 
 vqa:

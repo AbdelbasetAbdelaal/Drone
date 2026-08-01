@@ -14,6 +14,7 @@ class AthleteProfile:
     athlete_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     shoulder_width_cm: Optional[float] = None
     notes: str = ""
+    training_goals: str = ""
     schema_version: str = "1.0"
 
     def to_dict(self) -> dict:
@@ -28,7 +29,8 @@ class AthleteProfile:
             "shoulder_width_cm": self.shoulder_width_cm,
             "swimming_level": self.swimming_level,
             "preferred_stroke": self.preferred_stroke,
-            "notes": self.notes
+            "notes": self.notes,
+            "training_goals": self.training_goals
         }
 
     @classmethod
@@ -41,8 +43,9 @@ class AthleteProfile:
             height_cm=data["height_cm"],
             weight_kg=data["weight_kg"],
             shoulder_width_cm=data.get("shoulder_width_cm"),
-            swimming_level=data["swimming_level"],
-            preferred_stroke=data["preferred_stroke"],
+            swimming_level=data.get("swimming_level", "Beginner"),
+            preferred_stroke=data.get("preferred_stroke", "Freestyle"),
             notes=data.get("notes", ""),
+            training_goals=data.get("training_goals", ""),
             schema_version=data.get("schema_version", "1.0")
         )

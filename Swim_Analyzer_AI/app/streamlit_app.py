@@ -6,16 +6,24 @@ import sys
 import os
 from pathlib import Path
 import numpy as np
+import pandas as pd
 
 # Add the root directory to PYTHONPATH so that absolute imports work from within streamlit
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
+from app.ui.charts import create_performance_trend_chart, create_cycles_trend_chart
+from app.ui.dashboard import render_dashboard_page
 import streamlit as st
 from core.config import config
 from core.constants import APP_TITLE
 from services.analysis_service import AnalysisService
 from services.athlete_service import AthleteService
+from services.analysis_history_service import AnalysisHistoryService
+from services.comparison_service import ComparisonService
+from services.pdf_report_service import PDFReportService
 from models.athlete_profile import AthleteProfile
+from models.analysis_session import AnalysisSession
+from models.comparison_models import ComparisonReport
 from core.logger import setup_logger
 
 
@@ -284,8 +292,8 @@ def render_raw_data_tab(analysis_result):
         st.info("No biomechanical data was successfully extracted.")
     safe_log("[TRACE] EXIT render_raw_data_tab")
 
-def render_athlete_management():
-    st.title("👥 Athlete Management")
+def render_athletes_page():
+    st.title("👥 Athletes")
     st.markdown("Create and manage athlete profiles for longitudinal tracking and personalized analysis.")
     
     athlete_service = AthleteService()
@@ -298,19 +306,15 @@ def render_athlete_management():
             st.info("No athlete profiles found. Create one in the next tab.")
         else:
             for p in profiles:
-                with st.expander(f"{p.full_name} ({p.swimming_level} - {p.preferred_stroke})"):
-                    # We will implement editing in the future, for now just show details and delete.
-                    col1, col2 = st.columns(2)
-                    col1.markdown(f"**Age:** {p.age}")
-                    col1.markdown(f"**Gender:** {p.gender}")
-                    col2.markdown(f"**Height:** {p.height_cm} cm")
-                    col2.markdown(f"**Weight:** {p.weight_kg} kg")
-                    if p.notes:
-                        st.markdown(f"**Notes:** {p.notes}")
-                    
-                    if st.button("Delete Athlete", key=f"del_{p.athlete_id}"):
-                        athlete_service.delete_profile(p.athlete_id)
-                        st.rerun()
+                with st.container(border=True):
+                    col_info, col_btn = st.columns([3, 1])
+                    with col_info:
+                        st.markdown(f"### 👤 {p.full_name}")
+                        st.markdown(f"**Level:** {p.swimming_level} | **Stroke:** {p.preferred_stroke}")
+                    with col_btn:
+                        if st.button("View Profile", key=f"view_{p.athlete_id}", use_container_width=True):
+                            st.session_state.viewing_athlete_id = p.athlete_id
+                            st.rerun()
 
     with tab2:
         with st.form("create_athlete_form"):
@@ -336,19 +340,292 @@ def render_athlete_management():
                 if not full_name.strip():
                     st.error("Full Name is required.")
                 else:
-                    athlete_service.create_profile(
-                        full_name=full_name.strip(),
-                        age=age,
-                        gender=gender,
-                        height_cm=height,
-                        weight_kg=weight,
-                        swimming_level=level,
-                        preferred_stroke=stroke,
-                        notes=notes
-                    )
-                    st.success(f"Athlete profile for '{full_name}' created successfully!")
-                    st.rerun()
+                    existing_profiles = athlete_service.get_all_profiles()
+                    name_exists = any(p.full_name.lower() == full_name.strip().lower() for p in existing_profiles)
+                    if name_exists:
+                        st.error(f"An athlete with the name '{full_name.strip()}' already exists. Please use a unique name.")
+                    else:
+                        athlete_service.create_profile(
+                            full_name=full_name.strip(),
+                            age=age,
+                            gender=gender,
+                            height_cm=height,
+                            weight_kg=weight,
+                            swimming_level=level,
+                            preferred_stroke=stroke,
+                            notes=notes
+                        )
+                        st.success(f"Athlete profile for '{full_name}' created successfully!")
+                        st.rerun()
 
+def render_athlete_profile_page():
+    athlete_id = st.session_state.viewing_athlete_id
+    athlete_service = AthleteService()
+    profile = athlete_service.load_profile(athlete_id)
+    
+    if not profile:
+        st.error("Athlete profile not found.")
+        st.session_state.viewing_athlete_id = None
+        st.rerun()
+        return
+
+    col1, col2, col3 = st.columns([1, 7, 3])
+    with col1:
+        if st.button("⬅️ Back"):
+            st.session_state.viewing_athlete_id = None
+            st.rerun()
+    with col2:
+        st.title(f"🏊 {profile.full_name}")
+    with col3:
+        st.write("") # Spacing
+        history_service = AnalysisHistoryService()
+        history = history_service.get_sessions_by_athlete(athlete_id)
+        
+        # Generate PDF on the fly
+        try:
+            pdf_service = PDFReportService()
+            pdf_path = pdf_service.generate_athlete_summary(profile, history)
+            with open(pdf_path, "rb") as pdf_file:
+                PDFbyte = pdf_file.read()
+            st.download_button(
+                label="📄 Download PDF Report",
+                data=PDFbyte,
+                file_name=os.path.basename(pdf_path),
+                mime='application/pdf',
+                type="primary",
+                use_container_width=True
+            )
+        except Exception as e:
+            st.error(f"PDF Error: {e}")
+    
+    st.markdown(f"**Level:** {profile.swimming_level} | **Preferred Stroke:** {profile.preferred_stroke}")
+    
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Age", f"{profile.age} yrs")
+    c2.metric("Gender", profile.gender)
+    c3.metric("Height", f"{profile.height_cm} cm")
+    c4.metric("Weight", f"{profile.weight_kg} kg")
+    
+    st.markdown("---")
+    st.subheader("🎯 Coach Notes & Goals")
+    
+    with st.expander("📝 Edit Notes & Goals", expanded=False):
+        with st.form("edit_notes_form"):
+            new_notes = st.text_area("Coach Notes", value=profile.notes, height=100)
+            new_goals = st.text_area("Training Goals (Short/Long term)", value=profile.training_goals, height=100)
+            
+            if st.form_submit_button("Save Notes", type="primary"):
+                profile.notes = new_notes
+                profile.training_goals = new_goals
+                if athlete_service.save_profile(profile):
+                    st.success("Notes and goals updated successfully!")
+                    st.rerun()
+                else:
+                    st.error("Failed to save. Check logs.")
+                    
+    col_n1, col_n2 = st.columns(2)
+    with col_n1:
+        if profile.notes:
+            st.info(f"**Notes:**\n\n{profile.notes}")
+        else:
+            st.caption("No notes recorded.")
+    with col_n2:
+        if profile.training_goals:
+            st.success(f"**Training Goals:**\n\n{profile.training_goals}")
+        else:
+            st.caption("No training goals set.")
+        
+    st.markdown("---")
+    st.subheader("📊 Analysis History")
+    
+    history_service = AnalysisHistoryService()
+    history = history_service.get_sessions_by_athlete(athlete_id)
+    
+    if not history:
+        st.info("No analyses recorded for this athlete yet.")
+    else:
+        history_data = []
+        for s in history:
+            history_data.append({
+                "Date": s.analysis_timestamp.split("T")[0],
+                "Time": s.analysis_timestamp.split("T")[1][:5],
+                "Score": round(s.performance_score, 1),
+                "Confidence": s.scientific_confidence,
+                "Stroke": s.stroke_type,
+                "Cycles": s.completed_cycles,
+                "Proc. Time (s)": round(s.processing_time_seconds, 1)
+            })
+        
+        if len(history) >= 2:
+            st.markdown("### 📈 Performance Progression")
+            df = pd.DataFrame(history_data)
+            
+            c_trend1, c_trend2 = st.columns(2)
+            with c_trend1:
+                st.plotly_chart(create_performance_trend_chart(df), use_container_width=True)
+            with c_trend2:
+                st.plotly_chart(create_cycles_trend_chart(df), use_container_width=True)
+            st.markdown("---")
+            
+        st.dataframe(history_data, use_container_width=True)
+        
+        # --- PHASE 7: Session Comparison ---
+        if len(history) >= 2:
+            st.markdown("---")
+            st.subheader("⚖️ Compare Sessions")
+            st.markdown("Select two sessions below to visualize technique changes and performance progression.")
+            
+            # Create a dictionary to map a friendly display string to the session object
+            session_options = {}
+            for i, s in enumerate(history):
+                # Using index to ensure uniqueness if timestamp is identical
+                date_str = s.analysis_timestamp.split("T")[0]
+                time_str = s.analysis_timestamp.split("T")[1][:5]
+                label = f"{date_str} {time_str} | Score: {s.performance_score:.1f} | {s.stroke_type} ({i})"
+                session_options[label] = s
+                
+            col_sel_a, col_sel_b = st.columns(2)
+            options_list = list(session_options.keys())
+            
+            with col_sel_a:
+                sel_a_label = st.selectbox("Select Session A (Baseline)", options=options_list, index=len(options_list)-1)
+            with col_sel_b:
+                sel_b_label = st.selectbox("Select Session B (Recent)", options=options_list, index=0)
+                
+            if st.button("Generate Comparison Report", type="primary"):
+                sess_a = session_options[sel_a_label]
+                sess_b = session_options[sel_b_label]
+                
+                comp_service = ComparisonService()
+                report = comp_service.compare_sessions(sess_a, sess_b)
+                
+                st.markdown("### Comparison Results")
+                
+                # Render Coach Summary if present
+                if report.coach_summary:
+                    st.info(f"**Coach Summary:** {report.coach_summary}")
+                
+                # Render Metrics
+                col_m1, col_m2, col_m3, col_m4 = st.columns(4)
+                
+                if report.overall_score_delta:
+                    col_m1.metric("Overall Score", 
+                                  f"{report.overall_score_delta.new_value:.1f}", 
+                                  f"{report.overall_score_delta.delta:.1f}")
+                                  
+                if report.confidence_delta:
+                    color = "normal" if report.confidence_delta.is_improvement else "inverse"
+                    if report.confidence_delta.delta == 0: color = "off"
+                    col_m2.metric("Scientific Confidence", 
+                                  report.confidence_delta.new_label, 
+                                  f"{report.confidence_delta.delta} levels", delta_color=color)
+                                  
+                if report.cycles_delta:
+                    col_m3.metric("Completed Cycles", 
+                                  f"{int(report.cycles_delta.new_value)}", 
+                                  f"{int(report.cycles_delta.delta)}")
+                                  
+                if report.cycle_duration_delta:
+                    # Note: for duration, negative is usually better, which is_improvement handles conceptually,
+                    # but Streamlit native metric interprets negative delta as red by default unless inverse.
+                    # We'll let Streamlit default behavior work: negative time = red (bad) wait, inverse is better.
+                    col_m4.metric("Avg Cycle Duration", 
+                                  f"{report.cycle_duration_delta.new_value:.0f} ms", 
+                                  f"{report.cycle_duration_delta.delta:.0f} ms", delta_color="inverse")
+                                  
+                # Technique Deltas
+                if report.technique_deltas:
+                    st.markdown("#### Technique Metrics")
+                    tech_cols = st.columns(len(report.technique_deltas))
+                    for i, t_delta in enumerate(report.technique_deltas):
+                        with tech_cols[i]:
+                            st.metric(t_delta.metric_name, 
+                                      f"{t_delta.new_value:.2f} {t_delta.unit}".strip(), 
+                                      f"{t_delta.delta:.2f} {t_delta.unit}".strip())
+                                      
+                # Movement Errors
+                col_e1, col_e2, col_e3 = st.columns(3)
+                with col_e1:
+                    st.markdown("🟢 **Resolved Errors**")
+                    if report.resolved_errors:
+                        for e in report.resolved_errors: st.markdown(f"- {e}")
+                    else: st.caption("None")
+                with col_e2:
+                    st.markdown("🔴 **New Errors**")
+                    if report.new_errors:
+                        for e in report.new_errors: st.markdown(f"- {e}")
+                    else: st.caption("None")
+                with col_e3:
+                    st.markdown("🟡 **Persistent Errors**")
+                    if report.persistent_errors:
+                        for e in report.persistent_errors: st.markdown(f"- {e}")
+                    else: st.caption("None")
+                    
+                # Video Side-by-Side
+                if report.video_path_a and report.video_path_b:
+                    st.markdown("#### Video Comparison 🔗")
+                    vid_col1, vid_col2 = st.columns(2)
+                    try:
+                        # Construct absolute paths
+                        video_a_full = config.output_dir / report.video_path_a
+                        video_b_full = config.output_dir / report.video_path_b
+                        
+                        with vid_col1:
+                            st.markdown(f"**Session A:** {sel_a_label}")
+                            if video_a_full.exists():
+                                with open(video_a_full, 'rb') as f1: st.video(f1.read())
+                            else:
+                                st.warning("Video file missing.")
+                        with vid_col2:
+                            st.markdown(f"**Session B:** {sel_b_label}")
+                            if video_b_full.exists():
+                                with open(video_b_full, 'rb') as f2: st.video(f2.read())
+                            else:
+                                st.warning("Video file missing.")
+                    except Exception as e:
+                        st.warning(f"Could not load comparison videos: {e}")
+        
+    st.markdown("---")
+    # Quick Actions
+    with st.expander("⚙️ Advanced Settings"):
+        if st.button("Delete Athlete", type="primary", key="del_from_profile"):
+            athlete_service.delete_profile(athlete_id)
+            st.session_state.viewing_athlete_id = None
+            st.rerun()
+
+
+def render_history_page():
+    st.title("📊 Analysis History")
+    st.markdown("Review historical analysis sessions across all athletes.")
+
+    history_service = AnalysisHistoryService()
+    athlete_service = AthleteService()
+    
+    all_sessions = history_service.get_all_sessions()
+    
+    if not all_sessions:
+        st.info("No analysis history recorded yet.")
+        return
+
+    # Fetch athletes to map names
+    profiles = athlete_service.get_all_profiles()
+    athlete_map = {p.athlete_id: p.full_name for p in profiles}
+
+    history_data = []
+    for s in all_sessions:
+        athlete_name = athlete_map.get(s.athlete_id, "Guest Session") if s.athlete_id else "Guest Session"
+        history_data.append({
+            "Date": s.analysis_timestamp.split("T")[0],
+            "Time": s.analysis_timestamp.split("T")[1][:5],
+            "Athlete": athlete_name,
+            "Score": round(s.performance_score, 1),
+            "Confidence": s.scientific_confidence,
+            "Stroke": s.stroke_type,
+            "Cycles": s.completed_cycles,
+            "Proc. Time (s)": round(s.processing_time_seconds, 1)
+        })
+        
+    st.dataframe(history_data, use_container_width=True)
 
 
 def main():
@@ -359,13 +636,25 @@ def main():
         initial_sidebar_state="expanded",
     )
 
+    if "viewing_athlete_id" not in st.session_state:
+        st.session_state.viewing_athlete_id = None
+
     # --- Navigation ---
     st.sidebar.markdown("### Navigation")
-    app_mode = st.sidebar.radio("Go to:", ["🏊‍♂️ Analysis Dashboard", "👥 Athlete Management"], label_visibility="collapsed")
+    app_mode = st.sidebar.radio("Go to:", ["📊 Coach Dashboard", "🏊‍♂️ Analysis Dashboard", "👥 Athletes", "📉 Analysis History"], label_visibility="collapsed")
     st.sidebar.markdown("---")
     
-    if app_mode == "👥 Athlete Management":
-        render_athlete_management()
+    if app_mode == "📊 Coach Dashboard":
+        render_dashboard_page()
+        return
+    elif app_mode == "👥 Athletes":
+        if st.session_state.viewing_athlete_id:
+            render_athlete_profile_page()
+        else:
+            render_athletes_page()
+        return
+    elif app_mode == "📉 Analysis History":
+        render_history_page()
         return
 
     st.title(f"🏊‍♂️ {APP_TITLE}")
@@ -501,8 +790,11 @@ def main():
 
         if st.sidebar.button("Analyze Swimming Technique", type="primary"):
             st.session_state.analysis_state = "checking_stroke"
+            import time
+            st.session_state["_processing_start_time"] = time.time()
             st.session_state.stroke_result = None
             st.session_state.completed_analysis = None
+            st.rerun()
 
         if st.session_state.analysis_state == "checking_stroke":
             with st.spinner("Analyzing stroke type..."):
@@ -651,6 +943,28 @@ def main():
                         safe_log("WARN: consistency_critical_but_results_available")
                         for w in analysis_result.consistency.warnings:
                             st.warning(f"⚠️ Consistency Warning: {w}")
+
+                    # Automatically save Analysis History session
+                    try:
+                        import time
+                        from datetime import datetime
+                        history_service = AnalysisHistoryService()
+                        session = AnalysisSession(
+                            athlete_id=selected_athlete_id if selected_athlete_id != "None" else None,
+                            analysis_timestamp=datetime.now().isoformat(),
+                            original_video_filename=uploaded_file.name,
+                            processed_video_filename=Path(output_video_path).name if output_video_path else "",
+                            metadata_json_path=str(metadata_path),
+                            report_json_path=str(json_report_path),
+                            performance_score=analysis_result.report.overall_score if analysis_result.report else 0.0,
+                            scientific_confidence=analysis_result.consistency.scientific_confidence if getattr(analysis_result, 'consistency', None) else "Low",
+                            completed_cycles=analysis_result.stroke_statistics.completed_cycles if analysis_result.stroke_statistics else 0,
+                            stroke_type=st.session_state.stroke_result.selected_stroke.value,
+                            processing_time_seconds=st.session_state.get("_processing_end_time", time.time()) - st.session_state.get("_processing_start_time", time.time())
+                        )
+                        history_service.save_session(session)
+                    except Exception as e:
+                        safe_log(f"ERROR: Failed to save analysis history: {e}")
 
                     st.session_state.completed_analysis = {
                         "output_video_path": output_video_path,

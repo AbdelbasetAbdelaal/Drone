@@ -1,19 +1,26 @@
-import json
-import os
-from pathlib import Path
 from typing import List, Optional
 from models.athlete_profile import AthleteProfile
+from database import SessionLocal, AthleteRepository
 import logging
 
 logger = logging.getLogger(__name__)
 
 class AthleteService:
-    def __init__(self, data_dir: str = "data/athletes"):
-        self.data_dir = Path(data_dir)
-        self.data_dir.mkdir(parents=True, exist_ok=True)
+    def __init__(self, db_session=None):
+        self._owns_session = False
+        if db_session is None:
+            self.db = SessionLocal()
+            self._owns_session = True
+        else:
+            self.db = db_session
+        self.repository = AthleteRepository(self.db)
 
-    def _get_file_path(self, athlete_id: str) -> Path:
-        return self.data_dir / f"{athlete_id}.json"
+    def __del__(self):
+        if hasattr(self, '_owns_session') and self._owns_session and self.db:
+            try:
+                self.db.close()
+            except Exception:
+                pass
 
     def validate_profile(self, profile: AthleteProfile) -> List[str]:
         """Validate athlete profile fields. Returns a list of error messages."""
@@ -35,22 +42,19 @@ class AthleteService:
         return errors
 
     def save_profile(self, profile: AthleteProfile) -> bool:
-        """Save an athlete profile to a JSON file."""
+        """Save an athlete profile to the database."""
         errors = self.validate_profile(profile)
         if errors:
             error_msg = "; ".join(errors)
             logger.error(f"Failed to save athlete profile {profile.athlete_id}: {error_msg}")
             raise ValueError(f"Invalid athlete profile: {error_msg}")
         
-        file_path = self._get_file_path(profile.athlete_id)
-        try:
-            with open(file_path, 'w', encoding='utf-8') as f:
-                json.dump(profile.to_dict(), f, indent=4)
+        success = self.repository.add(profile)
+        if success:
             logger.info(f"Saved athlete profile: {profile.athlete_id}")
-            return True
-        except Exception as e:
-            logger.error(f"Error saving athlete profile {profile.athlete_id}: {e}")
-            return False
+        else:
+            logger.error(f"Error saving athlete profile {profile.athlete_id} to database.")
+        return success
 
     def create_profile(self, **kwargs) -> AthleteProfile:
         """Create and save a new athlete profile."""
@@ -59,29 +63,15 @@ class AthleteService:
         return profile
 
     def load_profile(self, athlete_id: str) -> Optional[AthleteProfile]:
-        """Load an athlete profile from a JSON file."""
-        file_path = self._get_file_path(athlete_id)
-        if not file_path.exists():
+        """Load an athlete profile from the database."""
+        profile = self.repository.get(athlete_id)
+        if not profile:
             logger.warning(f"Athlete profile not found: {athlete_id}")
-            return None
-            
-        try:
-            with open(file_path, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-            return AthleteProfile.from_dict(data)
-        except Exception as e:
-            logger.error(f"Error loading athlete profile {athlete_id}: {e}")
-            return None
+        return profile
 
     def get_all_profiles(self) -> List[AthleteProfile]:
-        """Load all athlete profiles in the data directory."""
-        profiles = []
-        for file_path in self.data_dir.glob("*.json"):
-            athlete_id = file_path.stem
-            profile = self.load_profile(athlete_id)
-            if profile:
-                profiles.append(profile)
-        return profiles
+        """Load all athlete profiles from the database."""
+        return self.repository.get_all()
 
     def update_profile(self, profile: AthleteProfile) -> bool:
         """Update an existing athlete profile. Alias for save_profile."""
@@ -89,14 +79,9 @@ class AthleteService:
 
     def delete_profile(self, athlete_id: str) -> bool:
         """Delete an athlete profile by ID."""
-        file_path = self._get_file_path(athlete_id)
-        if file_path.exists():
-            try:
-                file_path.unlink()
-                logger.info(f"Deleted athlete profile: {athlete_id}")
-                return True
-            except Exception as e:
-                logger.error(f"Error deleting athlete profile {athlete_id}: {e}")
-                return False
-        return False
-
+        success = self.repository.delete(athlete_id)
+        if success:
+            logger.info(f"Deleted athlete profile: {athlete_id}")
+        else:
+            logger.error(f"Error deleting athlete profile {athlete_id}")
+        return success
