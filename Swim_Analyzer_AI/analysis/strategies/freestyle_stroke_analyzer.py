@@ -213,7 +213,7 @@ class FreestyleStrokeStateMachine(BaseStrokeStateMachine):
                         )
                         self.transitions.append(transition)
                         
-                        logger.info(f"\nFrame {frame_idx}\nTimestamp {timestamp_ms}ms\n{self.current_phase} -> {target_phase}\nConfidence: {confidence:.2f}\nReason:\n{reason}\n")
+                        logger.debug_log(f"\nFrame {frame_idx}\nTimestamp {timestamp_ms}ms\n{self.current_phase} -> {target_phase}\nConfidence: {confidence:.2f}\nReason:\n{reason}\n")
                         # Cycle counting logic
                         last_phase = getattr(self, "last_known_phase", "Unknown")
                         if last_phase == "Recovery" and target_phase in ["Entry", "Catch", "Pull"]:

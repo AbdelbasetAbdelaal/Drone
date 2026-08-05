@@ -26,8 +26,15 @@ POSE_CONNECTIONS = [
 
 class PoseDetector:
     """
-    Wrapper for MediaPipe Pose Landmarker using the new Tasks API.
-    Handles initialization, detection, confidence checking, temporal smoothing, and drawing.
+    Purpose: Wrapper for MediaPipe Pose Landmarker using the Tasks API to detect, smooth, and draw poses.
+    Inputs: Uses config.pose_model_path for initialization. Takes BGR image frames for detection.
+    Outputs: Smoothed landmark coordinates and temporal validity metrics.
+    Exceptions: Raises RuntimeError if MediaPipe initialization fails or model file is missing.
+    Example:
+        detector = PoseDetector()
+        landmarks, is_valid = detector.detect_pose(frame)
+        annotated_frame = detector.draw_pose(frame, landmarks)
+        detector.close()
     """
     def __init__(self):
         logger.info(f"Initializing PoseDetector with model: {config.pose_model_path}")

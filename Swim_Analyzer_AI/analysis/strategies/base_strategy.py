@@ -19,7 +19,7 @@ class BaseBiomechanicsCalculator(ABC):
 
 class BaseScoringEngine(ABC):
     @abstractmethod
-    def generate_report(self, analysis_result: Any) -> PerformanceReport:
+    def generate_report(self, analysis_result: Any, global_metrics: dict) -> PerformanceReport:
         pass
 
 

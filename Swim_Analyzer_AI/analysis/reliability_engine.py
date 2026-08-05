@@ -1,6 +1,11 @@
 from typing import List, Dict
 from models.data_models import AnalysisResult, ReliabilityResult
 from core.logger import setup_logger
+from core.constants import (
+    FRAME_COVERAGE_WEIGHT, PHASE_CONFIDENCE_WEIGHT,
+    CONFIDENCE_HIGH_THRESHOLD, CONFIDENCE_MEDIUM_THRESHOLD,
+    RELIABILITY_HIGH_THRESHOLD, RELIABILITY_MEDIUM_THRESHOLD
+)
 
 logger = setup_logger(__name__)
 
@@ -34,12 +39,12 @@ class ReliabilityEngine:
             phase_confidences = [f.phase_confidence for f in analysis.frames if f.is_valid]
             avg_phase_confidence = sum(phase_confidences) / len(phase_confidences) if phase_confidences else 0.0
             
-            confidence_score = (frame_coverage_ratio * 0.7 + avg_phase_confidence * 0.3) * 100.0
+            confidence_score = (frame_coverage_ratio * FRAME_COVERAGE_WEIGHT + avg_phase_confidence * PHASE_CONFIDENCE_WEIGHT) * 100.0
             result.analysis_confidence_score = min(100.0, max(0.0, confidence_score))
             
-            if result.analysis_confidence_score >= 80:
+            if result.analysis_confidence_score >= CONFIDENCE_HIGH_THRESHOLD:
                 result.analysis_confidence_level = "High"
-            elif result.analysis_confidence_score >= 50:
+            elif result.analysis_confidence_score >= CONFIDENCE_MEDIUM_THRESHOLD:
                 result.analysis_confidence_level = "Medium"
             else:
                 result.analysis_confidence_level = "Low"
@@ -74,9 +79,9 @@ class ReliabilityEngine:
                     
             result.analysis_reliability_score = min(100.0, max(0.0, reliability_score))
             
-            if result.analysis_reliability_score >= 70:
+            if result.analysis_reliability_score >= RELIABILITY_HIGH_THRESHOLD:
                 result.analysis_reliability_level = "High"
-            elif result.analysis_reliability_score >= 40:
+            elif result.analysis_reliability_score >= RELIABILITY_MEDIUM_THRESHOLD:
                 result.analysis_reliability_level = "Medium"
             else:
                 result.analysis_reliability_level = "Low"

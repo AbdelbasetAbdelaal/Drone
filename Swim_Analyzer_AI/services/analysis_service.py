@@ -25,6 +25,136 @@ class AnalysisService:
     def __init__(self):
         pass
         
+    def _initialize_components(self, effective_fps: float, visualization_mode: str, trajectory_duration_sec: float) -> Tuple[Any, Any, Any]:
+        """Initialize detectors and annotators."""
+        from analysis.video_quality_assessor import VideoQualityAssessor
+        from analysis.video_annotator import VideoAnnotator
+        
+        vqa = VideoQualityAssessor()
+        pose_detector = PoseDetector()
+        trajectory_frames = int(effective_fps * trajectory_duration_sec)
+        annotator = VideoAnnotator(mode=visualization_mode, trajectory_frames=trajectory_frames)
+        
+        return vqa, pose_detector, annotator
+
+    def _process_frames_loop(self, processor: VideoProcessor, vqa: Any, pose_detector: Any, annotator: Any, 
+                             BiomechanicsCalculator: Any, stroke_analyzer: Any, effective_fps: float, 
+                             visualization_mode: str, progress_callback, vqa_callback, analysis_result: AnalysisResult) -> Tuple[bool, int, float, float]:
+        """Process video frames in a loop, extract poses, calculate biomechanics, and annotate."""
+        valid_frames_count = 0
+        frames_processed = 0
+        last_transition_count = 0
+        
+        import time
+        import psutil
+        import os
+        process = psutil.Process(os.getpid())
+        peak_ram = 0.0
+        peak_cpu = 0.0
+        
+        for frame in processor.generate_frames():
+            current_ram = process.memory_info().rss / (1024 * 1024)
+            current_cpu = process.cpu_percent(interval=None)
+            if current_ram > peak_ram: peak_ram = current_ram
+            if current_cpu > peak_cpu: peak_cpu = current_cpu
+            
+            # 1. Detect Pose
+            landmarks, is_valid = pose_detector.detect_pose(frame)
+            if is_valid:
+                valid_frames_count += 1
+                
+            # 2. VQA
+            vqa.assess_frame(frame, landmarks, is_valid)
+            if frames_processed == config.vqa_early_halt_frames:
+                early_vqa = vqa.get_current_result()
+                if early_vqa.quality_class == "Critical":
+                    logger.warning("VQA returned Critical at early halt check. Halting video processing.")
+                    analysis_result.vqa_result = early_vqa
+                    if vqa_callback: vqa_callback(early_vqa)
+                    return True, valid_frames_count, peak_ram, peak_cpu
+                elif vqa_callback:
+                    vqa_callback(early_vqa)
+
+            # 3. Biomechanics
+            angles = JointAngles()
+            stroke_phase = "Unknown"
+            phase_conf = 0.0
+            timestamp = int(frames_processed * (1000.0 / effective_fps)) if effective_fps > 0 else 0
+            
+            if landmarks and is_valid:
+                angles = BiomechanicsCalculator.calculate_all_angles(landmarks)
+                stroke_phase, phase_conf = stroke_analyzer.analyze_frame(landmarks, frames_processed, timestamp)
+                
+            new_transitions = None
+            if len(stroke_analyzer.transitions) > last_transition_count:
+                new_transitions = stroke_analyzer.transitions[last_transition_count:]
+                last_transition_count = len(stroke_analyzer.transitions)
+                
+            frame_conf = phase_conf if phase_conf > 0 else (0.95 if is_valid else 0.4)
+                
+            frame_data = FrameData(
+                frame_index=frames_processed, timestamp_ms=timestamp, raw_landmarks=landmarks,
+                is_valid=is_valid, angles=angles, stroke_phase=stroke_phase, phase_confidence=phase_conf
+            )
+            analysis_result.frames.append(frame_data)
+            
+            # 4. Annotate
+            annotated_frame = annotator.annotate(
+                frame, landmarks, angles, frames_processed, timestamp, 
+                frame_conf, stroke_phase, effective_fps, 100.0, 0, new_transitions
+            )
+            processor.write_frame(annotated_frame)
+            
+            if progress_callback:
+                progress_callback(frame_data, frame_conf, visualization_mode)
+            
+            frames_processed += 1
+            time.sleep(0.001) # Yield GIL
+            
+        return False, valid_frames_count, peak_ram, peak_cpu
+
+    def _finalize_metrics_and_export(self, analysis_result: AnalysisResult, metadata: VideoMetadata, 
+                                     stroke_analyzer: Any, BiomechanicsCalculator: Any, scoring_engine: Any, 
+                                     calibration_engine: Any, processor: VideoProcessor, input_filename: str, 
+                                     output_video_path: str) -> Tuple[str, str, str]:
+        """Finalize metrics, generate reports, run consistency validator, and export JSONs."""
+        from models.data_models import StrokeStatistics
+        stats = StrokeStatistics(
+            time_in_phases=stroke_analyzer.time_in_phases,
+            completed_cycles=stroke_analyzer.completed_cycles,
+            transitions=stroke_analyzer.transitions
+        )
+        if stats.completed_cycles > 0:
+            stats.average_cycle_duration_ms = (metadata.duration_seconds * 1000) / stats.completed_cycles
+            
+        valid_phases = [f.phase_confidence for f in analysis_result.frames if f.is_valid and f.stroke_phase != "Unknown"]
+        if valid_phases:
+            stats.average_phase_confidence = sum(valid_phases) / len(valid_phases)
+            
+        analysis_result.stroke_statistics = stats
+        
+        global_metrics = BiomechanicsCalculator.calculate_global_metrics(
+            analysis_result.frames, metadata.effective_fps, 
+            calibration_engine, processor.width, processor.height
+        )
+        
+        from analysis.reliability_engine import ReliabilityEngine
+        analysis_result.reliability = ReliabilityEngine.evaluate(analysis_result)
+        
+        analysis_result.report = scoring_engine.generate_report(analysis_result, global_metrics)
+        
+        from analysis.consistency_validator import AnalysisConsistencyValidator
+        analysis_result.consistency = AnalysisConsistencyValidator.validate(analysis_result)
+        
+        json_report_path, metadata_path, _ = ExportService.export_to_json(analysis_result, metadata, input_filename)
+        
+        if not VideoProcessor.validate_export(output_video_path):
+            logger.error("Video export validation failed. The output video is broken or empty.")
+            output_video_path = None
+            setattr(analysis_result, 'export_failed', True)
+            
+        return json_report_path, metadata_path, output_video_path
+
     def process_video(self, input_video_path: str, effective_fps: float, visualization_mode: str = "User Mode", 
                       progress_callback = None, vqa_callback = None, trajectory_duration_sec: float = 2.0,
                       stroke_detection: StrokeDetectionResult = None, athlete_id: str = None) -> Tuple[str, str, str, AnalysisResult]:
@@ -48,7 +178,6 @@ class AnalysisService:
         output_video_path = str(config.output_dir / output_filename)
         json_report_path = ""
         metadata_path = ""
-        
         pose_detector = None
         analysis_result = AnalysisResult(video_path=input_video_path)
         
@@ -57,221 +186,64 @@ class AnalysisService:
         stroke_analyzer = strategy.get_stroke_analyzer(effective_fps)
         BiomechanicsCalculator = strategy.get_biomechanics_calculator()
         scoring_engine = strategy.get_scoring_engine()
-        
         calibration_engine = RelativeCalibration()
+        
         metadata = VideoMetadata(
-            filename=input_filename,
-            effective_fps=effective_fps,
-            analysis_timestamp=datetime.now().isoformat(),
-            swimming_style=stroke_type.value,
-            stroke_detection=stroke_detection,
-            calibration_mode=calibration_engine.mode_name,
-            athlete_id=athlete_id
+            filename=input_filename, effective_fps=effective_fps, analysis_timestamp=datetime.now().isoformat(),
+            swimming_style=stroke_type.value, stroke_detection=stroke_detection,
+            calibration_mode=calibration_engine.mode_name, athlete_id=athlete_id
         )
         
         try:
-            # 1. Initialize Video Quality Assessor
-            from analysis.video_quality_assessor import VideoQualityAssessor
-            vqa = VideoQualityAssessor()
-            
-            pose_detector = PoseDetector()
-            
-            # Initialize VideoAnnotator with the requested mode
-            from analysis.video_annotator import VideoAnnotator
-            trajectory_frames = int(effective_fps * trajectory_duration_sec)
-            annotator = VideoAnnotator(mode=visualization_mode, trajectory_frames=trajectory_frames)
+            vqa, pose_detector, annotator = self._initialize_components(effective_fps, visualization_mode, trajectory_duration_sec)
             
             with VideoProcessor(input_video_path) as processor:
-                if not processor.open():
-                    raise RuntimeError(f"Could not open input video: {input_video_path}")
-                    
-                if not processor.setup_writer(output_video_path):
-                    raise RuntimeError(f"Could not setup output video writer: {output_video_path}")
+                if not processor.open(): raise RuntimeError(f"Could not open input video: {input_video_path}")
+                if not processor.setup_writer(output_video_path): raise RuntimeError(f"Could not setup output video writer: {output_video_path}")
                     
                 metadata.detected_fps = processor.fps
                 metadata.resolution_width = processor.width
                 metadata.resolution_height = processor.height
-                
                 vqa.set_video_metadata(processor.width, processor.height, processor.fps)
                 
-                valid_frames_count = 0
-                frames_processed = 0
-                
-                # Keep track of transition count to only pass new ones
-                last_transition_count = 0
-                
                 import time
-                import psutil
-                import os
-                process = psutil.Process(os.getpid())
                 start_time = time.time()
-                peak_ram = 0.0
-                peak_cpu = 0.0
+                early_halt, valid_frames_count, peak_ram, peak_cpu = self._process_frames_loop(
+                    processor, vqa, pose_detector, annotator, BiomechanicsCalculator, stroke_analyzer,
+                    effective_fps, visualization_mode, progress_callback, vqa_callback, analysis_result
+                )
                 
-                for frame in processor.generate_frames():
+                if early_halt:
+                    return "", "", "", analysis_result
                     
-                    current_ram = process.memory_info().rss / (1024 * 1024)
-                    current_cpu = process.cpu_percent(interval=None)
-                    if current_ram > peak_ram: peak_ram = current_ram
-                    if current_cpu > peak_cpu: peak_cpu = current_cpu
-                    
-                    # 1. Detect Pose & Check Confidence (Smoothed)
-                    landmarks, is_valid = pose_detector.detect_pose(frame)
-                    
-                    if is_valid:
-                        valid_frames_count += 1
-                        
-                    # Incremental VQA
-                    vqa.assess_frame(frame, landmarks, is_valid)
-                    
-                    if frames_processed == config.vqa_early_halt_frames:
-                        early_vqa = vqa.get_current_result()
-                        if early_vqa.quality_class == "Critical":
-                            logger.warning("VQA returned Critical at early halt check. Halting video processing.")
-                            analysis_result.vqa_result = early_vqa
-                            if vqa_callback:
-                                vqa_callback(early_vqa)
-                            return "", "", "", analysis_result
-                        elif vqa_callback:
-                            vqa_callback(early_vqa) # Update UI with non-critical early result
-
-                    # 2. Calculate Biomechanics
-                    angles = JointAngles()
-                    stroke_phase = "Unknown"
-                    phase_conf = 0.0
-                    timestamp = int(frames_processed * (1000.0 / effective_fps)) if effective_fps > 0 else 0
-                    
-                    if landmarks and is_valid:
-                        angles = BiomechanicsCalculator.calculate_all_angles(landmarks)
-                        stroke_phase, phase_conf = stroke_analyzer.analyze_frame(landmarks, frames_processed, timestamp)
-                        
-                    # Find new transitions
-                    new_transitions = None
-                    if len(stroke_analyzer.transitions) > last_transition_count:
-                        new_transitions = stroke_analyzer.transitions[last_transition_count:]
-                        last_transition_count = len(stroke_analyzer.transitions)
-                        
-                    # Get generic frame confidence
-                    frame_conf = phase_conf if phase_conf > 0 else (0.95 if is_valid else 0.4)
-                        
-                    # 3. Store Data
-                    frame_data = FrameData(
-                        frame_index=frames_processed,
-                        timestamp_ms=timestamp,
-                        raw_landmarks=landmarks,
-                        is_valid=is_valid,
-                        angles=angles,
-                        stroke_phase=stroke_phase,
-                        phase_confidence=phase_conf
-                    )
-                    analysis_result.frames.append(frame_data)
-                    
-                    # 4. Draw and Save
-                    annotated_frame = annotator.annotate(
-                        frame, landmarks, angles, frames_processed, timestamp, 
-                        frame_conf, stroke_phase, effective_fps, 100.0, 0, new_transitions
-                    )
-                    processor.write_frame(annotated_frame)
-                    
-                    # 5. Callback for Streamlit Live Update
-                    if progress_callback:
-                        progress_callback(frame_data, frame_conf, visualization_mode)
-                    
-                    frames_processed += 1
-                    time.sleep(0.001) # Yield GIL so Streamlit websocket doesn't timeout
-                    
+                frames_processed = len(analysis_result.frames)
                 logger.info(f"Successfully processed {frames_processed} frames.")
-                
                 analysis_result.vqa_result = vqa.get_current_result()
                 
+                processing_time = time.time() - start_time
                 metadata.total_frames = frames_processed
                 metadata.duration_seconds = frames_processed / effective_fps if effective_fps > 0 else 0
-                processing_time = time.time() - start_time
                 metadata.processing_time_sec = processing_time
                 metadata.peak_ram_mb = peak_ram
                 metadata.peak_cpu_percent = peak_cpu
                 metadata.average_processing_fps = frames_processed / processing_time if processing_time > 0 else 0
-                logger.info(f"Performance - Time: {processing_time:.2f}s, Peak RAM: {peak_ram:.1f}MB, Peak CPU: {peak_cpu:.1f}%")
                 metadata.confidence_statistics = {
                     "valid_frames": valid_frames_count,
                     "invalid_frames": frames_processed - valid_frames_count,
                     "validity_ratio": valid_frames_count / frames_processed if frames_processed > 0 else 0
                 }
                 
-            # Attach stroke statistics
-            from models.data_models import StrokeStatistics
-            stats = StrokeStatistics(
-                time_in_phases=stroke_analyzer.time_in_phases,
-                completed_cycles=stroke_analyzer.completed_cycles,
-                transitions=stroke_analyzer.transitions
-            )
-            # Calculate average cycle duration
-            if stats.completed_cycles > 0:
-                stats.average_cycle_duration_ms = (metadata.duration_seconds * 1000) / stats.completed_cycles
-                
-            # Calculate average phase confidence
-            valid_phases = [f.phase_confidence for f in analysis_result.frames if f.is_valid and f.stroke_phase != "Unknown"]
-            if valid_phases:
-                stats.average_phase_confidence = sum(valid_phases) / len(valid_phases)
-                
-            analysis_result.stroke_statistics = stats
-            
-            logger.info("=== Stroke Detection Summary ===")
-            logger.info(f"Completed Stroke Cycles: {stats.completed_cycles}")
-            logger.info(f"Average Cycle Duration: {stats.average_cycle_duration_ms:.1f}ms")
-            logger.info(f"Average Phase Confidence: {stats.average_phase_confidence:.2f}")
-            if stats.completed_cycles == 0:
-                logger.info("Reason for 0 cycles: The sequence of Recovery -> Entry/Catch/Pull was not observed, likely due to poor visibility, occlusions, or camera angle causing rapid switching between Unknown states.")
-            logger.info("=================================")
-            
-            # Generate Global Metrics & Performance Report
-            global_metrics = BiomechanicsCalculator.calculate_global_metrics(
-                analysis_result.frames, 
-                effective_fps, 
-                calibration_engine, 
-                processor.width, 
-                processor.height
+            json_report_path, metadata_path, output_video_path = self._finalize_metrics_and_export(
+                analysis_result, metadata, stroke_analyzer, BiomechanicsCalculator, scoring_engine,
+                calibration_engine, processor, input_filename, output_video_path
             )
             
-            # Calculate Reliability
-            from analysis.reliability_engine import ReliabilityEngine
-            analysis_result.reliability = ReliabilityEngine.evaluate(analysis_result)
-            
-            analysis_result.report = scoring_engine.generate_report(analysis_result, global_metrics)
-            
-            # Final Layer: Consistency Validation
-            from analysis.consistency_validator import AnalysisConsistencyValidator
-            analysis_result.consistency = AnalysisConsistencyValidator.validate(analysis_result)
-            
-            logger.info(f"Performance report generated with score: {analysis_result.report.overall_score}")
-            
-            # Export JSONs
-            from services.export_service import ExportService
-            json_report_path, metadata_path, timeline_path = ExportService.export_to_json(analysis_result, metadata, input_filename)
-            
-            # Validate generated video export
-            if not VideoProcessor.validate_export(output_video_path):
-                logger.error("Video export validation failed. The output video is broken or empty.")
-                output_video_path = None
-                setattr(analysis_result, 'export_failed', True)
-                
         except Exception as e:
             logger.error(f"Error during video processing: {e}")
             raise e
         finally:
-            if pose_detector:
-                pose_detector.close()
+            if pose_detector: pose_detector.close()
                 
-        logger.info(f"Finished processing. Output video path: {output_video_path}")
-        
-        # IMPORTANT: Clear raw_landmarks from all frames before returning.
-        # raw_landmarks are MediaPipe C++ extension objects. After pose_detector.close()
-        # the C++ backend is freed. If these Python wrapper objects are then stored in
-        # st.session_state and the Python GC cleans them up later (after main() returns),
-        # it can cause a silent C extension use-after-free crash that kills the entire
-        # Streamlit server process without any Python traceback.
-        # All downstream consumers of raw_landmarks (scoring, consistency, export) have
-        # already run at this point, so it is safe to discard them.
         for frame in analysis_result.frames:
             frame.raw_landmarks = None
         logger.info("raw_landmarks cleared from all frames to prevent C extension GC crash.")

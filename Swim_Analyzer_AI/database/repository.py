@@ -5,6 +5,16 @@ from models.athlete_profile import AthleteProfile
 from models.analysis_session import AnalysisSession
 
 class AthleteRepository:
+    """
+    Purpose: Provides data access methods (CRUD) for AthleteProfile entities, translating between Domain and Database models.
+    Inputs: SQLAlchemy database session instance.
+    Outputs: AthleteProfile domain objects or boolean success flags.
+    Exceptions: Returns False on database transaction errors; rolls back session safely.
+    Example:
+        repo = AthleteRepository(db_session)
+        success = repo.add(athlete_profile)
+        athlete = repo.get(athlete_id)
+    """
     def __init__(self, db: Session):
         self.db = db
 
@@ -57,6 +67,16 @@ class AthleteRepository:
 
 
 class AnalysisHistoryRepository:
+    """
+    Purpose: Provides data access methods (CRUD) for AnalysisSession entities, translating between Domain and Database models.
+    Inputs: SQLAlchemy database session instance.
+    Outputs: AnalysisSession domain objects or boolean success flags.
+    Exceptions: Returns False on database transaction errors; rolls back session safely.
+    Example:
+        repo = AnalysisHistoryRepository(db_session)
+        success = repo.add(session_data)
+        sessions = repo.get_by_athlete(athlete_id)
+    """
     def __init__(self, db: Session):
         self.db = db
 

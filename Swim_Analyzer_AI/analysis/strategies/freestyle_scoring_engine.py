@@ -6,6 +6,13 @@ import numpy as np
 from pathlib import Path
 from typing import List, Any
 from core.config import config
+from core.constants import (
+    MAX_SCORE, DEFAULT_PENALTY_SCORE, PULL_ELBOW_MIN_ANGLE, PULL_ELBOW_MAX_ANGLE,
+    RECOVERY_SHOULDER_MIN_ANGLE, RECOVERY_SHOULDER_MAX_ANGLE,
+    KNEE_BEND_MIN_ANGLE, KNEE_BEND_MAX_ANGLE, SYMMETRY_SCORE_PENALTY_THRESHOLD,
+    SCORE_THRESHOLD_EXCELLENT, SCORE_THRESHOLD_GOOD, SCORE_THRESHOLD_FAIR,
+    RELIABILITY_MIN_ACCEPTABLE_SCORE
+)
 from models.data_models import AnalysisResult, MovementError, PerformanceReport
 from core.logger import setup_logger
 from analysis.strategies.base_strategy import BaseScoringEngine
@@ -48,16 +55,16 @@ class FreestyleScoringEngine(BaseScoringEngine):
                 return 0, None
             avg_val = np.mean(value_list)
             if ideal_min <= avg_val <= ideal_max:
-                return 100, None
+                return MAX_SCORE, None
             else:
                 err = MovementError(-1, 0, error_name, f"{error_desc} (Measured: {avg_val:.1f})", "Medium")
-                return 50, err
+                return DEFAULT_PENALTY_SCORE, err
 
         # 1. Stroke Symmetry
         sym_weight = self.weights.get("symmetry_weight", 0.20)
-        sym_score = report.stroke_symmetry.value if report.stroke_symmetry.valid else 100.0
+        sym_score = report.stroke_symmetry.value if report.stroke_symmetry.valid else MAX_SCORE
         score_components.append(sym_score * sym_weight)
-        if report.stroke_symmetry.valid and sym_score < 80:
+        if report.stroke_symmetry.valid and sym_score < SYMMETRY_SCORE_PENALTY_THRESHOLD:
             errors.append(MovementError(-1, 0, "Asymmetrical Pull", "Left and right arms have significantly different mechanics.", "High", confidence=report.stroke_symmetry.confidence))
 
         # 2. Elbow Angle during Pull
@@ -71,7 +78,7 @@ class FreestyleScoringEngine(BaseScoringEngine):
         vals = [v[0] for v in pull_elbows]
         ts = pull_elbows[0][1] if pull_elbows else 0
         # Optimal high-elbow catch / mid-pull flexion is 90° to 120° (Maglischo, 2003)
-        elb_score, elb_err = calculate_component_score(vals, 90, 120, "Dropped Elbow", "Average elbow angle during pull is outside optimal range (90°-120°).")
+        elb_score, elb_err = calculate_component_score(vals, PULL_ELBOW_MIN_ANGLE, PULL_ELBOW_MAX_ANGLE, "Dropped Elbow", "Average elbow angle during pull is outside optimal range (90°-120°).")
         score_components.append(elb_score * elb_weight)
         if elb_err: 
             elb_err.timestamp_ms = ts
@@ -87,7 +94,7 @@ class FreestyleScoringEngine(BaseScoringEngine):
                 
         vals = [v[0] for v in reach_shoulders]
         ts = reach_shoulders[0][1] if reach_shoulders else 0
-        sh_score, sh_err = calculate_component_score(vals, 140, 180, "Limited Shoulder Extension", "Shoulder extension during recovery is restricted.")
+        sh_score, sh_err = calculate_component_score(vals, RECOVERY_SHOULDER_MIN_ANGLE, RECOVERY_SHOULDER_MAX_ANGLE, "Limited Shoulder Extension", "Shoulder extension during recovery is restricted.")
         score_components.append(sh_score * shoulder_weight)
         if sh_err: 
             sh_err.timestamp_ms = ts
@@ -95,8 +102,8 @@ class FreestyleScoringEngine(BaseScoringEngine):
         
         # 4. Hip Angle
         hip_weight = self.weights.get("hip_weight", 0.20)
-        # We don't have hip angle in JointAngles yet, assuming 100% for MVP
-        score_components.append(100 * hip_weight)
+        # We don't have hip angle in JointAngles yet, assuming MAX_SCORE for MVP
+        score_components.append(MAX_SCORE * hip_weight)
         
         # 5. Knee Angle
         knee_weight = self.weights.get("knee_weight", 0.15)
@@ -108,23 +115,23 @@ class FreestyleScoringEngine(BaseScoringEngine):
         
         vals = [v[0] for v in knees]
         ts = knees[0][1] if knees else 0
-        kn_score, kn_err = calculate_component_score(vals, 130, 175, "Excessive Knee Bend", "Knees are bending too much during kicking.")
+        kn_score, kn_err = calculate_component_score(vals, KNEE_BEND_MIN_ANGLE, KNEE_BEND_MAX_ANGLE, "Excessive Knee Bend", "Knees are bending too much during kicking.")
         score_components.append(kn_score * knee_weight)
         if kn_err: 
             kn_err.timestamp_ms = ts
             errors.append(kn_err)
 
         report.overall_score = sum(score_components)
-        report.overall_score = max(0.0, min(100.0, report.overall_score))
+        report.overall_score = max(0.0, min(MAX_SCORE, report.overall_score))
         report.errors = errors
         
         cycles = analysis_result.stroke_statistics.completed_cycles if analysis_result.stroke_statistics else 0
-        reliability_score = analysis_result.reliability.analysis_reliability_score if analysis_result.reliability else 100.0
+        reliability_score = analysis_result.reliability.analysis_reliability_score if analysis_result.reliability else MAX_SCORE
         
         if cycles == 0:
             report.overall_score = 0.0
             report.feedback_summary = "No complete stroke cycle detected. Performance scoring is incomplete."
-        elif reliability_score < 50.0:
+        elif reliability_score < RELIABILITY_MIN_ACCEPTABLE_SCORE:
             report.feedback_summary = "Analysis is inconclusive due to insufficient reliable biomechanical data. Metrics are marked as estimates."
         else:
             report.feedback_summary = self._generate_feedback_summary(report.overall_score, len(errors))
@@ -132,11 +139,11 @@ class FreestyleScoringEngine(BaseScoringEngine):
         return report
 
     def _generate_feedback_summary(self, score: float, error_count: int) -> str:
-        if score >= 90:
+        if score >= SCORE_THRESHOLD_EXCELLENT:
             return "Excellent technique! Keep up the great form."
-        elif score >= 75:
+        elif score >= SCORE_THRESHOLD_GOOD:
             return f"Good solid swim. We found {error_count} areas to focus on."
-        elif score >= 60:
+        elif score >= SCORE_THRESHOLD_FAIR:
             return f"Fair technique. Working on these {error_count} errors will improve efficiency."
         else:
             return "Significant adjustments are recommended. Focus on core mechanics."

@@ -110,6 +110,7 @@ def setup_logger(name: str) -> SwimLogger:
     level_str = config.log_level.upper()
     level = getattr(logging, level_str, logging.INFO)
     raw_logger.setLevel(level)
+    raw_logger.propagate = False
     
     formatter = logging.Formatter(
         '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
