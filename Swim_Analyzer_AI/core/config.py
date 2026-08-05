@@ -43,6 +43,9 @@ class AppConfig:
     video_downscale_width: int = 854
     video_downscale_height: int = 480
     video_default_fps: float = 30.0
+    frame_stride: int = 2  # 1 = process all frames (30 FPS), 2 = process every 2nd frame (15 FPS)
+    max_recommended_duration_s: float = 60.0  # Soft limit for UI warning
+    max_allowed_duration_s: float = 180.0     # Hard limit cap to prevent hangs
     
     # Analysis Constants
     analysis_confidence_penalty: float = 0.20

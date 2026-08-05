@@ -271,3 +271,453 @@
 2026-08-05 19:01:12,740 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
 2026-08-05 19:01:12,767 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
 2026-08-05 19:01:12,771 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-05 19:27:49,364 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:42:01,629 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:42:59,829 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:43:03,779 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:43:10,693 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:43:10,755 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 19:43:19,754 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:43:19,775 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 19:43:24,069 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:43:24,091 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 19:43:24,272 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:43:24,291 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 19:43:24,351 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-05 19:43:26,505 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_56c47d9b9b704a87a90c49c83c3538fd.mp4
+2026-08-05 19:43:33,075 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-05 19:43:33,222 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:43:33,237 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 19:43:42,934 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:43:42,959 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 19:43:43,166 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:43:43,183 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 19:43:43,248 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-05 19:43:43,251 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_56c47d9b9b704a87a90c49c83c3538fd.mp4 (Effective FPS: 29.97002997002997)
+2026-08-05 19:43:43,335 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-05 19:43:43,676 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_56c47d9b9b704a87a90c49c83c3538fd.mp4 (1280x720 @ 29.97002997002997fps)
+2026-08-05 19:43:43,692 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_56c47d9b9b704a87a90c49c83c3538fd.mp4 (1280x720 @ 29.97002997002997fps)
+2026-08-05 19:43:43,693 - utils.video_utils - INFO - [VIDEO] Output video will be downscaled to 854x480 (480p max) for stability.
+2026-08-05 19:43:43,932 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_56c47d9b9b704a87a90c49c83c3538fd.mp4 (Codec: mp4v)
+2026-08-05 19:45:20,837 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 895 frames.
+2026-08-05 19:45:20,887 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-05 19:45:20,927 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-05 19:45:21,748 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_56c47d9b9b704a87a90c49c83c3538fd.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_56c47d9b9b704a87a90c49c83c3538fd.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_56c47d9b9b704a87a90c49c83c3538fd.json
+2026-08-05 19:45:41,053 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_56c47d9b9b704a87a90c49c83c3538fd.mp4
+2026-08-05 19:45:41,113 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 2.96 MB, Frames: 895, Duration: 29.86s
+2026-08-05 19:45:41,165 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-05 19:45:41,170 - services.analysis_service - INFO - [ANALYSIS] raw_landmarks cleared from all frames to prevent C extension GC crash.
+2026-08-05 19:45:41,171 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-05 19:45:41,580 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:45:41,603 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 19:45:41,641 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-05 19:45:41,650 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-05 19:45:41,651 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-05 19:45:41,659 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-05 19:45:41,662 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-05 19:45:41,668 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-05 19:45:41,677 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-05 19:45:41,678 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-05 19:45:41,679 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-05 19:45:41,787 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-05 19:45:41,790 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-05 19:45:41,804 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-05 19:45:41,805 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-05 19:45:42,186 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-05 19:45:42,438 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-08-05 19:45:46,329 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-05 19:45:46,332 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-05 19:45:46,612 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-05 19:45:46,614 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-05 19:45:46,797 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-05 19:45:46,799 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-05 19:45:46,819 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-05 19:45:46,820 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-05 19:47:00,295 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:47:04,154 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:47:04,193 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 19:47:04,311 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-05 19:47:04,334 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-05 19:47:04,336 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-05 19:47:04,350 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-05 19:47:04,359 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-05 19:47:04,364 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-05 19:47:04,380 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-05 19:47:04,386 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-05 19:47:04,389 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-05 19:47:04,436 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-05 19:47:04,443 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-05 19:47:04,463 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-05 19:47:04,464 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-05 19:47:04,493 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-05 19:47:04,865 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-05 19:47:04,875 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-05 19:47:05,281 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-05 19:47:05,284 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-05 19:47:05,548 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-05 19:47:05,550 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-05 19:47:05,557 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-05 19:47:05,559 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-05 19:47:10,878 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:47:10,900 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 19:47:11,111 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:47:11,129 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 19:47:11,174 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-05 19:47:11,475 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_56c47d9b9b704a87a90c49c83c3538fd.mp4
+2026-08-05 19:47:17,235 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-05 19:47:17,380 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:47:17,399 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 19:47:17,461 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-05 19:47:17,462 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_56c47d9b9b704a87a90c49c83c3538fd.mp4 (Effective FPS: 29.97002997002997)
+2026-08-05 19:47:17,469 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-05 19:47:17,823 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_56c47d9b9b704a87a90c49c83c3538fd.mp4 (1280x720 @ 29.97002997002997fps)
+2026-08-05 19:47:17,839 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_56c47d9b9b704a87a90c49c83c3538fd.mp4 (1280x720 @ 29.97002997002997fps)
+2026-08-05 19:47:17,839 - utils.video_utils - INFO - [VIDEO] Output video will be downscaled to 854x480 (480p max) for stability.
+2026-08-05 19:47:17,841 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_56c47d9b9b704a87a90c49c83c3538fd.mp4 (Codec: mp4v)
+2026-08-05 19:48:53,662 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 895 frames.
+2026-08-05 19:48:53,672 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-05 19:48:53,696 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-05 19:48:54,390 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_56c47d9b9b704a87a90c49c83c3538fd.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_56c47d9b9b704a87a90c49c83c3538fd.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_56c47d9b9b704a87a90c49c83c3538fd.json
+2026-08-05 19:49:05,685 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_56c47d9b9b704a87a90c49c83c3538fd.mp4
+2026-08-05 19:49:05,711 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 2.96 MB, Frames: 895, Duration: 29.86s
+2026-08-05 19:49:05,728 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-05 19:49:05,734 - services.analysis_service - INFO - [ANALYSIS] raw_landmarks cleared from all frames to prevent C extension GC crash.
+2026-08-05 19:49:05,735 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-05 19:49:06,057 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:49:06,076 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 19:49:06,123 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-05 19:49:06,135 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-05 19:49:06,137 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-05 19:49:06,148 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-05 19:49:06,152 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-05 19:49:06,154 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-05 19:49:06,162 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-05 19:49:06,163 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-05 19:49:06,164 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-05 19:49:06,250 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-05 19:49:06,254 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-05 19:49:06,266 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-05 19:49:06,268 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-05 19:49:06,296 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-05 19:49:06,563 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-05 19:49:06,565 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-05 19:49:06,887 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-05 19:49:06,890 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-05 19:49:07,092 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-05 19:49:07,093 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-05 19:49:07,100 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-05 19:49:07,102 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-05 19:50:04,483 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:50:25,452 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:50:25,493 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: analyzed_WhatsApp Video.mp4
+2026-08-05 19:50:25,716 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-05 19:50:25,725 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-05 19:50:25,726 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-05 19:50:25,736 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-05 19:50:25,739 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-05 19:50:25,740 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-05 19:50:25,750 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-05 19:50:25,752 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-05 19:50:25,753 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-05 19:50:25,780 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-05 19:50:25,784 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-05 19:50:25,797 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-05 19:50:25,798 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-05 19:50:25,817 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-05 19:50:26,027 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-05 19:50:26,031 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-05 19:50:26,286 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-05 19:50:26,288 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-05 19:50:26,679 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-05 19:50:26,681 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-05 19:50:26,689 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-05 19:50:26,690 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-05 19:50:30,978 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:50:31,003 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: analyzed_WhatsApp Video.mp4
+2026-08-05 19:50:31,022 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-05 19:50:31,029 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-05 19:50:31,031 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-05 19:50:31,037 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-05 19:50:31,041 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-05 19:50:31,042 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-05 19:50:31,050 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-05 19:50:31,051 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-05 19:50:31,052 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-05 19:50:31,091 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-05 19:50:31,095 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-05 19:50:31,104 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-05 19:50:31,107 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-05 19:50:31,128 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-05 19:50:31,331 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-05 19:50:31,332 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-05 19:50:31,542 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-05 19:50:31,545 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-05 19:50:31,754 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-05 19:50:31,756 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-05 19:50:31,763 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-05 19:50:31,765 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-05 19:50:34,588 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:50:34,613 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: analyzed_WhatsApp Video.mp4
+2026-08-05 19:50:34,817 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:50:34,836 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: analyzed_WhatsApp Video.mp4
+2026-08-05 19:50:34,857 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-05 19:50:35,224 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_60f0cf0e0afc447b912e349be3e84f4c.mp4
+2026-08-05 19:50:39,837 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-05 19:50:39,984 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:50:40,008 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: analyzed_WhatsApp Video.mp4
+2026-08-05 19:50:43,861 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:50:43,892 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: analyzed_WhatsApp Video.mp4
+2026-08-05 19:50:44,084 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:50:44,150 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: analyzed_WhatsApp Video.mp4
+2026-08-05 19:50:44,179 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-05 19:50:44,180 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_60f0cf0e0afc447b912e349be3e84f4c.mp4 (Effective FPS: 29.97)
+2026-08-05 19:50:44,181 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-05 19:50:44,459 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_60f0cf0e0afc447b912e349be3e84f4c.mp4 (848x478 @ 29.97fps)
+2026-08-05 19:50:44,463 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_60f0cf0e0afc447b912e349be3e84f4c.mp4 (848x478 @ 29.97fps)
+2026-08-05 19:50:44,464 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_60f0cf0e0afc447b912e349be3e84f4c.mp4 (Codec: mp4v)
+2026-08-05 19:51:17,532 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 356 frames.
+2026-08-05 19:51:17,538 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-05 19:51:17,540 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-05 19:51:17,728 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_60f0cf0e0afc447b912e349be3e84f4c.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_60f0cf0e0afc447b912e349be3e84f4c.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_60f0cf0e0afc447b912e349be3e84f4c.json
+2026-08-05 19:51:25,729 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_60f0cf0e0afc447b912e349be3e84f4c.mp4
+2026-08-05 19:51:25,764 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 5.44 MB, Frames: 356, Duration: 11.88s
+2026-08-05 19:51:25,876 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-05 19:51:25,880 - services.analysis_service - INFO - [ANALYSIS] raw_landmarks cleared from all frames to prevent C extension GC crash.
+2026-08-05 19:51:25,881 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-05 19:51:26,160 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:51:26,187 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: analyzed_WhatsApp Video.mp4
+2026-08-05 19:51:26,205 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-05 19:51:26,212 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-05 19:51:26,213 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-05 19:51:26,220 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-05 19:51:26,222 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-05 19:51:26,224 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-05 19:51:26,234 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-05 19:51:26,235 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-05 19:51:26,235 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-05 19:51:26,318 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-05 19:51:26,321 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-05 19:51:26,331 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-05 19:51:26,331 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-05 19:51:26,347 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-05 19:51:26,515 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-05 19:51:26,517 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-05 19:51:26,777 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-08-05 19:51:26,779 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-05 19:51:26,781 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-05 19:51:26,935 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-08-05 19:51:26,992 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-05 19:51:26,994 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-05 19:51:27,000 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-05 19:51:27,001 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-05 20:57:51,458 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 20:57:55,335 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 20:57:59,863 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 20:58:09,119 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 20:58:09,159 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 20:58:16,323 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 20:58:16,343 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 20:58:23,896 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 20:58:23,915 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 20:58:24,248 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 20:58:24,264 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 20:58:25,607 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 20:58:25,628 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 20:58:25,983 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 20:58:25,999 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 20:58:37,385 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 20:58:37,402 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 20:58:46,953 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 20:58:46,972 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 20:58:47,149 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 20:58:47,166 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 20:58:47,253 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-05 20:58:47,887 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_41bb5c5e79794a068d5323f6c3fc1a3e.mp4
+2026-08-05 20:59:14,822 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-05 20:59:14,968 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 20:59:14,985 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 20:59:20,842 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 20:59:20,861 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 20:59:21,047 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 20:59:21,064 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 20:59:21,129 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-05 20:59:21,129 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_41bb5c5e79794a068d5323f6c3fc1a3e.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-05 20:59:21,210 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-05 20:59:21,490 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_41bb5c5e79794a068d5323f6c3fc1a3e.mp4 (1280x720 @ 29.97002997002997fps)
+2026-08-05 20:59:21,506 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_41bb5c5e79794a068d5323f6c3fc1a3e.mp4 (1280x720 @ 29.97002997002997fps)
+2026-08-05 20:59:21,507 - utils.video_utils - INFO - [VIDEO] Output video will be downscaled to 854x480 (480p max) for stability.
+2026-08-05 20:59:21,509 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_41bb5c5e79794a068d5323f6c3fc1a3e.mp4 (Codec: mp4v)
+2026-08-05 21:00:12,823 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 447 frames.
+2026-08-05 21:00:12,905 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-05 21:00:12,944 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-05 21:00:13,267 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_41bb5c5e79794a068d5323f6c3fc1a3e.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_41bb5c5e79794a068d5323f6c3fc1a3e.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_41bb5c5e79794a068d5323f6c3fc1a3e.json
+2026-08-05 21:00:26,195 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_41bb5c5e79794a068d5323f6c3fc1a3e.mp4
+2026-08-05 21:00:26,216 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 1.70 MB, Frames: 447, Duration: 14.91s
+2026-08-05 21:00:26,233 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-05 21:00:26,237 - services.analysis_service - INFO - [ANALYSIS] raw_landmarks cleared from all frames to prevent C extension GC crash.
+2026-08-05 21:00:26,237 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-05 21:00:26,519 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:00:26,539 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-05 21:00:26,591 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-05 21:00:26,597 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-05 21:00:26,601 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-05 21:00:26,610 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-05 21:00:26,614 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-05 21:00:26,618 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-05 21:00:26,625 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-05 21:00:26,627 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-05 21:00:26,628 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-05 21:00:26,728 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-05 21:00:26,735 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-05 21:00:26,746 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-05 21:00:26,747 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-05 21:00:26,770 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-05 21:00:29,478 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-05 21:00:29,480 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-05 21:00:29,700 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-05 21:00:29,703 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-05 21:00:29,908 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-05 21:00:29,911 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-05 21:00:29,917 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-05 21:00:29,919 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-05 21:07:40,524 - services.auth_service - INFO - [SYSTEM] Coach registered successfully: coach1
+2026-08-05 21:07:40,709 - services.auth_service - INFO - [SYSTEM] Coach logged in: coach1
+2026-08-05 21:08:28,078 - services.auth_service - INFO - [SYSTEM] Coach logged in: coach1
+2026-08-05 21:09:40,897 - app.streamlit_app - INFO - [UI] STREAMLIT APP RERUN
+2026-08-05 21:10:41,749 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:10:54,394 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:10:54,545 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:07,710 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:07,854 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:08,613 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:08,757 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:09,055 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:09,205 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:13,872 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:24,301 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:24,508 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:24,881 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:25,006 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:27,142 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:27,289 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:27,555 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:27,819 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:27,956 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:30,478 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:35,052 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:35,207 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:35,653 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:35,808 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:52,309 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:52,463 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:52,754 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:53,038 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:53,208 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:54,542 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:11:55,773 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:12:03,882 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:13:48,727 - app.streamlit_app - INFO - [UI] STREAMLIT APP RERUN
+2026-08-05 21:21:50,554 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:25:01,871 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:25:03,726 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:25:05,429 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:25:05,628 - services.auth_service - INFO - [SYSTEM] Coach logged in: coach1
+2026-08-05 21:25:05,825 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:25:10,297 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:25:10,446 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:25:14,437 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:25:14,618 - services.auth_service - INFO - [SYSTEM] Coach logged in: coach1
+2026-08-05 21:25:14,735 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:25:18,575 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:27:05,246 - services.auth_service - INFO - [SYSTEM] Coach registered successfully: coach_alpha
+2026-08-05 21:27:05,630 - services.auth_service - INFO - [SYSTEM] Coach registered successfully: coach_beta
+2026-08-05 21:28:28,437 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:28:46,404 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:28:46,597 - services.auth_service - INFO - [SYSTEM] Coach logged in: coach1
+2026-08-05 21:28:46,802 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:28:49,859 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:28:54,301 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:28:54,449 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:29:03,739 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:29:16,666 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:29:16,863 - services.auth_service - INFO - [SYSTEM] Coach logged in: coach1
+2026-08-05 21:29:16,981 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:29:19,933 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:29:21,996 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:29:24,456 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:29:31,891 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:29:37,106 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:29:39,639 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:31:47,219 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:31:47,409 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:31:50,561 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:31:54,115 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:32:42,816 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:32:43,236 - services.auth_service - INFO - [SYSTEM] Coach registered successfully: abdelbaset
+2026-08-05 21:32:43,374 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:32:47,827 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:32:47,980 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:33:06,139 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:33:12,241 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:33:14,008 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:33:23,081 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:33:23,265 - services.auth_service - INFO - [SYSTEM] Coach logged in: abdelbaset
+2026-08-05 21:33:23,385 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:33:28,539 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:33:32,866 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:33:33,054 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:33:34,962 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:33:35,148 - services.auth_service - INFO - [SYSTEM] Coach logged in: coach1
+2026-08-05 21:33:35,273 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:33:37,107 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:33:39,826 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:33:39,990 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:33:54,978 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 21:33:55,801 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-08-05 21:33:55,872 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-08-05 21:34:08,643 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN

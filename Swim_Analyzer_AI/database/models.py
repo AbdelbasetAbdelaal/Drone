@@ -2,10 +2,25 @@ from sqlalchemy import Column, String, Integer, Float, ForeignKey, Text
 from sqlalchemy.orm import relationship
 from database.database import Base
 
+class CoachModel(Base):
+    __tablename__ = "coaches"
+
+    coach_id = Column(String, primary_key=True, index=True)
+    username = Column(String, unique=True, nullable=False, index=True)
+    password_hash = Column(String, nullable=False)
+    salt = Column(String, nullable=False)
+    full_name = Column(String, nullable=False)
+    email = Column(String, nullable=True)
+    created_at = Column(String, nullable=False)
+
+    athletes = relationship("AthleteModel", back_populates="coach", cascade="all, delete-orphan")
+
+
 class AthleteModel(Base):
     __tablename__ = "athletes"
 
     athlete_id = Column(String, primary_key=True, index=True)
+    coach_id = Column(String, ForeignKey("coaches.coach_id"), nullable=True, index=True)
     full_name = Column(String, nullable=False)
     age = Column(Integer, nullable=False)
     gender = Column(String, nullable=False)
@@ -17,6 +32,7 @@ class AthleteModel(Base):
     notes = Column(String, nullable=True)
     training_goals = Column(Text, default="")
 
+    coach = relationship("CoachModel", back_populates="athletes")
     analyses = relationship("AnalysisSessionModel", back_populates="athlete", cascade="all, delete-orphan")
 
 

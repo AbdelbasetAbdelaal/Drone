@@ -23,6 +23,8 @@ from services.comparison_service import ComparisonService
 from services.pdf_report_service import PDFReportService
 from models.athlete_profile import AthleteProfile
 from models.analysis_session import AnalysisSession
+from models.coach_profile import CoachProfile
+from services.auth_service import AuthService
 from models.comparison_models import ComparisonReport
 from core.logger import setup_logger
 
@@ -319,7 +321,8 @@ def render_athletes_page():
     st.markdown("Create and manage athlete profiles for longitudinal tracking and personalized analysis.")
     
     athlete_service = AthleteService()
-    profiles = athlete_service.get_all_profiles()
+    current_coach_id = st.session_state.current_coach.coach_id if st.session_state.get("current_coach") else None
+    profiles = athlete_service.get_all_profiles(coach_id=current_coach_id)
     
     tab1, tab2 = st.tabs(["Athlete Directory", "Create New Athlete"])
     
@@ -368,6 +371,7 @@ def render_athletes_page():
                         st.error(f"An athlete with the name '{full_name.strip()}' already exists. Please use a unique name.")
                     else:
                         athlete_service.create_profile(
+                            coach_id=current_coach_id,
                             full_name=full_name.strip(),
                             age=age,
                             gender=gender,
@@ -630,7 +634,8 @@ def render_history_page():
         return
 
     # Fetch athletes to map names
-    profiles = athlete_service.get_all_profiles()
+    current_coach_id = st.session_state.current_coach.coach_id if st.session_state.get("current_coach") else None
+    profiles = athlete_service.get_all_profiles(coach_id=current_coach_id)
     athlete_map = {p.athlete_id: p.full_name for p in profiles}
 
     history_data = []
@@ -650,6 +655,106 @@ def render_history_page():
     st.dataframe(history_data, width="stretch")
 
 
+def render_login_portal():
+    """Renders main page Login / Registration Portal when no coach is logged in."""
+    st.title("🏊‍♂️ SwimAnalyzer AI — Coach Portal")
+    st.markdown("### Welcome to Professional Swimming Performance Analysis")
+    st.info("Please sign in or register a coach account to manage your team roster and video analyses.")
+
+    tab1, tab2 = st.tabs(["🔐 Sign In", "📝 Register New Coach"])
+
+    with tab1:
+        with st.form("main_login_form"):
+            st.markdown("#### Coach Sign In")
+            st.caption("Demo credentials: Username **coach1** | Password **swim2026**")
+            username = st.text_input("Username", value="coach1", key="main_user")
+            password = st.text_input("Password", type="password", value="swim2026", key="main_pass")
+            submitted = st.form_submit_button("Sign In", type="primary", use_container_width=True)
+            if submitted:
+                ok, msg, logged_coach = AuthService.login(username, password)
+                if ok:
+                    st.session_state.current_coach = logged_coach
+                    st.success(msg)
+                    st.rerun()
+                else:
+                    st.error(msg)
+
+    with tab2:
+        with st.form("main_register_form"):
+            st.markdown("#### Create Coach Account")
+            new_username = st.text_input("Username", key="reg_user")
+            new_fullname = st.text_input("Full Name (e.g. Coach Sarah)", key="reg_name")
+            new_email = st.text_input("Email Address", key="reg_email")
+            new_password = st.text_input("Password (min 6 characters)", type="password", key="reg_pass")
+            submitted = st.form_submit_button("Create Account", type="primary", use_container_width=True)
+            if submitted:
+                ok, msg, new_coach = AuthService.register_coach(new_username, new_password, new_fullname, new_email)
+                if ok:
+                    st.session_state.current_coach = new_coach
+                    st.success(msg)
+                    st.rerun()
+                else:
+                    st.error(msg)
+
+
+def render_coach_auth_sidebar():
+    """Renders Coach Authentication card in sidebar."""
+    st.sidebar.markdown("### 🔐 Coach Account")
+    
+    # Ensure default demo coach exists in DB
+    AuthService.seed_default_coach()
+    
+    if "current_coach" not in st.session_state:
+        st.session_state.current_coach = None
+
+    coach = st.session_state.current_coach
+    if coach:
+        st.sidebar.markdown(
+            f"""<div style="background:linear-gradient(135deg,#0055FF,#00F0FF); color:white;
+            padding:10px 14px; border-radius:10px; margin-bottom:10px;">
+            <div style="font-weight:bold; font-size:1.05rem;">📋 {coach.full_name}</div>
+            <div style="font-size:0.8rem; opacity:0.9;">Coach ID: @{coach.username}</div>
+            </div>""",
+            unsafe_allow_html=True
+        )
+        if st.sidebar.button("🚪 Logout", key="logout_btn", use_container_width=True):
+            st.session_state.current_coach = None
+            st.session_state.viewing_athlete_id = None
+            st.rerun()
+    else:
+        st.sidebar.warning("Not Logged In")
+        auth_mode = st.sidebar.radio("Account Action", ["Sign In", "Register New Coach"], label_visibility="collapsed")
+        if auth_mode == "Sign In":
+            with st.sidebar.form("coach_login_form"):
+                username = st.text_input("Username", value="coach1")
+                password = st.text_input("Password", type="password", value="swim2026")
+                submitted = st.form_submit_button("Sign In", type="primary", use_container_width=True)
+                if submitted:
+                    ok, msg, logged_coach = AuthService.login(username, password)
+                    if ok:
+                        st.session_state.current_coach = logged_coach
+                        st.sidebar.success(msg)
+                        st.rerun()
+                    else:
+                        st.sidebar.error(msg)
+        else:
+            with st.sidebar.form("coach_register_form"):
+                new_username = st.text_input("New Username")
+                new_fullname = st.text_input("Full Name")
+                new_email = st.text_input("Email (Optional)")
+                new_password = st.text_input("New Password", type="password")
+                submitted = st.form_submit_button("Register Coach", type="primary", use_container_width=True)
+                if submitted:
+                    ok, msg, new_coach = AuthService.register_coach(new_username, new_password, new_fullname, new_email)
+                    if ok:
+                        st.session_state.current_coach = new_coach
+                        st.sidebar.success(msg)
+                        st.rerun()
+                    else:
+                        st.sidebar.error(msg)
+    st.sidebar.markdown("---")
+
+
 def main():
     safe_log("STREAMLIT APP RERUN")
     st.set_page_config(
@@ -657,6 +762,14 @@ def main():
         layout="wide",
         initial_sidebar_state="expanded",
     )
+
+    # Render Coach Auth Widget
+    render_coach_auth_sidebar()
+
+    # Require Login to access platform features
+    if not st.session_state.get("current_coach"):
+        render_login_portal()
+        return
 
     if "viewing_athlete_id" not in st.session_state:
         st.session_state.viewing_athlete_id = None
@@ -686,7 +799,8 @@ def main():
     # Sidebar: Current Athlete
     st.sidebar.markdown("### Current Athlete")
     athlete_service = AthleteService()
-    profiles = athlete_service.get_all_profiles()
+    current_coach_id = st.session_state.current_coach.coach_id if st.session_state.get("current_coach") else None
+    profiles = athlete_service.get_all_profiles(coach_id=current_coach_id)
     
     athlete_options = {"None": "Guest Session"}
     for p in profiles:
@@ -748,6 +862,19 @@ def main():
             temp_input_path = _Path(st.session_state["_temp_input_path"])
 
             
+        # Read detected FPS & Duration
+        from utils.video_utils import get_video_info
+        video_info = get_video_info(str(temp_input_path))
+        detected_fps = video_info.get("fps", 30.0) if video_info.get("fps", 0) > 0 else 30.0
+        frame_count = video_info.get("frame_count", 0)
+        video_duration_s = frame_count / detected_fps if (detected_fps > 0 and frame_count > 0) else 0.0
+
+        # Video Duration Warning Banner
+        if video_duration_s > config.max_recommended_duration_s:
+            st.warning(f"⚠️ **Long Video Notice ({video_duration_s:.1f}s):** For optimal biomechanical accuracy and fast processing speed, clips between 15–30 seconds are recommended.")
+        elif video_duration_s > 0:
+            st.caption(f"📹 Video Duration: {video_duration_s:.1f}s ({frame_count} frames @ {detected_fps:.1f} FPS)")
+
         # Sidebar settings
         st.sidebar.markdown("---")
         st.sidebar.markdown("### Video Settings")
@@ -755,6 +882,15 @@ def main():
         stroke_options = ["Auto Detect", "Freestyle", "Backstroke", "Breaststroke", "Butterfly"]
         selected_stroke = st.sidebar.selectbox("Stroke Type", stroke_options, key="stroke_type_select")
         
+        speed_mode = st.sidebar.selectbox(
+            "Processing Speed Mode",
+            ["Fast (15 FPS - Recommended)", "High Detail (30 FPS)"],
+            index=0,
+            help="Fast mode processes 1 out of 2 frames for ~2x speedup without sacrificing stroke cycle metrics."
+        )
+        selected_stride = 2 if "Fast" in speed_mode else 1
+        st.session_state["_selected_frame_stride"] = selected_stride
+
         # Read app config
         import yaml
         app_config = {}
@@ -766,11 +902,6 @@ def main():
             
         analysis_cfg = app_config.get('analysis', {})
         fps_override = analysis_cfg.get('fps_override')
-        
-        # Read detected FPS
-        from utils.video_utils import get_video_info
-        video_info = get_video_info(str(temp_input_path))
-        detected_fps = video_info.get("fps", 30.0) if video_info.get("fps", 0) > 0 else 30.0
             
         # Validate FPS bounds
         if not (10 <= detected_fps <= 240):
@@ -780,7 +911,7 @@ def main():
         default_effective_fps = float(fps_override) if fps_override is not None else float(detected_fps)
         effective_fps = st.sidebar.number_input("Effective FPS", min_value=10.0, max_value=240.0, value=default_effective_fps, step=1.0)
         
-        st.sidebar.info(f"Detected FPS: {detected_fps:.2f}")
+        st.sidebar.info(f"Detected FPS: {detected_fps:.2f} | Mode: {speed_mode.split(' ')[0]}")
 
         st.sidebar.markdown("### Visualization")
         viz_mode = st.sidebar.selectbox("Mode", ["User Mode", "Coach Mode", "Developer Mode"])
@@ -933,6 +1064,7 @@ def main():
             try:
                 with st.spinner(f"Analyzing video at {effective_fps} FPS..."):
                     analysis_service = AnalysisService()
+                    selected_stride = st.session_state.get("_selected_frame_stride", 2)
                     
                     safe_log("ENTER: process_video")
                     output_video_path, json_report_path, metadata_path, analysis_result = analysis_service.process_video(
@@ -943,7 +1075,8 @@ def main():
                         vqa_callback=vqa_callback,
                         trajectory_duration_sec=trajectory_duration_sec,
                         stroke_detection=st.session_state.stroke_result,
-                        athlete_id=selected_athlete_id if selected_athlete_id != "None" else None
+                        athlete_id=selected_athlete_id if selected_athlete_id != "None" else None,
+                        frame_stride=selected_stride
                     )
                     safe_log("EXIT: process_video")
                     progress_bar.progress(100, text="✅ Analysis complete!")

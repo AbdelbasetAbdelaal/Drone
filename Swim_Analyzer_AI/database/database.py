@@ -17,6 +17,30 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 
+def init_db():
+    """Initializes tables and performs schema migrations if needed."""
+    from database.models import Base
+    Base.metadata.create_all(bind=engine)
+    
+    # Lightweight SQLite schema migration for coach_id column in athletes table
+    try:
+        with engine.connect() as conn:
+            from sqlalchemy import text
+            result = conn.execute(text("PRAGMA table_info(athletes)"))
+            columns = [row[1] for row in result.fetchall()]
+            if "coach_id" not in columns:
+                conn.execute(text("ALTER TABLE athletes ADD COLUMN coach_id VARCHAR"))
+                conn.commit()
+
+            # Assign legacy unassigned athletes to default coach1
+            res_coach = conn.execute(text("SELECT coach_id FROM coaches WHERE username = 'coach1'")).fetchone()
+            if res_coach:
+                c1_id = res_coach[0]
+                conn.execute(text("UPDATE athletes SET coach_id = :cid WHERE coach_id IS NULL"), {"cid": c1_id})
+                conn.commit()
+    except Exception:
+        pass
+
 def get_db():
     db = SessionLocal()
     try:

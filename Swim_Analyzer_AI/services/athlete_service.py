@@ -69,9 +69,9 @@ class AthleteService:
             logger.warning(f"Athlete profile not found: {athlete_id}")
         return profile
 
-    def get_all_profiles(self) -> List[AthleteProfile]:
-        """Load all athlete profiles from the database."""
-        return self.repository.get_all()
+    def get_all_profiles(self, coach_id: Optional[str] = None) -> List[AthleteProfile]:
+        """Load all athlete profiles for the given coach from the database."""
+        return self.repository.get_all(coach_id=coach_id)
 
     def update_profile(self, profile: AthleteProfile) -> bool:
         """Update an existing athlete profile. Alias for save_profile."""

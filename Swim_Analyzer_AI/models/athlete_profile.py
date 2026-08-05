@@ -12,6 +12,7 @@ class AthleteProfile:
     swimming_level: str
     preferred_stroke: str
     athlete_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    coach_id: Optional[str] = None
     shoulder_width_cm: Optional[float] = None
     notes: str = ""
     training_goals: str = ""
@@ -21,6 +22,7 @@ class AthleteProfile:
         return {
             "schema_version": self.schema_version,
             "athlete_id": self.athlete_id,
+            "coach_id": self.coach_id,
             "full_name": self.full_name,
             "age": self.age,
             "gender": self.gender,
@@ -37,6 +39,7 @@ class AthleteProfile:
     def from_dict(cls, data: dict) -> 'AthleteProfile':
         return cls(
             athlete_id=data.get("athlete_id", str(uuid.uuid4())),
+            coach_id=data.get("coach_id"),
             full_name=data["full_name"],
             age=data["age"],
             gender=data["gender"],

@@ -39,20 +39,28 @@ class AnalysisService:
 
     def _process_frames_loop(self, processor: VideoProcessor, vqa: Any, pose_detector: Any, annotator: Any, 
                              BiomechanicsCalculator: Any, stroke_analyzer: Any, effective_fps: float, 
-                             visualization_mode: str, progress_callback, vqa_callback, analysis_result: AnalysisResult) -> Tuple[bool, int, float, float]:
+                             visualization_mode: str, progress_callback, vqa_callback, analysis_result: AnalysisResult,
+                             frame_stride: int = 1) -> Tuple[bool, int, float, float]:
         """Process video frames in a loop, extract poses, calculate biomechanics, and annotate."""
-        valid_frames_count = 0
-        frames_processed = 0
-        last_transition_count = 0
-        
         import time
         import psutil
         import os
+        
+        last_transition_count = 0
+        frames_processed = 0
+        valid_frames_count = 0
+        raw_frame_counter = 0
+        
         process = psutil.Process(os.getpid())
         peak_ram = 0.0
         peak_cpu = 0.0
         
         for frame in processor.generate_frames():
+            raw_frame_counter += 1
+            # Frame Stride Filtering (e.g. stride 2 = process every 2nd frame)
+            if frame_stride > 1 and (raw_frame_counter % frame_stride != 0):
+                continue
+
             current_ram = process.memory_info().rss / (1024 * 1024)
             current_cpu = process.cpu_percent(interval=None)
             if current_ram > peak_ram: peak_ram = current_ram
@@ -155,23 +163,18 @@ class AnalysisService:
             
         return json_report_path, metadata_path, output_video_path
 
-    def process_video(self, input_video_path: str, effective_fps: float, visualization_mode: str = "User Mode", 
-                      progress_callback = None, vqa_callback = None, trajectory_duration_sec: float = 2.0,
-                      stroke_detection: StrokeDetectionResult = None, athlete_id: str = None) -> Tuple[str, str, str, AnalysisResult]:
+    def process_video(self, input_video_path: str, effective_fps: float = 30.0,
+                      visualization_mode: str = "User Mode", progress_callback=None, vqa_callback=None,
+                      trajectory_duration_sec: float = 2.0,
+                      stroke_detection: StrokeDetectionResult = None, athlete_id: str = None,
+                      frame_stride: int = None) -> Tuple[str, str, str, AnalysisResult]:
         """
         Process a video file to detect poses, calculate angles, and generate an output video.
-        
-        Args:
-            input_video_path (str): The absolute path to the input video.
-            effective_fps (float): The framerate to use for time-based calculations.
-            visualization_mode (str): One of User Mode, Coach Mode, Developer Mode.
-            progress_callback: A function to call per frame with debug data.
-            vqa_callback: A function to call with the VQAResult before processing starts.
-            trajectory_duration_sec: Length of hand trajectory tail in seconds.
-            stroke_detection: StrokeDetectionResult from the pre-analysis phase.
-            athlete_id: Optional UUID of the athlete to associate with this analysis.
         """
-        logger.info(f"Starting video processing for: {input_video_path} (Effective FPS: {effective_fps})")
+        stride = frame_stride if frame_stride is not None else config.frame_stride
+        stride = max(1, int(stride))
+        
+        logger.info(f"Starting video processing for: {input_video_path} (Effective FPS: {effective_fps}, Frame Stride: {stride})")
         
         input_filename = Path(input_video_path).name
         output_filename = f"processed_{input_filename}"
@@ -183,22 +186,31 @@ class AnalysisService:
         
         stroke_type = stroke_detection.selected_stroke if stroke_detection else StrokeType.FREESTYLE
         strategy = StrokeStrategyFactory.get_strategy(stroke_type)
-        stroke_analyzer = strategy.get_stroke_analyzer(effective_fps)
+        
+        # Adjust effective fps for calculations based on stride
+        adjusted_effective_fps = effective_fps / stride if stride > 1 else effective_fps
+        stroke_analyzer = strategy.get_stroke_analyzer(adjusted_effective_fps)
         BiomechanicsCalculator = strategy.get_biomechanics_calculator()
         scoring_engine = strategy.get_scoring_engine()
         calibration_engine = RelativeCalibration()
         
         metadata = VideoMetadata(
-            filename=input_filename, effective_fps=effective_fps, analysis_timestamp=datetime.now().isoformat(),
+            filename=input_filename, effective_fps=adjusted_effective_fps, analysis_timestamp=datetime.now().isoformat(),
             swimming_style=stroke_type.value, stroke_detection=stroke_detection,
             calibration_mode=calibration_engine.mode_name, athlete_id=athlete_id
         )
         
         try:
-            vqa, pose_detector, annotator = self._initialize_components(effective_fps, visualization_mode, trajectory_duration_sec)
+            vqa, pose_detector, annotator = self._initialize_components(adjusted_effective_fps, visualization_mode, trajectory_duration_sec)
             
             with VideoProcessor(input_video_path) as processor:
                 if not processor.open(): raise RuntimeError(f"Could not open input video: {input_video_path}")
+                
+                # Duration Limit Check
+                duration_s = processor.frame_count / processor.fps if processor.fps > 0 else 0
+                if duration_s > config.max_allowed_duration_s:
+                    raise ValueError(f"Video duration ({duration_s:.1f}s) exceeds the maximum allowed limit of {config.max_allowed_duration_s:.0f} seconds. Please upload a shorter clip.")
+
                 if not processor.setup_writer(output_video_path): raise RuntimeError(f"Could not setup output video writer: {output_video_path}")
                     
                 metadata.detected_fps = processor.fps
@@ -210,7 +222,8 @@ class AnalysisService:
                 start_time = time.time()
                 early_halt, valid_frames_count, peak_ram, peak_cpu = self._process_frames_loop(
                     processor, vqa, pose_detector, annotator, BiomechanicsCalculator, stroke_analyzer,
-                    effective_fps, visualization_mode, progress_callback, vqa_callback, analysis_result
+                    adjusted_effective_fps, visualization_mode, progress_callback, vqa_callback, analysis_result,
+                    frame_stride=stride
                 )
                 
                 if early_halt:
