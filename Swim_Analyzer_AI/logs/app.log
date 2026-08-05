@@ -6,3 +6,268 @@
 2026-08-05 18:10:44,347 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
 2026-08-05 18:10:54,843 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
 2026-08-05 18:10:56,716 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:30:04,067 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:32:25,945 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:32:29,232 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:32:41,479 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:32:41,525 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487664624.mp4
+2026-08-05 18:32:54,322 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:32:54,344 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487664624.mp4
+2026-08-05 18:32:58,040 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:32:58,056 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487664624.mp4
+2026-08-05 18:32:58,238 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:32:58,255 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487664624.mp4
+2026-08-05 18:32:58,299 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-05 18:33:01,210 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_df317674c0454b3a93bac76a5f57290a.mp4
+2026-08-05 18:33:26,975 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-05 18:33:27,133 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:33:27,154 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487664624.mp4
+2026-08-05 18:33:51,783 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:33:51,807 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487664624.mp4
+2026-08-05 18:33:51,993 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:33:52,012 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487664624.mp4
+2026-08-05 18:33:52,069 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-05 18:33:52,071 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_df317674c0454b3a93bac76a5f57290a.mp4 (Effective FPS: 30.0)
+2026-08-05 18:33:52,474 - __main__ - ERROR - [SYSTEM] An error occurred during analysis: Can't instantiate abstract class ButterflyBiomechanicsCalculator without an implementation for abstract method 'calculate_global_metrics'
+2026-08-05 18:41:33,525 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:41:47,846 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:41:51,168 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:42:02,222 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:42:02,268 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487664624.mp4
+2026-08-05 18:42:06,887 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:42:06,914 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487664624.mp4
+2026-08-05 18:42:10,747 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:42:10,777 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487664624.mp4
+2026-08-05 18:42:11,035 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:42:11,064 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487664624.mp4
+2026-08-05 18:42:11,211 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-05 18:42:11,921 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_0ad077dfcfda45aa91d6dfd5e38a0d6a.mp4
+2026-08-05 18:42:17,730 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-05 18:42:17,902 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:42:17,926 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487664624.mp4
+2026-08-05 18:43:13,675 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:43:13,695 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487664624.mp4
+2026-08-05 18:43:13,878 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:43:13,899 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487664624.mp4
+2026-08-05 18:43:13,964 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-05 18:43:13,966 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_0ad077dfcfda45aa91d6dfd5e38a0d6a.mp4 (Effective FPS: 30.0)
+2026-08-05 18:43:14,014 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-05 18:43:14,359 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_0ad077dfcfda45aa91d6dfd5e38a0d6a.mp4 (360x640 @ 30.0fps)
+2026-08-05 18:43:14,373 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_0ad077dfcfda45aa91d6dfd5e38a0d6a.mp4 (360x640 @ 30.0fps)
+2026-08-05 18:43:14,655 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_0ad077dfcfda45aa91d6dfd5e38a0d6a.mp4 (Codec: mp4v)
+2026-08-05 18:43:19,022 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-05 18:43:19,023 - services.analysis_service - ERROR - [ANALYSIS] Error during video processing: type object 'ButterflyBiomechanicsCalculator' has no attribute 'calculate_all_angles'
+2026-08-05 18:43:19,223 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-05 18:43:19,241 - __main__ - ERROR - [SYSTEM] An error occurred during analysis: type object 'ButterflyBiomechanicsCalculator' has no attribute 'calculate_all_angles'
+2026-08-05 18:45:36,446 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:46:05,141 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:46:07,825 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:46:12,448 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:46:12,505 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 18:46:16,371 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:46:16,397 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 18:46:19,408 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:46:19,428 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 18:46:19,603 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:46:19,620 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 18:46:19,664 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-05 18:46:20,030 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_9b037d5525f4456e8212a11a5eac4bab.mp4
+2026-08-05 18:46:25,347 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-05 18:46:25,472 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:46:25,490 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 18:46:30,378 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:46:30,405 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 18:46:30,602 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:46:30,623 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 18:46:30,688 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-05 18:46:30,690 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_9b037d5525f4456e8212a11a5eac4bab.mp4 (Effective FPS: 30.0)
+2026-08-05 18:46:30,696 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-05 18:46:31,010 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_9b037d5525f4456e8212a11a5eac4bab.mp4 (360x640 @ 30.0fps)
+2026-08-05 18:46:31,024 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_9b037d5525f4456e8212a11a5eac4bab.mp4 (360x640 @ 30.0fps)
+2026-08-05 18:46:31,027 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_9b037d5525f4456e8212a11a5eac4bab.mp4 (Codec: mp4v)
+2026-08-05 18:47:16,081 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 417 frames.
+2026-08-05 18:47:16,090 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-05 18:47:16,111 - services.analysis_service - ERROR - [ANALYSIS] Error during video processing: PerformanceReport.__init__() got an unexpected keyword argument 'technique_score'
+2026-08-05 18:47:16,254 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-05 18:47:16,262 - __main__ - ERROR - [SYSTEM] An error occurred during analysis: PerformanceReport.__init__() got an unexpected keyword argument 'technique_score'
+2026-08-05 18:49:04,123 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:49:11,330 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:49:14,865 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:49:22,504 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:49:22,657 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487664624.mp4
+2026-08-05 18:49:27,822 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:49:27,841 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487664624.mp4
+2026-08-05 18:49:30,817 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:49:30,836 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487664624.mp4
+2026-08-05 18:49:31,007 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:49:31,026 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487664624.mp4
+2026-08-05 18:49:31,067 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-05 18:49:31,418 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_d05d7d3805414fbea2ee9ebbb2f24c83.mp4
+2026-08-05 18:49:35,742 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-05 18:49:35,885 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:49:35,902 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487664624.mp4
+2026-08-05 18:49:59,370 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:49:59,395 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487664624.mp4
+2026-08-05 18:49:59,612 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:49:59,637 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487664624.mp4
+2026-08-05 18:49:59,707 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-05 18:49:59,709 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_d05d7d3805414fbea2ee9ebbb2f24c83.mp4 (Effective FPS: 30.0)
+2026-08-05 18:49:59,727 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-05 18:50:00,148 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_d05d7d3805414fbea2ee9ebbb2f24c83.mp4 (360x640 @ 30.0fps)
+2026-08-05 18:50:00,168 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_d05d7d3805414fbea2ee9ebbb2f24c83.mp4 (360x640 @ 30.0fps)
+2026-08-05 18:50:00,171 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_d05d7d3805414fbea2ee9ebbb2f24c83.mp4 (Codec: mp4v)
+2026-08-05 18:50:03,383 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Critical at early halt check. Halting video processing.
+2026-08-05 18:50:03,414 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-05 18:50:03,505 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-05 18:50:03,508 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-05 18:50:03,510 - __main__ - INFO - [SYSTEM] EXIT: process_video_aborted_vqa_critical_early_halt
+2026-08-05 18:50:19,280 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:50:25,171 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:50:25,218 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 18:50:25,429 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-05 18:50:25,430 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_52e118a3ad8f4a0b9b71784571323c38.mp4 (Effective FPS: 30.0)
+2026-08-05 18:50:25,433 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-05 18:50:25,953 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_52e118a3ad8f4a0b9b71784571323c38.mp4 (360x640 @ 30.0fps)
+2026-08-05 18:50:25,972 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_52e118a3ad8f4a0b9b71784571323c38.mp4 (360x640 @ 30.0fps)
+2026-08-05 18:50:25,974 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_52e118a3ad8f4a0b9b71784571323c38.mp4 (Codec: mp4v)
+2026-08-05 18:50:29,448 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:50:29,478 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 18:50:29,545 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-05 18:50:29,546 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_52e118a3ad8f4a0b9b71784571323c38.mp4 (Effective FPS: 30.0)
+2026-08-05 18:50:29,553 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-05 18:50:29,930 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_52e118a3ad8f4a0b9b71784571323c38.mp4 (360x640 @ 30.0fps)
+2026-08-05 18:50:29,949 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_52e118a3ad8f4a0b9b71784571323c38.mp4 (360x640 @ 30.0fps)
+2026-08-05 18:50:29,951 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_52e118a3ad8f4a0b9b71784571323c38.mp4 (Codec: mp4v)
+2026-08-05 18:50:30,143 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-05 18:50:30,235 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-05 18:50:33,900 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:50:33,928 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 18:50:34,148 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:50:34,173 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 18:50:34,215 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-05 18:50:34,588 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_52e118a3ad8f4a0b9b71784571323c38.mp4
+2026-08-05 18:50:34,678 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-05 18:50:34,768 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-05 18:50:40,617 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-05 18:50:40,774 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:50:40,798 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 18:51:31,598 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:51:31,616 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 18:51:31,809 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:51:31,829 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 18:51:31,884 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-05 18:51:31,886 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_52e118a3ad8f4a0b9b71784571323c38.mp4 (Effective FPS: 30.0)
+2026-08-05 18:51:31,889 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-05 18:51:32,236 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_52e118a3ad8f4a0b9b71784571323c38.mp4 (360x640 @ 30.0fps)
+2026-08-05 18:51:32,250 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_52e118a3ad8f4a0b9b71784571323c38.mp4 (360x640 @ 30.0fps)
+2026-08-05 18:51:32,252 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_52e118a3ad8f4a0b9b71784571323c38.mp4 (Codec: mp4v)
+2026-08-05 18:52:13,433 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 417 frames.
+2026-08-05 18:52:13,440 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-05 18:52:13,465 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-05 18:52:13,817 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_52e118a3ad8f4a0b9b71784571323c38.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_52e118a3ad8f4a0b9b71784571323c38.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_52e118a3ad8f4a0b9b71784571323c38.json
+2026-08-05 18:52:26,042 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_52e118a3ad8f4a0b9b71784571323c38.mp4
+2026-08-05 18:52:26,100 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 2.39 MB, Frames: 417, Duration: 13.90s
+2026-08-05 18:52:26,932 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-05 18:52:26,937 - services.analysis_service - INFO - [ANALYSIS] raw_landmarks cleared from all frames to prevent C extension GC crash.
+2026-08-05 18:52:26,939 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-05 18:52:27,294 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:52:27,317 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 18:52:27,354 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-05 18:52:27,365 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-05 18:52:27,369 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-05 18:52:27,376 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-05 18:52:27,383 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-05 18:52:27,387 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-05 18:52:27,394 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-05 18:52:27,397 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-05 18:52:27,403 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-05 18:52:27,485 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-05 18:52:27,489 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-05 18:52:27,501 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-05 18:52:27,503 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-05 18:52:28,000 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-05 18:52:31,444 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-05 18:52:31,448 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-05 18:52:31,802 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-05 18:52:31,805 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-05 18:52:32,006 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-05 18:52:32,011 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-05 18:52:32,040 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-05 18:52:32,042 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-05 18:57:44,901 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:57:51,410 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:57:57,868 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:58:02,773 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:58:10,006 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:58:12,622 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:58:12,822 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:58:20,411 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:58:20,586 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:58:24,162 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:58:24,343 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:58:28,627 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:58:29,214 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:59:20,473 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:59:20,913 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:59:29,451 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:59:29,615 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:59:36,491 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:59:48,156 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:59:48,874 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:59:51,638 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:59:58,170 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 18:59:58,191 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 19:00:05,480 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:00:05,504 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 19:00:07,868 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:00:07,891 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 19:00:08,072 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:00:08,092 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 19:00:08,208 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-05 19:00:10,494 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_21816bdd3e514405b7f7d598011518cd.mp4
+2026-08-05 19:00:16,768 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-05 19:00:16,904 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:00:16,923 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 19:00:20,427 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:00:20,448 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 19:00:20,624 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:00:20,640 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 19:00:20,696 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-05 19:00:20,698 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_21816bdd3e514405b7f7d598011518cd.mp4 (Effective FPS: 30.0)
+2026-08-05 19:00:20,730 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-05 19:00:21,028 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_21816bdd3e514405b7f7d598011518cd.mp4 (360x640 @ 30.0fps)
+2026-08-05 19:00:21,043 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_21816bdd3e514405b7f7d598011518cd.mp4 (360x640 @ 30.0fps)
+2026-08-05 19:00:21,195 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_21816bdd3e514405b7f7d598011518cd.mp4 (Codec: mp4v)
+2026-08-05 19:01:00,189 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 417 frames.
+2026-08-05 19:01:00,239 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-05 19:01:00,279 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-05 19:01:00,589 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_21816bdd3e514405b7f7d598011518cd.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_21816bdd3e514405b7f7d598011518cd.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_21816bdd3e514405b7f7d598011518cd.json
+2026-08-05 19:01:08,423 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_21816bdd3e514405b7f7d598011518cd.mp4
+2026-08-05 19:01:08,484 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 2.39 MB, Frames: 417, Duration: 13.90s
+2026-08-05 19:01:08,694 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-05 19:01:08,703 - services.analysis_service - INFO - [ANALYSIS] raw_landmarks cleared from all frames to prevent C extension GC crash.
+2026-08-05 19:01:08,708 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-05 19:01:09,133 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-05 19:01:09,153 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785487584391.mp4
+2026-08-05 19:01:09,191 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-05 19:01:09,199 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-05 19:01:09,202 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-05 19:01:09,210 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-05 19:01:09,217 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-05 19:01:09,219 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-05 19:01:09,231 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-05 19:01:09,240 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-05 19:01:09,242 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-05 19:01:09,312 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-05 19:01:09,317 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-05 19:01:09,327 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-05 19:01:09,331 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-05 19:01:09,511 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-05 19:01:12,248 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-05 19:01:12,261 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-05 19:01:12,536 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-05 19:01:12,539 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-05 19:01:12,736 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-05 19:01:12,740 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-05 19:01:12,767 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-05 19:01:12,771 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab

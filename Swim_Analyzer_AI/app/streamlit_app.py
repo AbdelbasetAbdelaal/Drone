@@ -42,6 +42,28 @@ def safe_log(msg: str):
 def render_summary(analysis_result):
     safe_log("[TRACE] ENTER render_summary")
     st.markdown("### Analysis Summary")
+    
+    # --- Detected Stroke Badge ---
+    stroke_icons = {
+        "Freestyle": "🏊",
+        "Backstroke": "🔄",
+        "Breaststroke": "🐸",
+        "Butterfly": "🦋",
+        "Auto Detect": "🔍",
+    }
+    stroke_result = getattr(st.session_state, 'stroke_result', None)
+    if stroke_result and hasattr(stroke_result, 'selected_stroke'):
+        stroke_name = stroke_result.selected_stroke.value.title()
+        icon = stroke_icons.get(stroke_name, "🏊")
+        st.markdown(
+            f"""<div style="display:inline-block; background:linear-gradient(135deg,#0055FF,#00F0FF);
+            color:white; padding:6px 18px; border-radius:20px; font-size:1rem;
+            font-weight:700; letter-spacing:1px; margin-bottom:12px;">
+            {icon} Detected Stroke: {stroke_name}
+            </div>""",
+            unsafe_allow_html=True
+        )
+    
     summary_col1, summary_col2, summary_col3, summary_col4 = st.columns(4)
     
     vqa_score = analysis_result.vqa_result.overall_score if analysis_result.vqa_result else 0

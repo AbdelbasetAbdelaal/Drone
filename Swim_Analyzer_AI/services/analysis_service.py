@@ -1,7 +1,7 @@
 """
 Service layer orchestrating the video analysis workflow.
 """
-from typing import Tuple
+from typing import Tuple, Any
 from pathlib import Path
 
 from core.logger import setup_logger
