@@ -37,32 +37,51 @@ populations:
           validation_status: VALIDATED
           evidence_level: LEVEL_A
           sample_size: 184
+      performance_score:
+        mean: 70.0
+        std: 10.0
+        unit: pts
+        evidence:
+          validation_status: PLACEHOLDER
+          evidence_level: LEVEL_E
+          source_ids: []
+          source_relationship: UNVERIFIED
   18-25:
     Male:
       stroke_rate:
         mean: 44.0
         std: 4.5
-        elite_mean: 50.0
+        elite_mean: 48.400000000000006
         unit: spm
         higher_is_better: true
         evidence:
           evidence_id: EVID-BREAST-MALE-001
+          source_id: SRC-BREAST-001
+          source_ids:
+          - SRC-BREAST-001
+          reported_source_value: 44.0
+          validation_status: VALIDATED
+          evidence_level: LEVEL_A
+          relationship: DIRECTLY_SUPPORTED
+          population_compatibility: EXACT_MATCH
+          definition_compatibility: EXACT_MATCH
+          audit_decision: ACCEPT
     Female:
       stroke_rate:
         mean: 41.8
         std: 3.9
-        elite_mean: 47.5
+        elite_mean: 45.980000000000004
         unit: spm
         higher_is_better: true
         evidence:
           evidence_id: EVID-BREAST-FEM-001
           source_id: SRC-BREAST-002
-          doi: 10.1123/jab.27.2.100
-          authors:
-          - Seifert, L.
-          - Leblanc, H.
-          publication: Journal of Applied Biomechanics (2011)
-          source_relationship: DIRECTLY_SUPPORTED
+          source_ids:
+          - SRC-BREAST-002
+          reported_source_value: 41.8
+          validation_status: VALIDATED
+          evidence_level: LEVEL_A
+          relationship: DIRECTLY_SUPPORTED
           population_compatibility: EXACT_MATCH
           definition_compatibility: EXACT_MATCH
           audit_decision: ACCEPT

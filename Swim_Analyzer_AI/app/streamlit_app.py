@@ -1266,7 +1266,9 @@ def main():
         if "last_sci_db_update_res" in st.session_state:
             res = st.session_state["last_sci_db_update_res"]
             verdict = res.get('verdict', '')
-            if verdict == "INTERNET_UNAVAILABLE":
+            if res.get('database_changed') is False and verdict == "SUCCESSFUL_UPDATE":
+                st.success(f"✓ **Scientific Database Already Up To Date** — No new literature found.")
+            elif verdict == "INTERNET_UNAVAILABLE":
                 st.warning(f"⚠️ **Internet Literature Update Could Not Be Completed** — External scientific sources were unavailable. Previous verified database preserved intact. (Version: `{res.get('previous_version', '2026.08.08')}`)")
             elif verdict == "UPDATE_ABORTED":
                 st.error(f"❌ **Scientific Database Update Aborted** — Safety validation tests failed. Previous verified database preserved intact. (Version: `{res.get('previous_version', '2026.08.08')}`)")
@@ -1277,15 +1279,21 @@ def main():
                 st.markdown("### 🔬 Scientific Database Update Summary")
                 c1, c2, c3, c4 = st.columns(4)
                 c1.metric("Sources Discovered", res.get("sources_discovered", 0))
-                c2.metric("Full-Text Verified", res.get("full_text_verified", 0))
-                c3.metric("Abstract Only", res.get("abstract_only", 0))
-                c4.metric("Rejected", res.get("sources_rejected", 0))
+                c2.metric("New Sources", res.get("new_sources", 0))
+                c3.metric("Full-Text Verified", res.get("full_text_verified", 0))
+                c4.metric("Evidence Candidates", res.get("evidence_candidates", 0))
 
                 c5, c6, c7, c8 = st.columns(4)
-                c5.metric("Evidence Records Added", res.get("evidence_added", 0))
-                c6.metric("Benchmarks Added/Updated", res.get("benchmarks_added", 0) + res.get("benchmarks_updated", 0))
-                c7.metric("Newly Verified Cohorts", res.get("newly_verified_cohorts", 0))
-                c8.metric("Insufficient Evidence Cohorts", res.get("remaining_insufficient_cohorts", 0))
+                c5.metric("Evidence Accepted", res.get("evidence_accepted", 0))
+                c6.metric("Review Required", res.get("evidence_review_required", 0))
+                c7.metric("Rejected", res.get("evidence_rejected", 0))
+                c8.metric("Benchmarks Added", res.get("benchmarks_added", 0))
+
+                c9, c10, c11, c12 = st.columns(4)
+                c9.metric("Benchmarks Updated", res.get("benchmarks_updated", 0))
+                c10.metric("Newly Verified Cohorts", res.get("newly_verified_cohorts", 0))
+                c11.metric("Insufficient Evidence Cohorts", res.get("remaining_insufficient_cohorts", 0))
+                c12.metric("Database Changed", "Yes" if res.get("database_changed") else "No")
 
                 test_status_str = "PASS (100%)" if res.get('tests_passed') else ("N/A (Offline)" if verdict == "INTERNET_UNAVAILABLE" else "FAIL")
                 st.caption(f"**Update Status**: `{res.get('verdict')}` | **Tests**: `{test_status_str}` | **Timestamp**: {res.get('timestamp')}")

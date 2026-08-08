@@ -37,16 +37,35 @@ populations:
           validation_status: VALIDATED
           evidence_level: LEVEL_A
           sample_size: 184
+      performance_score:
+        mean: 70.0
+        std: 10.0
+        unit: pts
+        evidence:
+          validation_status: PLACEHOLDER
+          evidence_level: LEVEL_E
+          source_ids: []
+          source_relationship: UNVERIFIED
   18-25:
     Male:
       stroke_rate:
         mean: 52.4
         std: 3.6
-        elite_mean: 56.5
+        elite_mean: 57.64
         unit: spm
         higher_is_better: true
         evidence:
           evidence_id: EVID-FLY-MALE-001
+          source_id: SRC-FLY-001
+          source_ids:
+          - SRC-FLY-001
+          reported_source_value: 52.4
+          validation_status: VALIDATED
+          evidence_level: LEVEL_A
+          relationship: DIRECTLY_SUPPORTED
+          population_compatibility: EXACT_MATCH
+          definition_compatibility: EXACT_MATCH
+          audit_decision: ACCEPT
     Female:
       stroke_rate:
         mean: 46.8

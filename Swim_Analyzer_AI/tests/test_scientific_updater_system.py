@@ -22,13 +22,13 @@ def test_1_pubmed_metadata_retrieval(updater):
 
 def test_2_pmcid_detection(updater):
     dummy_meta = {"pmid": "9999", "source_id": "SRC-9999", "title": "Dummy", "publication_year": 2026, "stroke": "Freestyle"}
-    success, n, age, gender = updater._try_retrieve_and_parse_pmc_fulltext("PMC7548777", dummy_meta)
+    success = updater._try_retrieve_and_parse_pmc_fulltext("PMC7548777", dummy_meta, {"evidence_candidates": 0, "evidence_rejected": 0, "evidence_accepted": 0, "evidence_review_required": 0})
     assert isinstance(success, bool)
 
 def test_3_pmc_fulltext_retrieval(updater):
     # PMC 7548777 is Gonjo et al 2020 open access
     dummy_meta = {"pmid": "9999", "source_id": "SRC-9999", "title": "Dummy", "publication_year": 2026, "stroke": "Freestyle"}
-    success, n, age, gender = updater._try_retrieve_and_parse_pmc_fulltext("7548777", dummy_meta)
+    success = updater._try_retrieve_and_parse_pmc_fulltext("7548777", dummy_meta, {"evidence_candidates": 0, "evidence_rejected": 0, "evidence_accepted": 0, "evidence_review_required": 0})
     # If network is online, parses successfully; if offline, fails safely
     assert isinstance(success, bool)
 
@@ -109,9 +109,9 @@ def test_19_ssl_failure_handling(updater):
 
 def test_20_parsing_failure_handling(updater):
     dummy_meta = {"pmid": "9999", "source_id": "SRC-9999", "title": "Dummy", "publication_year": 2026, "stroke": "Freestyle"}
-    success, n, age, gender = updater._try_retrieve_and_parse_pmc_fulltext("INVALID_PMC_ID_99999", dummy_meta)
+    success = updater._try_retrieve_and_parse_pmc_fulltext("INVALID_PMC_ID_99999", dummy_meta, {"evidence_candidates": 0, "evidence_rejected": 0, "evidence_accepted": 0, "evidence_review_required": 0})
     assert success is False
-    assert n is None
+    
 
 # --------------------------------------------------------------------------
 # PART 17 STROKE CLASSIFIER TESTS (21 - 32)

@@ -1,6 +1,6 @@
 {
-  "matrix_version": "3.0.0",
-  "generated_at": "2026-08-08T19:04:13.139761",
+  "matrix_version": "3.2.0",
+  "generated_at": "2026-08-08T23:44:37.043741",
   "total_demographic_cells": 96,
   "verified_empirical_cells": 12,
   "insufficient_evidence_cells": 84,
@@ -12,7 +12,8 @@
   ],
   "genders": [
     "Male",
-    "Female"
+    "Female",
+    "Mixed"
   ],
   "age_cohorts": [
     "U10",

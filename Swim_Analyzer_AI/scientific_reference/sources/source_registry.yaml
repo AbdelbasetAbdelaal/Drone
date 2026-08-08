@@ -1,4 +1,4 @@
-version: 3.1.0
+version: 3.2.0
 updated_at: '2026-08-08'
 sources:
   SRC-FREE-001:
@@ -795,3 +795,115 @@ sources:
     access_level: FULL_TEXT_VERIFIED
     verification_status: VERIFIED_CORRECT
     notes: Added to fix missing backstroke benchmark reference
+  SRC-DISCOVERED-42482107:
+    source_id: SRC-DISCOVERED-42482107
+    title: 'Feasibility and preliminary agreement of a lower-volume, pool-based incremental
+      swimming protocol in trained male university swimmers: a pilot study.'
+    authors:
+    - Aydogan, MS
+    - Agopyan, A
+    - Uylas, E
+    - Tortu, E
+    - Gunay, E
+    publication_year: 2026
+    journal_or_organization: BMC sports science, medicine & rehabilitation
+    doi: 10.1186/s13102-026-01890-8
+    pmid: '42482107'
+    pmcid: null
+    url: https://pubmed.ncbi.nlm.nih.gov/42482107/
+    stroke: Freestyle
+    population: Competitive Swimmers
+    competitive_level: National
+    measured_metrics: []
+    evidence_quality: LEVEL_A
+    notes: 'Discovered via query: Freestyle stroke kinematics rate'
+    access_level: PEER_REVIEWED_ABSTRACT_ONLY
+    verification_status: PEER_REVIEWED_ABSTRACT_ONLY
+    sample_size: null
+    age_range: null
+    gender: null
+  SRC-DISCOVERED-41710445:
+    source_id: SRC-DISCOVERED-41710445
+    title: Stroke Rate and Arm Coordination Management in Swimming in A Double Paralympic
+      Triathlete Champion.
+    authors:
+    - Seifert, L
+    - Guignard, B
+    - "L\xE9tocart, A"
+    - Regaieg, MA
+    - Guimard, A
+    - Chollet, D
+    - Carmigniani, R
+    - Pouleau, N
+    - Charentus, A
+    - "Lepr\xEAtre, PM"
+    publication_year: 2026
+    journal_or_organization: Journal of sports science & medicine
+    doi: 10.1242/jeb.97.1.169
+    pmid: '41710445'
+    pmcid: PMC10948887
+    url: https://pubmed.ncbi.nlm.nih.gov/41710445/
+    stroke: Freestyle
+    population: Competitive Swimmers
+    competitive_level: National
+    measured_metrics: []
+    evidence_quality: LEVEL_A
+    notes: 'Discovered via query: Freestyle stroke kinematics rate'
+    access_level: FULL_TEXT_VERIFIED
+    verification_status: VERIFIED_CORRECT
+    sample_size: null
+    age_range: null
+    gender: Mixed
+  SRC-DISCOVERED-41698982:
+    source_id: SRC-DISCOVERED-41698982
+    title: Tempo influences affective responses and perceived exertion during musical
+      self-selected swimming in a randomized crossover trial.
+    authors:
+    - Cao, Y
+    - Cui, C
+    - Zeng, W
+    - Aowei, Z
+    - Shijun, G
+    - Xie, J
+    publication_year: 2026
+    journal_or_organization: Scientific reports
+    doi: 10.1111/sms.12529
+    pmid: '41698982'
+    pmcid: PMC3312977
+    url: https://pubmed.ncbi.nlm.nih.gov/41698982/
+    stroke: Freestyle
+    population: Competitive Swimmers
+    competitive_level: National
+    measured_metrics: []
+    evidence_quality: LEVEL_A
+    notes: 'Discovered via query: Freestyle stroke rate Female swimming'
+    access_level: FULL_TEXT_VERIFIED
+    verification_status: VERIFIED_CORRECT
+    sample_size: 9
+    age_range: null
+    gender: Mixed
+  SRC-DISCOVERED-41132553:
+    source_id: SRC-DISCOVERED-41132553
+    title: 'Stroke rate-stroke length dynamics in elite freestyle swimming: application
+      of kernel density estimation.'
+    authors:
+    - Staunton, CA
+    - Ruiz-Navarro, JJ
+    - Born, DP
+    publication_year: 2025
+    journal_or_organization: Frontiers in sports and active living
+    doi: 10.3389/fspor.2025.1600554
+    pmid: '41132553'
+    pmcid: PMC3590877
+    url: https://pubmed.ncbi.nlm.nih.gov/41132553/
+    stroke: Freestyle
+    population: Competitive Swimmers
+    competitive_level: National
+    measured_metrics: []
+    evidence_quality: LEVEL_A
+    notes: 'Discovered via query: Freestyle stroke rate Female swimming'
+    access_level: FULL_TEXT_VERIFIED
+    verification_status: VERIFIED_CORRECT
+    sample_size: 10
+    age_range: null
+    gender: Mixed

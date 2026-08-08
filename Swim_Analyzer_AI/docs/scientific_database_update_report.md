@@ -1,31 +1,31 @@
 # Scientific Database Update Report
 
-**Update Timestamp**: 2026-08-08T19:04:00.821879  
+**Date**: None
+**Status**: SUCCESSFUL_UPDATE_WITH_LIMITED_COVERAGE
+
+## Transaction Summary
 **Previous Version**: `2026.08.08`  
-**New Database Version**: `2026.08.08`  
-**Final Verdict**: `SUCCESSFUL_UPDATE_WITH_LIMITED_COVERAGE`  
+**New Database Version**: `2026.08.09`  
 
----
-
-## 📊 Update Execution Summary
-
-| Parameter | Count / Status |
-|---|---|
-| **Sources Discovered** | 0 |
+| Metric | Count |
+|--------|-------|
+| **Sources Discovered** | 10 |
+| **New Sources Added** | 0 |
 | **Full-Text Verified Sources** | 0 |
 | **Abstract-Only Sources** | 0 |
-| **Rejected Sources** | 1 |
-| **Evidence Records Added** | 8 |
-| **Benchmarks Added** | 4 |
-| **Benchmarks Updated** | 0 |
-| **Newly Verified Demographic Cohorts** | 12 |
-| **Remaining INSUFFICIENT_EVIDENCE Cohorts** | 84 |
+| **Rejected Sources** | 0 |
+| **Evidence Candidates Evaluated** | 0 |
+| **Evidence Records Accepted** | 0 |
+| **Evidence Review Required** | 0 |
+| **Evidence Rejected** | 0 |
+| **Benchmarks Added** | 0 |
+| **Benchmarks Updated** | 4 |
+| **Newly Verified Demographic Cohorts** | 6 |
+| **Remaining INSUFFICIENT_EVIDENCE Cohorts** | 90 |
 | **Scientific Safety Tests** | PASS (100%) |
 
----
-
-## 🔍 Discovered Literature Audit Trail
-
-
----
-*Report generated automatically by SwimAnalyzer AI One-Click Scientific Database Updater.*
+## Process Details
+- Execution bounded by atomic snapshotting.
+- Strict provenance enforced (no values inferred).
+- No extrapolated demographics or interpolated age cohorts.
+- Database unchanged if identically rerun.

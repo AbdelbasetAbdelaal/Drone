@@ -9,7 +9,7 @@ import logging
 from typing import Optional, Dict, Any
 
 try:
-    import google.generativeai as genai
+    from google import genai
     HAS_GEMINI = True
 except ImportError:
     HAS_GEMINI = False
@@ -32,18 +32,16 @@ class ScientificSemanticExtractor:
         key_to_use = api_key or os.environ.get("GEMINI_API_KEY")
         
         if not HAS_GEMINI or not key_to_use:
-            logger.warning("ScientificSemanticExtractor initialized in DEGRADED_MODE. Missing google-generativeai or GEMINI_API_KEY.")
+            logger.warning("ScientificSemanticExtractor initialized in DEGRADED_MODE. Missing google-genai or GEMINI_API_KEY.")
             self.degraded_mode = True
-            self.model = None
+            self.client = None
         else:
             try:
-                genai.configure(api_key=key_to_use)
-                # Use a reliable stable model for extraction, preferably pro if available
-                self.model = genai.GenerativeModel('gemini-1.5-pro-latest')
+                self.client = genai.Client(api_key=key_to_use)
             except Exception as e:
-                logger.error(f"Failed to initialize Gemini model: {e}")
+                logger.error(f"Failed to initialize Gemini client: {e}")
                 self.degraded_mode = True
-                self.model = None
+                self.client = None
 
     def is_degraded(self) -> bool:
         """Returns True if the semantic extractor is offline or missing credentials."""
@@ -56,7 +54,7 @@ class ScientificSemanticExtractor:
         
         If in degraded mode, returns None.
         """
-        if self.is_degraded() or not self.model:
+        if self.is_degraded() or not self.client:
             return None
             
         prompt = """
@@ -66,10 +64,11 @@ Your job is to read the provided scientific text/table context and extract kinem
 CRITICAL SCIENTIFIC SAFETY RULES:
 1. Do NOT infer missing information.
 2. Do NOT estimate or guess numerical values.
-3. Do NOT infer age from competition level, or sex, or stroke.
+3. Do NOT infer age from competition level (e.g. junior, elite), or sex from pronouns, or stroke from generic swimming.
 4. Do NOT infer metric definitions or units.
 5. Only report information explicitly supported by the supplied source text.
-6. If a value is ambiguous or mixed, return null for it.
+6. If a value is ambiguous, mixed, or missing, return null for it.
+7. Every candidate MUST include an exact 'source_quote' containing the raw text that supports the value.
 
 Expected JSON output format:
 {
@@ -78,11 +77,18 @@ Expected JSON output format:
       "stroke": "Freestyle|Backstroke|Breaststroke|Butterfly|Unknown",
       "population_sex": "Male|Female|Mixed|Unknown",
       "population_age": "string descriptor or null",
+      "competitive_level": "string descriptor or null",
       "metric": "string metric name",
       "mean": float or null,
       "sd": float or null,
+      "se": float or null,
+      "median": float or null,
+      "range_min": float or null,
+      "range_max": float or null,
       "unit": "string unit or null",
-      "table_or_figure": "string if explicitly mentioned or null"
+      "sample_size": integer or null,
+      "table_or_figure": "string if explicitly mentioned or null",
+      "source_quote": "Exact raw text from the context supporting this entire row of data"
     }
   ]
 }
@@ -96,7 +102,10 @@ CONTEXT TO ANALYZE:
         full_prompt = prompt + text_context + "\n---"
         
         try:
-            response = self.model.generate_content(full_prompt)
+            response = self.client.models.generate_content(
+                model='gemini-2.5-flash',
+                contents=full_prompt,
+            )
             raw_text = response.text.strip()
             # Clean up potential markdown formatting if the model disobeys
             if raw_text.startswith("```json"):

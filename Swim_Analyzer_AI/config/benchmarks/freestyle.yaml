@@ -60,16 +60,35 @@ populations:
           validation_status: VALIDATED
           evidence_level: LEVEL_A
           sample_size: 184
+      performance_score:
+        mean: 70.0
+        std: 10.0
+        unit: pts
+        evidence:
+          validation_status: PLACEHOLDER
+          evidence_level: LEVEL_E
+          source_ids: []
+          source_relationship: UNVERIFIED
   18-25:
     Male:
       stroke_rate:
-        mean: 54.0
-        std: 0.11
-        elite_mean: 62.1
+        mean: 46.2
+        std: 4.8
+        elite_mean: 50.82000000000001
         unit: spm
         higher_is_better: true
         evidence:
-          evidence_id: EVID-FREE-001
+          evidence_id: EVID-MASTERS-001
+          source_id: SRC-MASTERS-001
+          source_ids:
+          - SRC-MASTERS-001
+          reported_source_value: 46.2
+          validation_status: VALIDATED
+          evidence_level: LEVEL_A
+          relationship: DIRECTLY_SUPPORTED
+          population_compatibility: EXACT_MATCH
+          definition_compatibility: EXACT_MATCH
+          audit_decision: ACCEPT
       stroke_length:
         mean: 2.15
         std: 0.18
@@ -78,6 +97,25 @@ populations:
         higher_is_better: true
         evidence:
           evidence_id: EVID-FREE-002
+    Female:
+      stroke_rate:
+        mean: 48.5
+        std: 4.2
+        elite_mean: 53.35
+        unit: spm
+        higher_is_better: true
+        evidence:
+          evidence_id: EVID-FREE-FEM-001
+          source_id: SRC-FREE-004
+          source_ids:
+          - SRC-FREE-004
+          reported_source_value: 48.5
+          validation_status: VALIDATED
+          evidence_level: LEVEL_A
+          relationship: DIRECTLY_SUPPORTED
+          population_compatibility: EXACT_MATCH
+          definition_compatibility: EXACT_MATCH
+          audit_decision: ACCEPT
   14-17:
     Female:
       stroke_rate:
