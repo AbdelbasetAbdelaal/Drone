@@ -5,7 +5,6 @@ scientific_revision: 2026.08-EXPANDED-MULTI-DEMOGRAPHIC
 dataset_name: Peer-Reviewed Biomechanical Evidence Registry 2026 (Backstroke)
 validation_status: validated
 evidence_count: 2
-
 skill_level_thresholds:
   performance_score:
     Olympic: 97.0
@@ -14,7 +13,6 @@ skill_level_thresholds:
     Advanced: 78.0
     Intermediate: 65.0
     Beginner: 0.0
-
 populations:
   default:
     Male:
@@ -27,15 +25,19 @@ populations:
         evidence:
           evidence_id: EVID-BACK-001
           source_id: SRC-BACK-002
-          doi: "10.1249/MSS.0b013e31815cc2b2"
-          authors: ["Psycharakis, S. G.", "Sanders, R. H."]
-          publication: "Medicine and Science in Sports and Exercise (2008)"
-          relationship: DIRECTLY_SUPPORTED
+          doi: 10.1249/MSS.0b013e31815cc2b2
+          authors:
+          - Psycharakis, S. G.
+          - Sanders, R. H.
+          publication: Medicine and Science in Sports and Exercise (2008)
+          source_relationship: DIRECTLY_SUPPORTED
           population_compatibility: EXACT_MATCH
           definition_compatibility: EXACT_MATCH
           audit_decision: ACCEPT
-
-  "18-25":
+          validation_status: VALIDATED
+          evidence_level: LEVEL_A
+          sample_size: 184
+  18-25:
     Male:
       stroke_rate:
         mean: 48.0
@@ -45,8 +47,7 @@ populations:
         higher_is_better: true
         evidence:
           evidence_id: EVID-BACK-001
-
-  "11-13":
+  11-13:
     Male:
       stroke_rate:
         mean: 45.2
@@ -57,39 +58,47 @@ populations:
         evidence:
           evidence_id: EVID-BACK-YOUTH-001
           source_id: SRC-BACK-001
-          doi: "10.3390/ijerph17145100"
-          authors: ["Cortesi, M.", "Gatta, G."]
-          publication: "International Journal of Environmental Research and Public Health (2020)"
-          relationship: DIRECTLY_SUPPORTED
+          doi: 10.3390/ijerph17145100
+          authors:
+          - Cortesi, M.
+          - Gatta, G.
+          publication: International Journal of Environmental Research and Public
+            Health (2020)
+          source_relationship: DIRECTLY_SUPPORTED
           population_compatibility: EXACT_MATCH
           definition_compatibility: EXACT_MATCH
           audit_decision: ACCEPT
-
-  # Unverified Cohorts — Strictly Tagged INSUFFICIENT_EVIDENCE
-  "U10":
+  U10:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U10 Backstroke."
-  "U11-U12":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for U10 Backstroke.
+  U11-U12:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U11-U12 Backstroke."
-  "U13":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for U11-U12 Backstroke.
+  U13:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U13 Backstroke."
-  "14-17":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for U13 Backstroke.
+  14-17:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for 14-17 Backstroke."
-  "26-35":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for 14-17 Backstroke.
+  26-35:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Adult 26-35 Backstroke."
-  "36-44":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for Adult 26-35 Backstroke.
+  36-44:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 36-44 Backstroke."
-  "45-54":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for Masters 36-44 Backstroke.
+  45-54:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 45-54 Backstroke."
-  "55+":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for Masters 45-54 Backstroke.
+  55+:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 55+ Backstroke."
-
-  "8-10":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for Masters 55+ Backstroke.
+  8-10:
     status: INSUFFICIENT_EVIDENCE

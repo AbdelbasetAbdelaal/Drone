@@ -5,7 +5,6 @@ scientific_revision: 2026.08-EXPANDED-MULTI-DEMOGRAPHIC
 dataset_name: Peer-Reviewed Biomechanical Evidence Registry 2026 (Breaststroke)
 validation_status: validated
 evidence_count: 2
-
 skill_level_thresholds:
   performance_score:
     Olympic: 97.0
@@ -14,7 +13,6 @@ skill_level_thresholds:
     Advanced: 78.0
     Intermediate: 65.0
     Beginner: 0.0
-
 populations:
   default:
     Male:
@@ -27,15 +25,19 @@ populations:
         evidence:
           evidence_id: EVID-BREAST-MALE-001
           source_id: SRC-BREAST-001
-          doi: "10.1007/s004210050334"
-          authors: ["Capelli, C.", "Pendergast, D. R."]
-          publication: "European Journal of Applied Physiology (1998)"
-          relationship: DIRECTLY_SUPPORTED
+          doi: 10.1007/s004210050334
+          authors:
+          - Capelli, C.
+          - Pendergast, D. R.
+          publication: European Journal of Applied Physiology (1998)
+          source_relationship: DIRECTLY_SUPPORTED
           population_compatibility: EXACT_MATCH
           definition_compatibility: EXACT_MATCH
           audit_decision: ACCEPT
-
-  "18-25":
+          validation_status: VALIDATED
+          evidence_level: LEVEL_A
+          sample_size: 184
+  18-25:
     Male:
       stroke_rate:
         mean: 44.0
@@ -55,39 +57,46 @@ populations:
         evidence:
           evidence_id: EVID-BREAST-FEM-001
           source_id: SRC-BREAST-002
-          doi: "10.1123/jab.27.2.100"
-          authors: ["Seifert, L.", "Leblanc, H."]
-          publication: "Journal of Applied Biomechanics (2011)"
-          relationship: DIRECTLY_SUPPORTED
+          doi: 10.1123/jab.27.2.100
+          authors:
+          - Seifert, L.
+          - Leblanc, H.
+          publication: Journal of Applied Biomechanics (2011)
+          source_relationship: DIRECTLY_SUPPORTED
           population_compatibility: EXACT_MATCH
           definition_compatibility: EXACT_MATCH
           audit_decision: ACCEPT
-
-  # Unverified Cohorts — Strictly Tagged INSUFFICIENT_EVIDENCE
-  "U10":
+  U10:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U10 Breaststroke."
-  "U11-U12":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for U10 Breaststroke.
+  U11-U12:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U11-U12 Breaststroke."
-  "U13":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for U11-U12 Breaststroke.
+  U13:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U13 Breaststroke."
-  "11-13":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for U13 Breaststroke.
+  11-13:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U11-U13 Breaststroke."
-  "14-17":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for U11-U13 Breaststroke.
+  14-17:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for 14-17 Breaststroke."
-  "36-44":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for 14-17 Breaststroke.
+  36-44:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 36-44 Breaststroke."
-  "45-54":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for Masters 36-44 Breaststroke.
+  45-54:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 45-54 Breaststroke."
-  "55+":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for Masters 45-54 Breaststroke.
+  55+:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 55+ Breaststroke."
-
-  "8-10":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for Masters 55+ Breaststroke.
+  8-10:
     status: INSUFFICIENT_EVIDENCE

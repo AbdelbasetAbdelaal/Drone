@@ -5,7 +5,6 @@ scientific_revision: 2026.08-EXPANDED-MULTI-DEMOGRAPHIC
 dataset_name: Peer-Reviewed Biomechanical Evidence Registry 2026 (Butterfly)
 validation_status: validated
 evidence_count: 2
-
 skill_level_thresholds:
   performance_score:
     Olympic: 97.0
@@ -14,7 +13,6 @@ skill_level_thresholds:
     Advanced: 78.0
     Intermediate: 65.0
     Beginner: 0.0
-
 populations:
   default:
     Male:
@@ -27,15 +25,19 @@ populations:
         evidence:
           evidence_id: EVID-FLY-MALE-001
           source_id: SRC-FLY-001
-          doi: "10.1016/j.humov.2007.08.001"
-          authors: ["Seifert, L.", "Boulesteix, L."]
-          publication: "Human Movement Science (2008)"
-          relationship: DIRECTLY_SUPPORTED
+          doi: 10.1016/j.humov.2007.08.001
+          authors:
+          - Seifert, L.
+          - Boulesteix, L.
+          publication: Human Movement Science (2008)
+          source_relationship: DIRECTLY_SUPPORTED
           population_compatibility: EXACT_MATCH
           definition_compatibility: EXACT_MATCH
           audit_decision: ACCEPT
-
-  "18-25":
+          validation_status: VALIDATED
+          evidence_level: LEVEL_A
+          sample_size: 184
+  18-25:
     Male:
       stroke_rate:
         mean: 52.4
@@ -55,39 +57,46 @@ populations:
         evidence:
           evidence_id: EVID-FLY-FEM-001
           source_id: SRC-FLY-001
-          doi: "10.1016/j.humov.2007.08.001"
-          authors: ["Seifert, L.", "Boulesteix, L."]
-          publication: "Human Movement Science (2008)"
-          relationship: DIRECTLY_SUPPORTED
+          doi: 10.1016/j.humov.2007.08.001
+          authors:
+          - Seifert, L.
+          - Boulesteix, L.
+          publication: Human Movement Science (2008)
+          source_relationship: DIRECTLY_SUPPORTED
           population_compatibility: EXACT_MATCH
           definition_compatibility: EXACT_MATCH
           audit_decision: ACCEPT
-
-  # Unverified Cohorts — Strictly Tagged INSUFFICIENT_EVIDENCE
-  "U10":
+  U10:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U10 Butterfly."
-  "U11-U12":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for U10 Butterfly.
+  U11-U12:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U11-U12 Butterfly."
-  "U13":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for U11-U12 Butterfly.
+  U13:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U13 Butterfly."
-  "11-13":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for U13 Butterfly.
+  11-13:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U11-U13 Butterfly."
-  "14-17":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for U11-U13 Butterfly.
+  14-17:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for 14-17 Butterfly."
-  "36-44":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for 14-17 Butterfly.
+  36-44:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 36-44 Butterfly."
-  "45-54":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for Masters 36-44 Butterfly.
+  45-54:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 45-54 Butterfly."
-  "55+":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for Masters 45-54 Butterfly.
+  55+:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 55+ Butterfly."
-
-  "8-10":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for Masters 55+ Butterfly.
+  8-10:
     status: INSUFFICIENT_EVIDENCE

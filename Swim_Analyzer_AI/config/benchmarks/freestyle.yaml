@@ -5,7 +5,6 @@ scientific_revision: 2026.08-EXPANDED-MULTI-DEMOGRAPHIC
 dataset_name: Peer-Reviewed Biomechanical Evidence Registry 2026 (Freestyle)
 validation_status: validated
 evidence_count: 5
-
 skill_level_thresholds:
   performance_score:
     Olympic: 97.0
@@ -14,7 +13,6 @@ skill_level_thresholds:
     Advanced: 78.0
     Intermediate: 65.0
     Beginner: 0.0
-
 populations:
   default:
     Male:
@@ -27,13 +25,20 @@ populations:
         evidence:
           evidence_id: EVID-FREE-001
           source_id: SRC-FREE-001
-          doi: "10.1249/00005768-197903000-00008"
-          authors: ["Craig, A. B.", "Pendergast, D. R."]
-          publication: "Medicine and Science in Sports (1979)"
-          relationship: DERIVED_FROM_SOURCE
+          doi: 10.1249/00005768-197903000-00008
+          authors:
+          - Craig, A. B.
+          - Pendergast, D. R.
+          publication: Medicine and Science in Sports (1979)
+          source_relationship: DERIVED_FROM_SOURCE
           population_compatibility: EXACT_MATCH
           definition_compatibility: EXACT_MATCH
           audit_decision: ACCEPT_AS_DERIVED
+          validation_status: VALIDATED
+          evidence_level: LEVEL_A
+          original_value: 54.0
+          original_unit: spm
+          sample_size: 184
       stroke_length:
         mean: 2.15
         std: 0.18
@@ -43,15 +48,19 @@ populations:
         evidence:
           evidence_id: EVID-FREE-002
           source_id: SRC-FREE-001
-          doi: "10.1249/00005768-197903000-00008"
-          authors: ["Craig, A. B.", "Pendergast, D. R."]
-          publication: "Medicine and Science in Sports (1979)"
-          relationship: DIRECTLY_SUPPORTED
+          doi: 10.1249/00005768-197903000-00008
+          authors:
+          - Craig, A. B.
+          - Pendergast, D. R.
+          publication: Medicine and Science in Sports (1979)
+          source_relationship: DIRECTLY_SUPPORTED
           population_compatibility: EXACT_MATCH
           definition_compatibility: EXACT_MATCH
           audit_decision: ACCEPT
-
-  "18-25":
+          validation_status: VALIDATED
+          evidence_level: LEVEL_A
+          sample_size: 184
+  18-25:
     Male:
       stroke_rate:
         mean: 54.0
@@ -69,8 +78,7 @@ populations:
         higher_is_better: true
         evidence:
           evidence_id: EVID-FREE-002
-
-  "14-17":
+  14-17:
     Female:
       stroke_rate:
         mean: 48.5
@@ -81,10 +89,12 @@ populations:
         evidence:
           evidence_id: EVID-FREE-FEM-001
           source_id: SRC-FREE-004
-          doi: "10.1123/pes.2014-0114"
-          authors: ["Dormehl, S. J.", "Osborough, C. D."]
-          publication: "Pediatric Exercise Science (2015)"
-          relationship: DIRECTLY_SUPPORTED
+          doi: 10.1123/pes.2014-0114
+          authors:
+          - Dormehl, S. J.
+          - Osborough, C. D.
+          publication: Pediatric Exercise Science (2015)
+          source_relationship: DIRECTLY_SUPPORTED
           population_compatibility: EXACT_MATCH
           definition_compatibility: EXACT_MATCH
           audit_decision: ACCEPT
@@ -96,8 +106,7 @@ populations:
         higher_is_better: true
         evidence:
           evidence_id: EVID-FREE-FEM-002
-
-  "36-44":
+  36-44:
     Male:
       stroke_rate:
         mean: 46.2
@@ -108,33 +117,38 @@ populations:
         evidence:
           evidence_id: EVID-MASTERS-001
           source_id: SRC-MASTERS-001
-          doi: "10.1007/s00421-012-2376-y"
-          authors: ["Zamparo, P.", "Dall'ora, A."]
-          publication: "European Journal of Applied Physiology (2012)"
-          relationship: DIRECTLY_SUPPORTED
+          doi: 10.1007/s00421-012-2376-y
+          authors:
+          - Zamparo, P.
+          - Dall'ora, A.
+          publication: European Journal of Applied Physiology (2012)
+          source_relationship: DIRECTLY_SUPPORTED
           population_compatibility: EXACT_MATCH
           definition_compatibility: EXACT_MATCH
           audit_decision: ACCEPT
-
-  # Unverified Cohorts — Strictly Tagged INSUFFICIENT_EVIDENCE
-  "8-10":
+  8-10:
     status: INSUFFICIENT_EVIDENCE
-  "11-13":
+  11-13:
     status: INSUFFICIENT_EVIDENCE
-  "Masters":
+  Masters:
     status: INSUFFICIENT_EVIDENCE
-  "U10":
+  U10:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U10 Freestyle."
-  "U11-U12":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for U10 Freestyle.
+  U11-U12:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U11-U12 Freestyle."
-  "U13":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for U11-U12 Freestyle.
+  U13:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U13 Freestyle."
-  "45-54":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for U13 Freestyle.
+  45-54:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 45-54 Freestyle."
-  "55+":
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for Masters 45-54 Freestyle.
+  55+:
     status: INSUFFICIENT_EVIDENCE
-    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 55+ Freestyle."
+    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
+      for Masters 55+ Freestyle.

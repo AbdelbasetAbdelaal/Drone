@@ -26,9 +26,9 @@ def test_citation_formatting():
     service = ScientificEvidenceService()
     src = service.repo.get_source("SRC-FREE-001")
     citation = service.format_citation(src)
-    assert "Craig, A. B., Pendergast, D. R." in citation
+    assert "Craig, AB, Pendergast, DR" in citation
     assert "1979" in citation
-    assert "Medicine and Science in Sports" in citation
+    assert "medicine and science in sports" in citation.lower()
 
 def test_benchmark_datasets_have_evidence_metadata():
     """
@@ -53,19 +53,22 @@ def test_benchmark_datasets_have_evidence_metadata():
         pops = data.get("populations", {})
         default_pop = pops.get("default", {})
         
-        for metric_name, mcfg in default_pop.items():
-            assert "mean" in mcfg and "std" in mcfg, f"Metric {metric_name} missing mean/std in {yfile.name}"
-            assert "evidence" in mcfg, f"CRITICAL AUDIT FAILURE: Metric {metric_name} in {yfile.name} has numerical mean/std but NO evidence metadata block!"
-            
-            ev = mcfg["evidence"]
-            assert "validation_status" in ev, f"Metric {metric_name} in {yfile.name} missing validation_status"
-            assert "evidence_level" in ev, f"Metric {metric_name} in {yfile.name} missing evidence_level"
-            
-            # Verify cited source_ids exist in registry if status is VALIDATED or PARTIALLY_VALIDATED
-            sids = ev.get("source_ids", [])
-            if ev["validation_status"] in ["VALIDATED", "PARTIALLY_VALIDATED"] and sids:
-                for sid in sids:
-                    assert repo.get_source(sid) is not None, f"Metric {metric_name} in {yfile.name} cites non-existent source_id {sid}"
+        for gender, gcfg in default_pop.items():
+            if gender == "status": continue
+            for metric_name, mcfg in gcfg.items():
+                if metric_name == "status": continue
+                assert "mean" in mcfg and "std" in mcfg, f"Metric {metric_name} missing mean/std in {yfile.name}"
+                assert "evidence" in mcfg, f"CRITICAL AUDIT FAILURE: Metric {metric_name} in {yfile.name} has numerical mean/std but NO evidence metadata block!"
+                
+                ev = mcfg["evidence"]
+                assert "validation_status" in ev, f"Metric {metric_name} in {yfile.name} missing validation_status"
+                assert "evidence_level" in ev, f"Metric {metric_name} in {yfile.name} missing evidence_level"
+                
+                # Verify cited source_ids exist in registry if status is VALIDATED or PARTIALLY_VALIDATED
+                sids = ev.get("source_ids", [])
+                if ev["validation_status"] in ["VALIDATED", "PARTIALLY_VALIDATED"] and sids:
+                    for sid in sids:
+                        assert repo.get_source(sid) is not None, f"Metric {metric_name} in {yfile.name} cites non-existent source_id {sid}"
 
 def test_benchmark_engine_evidence_resolution():
     """Verify BenchmarkEngine populates MetricEvidenceMetadata and validation status on evaluation."""

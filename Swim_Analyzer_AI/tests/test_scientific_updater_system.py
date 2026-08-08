@@ -21,12 +21,14 @@ def test_1_pubmed_metadata_retrieval(updater):
     assert hasattr(updater, '_search_literature')
 
 def test_2_pmcid_detection(updater):
-    success, n, age, gender = updater._try_retrieve_and_parse_pmc_fulltext("PMC7548777")
+    dummy_meta = {"pmid": "9999", "source_id": "SRC-9999", "title": "Dummy", "publication_year": 2026, "stroke": "Freestyle"}
+    success, n, age, gender = updater._try_retrieve_and_parse_pmc_fulltext("PMC7548777", dummy_meta)
     assert isinstance(success, bool)
 
 def test_3_pmc_fulltext_retrieval(updater):
     # PMC 7548777 is Gonjo et al 2020 open access
-    success, n, age, gender = updater._try_retrieve_and_parse_pmc_fulltext("7548777")
+    dummy_meta = {"pmid": "9999", "source_id": "SRC-9999", "title": "Dummy", "publication_year": 2026, "stroke": "Freestyle"}
+    success, n, age, gender = updater._try_retrieve_and_parse_pmc_fulltext("7548777", dummy_meta)
     # If network is online, parses successfully; if offline, fails safely
     assert isinstance(success, bool)
 
@@ -85,14 +87,16 @@ def test_15_dynamic_coverage_calculation(updater):
     verified, insufficient = updater._calculate_current_coverage()
     assert verified + insufficient == 96
 
-def test_16_duplicate_study_handling(updater):
+def test_16_duplicate_study_handling(updater, monkeypatch):
+    monkeypatch.setattr(updater, "_commit_staging_files", lambda: ("2026.08.08", "2026.08.09"))
     res1 = updater.run_update_cycle()
     if res1.get("verdict") == "INTERNET_UNAVAILABLE":
         pytest.skip("Skipped due to no internet")
     res2 = updater.run_update_cycle()
     assert res1.get("tests_passed") is True and res2.get("tests_passed") is True
 
-def test_17_no_change_update_behavior(updater):
+def test_17_no_change_update_behavior(updater, monkeypatch):
+    monkeypatch.setattr(updater, "_commit_staging_files", lambda: ("2026.08.08", "2026.08.09"))
     res = updater.run_update_cycle()
     assert res.get("verdict") in ["SUCCESSFUL_UPDATE", "SUCCESSFUL_UPDATE_WITH_LIMITED_COVERAGE", "INTERNET_UNAVAILABLE"]
 
@@ -104,7 +108,8 @@ def test_19_ssl_failure_handling(updater):
     assert updater.ssl_ctx.verify_mode != 0, "SSL context must use secure certificate verification"
 
 def test_20_parsing_failure_handling(updater):
-    success, n, age, gender = updater._try_retrieve_and_parse_pmc_fulltext("INVALID_PMC_ID_99999")
+    dummy_meta = {"pmid": "9999", "source_id": "SRC-9999", "title": "Dummy", "publication_year": 2026, "stroke": "Freestyle"}
+    success, n, age, gender = updater._try_retrieve_and_parse_pmc_fulltext("INVALID_PMC_ID_99999", dummy_meta)
     assert success is False
     assert n is None
 

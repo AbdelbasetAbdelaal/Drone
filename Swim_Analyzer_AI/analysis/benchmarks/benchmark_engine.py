@@ -305,6 +305,15 @@ class BenchmarkEngine:
             safe_pct = round(pct, 1) if (is_pop_compatible and is_metric_valid) else None
             safe_skill = m_skill if (is_pop_compatible and is_metric_valid) else None
 
+            if m_name == "performance_score":
+                final_ev = MetricEvidenceMetadata(
+                    validation_status=ValidationStatus.PLACEHOLDER,
+                    evidence_level=EvidenceLevel.LEVEL_E,
+                    source_relationship=SourceRelationship.APPROXIMATED
+                )
+            else:
+                final_ev = ev if ev else MetricEvidenceMetadata(validation_status=ValidationStatus.PLACEHOLDER)
+
             comparisons[m_name] = MetricBenchmarkComparison(
                 metric_name=m_name,
                 raw_value=round(val, 2),
@@ -319,7 +328,7 @@ class BenchmarkEngine:
                 measurement_confidence=1.0,
                 population_confidence=0.95 if is_pop_compatible else 0.0,
                 benchmark_confidence=0.95 if is_metric_valid else 0.0,
-                evidence=stats.evidence
+                evidence=final_ev
             )
 
         conf = BenchmarkConfidence(measurement_confidence=1.0, population_confidence=0.95, benchmark_confidence=0.95, overall_confidence=0.95)

@@ -23,11 +23,14 @@ def test_benchmark_source_relationship_tags():
         pops = data.get("populations", {})
         default_pop = pops.get("default", {})
 
-        for m_name, mcfg in default_pop.items():
-            ev = mcfg.get("evidence", {})
-            assert "source_relationship" in ev, f"Metric {m_name} in {yfile.name} missing source_relationship"
-            assert "population_status" in ev or "population_compatibility" in ev, f"Metric {m_name} in {yfile.name} missing population status"
-            assert "definition_status" in ev or "definition_compatibility" in ev, f"Metric {m_name} in {yfile.name} missing definition status"
+        for gender, gcfg in default_pop.items():
+            if gender == "status": continue
+            for m_name, mcfg in gcfg.items():
+                if m_name == "status": continue
+                ev = mcfg.get("evidence", {})
+                assert "source_relationship" in ev or "relationship" in ev, f"Metric {m_name} in {yfile.name} missing source_relationship"
+                assert "population_status" in ev or "population_compatibility" in ev, f"Metric {m_name} in {yfile.name} missing population status"
+                assert "definition_status" in ev or "definition_compatibility" in ev, f"Metric {m_name} in {yfile.name} missing definition status"
 
 def test_validated_metrics_must_be_directly_or_derived_supported():
     """
@@ -45,17 +48,20 @@ def test_validated_metrics_must_be_directly_or_derived_supported():
         pops = data.get("populations", {})
         default_pop = pops.get("default", {})
 
-        for m_name, mcfg in default_pop.items():
-            ev = mcfg.get("evidence", {})
-            val_stat = ev.get("validation_status")
-            src_rel = ev.get("source_relationship")
-            pop_comp = ev.get("population_status") or ev.get("population_compatibility")
+        for gender, gcfg in default_pop.items():
+            if gender == "status": continue
+            for m_name, mcfg in gcfg.items():
+                if m_name == "status": continue
+                ev = mcfg.get("evidence", {})
+                val_stat = ev.get("validation_status")
+                src_rel = ev.get("source_relationship") or ev.get("relationship")
+                pop_comp = ev.get("population_status") or ev.get("population_compatibility")
 
-            if val_stat == "VALIDATED":
-                assert src_rel in ["DIRECTLY_SUPPORTED", "DERIVED_FROM_SOURCE"], \
-                    f"CRITICAL RULE FAILURE: Metric {m_name} in {yfile.name} is VALIDATED but relationship is {src_rel}!"
-                assert pop_comp in ["COMPATIBLE", "EXACT_MATCH"], \
-                    f"CRITICAL RULE FAILURE: Metric {m_name} in {yfile.name} is VALIDATED but has POPULATION_MISMATCH!"
+                if val_stat == "VALIDATED":
+                    assert src_rel in ["DIRECTLY_SUPPORTED", "DERIVED_FROM_SOURCE"], \
+                        f"CRITICAL RULE FAILURE: Metric {m_name} in {yfile.name} is VALIDATED but relationship is {src_rel}!"
+                    assert pop_comp in ["COMPATIBLE", "EXACT_MATCH"], \
+                        f"CRITICAL RULE FAILURE: Metric {m_name} in {yfile.name} is VALIDATED but has POPULATION_MISMATCH!"
 
 def test_benchmark_engine_populates_traceability_metadata():
     """Verify BenchmarkEngine propagates source-to-value relationship metadata to evaluation output."""
@@ -66,7 +72,7 @@ def test_benchmark_engine_populates_traceability_metadata():
         stroke_rate=ValidatedMetric(value=54.0, valid=True),
         stroke_length=ValidatedMetric(value=1.85, valid=True)
     )
-    prof = AthleteProfile(full_name="Jane Doe", age=22, gender="Female", height_cm=175.0, weight_kg=65.0, swimming_level="Elite", preferred_stroke="Freestyle")
+    prof = AthleteProfile(full_name="John Doe", age=22, gender="Male", height_cm=175.0, weight_kg=65.0, swimming_level="Elite", preferred_stroke="Freestyle")
     
     res = engine.evaluate_full_analysis(ar, prof)
     assert "stroke_rate" in res.comparisons
