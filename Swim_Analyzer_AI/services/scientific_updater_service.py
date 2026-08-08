@@ -14,6 +14,7 @@ import yaml
 import urllib.request
 import urllib.parse
 import xml.etree.ElementTree as ET
+import time
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple, Callable
@@ -25,6 +26,7 @@ from models.scientific_evidence_models import (
     AuditDecision, SourceRelationship, PopulationMatchingStatus, DefinitionMatchingStatus,
     ScientificEvidenceRecord, ScientificSource, ReviewStatus
 )
+from scientific_reference.validation.scientific_evidence_validator import ScientificEvidenceValidator
 from services.population_taxonomy_service import PopulationTaxonomyService, AgeCohort, SexCategory
 from services.scientific_semantic_extractor import ScientificSemanticExtractor
 
@@ -202,7 +204,6 @@ class ScientificUpdaterService:
             queries.append((f"{stroke} stroke kinematics rate", stroke))
             for demo in demographics:
                 queries.append((f"{stroke} stroke rate {demo} swimming", stroke))
-        queries = queries[:6] 
 
         stats = {
             "search_executed": True,
@@ -235,95 +236,116 @@ class ScientificUpdaterService:
 
         try:
             for idx, (q_text, stroke) in enumerate(queries):
+                time.sleep(1)
                 enc_q = urllib.parse.quote(q_text)
                 search_url = f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term={enc_q}&retmode=json&retmax=2"
+                epmc_url = f"https://www.ebi.ac.uk/europepmc/webservices/rest/search?query={enc_q}&format=json&resultType=lite&pageSize=2"
 
-                req = urllib.request.Request(search_url, headers={'User-Agent': 'SwimAnalyzerAI/2.0'})
-                with urllib.request.urlopen(req, context=self.ssl_ctx, timeout=10) as resp:
-                    data = json.loads(resp.read().decode())
-                    pmids = data.get("esearchresult", {}).get("idlist", [])
-                    stats["raw_results_retrieved"] += len(pmids)
+                pmids = set()
+                try:
+                    req = urllib.request.Request(search_url, headers={'User-Agent': 'SwimAnalyzerAI/2.0'})
+                    with urllib.request.urlopen(req, context=self.ssl_ctx, timeout=10) as resp:
+                        data = json.loads(resp.read().decode())
+                        for p in data.get("esearchresult", {}).get("idlist", []):
+                            pmids.add(p)
+                except Exception as e:
+                    logger.warning(f"PubMed search failed for '{q_text}': {e}")
 
-                    if pmids:
-                        fetch_url = f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id={','.join(pmids)}&retmode=xml"
-                        freq = urllib.request.Request(fetch_url, headers={'User-Agent': 'SwimAnalyzerAI/2.0'})
-                        with urllib.request.urlopen(freq, context=self.ssl_ctx, timeout=10) as fresp:
-                            xml_data = fresp.read()
-                            root = ET.fromstring(xml_data)
+                try:
+                    time.sleep(1)
+                    req_epmc = urllib.request.Request(epmc_url, headers={'User-Agent': 'SwimAnalyzerAI/2.0'})
+                    with urllib.request.urlopen(req_epmc, context=self.ssl_ctx, timeout=10) as resp:
+                        data = json.loads(resp.read().decode())
+                        for res in data.get("resultList", {}).get("result", []):
+                            if res.get("pmid"):
+                                pmids.add(res["pmid"])
+                except Exception as e:
+                    logger.warning(f"Europe PMC search failed for '{q_text}': {e}")
 
-                            for art in root.findall('.//PubmedArticle'):
-                                pmid = art.findtext('.//PMID')
-                                title = (art.findtext('.//ArticleTitle') or '').strip()
-                                journal = (art.findtext('.//Journal/Title') or '').strip()
-                                year_str = art.findtext('.//JournalIssue/PubDate/Year') or art.findtext('.//JournalIssue/PubDate/MedlineDate') or "2026"
-                                try:
-                                    year = int(year_str[:4])
-                                except:
-                                    year = 2026
-                                doi = None
-                                pmc_id = None
-                                for el in art.findall('.//ArticleId'):
-                                    if el.attrib.get('IdType') == 'doi':
-                                        doi = el.text
-                                    elif el.attrib.get('IdType') == 'pmc':
-                                        pmc_id = el.text
+                pmids = list(pmids)
+                stats["raw_results_retrieved"] += len(pmids)
 
-                                authors = []
-                                for author in art.findall('.//Author'):
-                                    last = author.findtext('LastName') or ''
-                                    initials = author.findtext('Initials') or ''
-                                    if last:
-                                        authors.append(f"{last}, {initials}".strip())
+                if pmids:
+                    time.sleep(1)
+                    fetch_url = f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id={','.join(pmids)}&retmode=xml"
+                    freq = urllib.request.Request(fetch_url, headers={'User-Agent': 'SwimAnalyzerAI/2.0'})
+                    with urllib.request.urlopen(freq, context=self.ssl_ctx, timeout=10) as fresp:
+                        xml_data = fresp.read()
+                        root = ET.fromstring(xml_data)
 
-                                abstract = (art.findtext('.//AbstractText') or '').strip()
-                                stats["sources_discovered"] += 1
+                        for art in root.findall('.//PubmedArticle'):
+                            pmid = art.findtext('.//PMID')
+                            title = (art.findtext('.//ArticleTitle') or '').strip()
+                            journal = (art.findtext('.//Journal/Title') or '').strip()
+                            year_str = art.findtext('.//JournalIssue/PubDate/Year') or art.findtext('.//JournalIssue/PubDate/MedlineDate') or "2026"
+                            try:
+                                year = int(year_str[:4])
+                            except:
+                                year = 2026
+                            doi = None
+                            pmc_id = None
+                            for el in art.findall('.//ArticleId'):
+                                if el.attrib.get('IdType') == 'doi':
+                                    doi = el.text
+                                elif el.attrib.get('IdType') == 'pmc':
+                                    pmc_id = el.text
 
-                                # Deduplication
-                                if str(pmid) in existing_pmids or title.lower() in existing_titles:
-                                    stats["existing_sources"] += 1
-                                    continue
+                            authors = []
+                            for author in art.findall('.//Author'):
+                                last = author.findtext('LastName') or ''
+                                initials = author.findtext('Initials') or ''
+                                if last:
+                                    authors.append(f"{last}, {initials}".strip())
 
-                                stats["new_sources"] += 1
-                                is_full_text_parsed = False
-                                
-                                sid = f"SRC-DISCOVERED-{pmid}"
-                                source_record = {
-                                    "source_id": sid,
-                                    "title": title,
-                                    "authors": authors,
-                                    "publication_year": year,
-                                    "journal_or_organization": journal,
-                                    "doi": doi,
-                                    "pmid": pmid,
-                                    "pmcid": pmc_id,
-                                    "url": f"https://pubmed.ncbi.nlm.nih.gov/{pmid}/",
-                                    "stroke": stroke,
-                                    "measured_metrics": [],
-                                    "evidence_quality": "LEVEL_A",
-                                    "notes": f"Discovered via query: {q_text}"
-                                }
+                            abstract = (art.findtext('.//AbstractText') or '').strip()
+                            stats["sources_discovered"] += 1
 
-                                if pmc_id:
-                                    is_full_text_parsed = self._try_retrieve_and_parse_pmc_fulltext(pmc_id, source_record, stats)
+                            # Deduplication
+                            if str(pmid) in existing_pmids or title.lower() in existing_titles:
+                                stats["existing_sources"] += 1
+                                continue
 
-                                if is_full_text_parsed:
-                                    source_record["access_level"] = "FULL_TEXT_VERIFIED"
-                                    source_record["verification_status"] = "VERIFIED_CORRECT"
-                                    stats["full_text_verified"] += 1
-                                elif len(abstract) > 100:
-                                    source_record["access_level"] = "PEER_REVIEWED_ABSTRACT_ONLY"
-                                    source_record["verification_status"] = "PEER_REVIEWED_ABSTRACT_ONLY"
-                                    stats["abstract_only"] += 1
-                                    # Attempt abstract extraction
-                                    self._process_candidates_with_llm([abstract], source_record, stats)
-                                else:
-                                    source_record["access_level"] = "METADATA_ONLY"
-                                    stats["sources_rejected"] += 1
-                                    continue
+                            stats["new_sources"] += 1
+                            is_full_text_parsed = False
+                            
+                            sid = f"SRC-DISCOVERED-{pmid}"
+                            source_record = {
+                                "source_id": sid,
+                                "title": title,
+                                "authors": authors,
+                                "publication_year": year,
+                                "journal_or_organization": journal,
+                                "doi": doi,
+                                "pmid": pmid,
+                                "pmcid": pmc_id,
+                                "url": f"https://pubmed.ncbi.nlm.nih.gov/{pmid}/",
+                                "stroke": stroke,
+                                "measured_metrics": [],
+                                "evidence_quality": "LEVEL_A",
+                                "notes": f"Discovered via query: {q_text}"
+                            }
 
-                                sources_dict[sid] = source_record
-                                existing_pmids.add(str(pmid))
-                                existing_titles.add(title.lower())
+                            if pmc_id:
+                                is_full_text_parsed = self._try_retrieve_and_parse_pmc_fulltext(pmc_id, source_record, stats)
+
+                            if is_full_text_parsed:
+                                source_record["access_level"] = "FULL_TEXT_VERIFIED"
+                                source_record["verification_status"] = "VERIFIED_CORRECT"
+                                stats["full_text_verified"] += 1
+                            elif len(abstract) > 100:
+                                source_record["access_level"] = "PEER_REVIEWED_ABSTRACT_ONLY"
+                                source_record["verification_status"] = "PEER_REVIEWED_ABSTRACT_ONLY"
+                                stats["abstract_only"] += 1
+                                # Attempt abstract extraction
+                                self._process_candidates_with_llm([abstract], source_record, stats)
+                            else:
+                                source_record["access_level"] = "METADATA_ONLY"
+                                stats["sources_rejected"] += 1
+                                continue
+
+                            sources_dict[sid] = source_record
+                            existing_pmids.add(str(pmid))
+                            existing_titles.add(title.lower())
 
         except Exception as e:
             logger.warning(f"Internet search error: {e}")
@@ -356,9 +378,9 @@ class ScientificUpdaterService:
                     if abstract_node is not None:
                         candidates_contexts.append(ET.tostring(abstract_node, encoding='utf-8', method='text').decode('utf-8'))
                     
-                    # Extract Body Paragraphs structurally
-                    for p in root.findall('.//p'):
-                        txt = ET.tostring(p, encoding='utf-8', method='text').decode('utf-8').strip()
+                    # Extract Body Sections structurally
+                    for sec in root.findall('.//sec'):
+                        txt = ET.tostring(sec, encoding='utf-8', method='text').decode('utf-8').strip()
                         if not txt: continue
                         if re.search(r'\b(stroke rate|stroke frequency|stroke length|Hz|m/stroke|spm|body roll)\b', txt, re.IGNORECASE):
                             candidates_contexts.append(txt)
@@ -366,6 +388,11 @@ class ScientificUpdaterService:
                     # Extract Tables structurally
                     for t in tables:
                         txt = ET.tostring(t, encoding='utf-8', method='text').decode('utf-8').strip()
+                        if txt: candidates_contexts.append(txt)
+
+                    # Extract Figures structurally
+                    for fig in root.findall('.//fig'):
+                        txt = ET.tostring(fig, encoding='utf-8', method='text').decode('utf-8').strip()
                         if txt: candidates_contexts.append(txt)
 
                     # Pass chunks to Semantic Extractor
@@ -405,7 +432,7 @@ class ScientificUpdaterService:
                 
                 # 1. Deterministic source quote verification
                 quote = str(cand.get("source_quote", ""))
-                if not quote or quote.lower() not in ctx.lower():
+                if not ScientificEvidenceValidator.validate_provenance(quote, ctx):
                     logger.warning("Rejecting candidate: Source quote missing or hallucinated.")
                     stats["evidence_rejected"] += 1
                     continue
@@ -418,13 +445,27 @@ class ScientificUpdaterService:
                         stats["evidence_rejected"] += 1
                         continue
 
-                # 3. Metric normalization
-                metric_name = self._normalize_metric_name(cand.get("metric", ""))
-                if not metric_name:
+                # 3. Stroke validation
+                stroke_cand = cand.get("stroke") or source_metadata["stroke"]
+                if not ScientificEvidenceValidator.validate_stroke(stroke_cand, ctx):
+                    logger.warning("Rejecting candidate: Stroke hallucinated.")
                     stats["evidence_rejected"] += 1
                     continue
 
-                # 4. Demographic Isolation
+                # 4. Metric normalisation and definition validation
+                raw_metric = cand.get("metric", "")
+                metric_name = self._normalize_metric_name(raw_metric)
+                if not metric_name:
+                    stats["evidence_rejected"] += 1
+                    continue
+                
+                def_match = ScientificEvidenceValidator.evaluate_definition_match(raw_metric, metric_name)
+                if def_match == DefinitionMatchingStatus.DEFINITION_MISMATCH:
+                    logger.warning(f"Rejecting candidate: Definition mismatch {raw_metric} != {metric_name}")
+                    stats["evidence_rejected"] += 1
+                    continue
+
+                # 5. Demographic Isolation
                 sex = cand.get("population_sex")
                 if sex not in ["Male", "Female"]:
                     sex = "Mixed"
@@ -433,8 +474,8 @@ class ScientificUpdaterService:
                 if not age_cohort or age_cohort == "Unknown":
                     age_cohort = "Mixed"
 
-                # 5. Build unique ID
-                hash_input = f"{source_metadata['pmid']}_{metric_name}_{sex}_{age_cohort}_{mean_val}_{cand.get('stroke')}".encode()
+                # 6. Build unique ID
+                hash_input = f"{source_metadata['pmid']}_{metric_name}_{sex}_{age_cohort}_{mean_val}_{stroke_cand}".encode()
                 eid_hash = hashlib.md5(hash_input).hexdigest()[:8]
                 eid = f"EV-{source_metadata['pmid']}-{eid_hash}"
                 
@@ -443,24 +484,20 @@ class ScientificUpdaterService:
 
                 status = ReviewStatus.SCIENTIFICALLY_ACCEPTED if not self.semantic_extractor.is_degraded() else ReviewStatus.REVIEW_REQUIRED
 
-                # Metric Unit Translation
+                # 7. Metric Unit Translation via Validator
                 orig_unit = cand.get("unit") or ""
-                converted_mean = mean_val
-                converted_unit = orig_unit
-                conv_formula = None
+                converted_mean, converted_unit, conv_formula = ScientificEvidenceValidator.convert_unit(
+                    mean_val if mean_val is not None else 0.0, 
+                    orig_unit, 
+                    "strokes/min" if metric_name == "stroke_rate" else orig_unit
+                )
                 
-                if metric_name == "stroke_rate" and "Hz" in orig_unit:
-                    if mean_val is not None:
-                        converted_mean = mean_val * 60.0
-                        converted_unit = "strokes/min"
-                        conv_formula = "Hz * 60"
-                        
                 records[eid] = {
                     "evidence_id": eid,
                     "source_id": source_metadata["source_id"],
                     "title": source_metadata["title"],
                     "year": source_metadata["publication_year"],
-                    "stroke": cand.get("stroke") or source_metadata["stroke"],
+                    "stroke": stroke_cand,
                     "gender": sex,
                     "age_cohort": age_cohort,
                     "reported_mean": mean_val,

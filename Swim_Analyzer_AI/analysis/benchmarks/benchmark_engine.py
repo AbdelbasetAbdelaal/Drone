@@ -92,7 +92,16 @@ class BenchmarkEngine:
                         metric_cfg["evidence"][k] = v
 
         if not metric_cfg:
-            return PopulationStats(mean=70.0, std=10.0, elite_mean=95.0, unit="")
+            return PopulationStats(
+                mean=None, std=None, elite_mean=None, unit="",
+                evidence=MetricEvidenceMetadata(
+                    validation_status=ValidationStatus.INSUFFICIENT_EVIDENCE,
+                    evidence_level=EvidenceLevel.LEVEL_E,
+                    source_relationship=SourceRelationship.UNVERIFIED,
+                    population_compatibility=PopulationCompatibility.POPULATION_MISMATCH,
+                    definition_compatibility=DefinitionCompatibility.DEFINITION_MISMATCH
+                )
+            )
 
         ev_cfg = metric_cfg.get("evidence", {})
         try:

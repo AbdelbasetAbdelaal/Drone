@@ -99,3 +99,25 @@ class ScientificEvidenceValidator:
             return PopulationMatchingStatus.PARTIAL_MATCH
         else:
             return PopulationMatchingStatus.POPULATION_MISMATCH
+
+    @staticmethod
+    def validate_stroke(extracted_stroke: str, source_context: str) -> bool:
+        """
+        Ensures the stroke extracted by the LLM is explicitly supported by the context.
+        """
+        if not extracted_stroke or not source_context:
+            return False
+        return extracted_stroke.lower().strip() in source_context.lower()
+
+    @staticmethod
+    def validate_provenance(extracted_quote: str, full_xml_text: str) -> bool:
+        """
+        Ensures the quoted evidence actually exists verbatim in the parsed source.
+        Prevents LLM hallucination of numerical evidence.
+        """
+        if not extracted_quote or not full_xml_text:
+            return False
+        # Remove excess whitespace and newlines for robust matching
+        clean_quote = " ".join(extracted_quote.split()).lower()
+        clean_text = " ".join(full_xml_text.split()).lower()
+        return clean_quote in clean_text
