@@ -44,6 +44,7 @@ class ScientificSourceRepository:
                         publication_year=int(sdata.get("publication_year", 2026)),
                         journal_or_organization=sdata.get("journal_or_organization", ""),
                         doi=sdata.get("doi"),
+                        pmid=sdata.get("pmid"),
                         url=sdata.get("url"),
                         stroke=sdata.get("stroke", "Freestyle"),
                         population=sdata.get("population", "Competitive Swimmers"),
@@ -53,6 +54,8 @@ class ScientificSourceRepository:
                         competitive_level=sdata.get("competitive_level", "National"),
                         measured_metrics=sdata.get("measured_metrics", []),
                         evidence_quality=elev_enum,
+                        access_level=sdata.get("access_level", "FULL_TEXT_VERIFIED"),
+                        verification_status=sdata.get("verification_status", "VERIFIED_CORRECT"),
                         notes=sdata.get("notes", "")
                     )
             logger.info(f"Loaded {len(self._sources)} scientific literature sources from registry.")

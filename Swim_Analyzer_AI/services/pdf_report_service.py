@@ -166,13 +166,13 @@ class PDFReportService:
         pdf.rect(10, pdf.get_y(), 190, 24, style="FD")
         
         pdf.set_xy(15, pdf.get_y() + 4)
-        pdf.set_font("Helvetica", style="B", size=16)
+        pdf.set_font("Helvetica", style="B", size=15)
         pdf.set_text_color(0, 50, 150)
-        pdf.cell(85, 8, f"Overall Technique Score: {overall_score:.1f} / 100")
+        pdf.cell(90, 8, f"Overall Technique Score: {overall_score:.1f} / 100")
         
         pdf.set_font("Helvetica", size=11)
         pdf.set_text_color(80, 80, 80)
-        pdf.cell(85, 8, f"Scientific Confidence: {scientific_conf}", align="R")
+        pdf.cell(80, 8, f"Scientific Confidence: {scientific_conf}", align="R")
         pdf.set_x(10)
         pdf.ln(14)
 

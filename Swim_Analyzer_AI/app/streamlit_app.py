@@ -1231,12 +1231,65 @@ def main():
             index=0
         )
 
+        st.sidebar.markdown("---")
+        st.sidebar.markdown("### 🔬 Scientific Database Management")
+        if st.sidebar.button("🔄 Update Scientific Database", key="btn_update_sci_db_sidebar"):
+            st.session_state["trigger_sci_db_update"] = True
+
         if "analysis_state" not in st.session_state:
             st.session_state.analysis_state = "ready"
         if "stroke_result" not in st.session_state:
             st.session_state.stroke_result = None
         if "completed_analysis" not in st.session_state:
             st.session_state.completed_analysis = None
+
+        if st.session_state.get("trigger_sci_db_update", False):
+            st.markdown("---")
+            st.info("🔄 Initiating ONE Scientific Literature Database Update Transaction...")
+            st.caption("Searching PubMed, PMC, Europe PMC for peer-reviewed swimming literature, verifying provenance, and rebuilding coverage matrix...")
+
+            prog_bar = st.progress(0, text="Starting scientific database update...")
+            prog_status = st.empty()
+
+            def ui_progress_cb(msg: str, pct: int):
+                prog_bar.progress(pct, text=f"{msg} ({pct}%)")
+                prog_status.markdown(f"⏳ **{msg}**")
+
+            from services.scientific_updater_service import ScientificUpdaterService
+            updater = ScientificUpdaterService()
+            res = updater.run_update_cycle(progress_callback=ui_progress_cb)
+
+            st.session_state["trigger_sci_db_update"] = False
+            st.session_state["last_sci_db_update_res"] = res
+            st.rerun()
+
+        if "last_sci_db_update_res" in st.session_state:
+            res = st.session_state["last_sci_db_update_res"]
+            verdict = res.get('verdict', '')
+            if verdict == "INTERNET_UNAVAILABLE":
+                st.warning(f"⚠️ **Internet Literature Update Could Not Be Completed** — External scientific sources were unavailable. Previous verified database preserved intact. (Version: `{res.get('previous_version', '2026.08.08')}`)")
+            elif verdict == "UPDATE_ABORTED":
+                st.error(f"❌ **Scientific Database Update Aborted** — Safety validation tests failed. Previous verified database preserved intact. (Version: `{res.get('previous_version', '2026.08.08')}`)")
+            else:
+                st.success(f"✓ **Scientific Database Update Complete!** (Version: `{res.get('previous_version')}` → `{res.get('new_version')}`)")
+
+            with st.container(border=True):
+                st.markdown("### 🔬 Scientific Database Update Summary")
+                c1, c2, c3, c4 = st.columns(4)
+                c1.metric("Sources Discovered", res.get("sources_discovered", 0))
+                c2.metric("Full-Text Verified", res.get("full_text_verified", 0))
+                c3.metric("Abstract Only", res.get("abstract_only", 0))
+                c4.metric("Rejected", res.get("sources_rejected", 0))
+
+                c5, c6, c7, c8 = st.columns(4)
+                c5.metric("Evidence Records Added", res.get("evidence_added", 0))
+                c6.metric("Benchmarks Added/Updated", res.get("benchmarks_added", 0) + res.get("benchmarks_updated", 0))
+                c7.metric("Newly Verified Cohorts", res.get("newly_verified_cohorts", 0))
+                c8.metric("Insufficient Evidence Cohorts", res.get("remaining_insufficient_cohorts", 0))
+
+                test_status_str = "PASS (100%)" if res.get('tests_passed') else ("N/A (Offline)" if verdict == "INTERNET_UNAVAILABLE" else "FAIL")
+                st.caption(f"**Update Status**: `{res.get('verdict')}` | **Tests**: `{test_status_str}` | **Timestamp**: {res.get('timestamp')}")
+            st.markdown("---")
 
         if st.sidebar.button("Analyze Swimming Technique", type="primary"):
             st.session_state.analysis_state = "checking_stroke"

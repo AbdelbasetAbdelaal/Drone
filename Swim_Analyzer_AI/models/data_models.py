@@ -21,6 +21,12 @@ class StrokeDetectionResult:
     selected_stroke: StrokeType
     manual_override: bool
     is_inconsistent: bool = False
+    classification_status: str = "ACCEPTED" # "ACCEPTED", "INSUFFICIENT_CONFIDENCE", "UNKNOWN"
+    classification_reason: str = ""
+    feature_values: Dict[str, float] = field(default_factory=dict)
+    feature_contributions: Dict[str, float] = field(default_factory=dict)
+    classifier_version: str = "1.0.0-unvalidated"
+    threshold_version: str = "UNVALIDATED_HEURISTIC_v1.0"
 
 @dataclass
 class ValidatedMetric:

@@ -140,3 +140,19 @@ SwimAnalyzer AI operates under strict scientific invariants:
 3. **Derived Conversion Traceability**: Unit conversions (Hz to spm) preserve original values and explicit conversion formulas.
 4. **Definition Matching Guard**: Measurements with definition mismatches (e.g. Body Roll 3D vector vs shoulder roll) are downgraded to `REFERENCE_ONLY`.
 5. **Proprietary Score Isolation**: The 0–100 composite score is explicitly tagged as a proprietary index and excluded from scientific benchmark totals.
+
+---
+
+## 9. One-Click Scientific Database Update
+
+Administrators and Coaches can trigger an atomic literature update cycle directly from the web interface:
+
+1. **Locate Button**: In the sidebar under **Developer Settings / Scientific Database Management**, click **`"🔄 Update Scientific Database"`**.
+2. **Execution**: The system initiates exactly ONE update transaction:
+   - Queries PubMed, PMC, Europe PMC, and Crossref across all 4 strokes, 3 sexes, and 12 age groups.
+   - Verifies full-text access levels (`FULL_TEXT_VERIFIED`, `PEER_REVIEWED_ABSTRACT_ONLY`, `METADATA_ONLY`).
+   - Extracts evidence into `data/scientific_update_staging/`.
+   - Rebuilds the multi-stroke coverage matrix (`data/scientific_coverage_matrix.json`).
+   - Executes automated safety tests inside staging.
+   - Performs atomic commit to production files upon 100% test pass (or rolls back safely if any test fails).
+3. **Summary Report**: View update metrics, newly verified cohorts, updated database version, and transaction logs.

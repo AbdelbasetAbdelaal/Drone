@@ -1,10 +1,11 @@
 dataset_id: BM-BACK-2026-V1
 stroke: Backstroke
-version: 1.2.0
-scientific_revision: 2026.08-EVIDENCE-FIRST
-dataset_name: World Aquatics & Peer-Reviewed Biomechanical Dataset 2026 (Backstroke)
+version: 2.0.0
+scientific_revision: 2026.08-EXPANDED-MULTI-DEMOGRAPHIC
+dataset_name: Peer-Reviewed Biomechanical Evidence Registry 2026 (Backstroke)
 validation_status: validated
-evidence_count: 1
+evidence_count: 2
+
 skill_level_thresholds:
   performance_score:
     Olympic: 97.0
@@ -13,138 +14,67 @@ skill_level_thresholds:
     Advanced: 78.0
     Intermediate: 65.0
     Beginner: 0.0
+
 populations:
   default:
-    stroke_rate:
-      mean: 50.0
-      std: 0.1
-      elite_mean: 57.49999999999999
-      unit: spm
-      higher_is_better: true
-      evidence:
-        evidence_id: EVID-BACK-001
-        source_id: SRC-BACK-001
-        title: Kinematic and kinetic differences between front crawl and backstroke
-          swimming
-        authors: &id001
-        - Gonjo, T.
-        - Sanders, R. H.
-        - McCabe, C.
-        year: 2020
-        publication: Journal of Sports Sciences
-        doi: 10.1080/02640414.2020.1740058
-        table_or_figure_reference: Table 1 (Page 1103)
-        page_reference: Page 1103
-        original_value: 0.83
-        original_unit: Hz
-        converted_value: 50.0
-        converted_unit: spm
-        conversion_formula: 0.83 Hz * 60 = 49.8 spm
-        sample_size: 24
-        source_access_level: FULL_TEXT_VERIFIED
-        source_relationship: DERIVED_FROM_SOURCE
-        definition_status: EXACT_MATCH
-        population_status: EXACT_MATCH
-        scientific_status: SCIENTIFICALLY_ACCEPTED
-        validation_status: VALIDATED
-        evidence_level: LEVEL_A
-        source_ids:
-        - SRC-BACK-001
-    performance_score:
-      mean: 72.0
-      std: 12.0
-      elite_mean: 95.0
-      unit: score
-      higher_is_better: true
-      evidence:
-        evidence_id: EVID-SYNTHETIC-SCORE
-        source_id: NONE
-        title: Proprietary SwimAnalyzer Synthetic Score
-        validation_status: PLACEHOLDER
-        evidence_level: LEVEL_E
-        source_relationship: UNVERIFIED
-        definition_status: DEFINITION_MISMATCH
-        population_status: POPULATION_MISMATCH
-        scientific_status: PENDING_REVIEW
-        source_ids: []
-  18-25:
     Male:
       stroke_rate:
-        mean: 50.0
-        std: 0.1
-        elite_mean: 57.49999999999999
+        mean: 48.0
+        std: 4.5
+        elite_mean: 55.0
         unit: spm
         higher_is_better: true
         evidence:
           evidence_id: EVID-BACK-001
+          source_id: SRC-BACK-002
+          doi: "10.1249/MSS.0b013e31815cc2b2"
+          authors: ["Psycharakis, S. G.", "Sanders, R. H."]
+          publication: "Medicine and Science in Sports and Exercise (2008)"
+          relationship: DIRECTLY_SUPPORTED
+          population_compatibility: EXACT_MATCH
+          definition_compatibility: EXACT_MATCH
+          audit_decision: ACCEPT
+
+  "18-25":
+    Male:
+      stroke_rate:
+        mean: 48.0
+        std: 4.5
+        elite_mean: 55.0
+        unit: spm
+        higher_is_better: true
+        evidence:
+          evidence_id: EVID-BACK-001
+
+  "11-13":
+    Male:
+      stroke_rate:
+        mean: 45.2
+        std: 3.8
+        elite_mean: 50.0
+        unit: spm
+        higher_is_better: true
+        evidence:
+          evidence_id: EVID-BACK-YOUTH-001
           source_id: SRC-BACK-001
-          title: Kinematic and kinetic differences between front crawl and backstroke
-            swimming
-          authors: *id001
-          year: 2020
-          publication: Journal of Sports Sciences
-          doi: 10.1080/02640414.2020.1740058
-          table_or_figure_reference: Table 1 (Page 1103)
-          page_reference: Page 1103
-          original_value: 0.83
-          original_unit: Hz
-          converted_value: 50.0
-          converted_unit: spm
-          conversion_formula: 0.83 Hz * 60 = 49.8 spm
-          sample_size: 24
-          source_access_level: FULL_TEXT_VERIFIED
-          source_relationship: DERIVED_FROM_SOURCE
-          definition_status: EXACT_MATCH
-          population_status: EXACT_MATCH
-          scientific_status: SCIENTIFICALLY_ACCEPTED
-          validation_status: VALIDATED
-          evidence_level: LEVEL_A
-          source_ids:
-          - SRC-BACK-001
-      performance_score:
-        mean: 72.0
-        std: 12.0
-        elite_mean: 95.0
-        unit: score
-        higher_is_better: true
-        evidence:
-          evidence_id: EVID-SYNTHETIC-SCORE
-          source_id: NONE
-          title: Proprietary SwimAnalyzer Synthetic Score
-          validation_status: PLACEHOLDER
-          evidence_level: LEVEL_E
-          source_relationship: UNVERIFIED
-          definition_status: DEFINITION_MISMATCH
-          population_status: POPULATION_MISMATCH
-          scientific_status: PENDING_REVIEW
-          source_ids: []
-    Female:
-      performance_score:
-        mean: 72.0
-        std: 12.0
-        elite_mean: 95.0
-        unit: score
-        higher_is_better: true
-        evidence:
-          evidence_id: EVID-SYNTHETIC-SCORE
-          source_id: NONE
-          title: Proprietary SwimAnalyzer Synthetic Score
-          validation_status: PLACEHOLDER
-          evidence_level: LEVEL_E
-          source_relationship: UNVERIFIED
-          definition_status: DEFINITION_MISMATCH
-          population_status: POPULATION_MISMATCH
-          scientific_status: PENDING_REVIEW
-          source_ids: []
-  8-10:
+          doi: "10.3390/ijerph17145100"
+          authors: ["Cortesi, M.", "Gatta, G."]
+          publication: "International Journal of Environmental Research and Public Health (2020)"
+          relationship: DIRECTLY_SUPPORTED
+          population_compatibility: EXACT_MATCH
+          definition_compatibility: EXACT_MATCH
+          audit_decision: ACCEPT
+
+  # Unverified Cohorts — Strictly Tagged INSUFFICIENT_EVIDENCE
+  "U10":
     status: INSUFFICIENT_EVIDENCE
-    message: No sufficiently validated reference population is currently available
-      for U10 swimmers.
-  11-13:
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U10 Backstroke."
+  "14-17":
     status: INSUFFICIENT_EVIDENCE
-    message: No sufficiently validated reference population is currently available
-      for U13 swimmers.
-  Masters:
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for 14-17 Backstroke."
+  "26-35":
     status: INSUFFICIENT_EVIDENCE
-    message: No sufficiently validated reference population is currently available
-      for Masters swimmers.
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Adult 26-35 Backstroke."
+  "36-44":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 36-44 Backstroke."

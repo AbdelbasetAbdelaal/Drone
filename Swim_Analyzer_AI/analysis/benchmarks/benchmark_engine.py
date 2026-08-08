@@ -10,6 +10,10 @@ from models.benchmark_models import (
 )
 from models.data_models import AnalysisResult
 from models.athlete_profile import AthleteProfile
+from models.scientific_evidence_models import (
+    MetricEvidenceMetadata, ValidationStatus, EvidenceLevel,
+    SourceRelationship, PopulationCompatibility, DefinitionCompatibility, AuditDecision
+)
 from core.logger import setup_logger
 
 logger = setup_logger(__name__)
@@ -56,21 +60,27 @@ class BenchmarkEngine:
         pops = ds.get("populations", {})
         raw_age_pop = pops.get(age_group)
         if isinstance(raw_age_pop, dict) and raw_age_pop.get("status") == "INSUFFICIENT_EVIDENCE":
-            # Cohort lacks direct peer-reviewed empirical evidence
-            pass
+            # Cohort lacks direct peer-reviewed empirical evidence — return null/unvalidated stats
+            return PopulationStats(
+                mean=None, std=None, elite_mean=None, unit="",
+                evidence=MetricEvidenceMetadata(
+                    evidence_id="NONE",
+                    source_id="NONE",
+                    validation_status=ValidationStatus.INSUFFICIENT_EVIDENCE,
+                    evidence_level=EvidenceLevel.LEVEL_E,
+                    source_relationship=SourceRelationship.UNVERIFIED,
+                    population_compatibility=PopulationCompatibility.POPULATION_MISMATCH,
+                    definition_compatibility=DefinitionCompatibility.DEFINITION_MISMATCH,
+                    audit_decision=AuditDecision.INSUFFICIENT_EVIDENCE
+                )
+            )
 
-        age_pop = raw_age_pop if (isinstance(raw_age_pop, dict) and "status" not in raw_age_pop) else (pops.get("18-25") or pops.get("default", {}))
-        if not isinstance(age_pop, dict):
-            age_pop = pops.get("default", {})
-
+        age_pop = raw_age_pop if isinstance(raw_age_pop, dict) else pops.get("default", {})
         gender_pop = age_pop.get(gender) if isinstance(age_pop, dict) else None
         if not isinstance(gender_pop, dict):
-            gender_pop = pops.get("default", {})
-
-        from models.scientific_evidence_models import (
-            MetricEvidenceMetadata, ValidationStatus, EvidenceLevel,
-            SourceRelationship, PopulationCompatibility, DefinitionCompatibility
-        )
+            gender_pop = pops.get("default", {}).get(gender) if isinstance(pops.get("default"), dict) else None
+            if not isinstance(gender_pop, dict):
+                gender_pop = pops.get("default", {})
 
         metric_cfg = gender_pop.get(metric_name) if isinstance(gender_pop, dict) else None
         if not metric_cfg and isinstance(pops.get("default"), dict):
@@ -212,11 +222,9 @@ class BenchmarkEngine:
         age = athlete_profile.age if athlete_profile.age else 20
         gender = athlete_profile.gender if athlete_profile.gender else "Male"
 
-        if gender.lower() == "female":
-            return (False, "⚠️ No validated reference population is currently available for female swimmers in this dataset.")
-
-        if age < 18 or age > 25:
-            return (False, f"⚠️ No validated reference population is currently available for age group '{AgeGroup.from_age(age).value}'.")
+        stats = self._get_population_stats(stroke_type, AgeGroup.from_age(age).value, gender, "stroke_rate")
+        if stats.mean is None:
+            return (False, f"⚠️ No validated reference population is currently available for {gender} age group '{AgeGroup.from_age(age).value}' in {stroke_type}.")
 
         return (True, "✓ Athlete belongs to scientifically validated reference population cohort.")
 

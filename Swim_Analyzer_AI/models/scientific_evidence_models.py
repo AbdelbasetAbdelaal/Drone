@@ -153,6 +153,7 @@ class ScientificSource:
     publication_year: int
     journal_or_organization: str
     doi: Optional[str] = None
+    pmid: Optional[str] = None
     url: Optional[str] = None
     stroke: str = "Freestyle"
     population: str = "Competitive Swimmers"
@@ -162,6 +163,8 @@ class ScientificSource:
     competitive_level: str = "National"
     measured_metrics: List[str] = field(default_factory=list)
     evidence_quality: EvidenceLevel = EvidenceLevel.LEVEL_A
+    access_level: str = "FULL_TEXT_VERIFIED"
+    verification_status: str = "VERIFIED_CORRECT"
     notes: str = ""
 
 @dataclass

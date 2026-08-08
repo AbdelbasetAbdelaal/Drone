@@ -1,0 +1,31 @@
+{
+  "matrix_version": "3.0.0",
+  "generated_at": "2026-08-08T19:04:13.139761",
+  "total_demographic_cells": 96,
+  "verified_empirical_cells": 12,
+  "insufficient_evidence_cells": 84,
+  "strokes": [
+    "Freestyle",
+    "Backstroke",
+    "Breaststroke",
+    "Butterfly"
+  ],
+  "genders": [
+    "Male",
+    "Female"
+  ],
+  "age_cohorts": [
+    "U10",
+    "U11-U12",
+    "U13",
+    "U14-U15",
+    "U16-U17",
+    "18-20",
+    "21-25",
+    "26-35",
+    "36-44",
+    "45-54",
+    "55+",
+    "Open/Elite"
+  ]
+}

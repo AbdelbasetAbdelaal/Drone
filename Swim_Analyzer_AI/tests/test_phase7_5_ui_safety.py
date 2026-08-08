@@ -51,13 +51,13 @@ def test_rule_3_female_athlete_percentile_suppressed():
         overall_score=82.0,
         stroke_rate=ValidatedMetric(value=54.0, valid=True)
     )
-    prof = AthleteProfile(full_name="Jane Smith", age=21, gender="Female", height_cm=172.0, weight_kg=62.0, swimming_level="Elite", preferred_stroke="Freestyle")
+    prof = AthleteProfile(full_name="Jane Smith", age=30, gender="Female", height_cm=172.0, weight_kg=62.0, swimming_level="Elite", preferred_stroke="Freestyle")
 
     res = engine.evaluate_full_analysis(ar, prof)
     sr_comp = res.comparisons["stroke_rate"]
 
-    assert sr_comp.z_score is None, "Female athlete must NOT receive male Z-score"
-    assert sr_comp.percentile is None, "Female athlete must NOT receive male Percentile"
+    assert sr_comp.z_score is None, "Female athlete without verified benchmark cohort must NOT receive Z-score"
+    assert sr_comp.percentile is None, "Female athlete without verified benchmark cohort must NOT receive Percentile"
 
 def test_rule_4_masters_athlete_percentile_suppressed():
     """Rule 4: Masters athlete (Age 45) does NOT receive adult 18-25 benchmark percentile."""

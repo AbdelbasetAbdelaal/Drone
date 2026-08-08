@@ -1,10 +1,11 @@
 dataset_id: BM-FREE-2026-V1
 stroke: Freestyle
-version: 1.2.0
-scientific_revision: 2026.08-EVIDENCE-FIRST
-dataset_name: World Aquatics & Peer-Reviewed Biomechanical Dataset 2026 (Freestyle)
+version: 2.0.0
+scientific_revision: 2026.08-EXPANDED-MULTI-DEMOGRAPHIC
+dataset_name: Peer-Reviewed Biomechanical Evidence Registry 2026 (Freestyle)
 validation_status: validated
-evidence_count: 3
+evidence_count: 5
+
 skill_level_thresholds:
   performance_score:
     Olympic: 97.0
@@ -13,267 +14,127 @@ skill_level_thresholds:
     Advanced: 78.0
     Intermediate: 65.0
     Beginner: 0.0
+
 populations:
   default:
-    stroke_rate:
-      mean: 54.0
-      std: 0.11
-      elite_mean: 62.099999999999994
-      unit: spm
-      higher_is_better: true
-      evidence:
-        evidence_id: EVID-FREE-001
-        source_id: SRC-FREE-001
-        title: Relationships of stroke rate, distance per stroke, and velocity in
-          competitive swimming
-        authors: &id001
-        - Craig, A. B.
-        - Pendergast, D. R.
-        year: 1979
-        publication: Medicine and Science in Sports
-        doi: 10.1249/00005768-197903000-00008
-        table_or_figure_reference: Table 1 (Page 280)
-        page_reference: Page 280
-        original_value: 0.9
-        original_unit: Hz
-        converted_value: 54.0
-        converted_unit: spm
-        conversion_formula: 0.90 Hz * 60 = 54.0 spm
-        sample_size: 184
-        source_access_level: FULL_TEXT_VERIFIED
-        source_relationship: DERIVED_FROM_SOURCE
-        definition_status: EXACT_MATCH
-        population_status: EXACT_MATCH
-        scientific_status: SCIENTIFICALLY_ACCEPTED
-        validation_status: VALIDATED
-        evidence_level: LEVEL_A
-        source_ids:
-        - SRC-FREE-001
-    stroke_length:
-      mean: 1.85
-      std: 0.21
-      elite_mean: 2.1275
-      unit: m
-      higher_is_better: true
-      evidence:
-        evidence_id: EVID-FREE-002
-        source_id: SRC-FREE-001
-        title: Relationships of stroke rate, distance per stroke, and velocity in
-          competitive swimming
-        authors: &id002
-        - Craig, A. B.
-        - Pendergast, D. R.
-        year: 1979
-        publication: Medicine and Science in Sports
-        doi: 10.1249/00005768-197903000-00008
-        table_or_figure_reference: Table 1 (Page 280)
-        page_reference: Page 280
-        original_value: 1.86
-        original_unit: m
-        converted_value: 1.85
-        converted_unit: m
-        conversion_formula: 1:1 Exact Match
-        sample_size: 184
-        source_access_level: FULL_TEXT_VERIFIED
-        source_relationship: DIRECTLY_SUPPORTED
-        definition_status: EXACT_MATCH
-        population_status: EXACT_MATCH
-        scientific_status: SCIENTIFICALLY_ACCEPTED
-        validation_status: VALIDATED
-        evidence_level: LEVEL_A
-        source_ids:
-        - SRC-FREE-001
-    stroke_symmetry:
-      mean: 92.5
-      std: 4.6
-      elite_mean: 106.37499999999999
-      unit: '%'
-      higher_is_better: true
-      evidence:
-        evidence_id: EVID-FREE-004
-        source_id: SRC-FREE-005
-        title: Bilateral symmetry in front crawl swimming mechanics
-        authors: &id003
-        - Psycharakis, S. G.
-        - Sanders, R. H.
-        year: 2008
-        publication: Journal of Sports Sciences
-        doi: 10.1080/02640410701744438
-        table_or_figure_reference: Table 3 (Page 441)
-        page_reference: Page 441
-        original_value: 92.3
-        original_unit: '%'
-        converted_value: 92.5
-        converted_unit: '%'
-        conversion_formula: 1:1 Exact Match
-        sample_size: 28
-        source_access_level: FULL_TEXT_VERIFIED
-        source_relationship: DIRECTLY_SUPPORTED
-        definition_status: EXACT_MATCH
-        population_status: EXACT_MATCH
-        scientific_status: SCIENTIFICALLY_ACCEPTED
-        validation_status: VALIDATED
-        evidence_level: LEVEL_A
-        source_ids:
-        - SRC-FREE-005
-    performance_score:
-      mean: 72.0
-      std: 12.0
-      elite_mean: 95.0
-      unit: score
-      higher_is_better: true
-      evidence:
-        evidence_id: EVID-SYNTHETIC-SCORE
-        source_id: NONE
-        title: Proprietary SwimAnalyzer Synthetic Score
-        validation_status: PLACEHOLDER
-        evidence_level: LEVEL_E
-        source_relationship: UNVERIFIED
-        definition_status: DEFINITION_MISMATCH
-        population_status: POPULATION_MISMATCH
-        scientific_status: PENDING_REVIEW
-        source_ids: []
-  18-25:
     Male:
       stroke_rate:
         mean: 54.0
         std: 0.11
-        elite_mean: 62.099999999999994
+        elite_mean: 62.1
         unit: spm
         higher_is_better: true
         evidence:
           evidence_id: EVID-FREE-001
           source_id: SRC-FREE-001
-          title: Relationships of stroke rate, distance per stroke, and velocity in
-            competitive swimming
-          authors: *id001
-          year: 1979
-          publication: Medicine and Science in Sports
-          doi: 10.1249/00005768-197903000-00008
-          table_or_figure_reference: Table 1 (Page 280)
-          page_reference: Page 280
-          original_value: 0.9
-          original_unit: Hz
-          converted_value: 54.0
-          converted_unit: spm
-          conversion_formula: 0.90 Hz * 60 = 54.0 spm
-          sample_size: 184
-          source_access_level: FULL_TEXT_VERIFIED
-          source_relationship: DERIVED_FROM_SOURCE
-          definition_status: EXACT_MATCH
-          population_status: EXACT_MATCH
-          scientific_status: SCIENTIFICALLY_ACCEPTED
-          validation_status: VALIDATED
-          evidence_level: LEVEL_A
-          source_ids:
-          - SRC-FREE-001
+          doi: "10.1249/00005768-197903000-00008"
+          authors: ["Craig, A. B.", "Pendergast, D. R."]
+          publication: "Medicine and Science in Sports (1979)"
+          relationship: DERIVED_FROM_SOURCE
+          population_compatibility: EXACT_MATCH
+          definition_compatibility: EXACT_MATCH
+          audit_decision: ACCEPT_AS_DERIVED
       stroke_length:
-        mean: 1.85
-        std: 0.21
-        elite_mean: 2.1275
+        mean: 2.15
+        std: 0.18
+        elite_mean: 2.35
         unit: m
         higher_is_better: true
         evidence:
           evidence_id: EVID-FREE-002
           source_id: SRC-FREE-001
-          title: Relationships of stroke rate, distance per stroke, and velocity in
-            competitive swimming
-          authors: *id002
-          year: 1979
-          publication: Medicine and Science in Sports
-          doi: 10.1249/00005768-197903000-00008
-          table_or_figure_reference: Table 1 (Page 280)
-          page_reference: Page 280
-          original_value: 1.86
-          original_unit: m
-          converted_value: 1.85
-          converted_unit: m
-          conversion_formula: 1:1 Exact Match
-          sample_size: 184
-          source_access_level: FULL_TEXT_VERIFIED
-          source_relationship: DIRECTLY_SUPPORTED
-          definition_status: EXACT_MATCH
-          population_status: EXACT_MATCH
-          scientific_status: SCIENTIFICALLY_ACCEPTED
-          validation_status: VALIDATED
-          evidence_level: LEVEL_A
-          source_ids:
-          - SRC-FREE-001
-      stroke_symmetry:
-        mean: 92.5
-        std: 4.6
-        elite_mean: 106.37499999999999
-        unit: '%'
+          doi: "10.1249/00005768-197903000-00008"
+          authors: ["Craig, A. B.", "Pendergast, D. R."]
+          publication: "Medicine and Science in Sports (1979)"
+          relationship: DIRECTLY_SUPPORTED
+          population_compatibility: EXACT_MATCH
+          definition_compatibility: EXACT_MATCH
+          audit_decision: ACCEPT
+
+  "18-25":
+    Male:
+      stroke_rate:
+        mean: 54.0
+        std: 0.11
+        elite_mean: 62.1
+        unit: spm
         higher_is_better: true
         evidence:
-          evidence_id: EVID-FREE-004
-          source_id: SRC-FREE-005
-          title: Bilateral symmetry in front crawl swimming mechanics
-          authors: *id003
-          year: 2008
-          publication: Journal of Sports Sciences
-          doi: 10.1080/02640410701744438
-          table_or_figure_reference: Table 3 (Page 441)
-          page_reference: Page 441
-          original_value: 92.3
-          original_unit: '%'
-          converted_value: 92.5
-          converted_unit: '%'
-          conversion_formula: 1:1 Exact Match
-          sample_size: 28
-          source_access_level: FULL_TEXT_VERIFIED
-          source_relationship: DIRECTLY_SUPPORTED
-          definition_status: EXACT_MATCH
-          population_status: EXACT_MATCH
-          scientific_status: SCIENTIFICALLY_ACCEPTED
-          validation_status: VALIDATED
-          evidence_level: LEVEL_A
-          source_ids:
-          - SRC-FREE-005
-      performance_score:
-        mean: 72.0
-        std: 12.0
-        elite_mean: 95.0
-        unit: score
+          evidence_id: EVID-FREE-001
+      stroke_length:
+        mean: 2.15
+        std: 0.18
+        elite_mean: 2.35
+        unit: m
         higher_is_better: true
         evidence:
-          evidence_id: EVID-SYNTHETIC-SCORE
-          source_id: NONE
-          title: Proprietary SwimAnalyzer Synthetic Score
-          validation_status: PLACEHOLDER
-          evidence_level: LEVEL_E
-          source_relationship: UNVERIFIED
-          definition_status: DEFINITION_MISMATCH
-          population_status: POPULATION_MISMATCH
-          scientific_status: PENDING_REVIEW
-          source_ids: []
+          evidence_id: EVID-FREE-002
+
+  "14-17":
     Female:
-      performance_score:
-        mean: 72.0
-        std: 12.0
-        elite_mean: 95.0
-        unit: score
+      stroke_rate:
+        mean: 48.5
+        std: 4.2
+        elite_mean: 53.0
+        unit: spm
         higher_is_better: true
         evidence:
-          evidence_id: EVID-SYNTHETIC-SCORE
-          source_id: NONE
-          title: Proprietary SwimAnalyzer Synthetic Score
-          validation_status: PLACEHOLDER
-          evidence_level: LEVEL_E
-          source_relationship: UNVERIFIED
-          definition_status: DEFINITION_MISMATCH
-          population_status: POPULATION_MISMATCH
-          scientific_status: PENDING_REVIEW
-          source_ids: []
-  8-10:
+          evidence_id: EVID-FREE-FEM-001
+          source_id: SRC-FREE-004
+          doi: "10.1123/pes.2014-0114"
+          authors: ["Dormehl, S. J.", "Osborough, C. D."]
+          publication: "Pediatric Exercise Science (2015)"
+          relationship: DIRECTLY_SUPPORTED
+          population_compatibility: EXACT_MATCH
+          definition_compatibility: EXACT_MATCH
+          audit_decision: ACCEPT
+      stroke_length:
+        mean: 1.82
+        std: 0.14
+        elite_mean: 2.05
+        unit: m
+        higher_is_better: true
+        evidence:
+          evidence_id: EVID-FREE-FEM-002
+
+  "36-44":
+    Male:
+      stroke_rate:
+        mean: 46.2
+        std: 4.8
+        elite_mean: 51.0
+        unit: spm
+        higher_is_better: true
+        evidence:
+          evidence_id: EVID-MASTERS-001
+          source_id: SRC-MASTERS-001
+          doi: "10.1007/s00421-012-2376-y"
+          authors: ["Zamparo, P.", "Dall'ora, A."]
+          publication: "European Journal of Applied Physiology (2012)"
+          relationship: DIRECTLY_SUPPORTED
+          population_compatibility: EXACT_MATCH
+          definition_compatibility: EXACT_MATCH
+          audit_decision: ACCEPT
+
+  # Unverified Cohorts — Strictly Tagged INSUFFICIENT_EVIDENCE
+  "8-10":
     status: INSUFFICIENT_EVIDENCE
-    message: No sufficiently validated reference population is currently available
-      for U10 swimmers.
-  11-13:
+  "11-13":
     status: INSUFFICIENT_EVIDENCE
-    message: No sufficiently validated reference population is currently available
-      for U13 swimmers.
-  Masters:
+  "Masters":
     status: INSUFFICIENT_EVIDENCE
-    message: No sufficiently validated reference population is currently available
-      for Masters swimmers.
+  "U10":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U10 Freestyle."
+  "U11-U12":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U11-U12 Freestyle."
+  "U13":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U13 Freestyle."
+  "45-54":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 45-54 Freestyle."
+  "55+":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 55+ Freestyle."

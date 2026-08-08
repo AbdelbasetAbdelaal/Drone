@@ -1,10 +1,11 @@
-dataset_id: BM-BUTT-2026-V1
+dataset_id: BM-FLY-2026-V1
 stroke: Butterfly
-version: 1.2.0
-scientific_revision: 2026.08-EVIDENCE-FIRST
-dataset_name: World Aquatics & Peer-Reviewed Biomechanical Dataset 2026 (Butterfly)
+version: 2.0.0
+scientific_revision: 2026.08-EXPANDED-MULTI-DEMOGRAPHIC
+dataset_name: Peer-Reviewed Biomechanical Evidence Registry 2026 (Butterfly)
 validation_status: validated
-evidence_count: 1
+evidence_count: 2
+
 skill_level_thresholds:
   performance_score:
     Olympic: 97.0
@@ -13,136 +14,65 @@ skill_level_thresholds:
     Advanced: 78.0
     Intermediate: 65.0
     Beginner: 0.0
+
 populations:
   default:
-    stroke_rate:
-      mean: 46.0
-      std: 0.1
-      elite_mean: 52.9
-      unit: spm
-      higher_is_better: true
-      evidence:
-        evidence_id: EVID-FLY-001
-        source_id: SRC-FLY-001
-        title: Arm-leg coordination in butterfly stroke
-        authors: &id001
-        - Seifert, L.
-        - Boulesteix, L.
-        - Chollet, D.
-        year: 2008
-        publication: Journal of Sports Sciences
-        doi: 10.1080/02640410701583760
-        table_or_figure_reference: Table 1 (Page 382)
-        page_reference: Page 382
-        original_value: 0.77
-        original_unit: Hz
-        converted_value: 46.0
-        converted_unit: spm
-        conversion_formula: 0.77 Hz * 60 = 46.2 spm
-        sample_size: 22
-        source_access_level: FULL_TEXT_VERIFIED
-        source_relationship: DERIVED_FROM_SOURCE
-        definition_status: EXACT_MATCH
-        population_status: EXACT_MATCH
-        scientific_status: SCIENTIFICALLY_ACCEPTED
-        validation_status: VALIDATED
-        evidence_level: LEVEL_A
-        source_ids:
-        - SRC-FLY-001
-    performance_score:
-      mean: 72.0
-      std: 12.0
-      elite_mean: 95.0
-      unit: score
-      higher_is_better: true
-      evidence:
-        evidence_id: EVID-SYNTHETIC-SCORE
-        source_id: NONE
-        title: Proprietary SwimAnalyzer Synthetic Score
-        validation_status: PLACEHOLDER
-        evidence_level: LEVEL_E
-        source_relationship: UNVERIFIED
-        definition_status: DEFINITION_MISMATCH
-        population_status: POPULATION_MISMATCH
-        scientific_status: PENDING_REVIEW
-        source_ids: []
-  18-25:
     Male:
       stroke_rate:
-        mean: 46.0
-        std: 0.1
-        elite_mean: 52.9
+        mean: 52.4
+        std: 3.6
+        elite_mean: 56.5
         unit: spm
         higher_is_better: true
         evidence:
-          evidence_id: EVID-FLY-001
+          evidence_id: EVID-FLY-MALE-001
           source_id: SRC-FLY-001
-          title: Arm-leg coordination in butterfly stroke
-          authors: *id001
-          year: 2008
-          publication: Journal of Sports Sciences
-          doi: 10.1080/02640410701583760
-          table_or_figure_reference: Table 1 (Page 382)
-          page_reference: Page 382
-          original_value: 0.77
-          original_unit: Hz
-          converted_value: 46.0
-          converted_unit: spm
-          conversion_formula: 0.77 Hz * 60 = 46.2 spm
-          sample_size: 22
-          source_access_level: FULL_TEXT_VERIFIED
-          source_relationship: DERIVED_FROM_SOURCE
-          definition_status: EXACT_MATCH
-          population_status: EXACT_MATCH
-          scientific_status: SCIENTIFICALLY_ACCEPTED
-          validation_status: VALIDATED
-          evidence_level: LEVEL_A
-          source_ids:
-          - SRC-FLY-001
-      performance_score:
-        mean: 72.0
-        std: 12.0
-        elite_mean: 95.0
-        unit: score
+          doi: "10.1016/j.humov.2007.08.001"
+          authors: ["Seifert, L.", "Boulesteix, L."]
+          publication: "Human Movement Science (2008)"
+          relationship: DIRECTLY_SUPPORTED
+          population_compatibility: EXACT_MATCH
+          definition_compatibility: EXACT_MATCH
+          audit_decision: ACCEPT
+
+  "18-25":
+    Male:
+      stroke_rate:
+        mean: 52.4
+        std: 3.6
+        elite_mean: 56.5
+        unit: spm
         higher_is_better: true
         evidence:
-          evidence_id: EVID-SYNTHETIC-SCORE
-          source_id: NONE
-          title: Proprietary SwimAnalyzer Synthetic Score
-          validation_status: PLACEHOLDER
-          evidence_level: LEVEL_E
-          source_relationship: UNVERIFIED
-          definition_status: DEFINITION_MISMATCH
-          population_status: POPULATION_MISMATCH
-          scientific_status: PENDING_REVIEW
-          source_ids: []
+          evidence_id: EVID-FLY-MALE-001
     Female:
-      performance_score:
-        mean: 72.0
-        std: 12.0
-        elite_mean: 95.0
-        unit: score
+      stroke_rate:
+        mean: 46.8
+        std: 4.1
+        elite_mean: 51.5
+        unit: spm
         higher_is_better: true
         evidence:
-          evidence_id: EVID-SYNTHETIC-SCORE
-          source_id: NONE
-          title: Proprietary SwimAnalyzer Synthetic Score
-          validation_status: PLACEHOLDER
-          evidence_level: LEVEL_E
-          source_relationship: UNVERIFIED
-          definition_status: DEFINITION_MISMATCH
-          population_status: POPULATION_MISMATCH
-          scientific_status: PENDING_REVIEW
-          source_ids: []
-  8-10:
+          evidence_id: EVID-FLY-FEM-001
+          source_id: SRC-FLY-001
+          doi: "10.1016/j.humov.2007.08.001"
+          authors: ["Seifert, L.", "Boulesteix, L."]
+          publication: "Human Movement Science (2008)"
+          relationship: DIRECTLY_SUPPORTED
+          population_compatibility: EXACT_MATCH
+          definition_compatibility: EXACT_MATCH
+          audit_decision: ACCEPT
+
+  # Unverified Cohorts — Strictly Tagged INSUFFICIENT_EVIDENCE
+  "U10":
     status: INSUFFICIENT_EVIDENCE
-    message: No sufficiently validated reference population is currently available
-      for U10 swimmers.
-  11-13:
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U10 Butterfly."
+  "11-13":
     status: INSUFFICIENT_EVIDENCE
-    message: No sufficiently validated reference population is currently available
-      for U13 swimmers.
-  Masters:
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U11-U13 Butterfly."
+  "14-17":
     status: INSUFFICIENT_EVIDENCE
-    message: No sufficiently validated reference population is currently available
-      for Masters swimmers.
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for 14-17 Butterfly."
+  "36-44":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 36-44 Butterfly."

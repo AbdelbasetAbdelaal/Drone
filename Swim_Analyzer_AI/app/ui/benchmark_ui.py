@@ -22,27 +22,46 @@ def render_population_benchmark_cards(bm_res: BenchmarkResult, athlete_profile: 
     athlete_gender = athlete_profile.gender if athlete_profile and athlete_profile.gender else "Male"
     athlete_age = athlete_profile.age if athlete_profile and athlete_profile.age else 20
 
-    is_demographic_compatible = (athlete_gender.lower() in ["male", "mixed"] and 18 <= athlete_age <= 25)
+    is_demographic_compatible = getattr(bm_res, 'is_population_compatible', False)
+
+    # Determine athlete demographic cohort description
+    if athlete_age < 18:
+        demographic_desc = f"Youth Athlete (Age {athlete_age})"
+    elif athlete_age <= 25:
+        demographic_desc = f"Adult {athlete_gender} (Age {athlete_age})"
+    elif athlete_age <= 35:
+        demographic_desc = f"Adult {athlete_gender} (Age {athlete_age}, 26-35)"
+    else:
+        demographic_desc = f"Masters {athlete_gender} (Age {athlete_age})"
+
+    # Retrieve actual reference cohort name from evidence metadata if present
+    ref_cohort_name = "Adult Male (18–25)"
+    for m_comp in bm_res.comparisons.values():
+        if m_comp.population_mean is not None:
+            if m_comp.evidence and getattr(m_comp.evidence, 'population_description', None):
+                ref_cohort_name = m_comp.evidence.population_description
+                break
+            elif is_demographic_compatible:
+                ref_cohort_name = demographic_desc
 
     if not is_demographic_compatible:
         st.warning(
-            f"⚠️ **No validated reference population is currently available for this athlete's demographic group** "
-            f"({athlete_gender}, Age {athlete_age}). "
-            f"Currently validated reference benchmarks apply to: *Adult Competitive Male Swimmers (Age 18–25)*. "
-            f"Athlete measurements are displayed below alongside reference values for context, but percentiles/Z-scores are suppressed."
+            f"⚠️ **No direct peer-reviewed reference dataset is currently indexed for this specific demographic group** "
+            f"({demographic_desc}). "
+            f"Athlete measurements are displayed below for context, but percentiles and Z-scores are suppressed to uphold scientific accuracy."
         )
     else:
         st.success(
-            "✓ **Athlete belongs to the scientifically validated reference population cohort** "
-            "(Adult Competitive Male Swimmers, Age 18–25)."
+            f"✓ **Athlete belongs to a scientifically validated reference population cohort** "
+            f"({demographic_desc} - {ref_cohort_name})."
         )
 
     b_c1, b_c2, b_c3 = st.columns(3)
-    b_c1.metric("Skill Level Tier", bm_res.overall_skill_level if is_demographic_compatible else "N/A (Non-Adult)")
-    b_c2.metric("Age Demographics", bm_res.age_group)
-    b_c3.metric("Gender Reference", bm_res.gender)
+    b_c1.metric("Skill Level Tier", bm_res.overall_skill_level if is_demographic_compatible else "N/A (Unvalidated Cohort)")
+    b_c2.metric("Athlete Cohort", demographic_desc)
+    b_c3.metric("Reference Cohort", ref_cohort_name if is_demographic_compatible else "Adult Male (18–25) Baseline")
 
-    st.caption(f"**Dataset Reference:** {bm_res.dataset_name} (ID: `{bm_res.dataset_id}`, v{bm_res.dataset_version}, Revision: {bm_res.scientific_revision})")
+    st.caption(f"**Evidence Registry Dataset:** {bm_res.dataset_name} (ID: `{bm_res.dataset_id}`, v{bm_res.dataset_version}, Revision: {bm_res.scientific_revision})")
     st.markdown("---")
 
     # 2. Render Cards for each Metric

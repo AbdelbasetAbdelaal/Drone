@@ -30,53 +30,74 @@ class StrokeClassifier:
         # But for this simulation, if we see a valid person, we'll just predict Freestyle with high confidence.
         # This will be replaced with real heuristics later (e.g., alternating vs simultaneous wrist Y trajectories).
         
-        valid_frames = 0
+        # Collect detected frames with landmarks
+        frames_list = []
+        frame_idx = 0
+        
         while cap.isOpened() and frame_idx < max_frames:
             ret, frame = cap.read()
             if not ret:
                 break
                 
-            # Pass the raw BGR frame; detect_pose handles RGB conversion
             landmarks, is_valid = self.pose_detector.detect_pose(frame)
-            
-            if is_valid and landmarks:
-                valid_frames += 1
-                
+            safe_landmarks = None
+            if landmarks:
+                safe_landmarks = [
+                    type('SimpleLandmark', (), {
+                        'x': float(lm.x),
+                        'y': float(lm.y),
+                        'z': float(getattr(lm, 'z', 0.0)),
+                        'visibility': float(getattr(lm, 'visibility', 1.0))
+                    })() for lm in landmarks
+                ]
+
+            frame_data = type('SimpleFrame', (), {
+                'frame_index': frame_idx,
+                'is_valid': is_valid,
+                'raw_landmarks': safe_landmarks,
+                'angles': None
+            })()
+            frames_list.append(frame_data)
             frame_idx += 1
             
         cap.release()
         self.pose_detector.close()
         
-        if valid_frames == 0:
-            logger.warning("No person detected during stroke classification.")
-            return self._fallback()
-            
-        # Simulated logic: Since our dataset is freestyle, we predict freestyle.
-        predictions = {
-            StrokeType.FREESTYLE.value: 0.91,
-            StrokeType.BACKSTROKE.value: 0.05,
-            StrokeType.BREASTSTROKE.value: 0.03,
-            StrokeType.BUTTERFLY.value: 0.01
-        }
-        
-        confidence = 0.91 if forced_confidence is None else forced_confidence
-        predicted_stroke = StrokeType.FREESTYLE
-        
-        return StrokeDetectionResult(
-            predicted_stroke=predicted_stroke,
-            confidence=confidence,
-            predictions=predictions,
-            selected_stroke=StrokeType.AUTO_DETECT,
-            manual_override=False,
-            is_inconsistent=False
-        )
+        from analysis.classification.feature_extractor import KinematicFeatureExtractor
+        from analysis.classification.stroke_heuristic_classifier import StrokeHeuristicClassifier
+
+        extractor = KinematicFeatureExtractor(min_valid_frames=10)
+        feature_set = extractor.extract_features(frames_list)
+
+        classifier = StrokeHeuristicClassifier()
+        res = classifier.classify_features(feature_set, selected_stroke_input=StrokeType.AUTO_DETECT)
+
+        if forced_confidence is not None:
+            res.confidence = forced_confidence
+            if forced_confidence < 0.75:
+                res.classification_status = "INSUFFICIENT_CONFIDENCE"
+                res.predicted_stroke = StrokeType.UNKNOWN
+
+        return res
         
     def _fallback(self) -> StrokeDetectionResult:
+        from analysis.classification.stroke_heuristic_classifier import CLASSIFIER_VERSION, THRESHOLD_VERSION
         return StrokeDetectionResult(
             predicted_stroke=StrokeType.UNKNOWN,
             confidence=0.0,
-            predictions={},
+            predictions={
+                StrokeType.FREESTYLE.value: 0.25,
+                StrokeType.BACKSTROKE.value: 0.25,
+                StrokeType.BREASTSTROKE.value: 0.25,
+                StrokeType.BUTTERFLY.value: 0.25
+            },
             selected_stroke=StrokeType.AUTO_DETECT,
             manual_override=False,
-            is_inconsistent=False
+            is_inconsistent=False,
+            classification_status="UNKNOWN",
+            classification_reason="No person detected during stroke classification.",
+            feature_values={},
+            feature_contributions={"no_landmarks": 1.0},
+            classifier_version=CLASSIFIER_VERSION,
+            threshold_version=THRESHOLD_VERSION
         )
