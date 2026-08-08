@@ -6,7 +6,7 @@
     "total_frames": 75,
     "detected_fps": 30.0,
     "effective_fps": 15.0,
-    "analysis_timestamp": "2026-08-08T18:56:11.241271",
+    "analysis_timestamp": "2026-08-08T20:44:44.134729",
     "swimming_style": "Freestyle",
     "stroke_detection": {
         "predicted_stroke": "Freestyle",
@@ -22,10 +22,10 @@
         "classifier_version": "1.0.0-unvalidated",
         "threshold_version": "UNVALIDATED_HEURISTIC_v1.0"
     },
-    "processing_time_sec": 6.474085092544556,
-    "peak_ram_mb": 262.48046875,
-    "peak_cpu_percent": 166.6,
-    "average_processing_fps": 11.584648475870159,
+    "processing_time_sec": 6.567816495895386,
+    "peak_ram_mb": 262.171875,
+    "peak_cpu_percent": 183.3,
+    "average_processing_fps": 11.419320263724162,
     "calibration_mode": "Relative (Body Height)",
     "confidence_statistics": {
         "valid_frames": 0,

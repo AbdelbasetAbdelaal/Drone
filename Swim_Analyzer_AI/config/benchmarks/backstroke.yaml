@@ -69,6 +69,12 @@ populations:
   "U10":
     status: INSUFFICIENT_EVIDENCE
     reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U10 Backstroke."
+  "U11-U12":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U11-U12 Backstroke."
+  "U13":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U13 Backstroke."
   "14-17":
     status: INSUFFICIENT_EVIDENCE
     reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for 14-17 Backstroke."
@@ -78,3 +84,9 @@ populations:
   "36-44":
     status: INSUFFICIENT_EVIDENCE
     reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 36-44 Backstroke."
+  "45-54":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 45-54 Backstroke."
+  "55+":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 55+ Backstroke."

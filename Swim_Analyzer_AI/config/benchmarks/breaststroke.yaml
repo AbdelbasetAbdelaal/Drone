@@ -67,6 +67,12 @@ populations:
   "U10":
     status: INSUFFICIENT_EVIDENCE
     reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U10 Breaststroke."
+  "U11-U12":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U11-U12 Breaststroke."
+  "U13":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U13 Breaststroke."
   "11-13":
     status: INSUFFICIENT_EVIDENCE
     reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U11-U13 Breaststroke."
@@ -76,3 +82,9 @@ populations:
   "36-44":
     status: INSUFFICIENT_EVIDENCE
     reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 36-44 Breaststroke."
+  "45-54":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 45-54 Breaststroke."
+  "55+":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 55+ Breaststroke."

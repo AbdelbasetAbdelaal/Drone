@@ -67,6 +67,12 @@ populations:
   "U10":
     status: INSUFFICIENT_EVIDENCE
     reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U10 Butterfly."
+  "U11-U12":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U11-U12 Butterfly."
+  "U13":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U13 Butterfly."
   "11-13":
     status: INSUFFICIENT_EVIDENCE
     reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for U11-U13 Butterfly."
@@ -76,3 +82,9 @@ populations:
   "36-44":
     status: INSUFFICIENT_EVIDENCE
     reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 36-44 Butterfly."
+  "45-54":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 45-54 Butterfly."
+  "55+":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 55+ Butterfly."
