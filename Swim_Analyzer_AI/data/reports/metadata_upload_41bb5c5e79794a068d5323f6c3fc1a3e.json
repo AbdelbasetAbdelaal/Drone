@@ -1,0 +1,39 @@
+{
+    "filename": "upload_41bb5c5e79794a068d5323f6c3fc1a3e.mp4",
+    "resolution_width": 854,
+    "resolution_height": 480,
+    "duration_seconds": 14.9,
+    "total_frames": 447,
+    "detected_fps": 29.97002997002997,
+    "effective_fps": 15.0,
+    "analysis_timestamp": "2026-08-05T20:59:21.130508",
+    "swimming_style": "Backstroke",
+    "stroke_detection": {
+        "predicted_stroke": "Freestyle",
+        "confidence": 0.91,
+        "predictions": {
+            "Freestyle": 0.91,
+            "Backstroke": 0.05,
+            "Breaststroke": 0.03,
+            "Butterfly": 0.01
+        },
+        "selected_stroke": "Backstroke",
+        "manual_override": true,
+        "is_inconsistent": true
+    },
+    "processing_time_sec": 51.31482982635498,
+    "peak_ram_mb": 394.5859375,
+    "peak_cpu_percent": 257.1,
+    "average_processing_fps": 8.710932132340885,
+    "calibration_mode": "Relative (Body Height)",
+    "confidence_statistics": {
+        "valid_frames": 233,
+        "invalid_frames": 214,
+        "validity_ratio": 0.5212527964205816
+    },
+    "software_version": "1.0.0",
+    "athlete_id": "98e1f863-82de-4087-ae8d-dcd0648b5267",
+    "consistency_score": 87.0,
+    "analysis_reliability": 52.800000000000004,
+    "phase_confidence": 1.0
+}

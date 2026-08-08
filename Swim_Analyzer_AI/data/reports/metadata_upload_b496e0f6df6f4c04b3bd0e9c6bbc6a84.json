@@ -1,0 +1,54 @@
+{
+    "filename": "upload_b496e0f6df6f4c04b3bd0e9c6bbc6a84.mp4",
+    "resolution_width": 720,
+    "resolution_height": 1280,
+    "duration_seconds": 3.5,
+    "total_frames": 105,
+    "detected_fps": 30.0,
+    "effective_fps": 15.0,
+    "analysis_timestamp": "2026-08-08T19:00:11.745560",
+    "swimming_style": "Freestyle",
+    "stroke_detection": {
+        "predicted_stroke": "Unknown",
+        "confidence": 0.25,
+        "predictions": {
+            "Freestyle": 0.25,
+            "Backstroke": 0.25,
+            "Breaststroke": 0.25,
+            "Butterfly": 0.25
+        },
+        "selected_stroke": "Freestyle",
+        "manual_override": true,
+        "is_inconsistent": false,
+        "classification_status": "INSUFFICIENT_CONFIDENCE",
+        "classification_reason": "Top prediction confidence (25.0%) below safety threshold (75%). Declared UNKNOWN.",
+        "feature_values": {
+            "arm_phase_correlation": -0.2946212458936492,
+            "mean_body_roll": 91.84029170427421,
+            "body_roll_amplitude": 177.86200251841396,
+            "wrist_vertical_range_ratio": 0.10425817863533848,
+            "leg_kick_symmetry": 0.6000274274743247,
+            "wrist_recovery_height_ratio": 0.17303011997927453
+        },
+        "feature_contributions": {
+            "arm_phase_ambiguous": 0.0
+        },
+        "classifier_version": "1.0.0-unvalidated",
+        "threshold_version": "UNVALIDATED_HEURISTIC_v1.0"
+    },
+    "processing_time_sec": 15.305343866348267,
+    "peak_ram_mb": 399.78125,
+    "peak_cpu_percent": 180.7,
+    "average_processing_fps": 6.860348968105358,
+    "calibration_mode": "Relative (Body Height)",
+    "confidence_statistics": {
+        "valid_frames": 44,
+        "invalid_frames": 61,
+        "validity_ratio": 0.41904761904761906
+    },
+    "software_version": "1.0.0",
+    "athlete_id": "906e6306-dcaf-4bdd-80f6-6fd9c49774a3",
+    "consistency_score": 0.0,
+    "analysis_reliability": 70.0,
+    "phase_confidence": 0.8813953488372093
+}
