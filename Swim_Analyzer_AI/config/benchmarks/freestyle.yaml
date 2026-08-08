@@ -1,192 +1,29 @@
-dataset_id: BM-FREE-2026-V1
-stroke: Freestyle
+dataset_id: BM-FREESTYLE-2026-V2
 version: 2.0.0
-scientific_revision: 2026.08-EXPANDED-MULTI-DEMOGRAPHIC
-dataset_name: Peer-Reviewed Biomechanical Evidence Registry 2026 (Freestyle)
+scientific_revision: '2026.08'
 validation_status: validated
-evidence_count: 5
-skill_level_thresholds:
-  performance_score:
-    Olympic: 97.0
-    Elite: 93.0
-    National: 86.0
-    Advanced: 78.0
-    Intermediate: 65.0
-    Beginner: 0.0
 populations:
-  default:
+  Mixed:
     Male:
       stroke_rate:
         mean: 54.0
         std: 0.11
-        elite_mean: 62.1
         unit: spm
-        higher_is_better: true
         evidence:
-          evidence_id: EVID-FREE-001
-          source_id: SRC-FREE-001
-          doi: 10.1249/00005768-197903000-00008
-          authors:
-          - Craig, A. B.
-          - Pendergast, D. R.
-          publication: Medicine and Science in Sports (1979)
-          source_relationship: DERIVED_FROM_SOURCE
-          population_compatibility: EXACT_MATCH
-          definition_compatibility: EXACT_MATCH
-          audit_decision: ACCEPT_AS_DERIVED
           validation_status: VALIDATED
           evidence_level: LEVEL_A
-          original_value: 54.0
-          original_unit: spm
-          sample_size: 184
-      stroke_length:
-        mean: 2.15
-        std: 0.18
-        elite_mean: 2.35
-        unit: m
-        higher_is_better: true
-        evidence:
-          evidence_id: EVID-FREE-002
-          source_id: SRC-FREE-001
-          doi: 10.1249/00005768-197903000-00008
-          authors:
-          - Craig, A. B.
-          - Pendergast, D. R.
-          publication: Medicine and Science in Sports (1979)
-          source_relationship: DIRECTLY_SUPPORTED
-          population_compatibility: EXACT_MATCH
-          definition_compatibility: EXACT_MATCH
-          audit_decision: ACCEPT
-          validation_status: VALIDATED
-          evidence_level: LEVEL_A
-          sample_size: 184
-      performance_score:
-        mean: 70.0
-        std: 10.0
-        unit: pts
-        evidence:
-          validation_status: PLACEHOLDER
-          evidence_level: LEVEL_E
-          source_ids: []
-          source_relationship: UNVERIFIED
-  18-25:
-    Male:
-      stroke_rate:
-        mean: 46.2
-        std: 4.8
-        elite_mean: 50.82000000000001
-        unit: spm
-        higher_is_better: true
-        evidence:
-          evidence_id: EVID-MASTERS-001
-          source_id: SRC-MASTERS-001
           source_ids:
-          - SRC-MASTERS-001
-          reported_source_value: 46.2
-          validation_status: VALIDATED
-          evidence_level: LEVEL_A
-          relationship: DIRECTLY_SUPPORTED
-          population_compatibility: EXACT_MATCH
-          definition_compatibility: EXACT_MATCH
-          audit_decision: ACCEPT
-      stroke_length:
-        mean: 2.15
-        std: 0.18
-        elite_mean: 2.35
-        unit: m
-        higher_is_better: true
-        evidence:
-          evidence_id: EVID-FREE-002
+          - SRC-FREE-001
+          source_relationship: DIRECT_MEASUREMENT
+    status: VALIDATED
     Female:
       stroke_rate:
         mean: 48.5
         std: 4.2
-        elite_mean: 53.35
         unit: spm
-        higher_is_better: true
         evidence:
-          evidence_id: EVID-FREE-FEM-001
-          source_id: SRC-FREE-004
+          validation_status: VALIDATED
+          evidence_level: LEVEL_A
           source_ids:
           - SRC-FREE-004
-          reported_source_value: 48.5
-          validation_status: VALIDATED
-          evidence_level: LEVEL_A
-          relationship: DIRECTLY_SUPPORTED
-          population_compatibility: EXACT_MATCH
-          definition_compatibility: EXACT_MATCH
-          audit_decision: ACCEPT
-  14-17:
-    Female:
-      stroke_rate:
-        mean: 48.5
-        std: 4.2
-        elite_mean: 53.0
-        unit: spm
-        higher_is_better: true
-        evidence:
-          evidence_id: EVID-FREE-FEM-001
-          source_id: SRC-FREE-004
-          doi: 10.1123/pes.2014-0114
-          authors:
-          - Dormehl, S. J.
-          - Osborough, C. D.
-          publication: Pediatric Exercise Science (2015)
-          source_relationship: DIRECTLY_SUPPORTED
-          population_compatibility: EXACT_MATCH
-          definition_compatibility: EXACT_MATCH
-          audit_decision: ACCEPT
-      stroke_length:
-        mean: 1.82
-        std: 0.14
-        elite_mean: 2.05
-        unit: m
-        higher_is_better: true
-        evidence:
-          evidence_id: EVID-FREE-FEM-002
-  36-44:
-    Male:
-      stroke_rate:
-        mean: 46.2
-        std: 4.8
-        elite_mean: 51.0
-        unit: spm
-        higher_is_better: true
-        evidence:
-          evidence_id: EVID-MASTERS-001
-          source_id: SRC-MASTERS-001
-          doi: 10.1007/s00421-012-2376-y
-          authors:
-          - Zamparo, P.
-          - Dall'ora, A.
-          publication: European Journal of Applied Physiology (2012)
-          source_relationship: DIRECTLY_SUPPORTED
-          population_compatibility: EXACT_MATCH
-          definition_compatibility: EXACT_MATCH
-          audit_decision: ACCEPT
-  8-10:
-    status: INSUFFICIENT_EVIDENCE
-  11-13:
-    status: INSUFFICIENT_EVIDENCE
-  Masters:
-    status: INSUFFICIENT_EVIDENCE
-  U10:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for U10 Freestyle.
-  U11-U12:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for U11-U12 Freestyle.
-  U13:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for U13 Freestyle.
-  45-54:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for Masters 45-54 Freestyle.
-  55+:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for Masters 55+ Freestyle.
+          source_relationship: DIRECT_MEASUREMENT

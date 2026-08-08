@@ -40,7 +40,8 @@ class ScientificUpdaterService:
         self.history_file = self.root_dir / "data" / "scientific_update_history.json"
         self.report_file = self.root_dir / "docs" / "scientific_database_update_report.md"
 
-        self.ssl_ctx = ssl.create_default_context()
+        import certifi
+        self.ssl_ctx = ssl.create_default_context(cafile=certifi.where())
         # SSL Verification MUST be strictly enforced to prevent MITM scientific data spoofing.
         self.ssl_ctx.verify_mode = ssl.CERT_REQUIRED
         self.ssl_ctx.check_hostname = True

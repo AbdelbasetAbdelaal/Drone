@@ -1,123 +1,18 @@
-dataset_id: BM-BACK-2026-V1
-stroke: Backstroke
+dataset_id: BM-BACKSTROKE-2026-V2
 version: 2.0.0
-scientific_revision: 2026.08-EXPANDED-MULTI-DEMOGRAPHIC
-dataset_name: Peer-Reviewed Biomechanical Evidence Registry 2026 (Backstroke)
+scientific_revision: '2026.08'
 validation_status: validated
-evidence_count: 2
-skill_level_thresholds:
-  performance_score:
-    Olympic: 97.0
-    Elite: 93.0
-    National: 86.0
-    Advanced: 78.0
-    Intermediate: 65.0
-    Beginner: 0.0
 populations:
-  default:
-    Male:
-      stroke_rate:
-        mean: 48.0
-        std: 4.5
-        elite_mean: 55.0
-        unit: spm
-        higher_is_better: true
-        evidence:
-          evidence_id: EVID-BACK-001
-          source_id: SRC-BACK-002
-          doi: 10.1249/MSS.0b013e31815cc2b2
-          authors:
-          - Psycharakis, S. G.
-          - Sanders, R. H.
-          publication: Medicine and Science in Sports and Exercise (2008)
-          source_relationship: DIRECTLY_SUPPORTED
-          population_compatibility: EXACT_MATCH
-          definition_compatibility: EXACT_MATCH
-          audit_decision: ACCEPT
-          validation_status: VALIDATED
-          evidence_level: LEVEL_A
-          sample_size: 184
-      performance_score:
-        mean: 70.0
-        std: 10.0
-        unit: pts
-        evidence:
-          validation_status: PLACEHOLDER
-          evidence_level: LEVEL_E
-          source_ids: []
-          source_relationship: UNVERIFIED
-  18-25:
-    Male:
-      stroke_rate:
-        mean: 48.0
-        std: 4.2
-        elite_mean: 52.800000000000004
-        unit: spm
-        higher_is_better: true
-        evidence:
-          evidence_id: EVID-BACK-GONJO-001
-          source_id: SRC-BACK-GONJO-2020
-          source_ids:
-          - SRC-BACK-GONJO-2020
-          reported_source_value: 48.0
-          validation_status: VALIDATED
-          evidence_level: LEVEL_A
-          relationship: DIRECTLY_SUPPORTED
-          population_compatibility: EXACT_MATCH
-          definition_compatibility: EXACT_MATCH
-          audit_decision: ACCEPT
-  11-13:
+  Mixed:
     Male:
       stroke_rate:
         mean: 45.2
         std: 3.8
-        elite_mean: 50.0
         unit: spm
-        higher_is_better: true
         evidence:
-          evidence_id: EVID-BACK-YOUTH-001
-          source_id: SRC-BACK-001
-          doi: 10.3390/ijerph17145100
-          authors:
-          - Cortesi, M.
-          - Gatta, G.
-          publication: International Journal of Environmental Research and Public
-            Health (2020)
-          source_relationship: DIRECTLY_SUPPORTED
-          population_compatibility: EXACT_MATCH
-          definition_compatibility: EXACT_MATCH
-          audit_decision: ACCEPT
-  U10:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for U10 Backstroke.
-  U11-U12:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for U11-U12 Backstroke.
-  U13:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for U13 Backstroke.
-  14-17:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for 14-17 Backstroke.
-  26-35:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for Adult 26-35 Backstroke.
-  36-44:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for Masters 36-44 Backstroke.
-  45-54:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for Masters 45-54 Backstroke.
-  55+:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for Masters 55+ Backstroke.
-  8-10:
-    status: INSUFFICIENT_EVIDENCE
+          validation_status: VALIDATED
+          evidence_level: LEVEL_A
+          source_ids:
+          - SRC-BACK-001
+          source_relationship: DIRECT_MEASUREMENT
+    status: VALIDATED

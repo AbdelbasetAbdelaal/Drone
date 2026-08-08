@@ -4859,3 +4859,317 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 2026-08-09 00:16:45,067 - services.scientific_updater_service - INFO - [SYSTEM] [20%] Searching external peer-reviewed literature & retrieving PMC full text...
 2026-08-09 00:16:45,629 - services.scientific_updater_service - WARNING - [SYSTEM] Internet search error: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1081)>
 2026-08-09 00:16:45,630 - services.scientific_updater_service - WARNING - [SYSTEM] Executing atomic rollback of production scientific database...
+2026-08-09 00:21:48,435 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:22:21,869 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:22:22,077 - services.auth_service - INFO - [SYSTEM] Coach logged in: coach1
+2026-08-09 00:22:22,307 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:22:24,528 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:22:29,924 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:22:29,957 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:22:36,580 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:22:36,610 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:22:41,717 - services.scientific_semantic_extractor - WARNING - ScientificSemanticExtractor initialized in DEGRADED_MODE. Missing google-genai or GEMINI_API_KEY.
+2026-08-09 00:22:41,717 - services.scientific_updater_service - INFO - [SYSTEM] [5%] Initializing atomic update staging environment...
+2026-08-09 00:22:41,809 - services.scientific_updater_service - INFO - [SYSTEM] [20%] Searching external peer-reviewed literature & retrieving PMC full text...
+2026-08-09 00:22:42,410 - services.scientific_updater_service - WARNING - [SYSTEM] Internet search error: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1081)>
+2026-08-09 00:22:42,410 - services.scientific_updater_service - WARNING - [SYSTEM] Executing atomic rollback of production scientific database...
+2026-08-09 00:22:42,995 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:22:43,028 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:24:18,243 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:24:18,270 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:24:18,532 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:24:18,550 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:24:18,638 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 00:24:19,169 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_43eece280ace429fa58e5e77d97bece8.mp4
+2026-08-09 00:24:25,090 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 00:24:25,310 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:24:25,329 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:25:21,468 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:25:21,494 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:25:22,339 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:25:22,366 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:25:22,634 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:25:22,736 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:25:22,843 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-09 00:25:22,845 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_43eece280ace429fa58e5e77d97bece8.mp4 (Effective FPS: 29.97002997002997, Frame Stride: 2)
+2026-08-09 00:25:22,898 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 00:25:23,310 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_43eece280ace429fa58e5e77d97bece8.mp4 (1280x720 @ 29.97002997002997fps)
+2026-08-09 00:25:23,339 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_43eece280ace429fa58e5e77d97bece8.mp4 (1280x720 @ 29.97002997002997fps)
+2026-08-09 00:25:23,340 - utils.video_utils - INFO - [VIDEO] Output video will be downscaled to 854x480 (480p max) for stability.
+2026-08-09 00:25:24,100 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_43eece280ace429fa58e5e77d97bece8.mp4 (Codec: mp4v)
+2026-08-09 00:26:26,997 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 447 frames.
+2026-08-09 00:26:27,047 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-09 00:26:27,086 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 00:26:27,180 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:26:27,200 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:26:27,219 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:26:27,261 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:26:27,263 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: National, Dataset: Peer-Reviewed Biomechanical Evidence Registry 2026 (Freestyle))
+2026-08-09 00:26:27,703 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_43eece280ace429fa58e5e77d97bece8.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_43eece280ace429fa58e5e77d97bece8.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_43eece280ace429fa58e5e77d97bece8.json
+2026-08-09 00:26:43,690 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_43eece280ace429fa58e5e77d97bece8.mp4
+2026-08-09 00:26:43,764 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 1.70 MB, Frames: 447, Duration: 14.91s
+2026-08-09 00:26:43,875 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 00:26:43,877 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-09 00:26:44,264 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:26:44,290 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:26:44,375 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-09 00:26:44,381 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-09 00:26:44,389 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-09 00:26:44,393 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-09 00:26:44,394 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-09 00:26:44,403 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-09 00:26:44,410 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-09 00:26:44,422 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-09 00:26:44,425 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-09 00:26:44,431 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-09 00:26:44,843 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 32 scientific literature sources from registry.
+2026-08-09 00:26:45,868 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-09 00:26:46,243 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-09 00:26:49,983 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-09 00:26:49,988 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-09 00:26:50,263 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-09 00:26:50,269 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-09 00:26:50,475 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-09 00:26:50,480 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-09 00:26:50,502 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-09 00:26:50,506 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-09 00:26:50,510 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-09 00:26:50,708 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 32 scientific literature sources from registry.
+2026-08-09 00:26:50,715 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_8f7c2f2c.pdf
+2026-08-09 00:26:51,192 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-09 00:30:21,254 - services.scientific_semantic_extractor - WARNING - ScientificSemanticExtractor initialized in DEGRADED_MODE. Missing google-genai or GEMINI_API_KEY.
+2026-08-09 00:30:21,255 - services.scientific_updater_service - INFO - [SYSTEM] [5%] Initializing atomic update staging environment...
+2026-08-09 00:30:21,332 - services.scientific_updater_service - INFO - [SYSTEM] [20%] Searching external peer-reviewed literature & retrieving PMC full text...
+2026-08-09 00:30:32,023 - services.scientific_updater_service - INFO - [SYSTEM] [70%] Building strictly supported benchmarks...
+2026-08-09 00:30:32,340 - services.scientific_updater_service - INFO - [SYSTEM] [85%] Rebuilding population coverage matrix...
+2026-08-09 00:30:32,449 - services.scientific_updater_service - INFO - [SYSTEM] [90%] Running strict scientific safety tests...
+2026-08-09 00:30:32,910 - services.scientific_updater_service - INFO - [SYSTEM] [100%] Scientific Database Update complete.
+2026-08-09 00:31:46,505 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:31:48,297 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:31:48,510 - services.auth_service - INFO - [SYSTEM] Coach logged in: coach1
+2026-08-09 00:31:48,728 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:31:50,384 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:31:55,961 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:31:55,988 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:32:00,762 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:32:00,794 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:32:00,882 - services.scientific_semantic_extractor - WARNING - ScientificSemanticExtractor initialized in DEGRADED_MODE. Missing google-genai or GEMINI_API_KEY.
+2026-08-09 00:32:00,883 - services.scientific_updater_service - INFO - [SYSTEM] [5%] Initializing atomic update staging environment...
+2026-08-09 00:32:01,008 - services.scientific_updater_service - INFO - [SYSTEM] [20%] Searching external peer-reviewed literature & retrieving PMC full text...
+2026-08-09 00:32:01,689 - services.scientific_updater_service - WARNING - [SYSTEM] Internet search error: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1081)>
+2026-08-09 00:32:01,690 - services.scientific_updater_service - WARNING - [SYSTEM] Executing atomic rollback of production scientific database...
+2026-08-09 00:32:02,042 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:32:02,073 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:35:13,092 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:35:51,635 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:35:51,855 - services.auth_service - INFO - [SYSTEM] Coach logged in: coach1
+2026-08-09 00:35:52,105 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:35:53,832 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:35:59,283 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:35:59,313 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:36:04,322 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:36:04,346 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:36:09,845 - services.scientific_updater_service - INFO - [SYSTEM] [5%] Initializing atomic update staging environment...
+2026-08-09 00:36:10,091 - services.scientific_updater_service - INFO - [SYSTEM] [20%] Searching external peer-reviewed literature & retrieving PMC full text...
+2026-08-09 00:36:10,387 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 00:36:10,393 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 00:36:10,405 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 00:36:10,410 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 00:36:10,417 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 00:36:10,422 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 00:36:10,427 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 00:36:10,520 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 00:36:10,588 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 00:36:10,651 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 00:36:11,377 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 00:36:12,920 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: test_stability_video.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-09 00:36:12,951 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 00:36:13,666 - utils.video_utils - INFO - [VIDEO] Opened video: test_stability_video.mp4 (854x480 @ 30.0fps)
+2026-08-09 00:36:13,670 - utils.video_utils - INFO - [VIDEO] Opened video: test_stability_video.mp4 (854x480 @ 30.0fps)
+2026-08-09 00:36:13,671 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_test_stability_video.mp4 (Codec: mp4v)
+2026-08-09 00:36:18,907 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 75 frames.
+2026-08-09 00:36:18,946 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-09 00:36:18,996 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 00:36:19,020 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:36:19,041 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:36:19,071 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:36:19,111 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:36:19,112 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: Beginner, Dataset: Population Reference Dataset)
+2026-08-09 00:36:19,135 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_test_stability_video.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_test_stability_video.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_test_stability_video.json
+2026-08-09 00:36:20,872 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_test_stability_video.mp4
+2026-08-09 00:36:20,898 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 0.08 MB, Frames: 75, Duration: 2.50s
+2026-08-09 00:36:21,715 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 00:36:22,187 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 32 scientific literature sources from registry.
+2026-08-09 00:36:22,462 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:36:22,471 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:36:22,476 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:36:22,480 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:36:22,520 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:36:22,528 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:36:22,533 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:36:22,557 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:36:22,567 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:36:22,575 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:36:22,580 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:36:22,585 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:36:22,595 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:36:22,603 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:36:22,608 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:36:22,614 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:36:22,623 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:36:22,630 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:36:22,635 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:36:22,643 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:36:22,717 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 00:36:22,728 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:36:22,736 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:36:22,742 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:36:22,747 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:36:22,961 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 32 scientific literature sources from registry.
+2026-08-09 00:36:22,996 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_2884737b.pdf
+2026-08-09 00:36:23,007 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:36:23,012 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:36:23,016 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:36:23,021 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:36:23,201 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 32 scientific literature sources from registry.
+2026-08-09 00:36:23,579 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:36:23,588 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:36:23,593 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:36:23,602 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:36:23,648 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:36:23,657 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:36:23,664 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:36:23,673 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:36:23,702 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:36:23,712 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:36:23,718 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:36:23,726 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:36:24,191 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 32 scientific literature sources from registry.
+2026-08-09 00:36:24,463 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 32 scientific literature sources from registry.
+2026-08-09 00:36:24,684 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 32 scientific literature sources from registry.
+2026-08-09 00:36:24,690 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:36:24,698 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:36:24,703 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:36:24,711 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:36:24,721 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:36:24,729 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:36:24,734 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:36:24,742 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:36:24,767 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:36:24,775 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:36:24,780 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:36:24,788 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:36:24,803 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:36:24,812 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:36:24,818 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:36:24,826 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:36:24,952 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 00:36:26,854 - services.scientific_updater_service - INFO - [SYSTEM] [70%] Building strictly supported benchmarks...
+2026-08-09 00:36:27,103 - services.scientific_updater_service - INFO - [SYSTEM] [85%] Rebuilding population coverage matrix...
+2026-08-09 00:36:27,187 - services.scientific_updater_service - INFO - [SYSTEM] [90%] Running strict scientific safety tests...
+2026-08-09 00:36:27,582 - services.scientific_updater_service - INFO - [SYSTEM] [100%] Scientific Database Update complete.
+2026-08-09 00:36:27,766 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:36:27,787 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:36:27,928 - services.scientific_updater_service - WARNING - [SYSTEM] PMC full text retrieval/parsing failed for PMC7548777: [Errno 2] No such file or directory: 'D:\\AI_Projects\\Swim_Analyzer_AI\\data\\scientific_update_staging\\evidence\\evidence_registry.yaml'
+2026-08-09 00:36:29,810 - services.scientific_updater_service - WARNING - [SYSTEM] PMC full text retrieval/parsing failed for 7548777: [Errno 2] No such file or directory: 'D:\\AI_Projects\\Swim_Analyzer_AI\\data\\scientific_update_staging\\evidence\\evidence_registry.yaml'
+2026-08-09 00:36:32,371 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:36:32,379 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:36:32,385 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:36:32,391 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:36:32,932 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:36:32,939 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:36:32,944 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:36:32,950 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:36:33,545 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:36:33,552 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:36:33,558 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:36:33,565 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:36:34,185 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:36:34,189 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:36:34,192 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:36:34,197 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:36:35,603 - services.scientific_updater_service - INFO - [SYSTEM] [5%] Initializing atomic update staging environment...
+2026-08-09 00:36:35,634 - services.scientific_updater_service - INFO - [SYSTEM] [20%] Searching external peer-reviewed literature & retrieving PMC full text...
+2026-08-09 00:36:45,716 - services.scientific_updater_service - INFO - [SYSTEM] [70%] Building strictly supported benchmarks...
+2026-08-09 00:36:45,813 - services.scientific_updater_service - INFO - [SYSTEM] [85%] Rebuilding population coverage matrix...
+2026-08-09 00:36:45,867 - services.scientific_updater_service - INFO - [SYSTEM] [90%] Running strict scientific safety tests...
+2026-08-09 00:36:46,111 - services.scientific_updater_service - INFO - [SYSTEM] [100%] Scientific Database Update complete.
+2026-08-09 00:36:46,111 - services.scientific_updater_service - INFO - [SYSTEM] [5%] Initializing atomic update staging environment...
+2026-08-09 00:36:46,145 - services.scientific_updater_service - INFO - [SYSTEM] [20%] Searching external peer-reviewed literature & retrieving PMC full text...
+2026-08-09 00:36:55,441 - services.scientific_updater_service - INFO - [SYSTEM] [70%] Building strictly supported benchmarks...
+2026-08-09 00:36:55,663 - services.scientific_updater_service - INFO - [SYSTEM] [85%] Rebuilding population coverage matrix...
+2026-08-09 00:36:55,750 - services.scientific_updater_service - INFO - [SYSTEM] [90%] Running strict scientific safety tests...
+2026-08-09 00:36:56,031 - services.scientific_updater_service - INFO - [SYSTEM] [100%] Scientific Database Update complete.
+2026-08-09 00:36:56,979 - services.scientific_updater_service - INFO - [SYSTEM] [5%] Initializing atomic update staging environment...
+2026-08-09 00:36:57,020 - services.scientific_updater_service - INFO - [SYSTEM] [20%] Searching external peer-reviewed literature & retrieving PMC full text...
+2026-08-09 00:37:07,237 - services.scientific_updater_service - INFO - [SYSTEM] [70%] Building strictly supported benchmarks...
+2026-08-09 00:37:07,454 - services.scientific_updater_service - INFO - [SYSTEM] [85%] Rebuilding population coverage matrix...
+2026-08-09 00:37:07,537 - services.scientific_updater_service - INFO - [SYSTEM] [90%] Running strict scientific safety tests...
+2026-08-09 00:37:07,886 - services.scientific_updater_service - INFO - [SYSTEM] [100%] Scientific Database Update complete.
+2026-08-09 00:37:10,812 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 00:37:11,585 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 00:37:12,457 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 32 scientific literature sources from registry.
+2026-08-09 00:37:12,674 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 32 scientific literature sources from registry.
+2026-08-09 00:37:12,907 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 32 scientific literature sources from registry.
+2026-08-09 00:37:12,945 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:37:12,954 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:37:12,960 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:37:12,970 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:37:12,998 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:37:13,007 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:37:13,013 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:37:13,022 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:37:13,101 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 00:37:13,110 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 00:37:13,116 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 00:37:13,126 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 00:37:15,397 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Passed. Scientific Confidence: High
+2026-08-09 00:37:15,405 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 00:37:15,423 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 00:37:15,431 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 00:37:15,442 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Passed. Scientific Confidence: High
+2026-08-09 00:37:15,452 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 00:37:15,470 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 00:37:25,127 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: C:\Users\DELL\AppData\Local\Temp\tmpc_takddz.mp4
+2026-08-09 00:37:25,260 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 7.00 MB, Frames: 90, Duration: 3.00s
+2026-08-09 00:37:25,269 - utils.video_utils - ERROR - [VIDEO] Export validation failed: File size is only 0 bytes (too small).
+2026-08-09 00:37:26,028 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: C:\Users\DELL\AppData\Local\Temp\tmp_5plrb8z.mp4
+2026-08-09 00:41:33,409 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:41:37,296 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:41:37,491 - services.auth_service - INFO - [SYSTEM] Coach logged in: coach1
+2026-08-09 00:41:38,057 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:41:40,142 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:41:46,328 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:41:46,352 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:41:51,405 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:41:51,444 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:42:07,337 - services.scientific_updater_service - INFO - [SYSTEM] [5%] Initializing atomic update staging environment...
+2026-08-09 00:42:07,457 - services.scientific_updater_service - INFO - [SYSTEM] [20%] Searching external peer-reviewed literature & retrieving PMC full text...
+2026-08-09 00:42:16,975 - services.scientific_updater_service - INFO - [SYSTEM] [70%] Building strictly supported benchmarks...
+2026-08-09 00:42:17,149 - services.scientific_updater_service - INFO - [SYSTEM] [85%] Rebuilding population coverage matrix...
+2026-08-09 00:42:17,219 - services.scientific_updater_service - INFO - [SYSTEM] [90%] Running strict scientific safety tests...
+2026-08-09 00:42:17,564 - services.scientific_updater_service - INFO - [SYSTEM] [100%] Scientific Database Update complete.
+2026-08-09 00:42:17,748 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:42:17,767 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:42:25,048 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:42:25,072 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:42:25,332 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:42:25,352 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:42:25,429 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 00:42:25,896 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_cd2a55346c794c11b0193f82f71fa2a2.mp4
+2026-08-09 00:42:31,789 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 00:42:32,080 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:42:32,109 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:42:37,304 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:42:37,330 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:42:38,240 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:42:38,261 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:42:38,531 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 00:42:38,552 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Learn How to Swim Backstroke in 30 Seconds!.mp4
+2026-08-09 00:42:38,641 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-09 00:42:38,642 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_cd2a55346c794c11b0193f82f71fa2a2.mp4 (Effective FPS: 29.97002997002997, Frame Stride: 2)
+2026-08-09 00:42:38,676 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 00:42:39,049 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_cd2a55346c794c11b0193f82f71fa2a2.mp4 (1280x720 @ 29.97002997002997fps)
+2026-08-09 00:42:39,066 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_cd2a55346c794c11b0193f82f71fa2a2.mp4 (1280x720 @ 29.97002997002997fps)
+2026-08-09 00:42:39,066 - utils.video_utils - INFO - [VIDEO] Output video will be downscaled to 854x480 (480p max) for stability.
+2026-08-09 00:42:39,069 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_cd2a55346c794c11b0193f82f71fa2a2.mp4 (Codec: mp4v)

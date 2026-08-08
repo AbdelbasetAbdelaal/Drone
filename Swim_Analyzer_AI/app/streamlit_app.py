@@ -7,6 +7,8 @@ import os
 from pathlib import Path
 import numpy as np
 import pandas as pd
+from dotenv import load_dotenv
+load_dotenv()
 
 # Add the root directory to PYTHONPATH so that absolute imports work from within streamlit
 sys.path.append(str(Path(__file__).resolve().parent.parent))

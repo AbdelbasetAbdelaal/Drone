@@ -1,121 +1,29 @@
-dataset_id: BM-BREAST-2026-V1
-stroke: Breaststroke
+dataset_id: BM-BREASTSTROKE-2026-V2
 version: 2.0.0
-scientific_revision: 2026.08-EXPANDED-MULTI-DEMOGRAPHIC
-dataset_name: Peer-Reviewed Biomechanical Evidence Registry 2026 (Breaststroke)
+scientific_revision: '2026.08'
 validation_status: validated
-evidence_count: 2
-skill_level_thresholds:
-  performance_score:
-    Olympic: 97.0
-    Elite: 93.0
-    National: 86.0
-    Advanced: 78.0
-    Intermediate: 65.0
-    Beginner: 0.0
 populations:
-  default:
+  Mixed:
     Male:
       stroke_rate:
         mean: 44.0
         std: 4.5
-        elite_mean: 50.0
         unit: spm
-        higher_is_better: true
         evidence:
-          evidence_id: EVID-BREAST-MALE-001
-          source_id: SRC-BREAST-001
-          doi: 10.1007/s004210050334
-          authors:
-          - Capelli, C.
-          - Pendergast, D. R.
-          publication: European Journal of Applied Physiology (1998)
-          source_relationship: DIRECTLY_SUPPORTED
-          population_compatibility: EXACT_MATCH
-          definition_compatibility: EXACT_MATCH
-          audit_decision: ACCEPT
           validation_status: VALIDATED
           evidence_level: LEVEL_A
-          sample_size: 184
-      performance_score:
-        mean: 70.0
-        std: 10.0
-        unit: pts
-        evidence:
-          validation_status: PLACEHOLDER
-          evidence_level: LEVEL_E
-          source_ids: []
-          source_relationship: UNVERIFIED
-  18-25:
-    Male:
-      stroke_rate:
-        mean: 44.0
-        std: 4.5
-        elite_mean: 48.400000000000006
-        unit: spm
-        higher_is_better: true
-        evidence:
-          evidence_id: EVID-BREAST-MALE-001
-          source_id: SRC-BREAST-001
           source_ids:
           - SRC-BREAST-001
-          reported_source_value: 44.0
-          validation_status: VALIDATED
-          evidence_level: LEVEL_A
-          relationship: DIRECTLY_SUPPORTED
-          population_compatibility: EXACT_MATCH
-          definition_compatibility: EXACT_MATCH
-          audit_decision: ACCEPT
+          source_relationship: DIRECT_MEASUREMENT
+    status: VALIDATED
     Female:
       stroke_rate:
         mean: 41.8
         std: 3.9
-        elite_mean: 45.980000000000004
         unit: spm
-        higher_is_better: true
         evidence:
-          evidence_id: EVID-BREAST-FEM-001
-          source_id: SRC-BREAST-002
-          source_ids:
-          - SRC-BREAST-002
-          reported_source_value: 41.8
           validation_status: VALIDATED
           evidence_level: LEVEL_A
-          relationship: DIRECTLY_SUPPORTED
-          population_compatibility: EXACT_MATCH
-          definition_compatibility: EXACT_MATCH
-          audit_decision: ACCEPT
-  U10:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for U10 Breaststroke.
-  U11-U12:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for U11-U12 Breaststroke.
-  U13:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for U13 Breaststroke.
-  11-13:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for U11-U13 Breaststroke.
-  14-17:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for 14-17 Breaststroke.
-  36-44:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for Masters 36-44 Breaststroke.
-  45-54:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for Masters 45-54 Breaststroke.
-  55+:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for Masters 55+ Breaststroke.
-  8-10:
-    status: INSUFFICIENT_EVIDENCE
+          source_ids:
+          - SRC-BREAST-002
+          source_relationship: DIRECT_MEASUREMENT

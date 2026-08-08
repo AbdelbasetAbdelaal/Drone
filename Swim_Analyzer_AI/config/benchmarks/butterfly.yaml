@@ -1,121 +1,18 @@
-dataset_id: BM-FLY-2026-V1
-stroke: Butterfly
+dataset_id: BM-BUTTERFLY-2026-V2
 version: 2.0.0
-scientific_revision: 2026.08-EXPANDED-MULTI-DEMOGRAPHIC
-dataset_name: Peer-Reviewed Biomechanical Evidence Registry 2026 (Butterfly)
+scientific_revision: '2026.08'
 validation_status: validated
-evidence_count: 2
-skill_level_thresholds:
-  performance_score:
-    Olympic: 97.0
-    Elite: 93.0
-    National: 86.0
-    Advanced: 78.0
-    Intermediate: 65.0
-    Beginner: 0.0
 populations:
-  default:
+  Mixed:
     Male:
       stroke_rate:
         mean: 52.4
         std: 3.6
-        elite_mean: 56.5
         unit: spm
-        higher_is_better: true
         evidence:
-          evidence_id: EVID-FLY-MALE-001
-          source_id: SRC-FLY-001
-          doi: 10.1016/j.humov.2007.08.001
-          authors:
-          - Seifert, L.
-          - Boulesteix, L.
-          publication: Human Movement Science (2008)
-          source_relationship: DIRECTLY_SUPPORTED
-          population_compatibility: EXACT_MATCH
-          definition_compatibility: EXACT_MATCH
-          audit_decision: ACCEPT
           validation_status: VALIDATED
           evidence_level: LEVEL_A
-          sample_size: 184
-      performance_score:
-        mean: 70.0
-        std: 10.0
-        unit: pts
-        evidence:
-          validation_status: PLACEHOLDER
-          evidence_level: LEVEL_E
-          source_ids: []
-          source_relationship: UNVERIFIED
-  18-25:
-    Male:
-      stroke_rate:
-        mean: 52.4
-        std: 3.6
-        elite_mean: 57.64
-        unit: spm
-        higher_is_better: true
-        evidence:
-          evidence_id: EVID-FLY-MALE-001
-          source_id: SRC-FLY-001
           source_ids:
           - SRC-FLY-001
-          reported_source_value: 52.4
-          validation_status: VALIDATED
-          evidence_level: LEVEL_A
-          relationship: DIRECTLY_SUPPORTED
-          population_compatibility: EXACT_MATCH
-          definition_compatibility: EXACT_MATCH
-          audit_decision: ACCEPT
-    Female:
-      stroke_rate:
-        mean: 46.8
-        std: 4.1
-        elite_mean: 51.5
-        unit: spm
-        higher_is_better: true
-        evidence:
-          evidence_id: EVID-FLY-FEM-001
-          source_id: SRC-FLY-001
-          doi: 10.1016/j.humov.2007.08.001
-          authors:
-          - Seifert, L.
-          - Boulesteix, L.
-          publication: Human Movement Science (2008)
-          source_relationship: DIRECTLY_SUPPORTED
-          population_compatibility: EXACT_MATCH
-          definition_compatibility: EXACT_MATCH
-          audit_decision: ACCEPT
-  U10:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for U10 Butterfly.
-  U11-U12:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for U11-U12 Butterfly.
-  U13:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for U13 Butterfly.
-  11-13:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for U11-U13 Butterfly.
-  14-17:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for 14-17 Butterfly.
-  36-44:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for Masters 36-44 Butterfly.
-  45-54:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for Masters 45-54 Butterfly.
-  55+:
-    status: INSUFFICIENT_EVIDENCE
-    reason: No peer-reviewed empirical kinematic evidence record indexed in registry
-      for Masters 55+ Butterfly.
-  8-10:
-    status: INSUFFICIENT_EVIDENCE
+          source_relationship: DIRECT_MEASUREMENT
+    status: VALIDATED
