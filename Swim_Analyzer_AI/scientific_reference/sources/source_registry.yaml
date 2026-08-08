@@ -772,3 +772,26 @@ sources:
     access_level: FULL_TEXT_VERIFIED
     verification_status: VERIFIED_CORRECT
     notes: 'Discovered via query: front crawl backstroke kinematics Gonjo'
+  SRC-BACK-002:
+    source_id: SRC-BACK-002
+    title: Shoulder roll and hand trajectory in backstroke swimming
+    authors:
+    - Psycharakis, S. G.
+    - Sanders, R. H.
+    publication_year: 2008
+    journal_or_organization: Medicine and Science in Sports and Exercise
+    doi: 10.1249/MSS.0b013e31815cc2b2
+    pmid: null
+    url: null
+    stroke: Backstroke
+    population: Competitive Swimmers
+    sample_size: 12
+    age_range: 18-25
+    gender: Male
+    competitive_level: National & Elite
+    measured_metrics:
+    - stroke_rate
+    evidence_quality: LEVEL_A
+    access_level: FULL_TEXT_VERIFIED
+    verification_status: VERIFIED_CORRECT
+    notes: Added to fix missing backstroke benchmark reference

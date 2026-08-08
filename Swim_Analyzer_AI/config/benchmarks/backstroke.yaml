@@ -90,3 +90,6 @@ populations:
   "55+":
     status: INSUFFICIENT_EVIDENCE
     reason: "No peer-reviewed empirical kinematic evidence record indexed in registry for Masters 55+ Backstroke."
+
+  "8-10":
+    status: INSUFFICIENT_EVIDENCE

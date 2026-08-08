@@ -106,7 +106,7 @@ def test_12_no_benchmark_from_unverified_source(repo, benchmark_engine):
 def test_13_traceability_metadata_present(benchmark_engine):
     stats = benchmark_engine._get_population_stats("freestyle", "18-25", "Male", "stroke_rate")
     assert stats.evidence is not None
-    assert stats.evidence.source_id == "SRC-FREE-001"
+    assert "SRC-FREE-001" in stats.evidence.source_ids
 
 def test_14_four_stroke_coverage_in_engine(benchmark_engine):
     for stroke in ["freestyle", "backstroke", "breaststroke", "butterfly"]:

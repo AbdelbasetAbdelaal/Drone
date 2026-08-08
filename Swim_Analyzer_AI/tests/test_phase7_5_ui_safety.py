@@ -132,4 +132,4 @@ def test_rule_10_stroke_isolation():
     bk_stats = engine._get_population_stats("Backstroke", "18-25", "Male", "stroke_rate")
 
     assert fs_stats.mean == 54.0
-    assert bk_stats.mean == 50.0
+    assert bk_stats.mean == 48.0

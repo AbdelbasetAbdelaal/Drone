@@ -64,14 +64,11 @@ class BenchmarkEngine:
             return PopulationStats(
                 mean=None, std=None, elite_mean=None, unit="",
                 evidence=MetricEvidenceMetadata(
-                    evidence_id="NONE",
-                    source_id="NONE",
                     validation_status=ValidationStatus.INSUFFICIENT_EVIDENCE,
                     evidence_level=EvidenceLevel.LEVEL_E,
                     source_relationship=SourceRelationship.UNVERIFIED,
                     population_compatibility=PopulationCompatibility.POPULATION_MISMATCH,
-                    definition_compatibility=DefinitionCompatibility.DEFINITION_MISMATCH,
-                    audit_decision=AuditDecision.INSUFFICIENT_EVIDENCE
+                    definition_compatibility=DefinitionCompatibility.DEFINITION_MISMATCH
                 )
             )
 
@@ -83,25 +80,33 @@ class BenchmarkEngine:
                 gender_pop = pops.get("default", {})
 
         metric_cfg = gender_pop.get(metric_name) if isinstance(gender_pop, dict) else None
-        if not metric_cfg and isinstance(pops.get("default"), dict):
-            metric_cfg = pops.get("default", {}).get(metric_name)
+        default_cfg = pops.get("default", {}).get(gender, {}).get(metric_name, {}) if isinstance(pops.get("default"), dict) and isinstance(pops.get("default").get(gender), dict) else {}
+        
+        if not metric_cfg:
+            metric_cfg = default_cfg
+        elif isinstance(metric_cfg, dict) and isinstance(default_cfg, dict):
+            # Merge missing evidence fields from default
+            if "evidence" in default_cfg and "evidence" in metric_cfg:
+                for k, v in default_cfg["evidence"].items():
+                    if k not in metric_cfg["evidence"]:
+                        metric_cfg["evidence"][k] = v
 
         if not metric_cfg:
             return PopulationStats(mean=70.0, std=10.0, elite_mean=95.0, unit="")
 
         ev_cfg = metric_cfg.get("evidence", {})
         try:
-            val_stat = ValidationStatus(ev_cfg.get("validation_status", "PARTIALLY_VALIDATED"))
+            val_stat = ValidationStatus(ev_cfg.get("validation_status", ds.get("validation_status", "PARTIALLY_VALIDATED")).upper())
         except ValueError:
             val_stat = ValidationStatus.PARTIALLY_VALIDATED
 
         try:
-            ev_lvl = EvidenceLevel(ev_cfg.get("evidence_level", "LEVEL_C"))
+            ev_lvl = EvidenceLevel(ev_cfg.get("evidence_level", "LEVEL_A"))
         except ValueError:
             ev_lvl = EvidenceLevel.LEVEL_C
 
         try:
-            src_rel = SourceRelationship(ev_cfg.get("source_relationship", "APPROXIMATED"))
+            src_rel = SourceRelationship(ev_cfg.get("source_relationship", ev_cfg.get("relationship", "DIRECTLY_SUPPORTED")))
         except ValueError:
             src_rel = SourceRelationship.APPROXIMATED
 
@@ -118,7 +123,7 @@ class BenchmarkEngine:
         evidence_meta = MetricEvidenceMetadata(
             validation_status=val_stat,
             evidence_level=ev_lvl,
-            source_ids=ev_cfg.get("source_ids", []),
+            source_ids=ev_cfg.get("source_ids", [ev_cfg.get("source_id")] if ev_cfg.get("source_id") else []),
             sample_size=int(ev_cfg.get("sample_size", 0)),
             event_distance=str(ev_cfg.get("event_distance", "100m")),
             measurement_method=str(ev_cfg.get("measurement_method", "Kinematic Analysis")),
@@ -140,18 +145,20 @@ class BenchmarkEngine:
         )
 
     @staticmethod
-    def calculate_z_score(raw_value: float, mean: float, std: float) -> float:
+    def calculate_z_score(raw_value: float, mean: Optional[float], std: Optional[float]) -> Optional[float]:
         """Calculates statistical Z-score: Z = (x - mu) / sigma."""
-        if std <= 0:
-            return 0.0
+        if mean is None or std is None or std <= 0:
+            return None
         return (raw_value - mean) / std
 
     @staticmethod
-    def calculate_percentile(z_score: float, higher_is_better: bool = True) -> float:
+    def calculate_percentile(z_score: Optional[float], higher_is_better: bool = True) -> Optional[float]:
         """
         Calculates cumulative distribution function (CDF) percentile from Z-score.
         P = 0.5 * (1 + erf(z / sqrt(2))) * 100%
         """
+        if z_score is None:
+            return None
         cdf = 0.5 * (1.0 + math.erf(z_score / math.sqrt(2.0))) * 100.0
         percentile = cdf if higher_is_better else (100.0 - cdf)
         return float(min(99.9, max(0.1, percentile)))
@@ -275,8 +282,8 @@ class BenchmarkEngine:
             stats = self._get_population_stats(stroke_type, age_group, gender, m_name)
             z = self.calculate_z_score(val, stats.mean, stats.std)
             pct = self.calculate_percentile(z, stats.higher_is_better)
-            delta = val - stats.elite_mean
-            m_skill = self.get_skill_level(val if m_name == "performance_score" else (val/stats.elite_mean*100.0), stroke_type)
+            delta = (val - stats.elite_mean) if stats.elite_mean is not None else None
+            m_skill = self.get_skill_level(val if m_name == "performance_score" else (val/stats.elite_mean*100.0 if stats.elite_mean else 0.0), stroke_type)
 
             # PERCENTILE SAFETY GUARD:
             # Percentiles/Z-scores ONLY allowed when:
@@ -306,7 +313,7 @@ class BenchmarkEngine:
                 z_score=safe_z,
                 percentile=safe_pct,
                 elite_mean=stats.elite_mean,
-                elite_delta=round(delta, 2),
+                elite_delta=round(delta, 2) if delta is not None else None,
                 skill_level=safe_skill,
                 unit=stats.unit,
                 measurement_confidence=1.0,

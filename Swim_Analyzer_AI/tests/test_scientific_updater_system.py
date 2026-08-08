@@ -87,6 +87,8 @@ def test_15_dynamic_coverage_calculation(updater):
 
 def test_16_duplicate_study_handling(updater):
     res1 = updater.run_update_cycle()
+    if res1.get("verdict") == "INTERNET_UNAVAILABLE":
+        pytest.skip("Skipped due to no internet")
     res2 = updater.run_update_cycle()
     assert res1.get("tests_passed") is True and res2.get("tests_passed") is True
 
@@ -110,56 +112,71 @@ def test_20_parsing_failure_handling(updater):
 # PART 17 STROKE CLASSIFIER TESTS (21 - 32)
 # --------------------------------------------------------------------------
 
+# Helper to build empty feature set
+def _dummy_feature_set():
+    from analysis.classification.feature_extractor import KinematicFeatureSet, ExtractedFeatureValue
+    return KinematicFeatureSet(
+        arm_phase_correlation=ExtractedFeatureValue("arm_phase_correlation", None, False),
+        mean_body_roll=ExtractedFeatureValue("mean_body_roll", None, False),
+        body_roll_amplitude=ExtractedFeatureValue("body_roll_amplitude", None, False),
+        wrist_vertical_range_ratio=ExtractedFeatureValue("wrist_vertical_range_ratio", None, False),
+        leg_kick_symmetry=ExtractedFeatureValue("leg_kick_symmetry", None, False),
+        wrist_recovery_height_ratio=ExtractedFeatureValue("wrist_recovery_height_ratio", None, False),
+        total_frames_in_window=0,
+        valid_frames_in_window=0,
+        window_start_frame=0,
+        window_end_frame=0
+    )
+
 def test_21_to_24_all_four_strokes_reachable():
     from analysis.classification.stroke_heuristic_classifier import StrokeHeuristicClassifier
-    from analysis.classification.feature_extractor import KinematicFeatureSet, FeatureValidity
+    from analysis.classification.feature_extractor import ExtractedFeatureValue
     
     classifier = StrokeHeuristicClassifier(confidence_threshold=0.75)
     
     # Test Freestyle Reachable
-    f_free = KinematicFeatureSet()
-    f_free.arm_phase_correlation = FeatureValidity(valid=True, raw_value=-0.8)
-    f_free.body_roll_amplitude = FeatureValidity(valid=True, raw_value=25.0)
-    f_free.wrist_vertical_range_ratio = FeatureValidity(valid=True, raw_value=0.20)
+    f_free = _dummy_feature_set()
+    f_free.arm_phase_correlation = ExtractedFeatureValue("arm_phase_correlation", raw_value=-0.8, valid=True)
+    f_free.body_roll_amplitude = ExtractedFeatureValue("body_roll_amplitude", raw_value=25.0, valid=True)
+    f_free.wrist_vertical_range_ratio = ExtractedFeatureValue("wrist_vertical_range_ratio", raw_value=0.20, valid=True)
     res_free = classifier.classify_features(f_free)
     assert res_free.predicted_stroke == StrokeType.FREESTYLE
 
     # Test Backstroke Reachable
-    f_back = KinematicFeatureSet()
-    f_back.arm_phase_correlation = FeatureValidity(valid=True, raw_value=-0.8)
-    f_back.body_roll_amplitude = FeatureValidity(valid=True, raw_value=5.0)
-    f_back.wrist_vertical_range_ratio = FeatureValidity(valid=True, raw_value=0.05)
+    f_back = _dummy_feature_set()
+    f_back.arm_phase_correlation = ExtractedFeatureValue("arm_phase_correlation", raw_value=-0.8, valid=True)
+    f_back.body_roll_amplitude = ExtractedFeatureValue("body_roll_amplitude", raw_value=5.0, valid=True)
+    f_back.wrist_vertical_range_ratio = ExtractedFeatureValue("wrist_vertical_range_ratio", raw_value=0.05, valid=True)
     res_back = classifier.classify_features(f_back)
     assert res_back.predicted_stroke == StrokeType.BACKSTROKE
 
     # Test Butterfly Reachable
-    f_fly = KinematicFeatureSet()
-    f_fly.arm_phase_correlation = FeatureValidity(valid=True, raw_value=0.8)
-    f_fly.wrist_vertical_range_ratio = FeatureValidity(valid=True, raw_value=0.35)
+    f_fly = _dummy_feature_set()
+    f_fly.arm_phase_correlation = ExtractedFeatureValue("arm_phase_correlation", raw_value=0.8, valid=True)
+    f_fly.wrist_vertical_range_ratio = ExtractedFeatureValue("wrist_vertical_range_ratio", raw_value=0.35, valid=True)
     res_fly = classifier.classify_features(f_fly)
     assert res_fly.predicted_stroke == StrokeType.BUTTERFLY
 
     # Test Breaststroke Reachable
-    f_breast = KinematicFeatureSet()
-    f_breast.arm_phase_correlation = FeatureValidity(valid=True, raw_value=0.8)
-    f_breast.wrist_vertical_range_ratio = FeatureValidity(valid=True, raw_value=0.10)
+    f_breast = _dummy_feature_set()
+    f_breast.arm_phase_correlation = ExtractedFeatureValue("arm_phase_correlation", raw_value=0.8, valid=True)
+    f_breast.wrist_vertical_range_ratio = ExtractedFeatureValue("wrist_vertical_range_ratio", raw_value=0.10, valid=True)
     res_breast = classifier.classify_features(f_breast)
     assert res_breast.predicted_stroke == StrokeType.BREASTSTROKE
 
 def test_25_unknown_classification():
     from analysis.classification.stroke_heuristic_classifier import StrokeHeuristicClassifier
-    from analysis.classification.feature_extractor import KinematicFeatureSet, FeatureValidity
     classifier = StrokeHeuristicClassifier()
-    f = KinematicFeatureSet()
+    f = _dummy_feature_set()
     res = classifier.classify_features(f)
     assert res.predicted_stroke == StrokeType.UNKNOWN
 
 def test_26_27_ambiguous_input_and_low_confidence():
     from analysis.classification.stroke_heuristic_classifier import StrokeHeuristicClassifier
-    from analysis.classification.feature_extractor import KinematicFeatureSet, FeatureValidity
+    from analysis.classification.feature_extractor import ExtractedFeatureValue
     classifier = StrokeHeuristicClassifier()
-    f = KinematicFeatureSet()
-    f.arm_phase_correlation = FeatureValidity(valid=True, raw_value=0.0) # Ambiguous phase
+    f = _dummy_feature_set()
+    f.arm_phase_correlation = ExtractedFeatureValue("arm_phase_correlation", raw_value=0.0, valid=True) # Ambiguous phase
     res = classifier.classify_features(f)
     assert res.predicted_stroke == StrokeType.UNKNOWN
     assert res.classification_status == "INSUFFICIENT_CONFIDENCE"
@@ -178,11 +195,11 @@ def test_30_no_silent_freestyle_fallback():
 
 def test_31_explainability_output():
     from analysis.classification.stroke_heuristic_classifier import StrokeHeuristicClassifier
-    from analysis.classification.feature_extractor import KinematicFeatureSet, FeatureValidity
+    from analysis.classification.feature_extractor import ExtractedFeatureValue
     classifier = StrokeHeuristicClassifier()
-    f = KinematicFeatureSet()
-    f.arm_phase_correlation = FeatureValidity(valid=True, raw_value=-0.8)
-    f.body_roll_amplitude = FeatureValidity(valid=True, raw_value=25.0)
+    f = _dummy_feature_set()
+    f.arm_phase_correlation = ExtractedFeatureValue("arm_phase_correlation", raw_value=-0.8, valid=True)
+    f.body_roll_amplitude = ExtractedFeatureValue("body_roll_amplitude", raw_value=25.0, valid=True)
     res = classifier.classify_features(f)
     assert "feature_contributions" in dir(res) or hasattr(res, "feature_contributions")
 
