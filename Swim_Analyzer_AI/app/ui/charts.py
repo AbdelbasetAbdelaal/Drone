@@ -109,3 +109,196 @@ def create_cycles_trend_chart(df: pd.DataFrame) -> go.Figure:
     
     return fig
 
+
+def create_3d_skeleton_chart(raw_landmarks, frame_idx: int = 0) -> go.Figure:
+    """
+    Renders an interactive rotatable 3D Pose Skeleton using Plotly Scatter3d.
+    """
+    fig = go.Figure()
+
+    if not raw_landmarks or len(raw_landmarks) < 25:
+        fig.add_annotation(text="No 3D landmark data available for this frame",
+                           showarrow=False, font=dict(size=14, color=TEXT_COLOR))
+        fig.update_layout(paper_bgcolor=BACKGROUND_COLOR, plot_bgcolor=BACKGROUND_COLOR)
+        return fig
+
+    # MediaPipe pose connections for 3D skeleton rendering
+    POSE_CONNECTIONS = [
+        (11, 12), # Left Shoulder -> Right Shoulder
+        (11, 13), (13, 15), # Left Arm
+        (12, 14), (14, 16), # Right Arm
+        (11, 23), (12, 24), # Torso sides
+        (23, 24), # Pelvic Line
+        (23, 25), (25, 27), # Left Leg
+        (24, 26), (26, 28)  # Right Leg
+    ]
+
+    # Extract 3D coordinates (invert Y for 3D coordinate system)
+    xs = [lm.x for lm in raw_landmarks]
+    ys = [-lm.y for lm in raw_landmarks]
+    zs = [-getattr(lm, 'z', 0.0) for lm in raw_landmarks]
+
+    # Draw limb connection lines
+    for p1, p2 in POSE_CONNECTIONS:
+        if p1 < len(xs) and p2 < len(xs):
+            fig.add_trace(go.Scatter3d(
+                x=[xs[p1], xs[p2]],
+                y=[ys[p1], ys[p2]],
+                z=[zs[p1], zs[p2]],
+                mode='lines',
+                line=dict(color=PRIMARY_CYAN, width=6),
+                showlegend=False,
+                hoverinfo='none'
+            ))
+
+    # Joint landmark nodes
+    fig.add_trace(go.Scatter3d(
+        x=xs, y=ys, z=zs,
+        mode='markers',
+        marker=dict(size=6, color=ACCENT_PINK, symbol='circle'),
+        name='Joint Landmarks',
+        hoverinfo='text',
+        text=[f"Landmark {i}" for i in range(len(xs))]
+    ))
+
+    fig.update_layout(
+        title=dict(text=f"🧊 360° Interactive 3D Skeleton (Frame {frame_idx})", font=dict(size=16, color=TEXT_COLOR)),
+        paper_bgcolor=BACKGROUND_COLOR,
+        plot_bgcolor=BACKGROUND_COLOR,
+        margin=dict(l=0, r=0, t=40, b=0),
+        scene=dict(
+            xaxis=dict(title='X (Width)', backgroundcolor=BACKGROUND_COLOR, gridcolor=GRID_COLOR, showbackground=True),
+            yaxis=dict(title='Y (Height)', backgroundcolor=BACKGROUND_COLOR, gridcolor=GRID_COLOR, showbackground=True),
+            zaxis=dict(title='Z (Depth)', backgroundcolor=BACKGROUND_COLOR, gridcolor=GRID_COLOR, showbackground=True),
+            camera=dict(eye=dict(x=1.5, y=1.5, z=1.2))
+        )
+    )
+    return fig
+
+
+def create_3d_torsion_chart(frames: list) -> go.Figure:
+    """
+    Renders 3D Core Torsion timeseries chart across the video timeline.
+    """
+    timestamps = []
+    torsions = []
+    rolls_3d = []
+
+    for f in frames:
+        if f.is_valid and f.angles:
+            t = f.timestamp_ms / 1000.0
+            timestamps.append(t)
+            torsion_val = f.angles.core_torsion_3d.value if f.angles.core_torsion_3d else 0.0
+            roll_val = f.angles.body_roll_3d.value if f.angles.body_roll_3d else 0.0
+            torsions.append(torsion_val)
+            rolls_3d.append(roll_val)
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+        x=timestamps, y=torsions,
+        mode='lines', name='3D Core Torsion (°)',
+        line=dict(color=ACCENT_ORANGE, width=3)
+    ))
+    fig.add_trace(go.Scatter(
+        x=timestamps, y=rolls_3d,
+        mode='lines', name='True 3D Body Roll (°)',
+        line=dict(color=PRIMARY_CYAN, width=3)
+    ))
+
+    fig = apply_premium_layout(fig, "🧊 3D Core Torsion & Spatial Roll Timeline")
+    fig.update_yaxes(title="Angle (°)", range=[0, 90])
+    fig.update_xaxes(title="Time (seconds)")
+    return fig
+
+
+def create_benchmark_percentile_chart(benchmark_result) -> go.Figure:
+    """
+    Renders horizontal bar chart of population percentiles across metrics.
+    """
+    if not benchmark_result or not getattr(benchmark_result, 'comparisons', None):
+        fig = go.Figure()
+        fig.add_annotation(text="No Population Benchmark Data Available", showarrow=False, font=dict(size=14, color=TEXT_COLOR))
+        fig.update_layout(paper_bgcolor=BACKGROUND_COLOR, plot_bgcolor=BACKGROUND_COLOR)
+        return fig
+
+    metrics = []
+    percentiles = []
+    colors = []
+
+    for name, comp in benchmark_result.comparisons.items():
+        metrics.append(name.replace("_", " ").title())
+        pct = comp.percentile
+        percentiles.append(pct)
+        if pct >= 85:
+            colors.append(PRIMARY_CYAN)
+        elif pct >= 65:
+            colors.append(ACCENT_ORANGE)
+        else:
+            colors.append(ACCENT_PINK)
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        y=metrics,
+        x=percentiles,
+        orientation='h',
+        marker_color=colors,
+        text=[f"{p:.1f}th percentile" for p in percentiles],
+        textposition='inside',
+        hoverinfo='text'
+    ))
+
+    # Population Mean reference line (50th percentile)
+    fig.add_vline(x=50, line_dash="dash", line_color=TEXT_COLOR, annotation_text="Population Mean (50th)", annotation_position="top left")
+    # Elite Mean reference line (90th percentile)
+    fig.add_vline(x=90, line_dash="dot", line_color=PRIMARY_CYAN, annotation_text="Elite Benchmark (90th)", annotation_position="top right")
+
+    fig = apply_premium_layout(fig, "📊 Population Percentile Rankings")
+    fig.update_xaxes(title="Percentile Rank (%)", range=[0, 100])
+    return fig
+
+
+def create_bell_curve_chart(metric_name: str, raw_value: float, mean: float, std: float, elite_mean: float) -> go.Figure:
+    """
+    Renders a Gaussian Normal Distribution Bell Curve showing athlete position vs population.
+    """
+    import numpy as np
+
+    if std <= 0:
+        std = 1.0
+
+    x = np.linspace(mean - 3.5 * std, mean + 3.5 * std, 100)
+    y = (1.0 / (std * np.sqrt(2 * np.pi))) * np.exp(-0.5 * ((x - mean) / std) ** 2)
+
+    fig = go.Figure()
+    # Bell Curve area
+    fig.add_trace(go.Scatter(
+        x=x, y=y,
+        mode='lines',
+        name='Population Distribution',
+        line=dict(color=SECONDARY_BLUE, width=3),
+        fill='tozeroy',
+        fillcolor='rgba(0, 85, 255, 0.15)'
+    ))
+
+    # Population Mean vertical line
+    fig.add_vline(x=mean, line_dash="dash", line_color=TEXT_COLOR, annotation_text=f"Mean: {mean:.1f}")
+
+    # Elite Mean vertical line
+    fig.add_vline(x=elite_mean, line_dash="dot", line_color=PRIMARY_CYAN, annotation_text=f"Elite: {elite_mean:.1f}")
+
+    # Athlete Position Marker
+    ath_y = (1.0 / (std * np.sqrt(2 * np.pi))) * np.exp(-0.5 * ((raw_value - mean) / std) ** 2)
+    fig.add_trace(go.Scatter(
+        x=[raw_value], y=[ath_y],
+        mode='markers+text',
+        name='Athlete Value',
+        marker=dict(size=14, color=ACCENT_PINK, symbol='star'),
+        text=[f" Athlete ({raw_value:.1f})"],
+        textposition="top center"
+    ))
+
+    fig = apply_premium_layout(fig, f"📈 Normal Distribution: {metric_name.replace('_', ' ').title()}")
+    fig.update_xaxes(title=metric_name.replace("_", " ").title())
+    fig.update_yaxes(showticklabels=False, title="Probability Density")
+    return fig
+

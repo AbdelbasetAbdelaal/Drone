@@ -35,7 +35,7 @@ class ValidatedMetric:
     
 @dataclass
 class JointAngles:
-    """Holds calculated angles for key joints in degrees."""
+    """Holds calculated angles for key joints in degrees and 3D spatial metrics."""
     left_elbow: Optional[ValidatedMetric] = None
     right_elbow: Optional[ValidatedMetric] = None
     left_knee: Optional[ValidatedMetric] = None
@@ -45,6 +45,11 @@ class JointAngles:
     left_hip: Optional[ValidatedMetric] = None
     right_hip: Optional[ValidatedMetric] = None
     body_roll: Optional[ValidatedMetric] = None
+    # 3D Pose Analytics
+    body_roll_3d: Optional[ValidatedMetric] = None
+    core_torsion_3d: Optional[ValidatedMetric] = None
+    hand_depth_left_3d: Optional[ValidatedMetric] = None
+    hand_depth_right_3d: Optional[ValidatedMetric] = None
 
 @dataclass
 class VideoMetadata:
@@ -173,6 +178,7 @@ class AnalysisResult:
     stroke_statistics: Optional[StrokeStatistics] = None
     reliability: Optional[ReliabilityResult] = None
     consistency: Optional[ConsistencyReport] = None
+    benchmark_result: Optional[Any] = None
     
     def get_angles_timeseries(self) -> Dict[str, List[Optional[float]]]:
         """Returns timeseries data suitable for plotting."""

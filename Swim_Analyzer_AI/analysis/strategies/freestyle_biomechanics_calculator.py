@@ -104,7 +104,7 @@ class FreestyleBiomechanicsCalculator(BaseBiomechanicsCalculator):
 
     @classmethod
     def _estimate_body_roll(cls, landmarks: Any, angles: JointAngles):
-        """Estimates body roll based on shoulder horizontal displacement."""
+        """Estimates 2D body roll based on shoulder horizontal displacement."""
         dx = landmarks[cls.R_SHOULDER].x - landmarks[cls.L_SHOULDER].x
         dy = landmarks[cls.R_SHOULDER].y - landmarks[cls.L_SHOULDER].y
         roll = np.abs(np.arctan2(dy, dx) * 180.0 / np.pi)
@@ -113,14 +113,65 @@ class FreestyleBiomechanicsCalculator(BaseBiomechanicsCalculator):
         angles.body_roll = cls._create_angle_metric(float(roll), "body_roll")
 
     @classmethod
+    def _calculate_3d_metrics(cls, landmarks: Any, angles: JointAngles):
+        """Calculates 3D spatial metrics (True 3D Body Roll, Core Torsion, and 3D Hand Depths)."""
+        try:
+            l_sh, r_sh = landmarks[cls.L_SHOULDER], landmarks[cls.R_SHOULDER]
+            l_hp, r_hp = landmarks[cls.L_HIP], landmarks[cls.R_HIP]
+            l_wr, r_wr = landmarks[cls.L_WRIST], landmarks[cls.R_WRIST]
+
+            # 3D Shoulder vector
+            sh_v = np.array([r_sh.x - l_sh.x, r_sh.y - l_sh.y, getattr(r_sh, 'z', 0.0) - getattr(l_sh, 'z', 0.0)])
+            # 3D Hip vector
+            hp_v = np.array([r_hp.x - l_hp.x, r_hp.y - l_hp.y, getattr(r_hp, 'z', 0.0) - getattr(l_hp, 'z', 0.0)])
+            # 3D Spine vector (mid hips to mid shoulders)
+            mid_sh = np.array([(l_sh.x + r_sh.x)/2, (l_sh.y + r_sh.y)/2, (getattr(l_sh, 'z', 0.0) + getattr(r_sh, 'z', 0.0))/2])
+            mid_hp = np.array([(l_hp.x + r_hp.x)/2, (l_hp.y + r_hp.y)/2, (getattr(l_hp, 'z', 0.0) + getattr(r_hp, 'z', 0.0))/2])
+            sp_v = mid_sh - mid_hp
+
+            # Torso Normal Vector = Shoulder x Spine
+            torso_normal = np.cross(sh_v, sp_v)
+            norm_mag = np.linalg.norm(torso_normal)
+            
+            if norm_mag > 0:
+                torso_normal = torso_normal / norm_mag
+                # 3D Roll Angle relative to vertical
+                roll_3d = float(np.degrees(np.arctan2(abs(torso_normal[0]), abs(torso_normal[1]))))
+            else:
+                roll_3d = 0.0
+                
+            angles.body_roll_3d = ValidatedMetric(value=min(90.0, max(0.0, roll_3d)), valid=True)
+
+            # Core Torsion: 3D angle difference between shoulder line and hip line
+            sh_mag = np.linalg.norm(sh_v)
+            hp_mag = np.linalg.norm(hp_v)
+            if sh_mag > 0 and hp_mag > 0:
+                dot_prod = np.clip(np.dot(sh_v, hp_v) / (sh_mag * hp_mag), -1.0, 1.0)
+                torsion = float(np.degrees(np.arccos(dot_prod)))
+            else:
+                torsion = 0.0
+            angles.core_torsion_3d = ValidatedMetric(value=min(90.0, max(0.0, torsion)), valid=True)
+
+            # 3D Hand Depth (Z offset from chest plane midpoint)
+            chest_z = mid_sh[2]
+            l_depth = float(getattr(l_wr, 'z', 0.0) - chest_z)
+            r_depth = float(getattr(r_wr, 'z', 0.0) - chest_z)
+            angles.hand_depth_left_3d = ValidatedMetric(value=l_depth, valid=True)
+            angles.hand_depth_right_3d = ValidatedMetric(value=r_depth, valid=True)
+
+        except Exception as e:
+            logger.debug(f"Error calculating 3D metrics: {e}")
+
+    @classmethod
     def calculate_all_angles(cls, landmarks: Any) -> JointAngles:
-        """Calculate predefined key joint angles and body roll."""
+        """Calculate predefined key joint angles and 3D spatial metrics."""
         angles = JointAngles()
         
         try:
             if len(landmarks) > max(cls.L_ANKLE, cls.R_ANKLE):
                 cls._calculate_joint_angles(landmarks, angles)
                 cls._estimate_body_roll(landmarks, angles)
+                cls._calculate_3d_metrics(landmarks, angles)
         except Exception as e:
             logger.warning(f"Error calculating angles: {e}")
             
@@ -237,7 +288,9 @@ class FreestyleBiomechanicsCalculator(BaseBiomechanicsCalculator):
             "stroke_rate": ValidatedMetric(),
             "stroke_length": ValidatedMetric(),
             "kick_frequency": ValidatedMetric(),
-            "stroke_symmetry": ValidatedMetric()
+            "stroke_symmetry": ValidatedMetric(),
+            "body_roll_3d": ValidatedMetric(),
+            "core_torsion_3d": ValidatedMetric(),
         }
         
         if not frames or effective_fps <= 0:
@@ -248,6 +301,15 @@ class FreestyleBiomechanicsCalculator(BaseBiomechanicsCalculator):
             metrics["stroke_length"] = cls._calculate_stroke_length(frames, calibration_engine, frame_width, frame_height)
             metrics["stroke_symmetry"] = cls._evaluate_symmetry(frames)
             metrics["kick_frequency"] = cls._calculate_kick_frequency(frames, effective_fps)
+
+            # 3D Aggregation
+            rolls_3d = [f.angles.body_roll_3d.value for f in frames if f.is_valid and f.angles and f.angles.body_roll_3d and f.angles.body_roll_3d.valid]
+            torsions = [f.angles.core_torsion_3d.value for f in frames if f.is_valid and f.angles and f.angles.core_torsion_3d and f.angles.core_torsion_3d.valid]
+
+            if rolls_3d:
+                metrics["body_roll_3d"] = ValidatedMetric(value=float(np.mean(rolls_3d)), valid=True)
+            if torsions:
+                metrics["core_torsion_3d"] = ValidatedMetric(value=float(np.mean(torsions)), valid=True)
         except Exception as e:
             logger.error(f"Error calculating global metrics: {e}")
             

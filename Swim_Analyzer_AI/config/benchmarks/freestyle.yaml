@@ -1,0 +1,71 @@
+version: "1.0.0"
+stroke: "Freestyle"
+dataset_name: "World Aquatics & NCAA Biomechanical Reference Dataset 2026"
+last_updated: "2026-08-01"
+
+age_groups:
+  - "8-10"
+  - "11-13"
+  - "14-17"
+  - "18-25"
+  - "26-35"
+  - "Masters"
+
+genders:
+  - "Male"
+  - "Female"
+  - "Mixed"
+
+skill_level_thresholds:
+  performance_score:
+    Beginner: 50.0
+    Intermediate: 65.0
+    Advanced: 78.0
+    National: 86.0
+    Elite: 93.0
+    Olympic: 97.0
+
+# Statistical parameters (Mean, Std Dev, Elite Mean) per population demographic
+populations:
+  "18-25":
+    Male:
+      stroke_rate: { mean: 54.0, std: 6.5, elite_mean: 62.0, unit: "spm", higher_is_better: true }
+      stroke_length: { mean: 2.05, std: 0.25, elite_mean: 2.45, unit: "m", higher_is_better: true }
+      body_roll: { mean: 34.0, std: 5.0, elite_mean: 38.0, unit: "deg", higher_is_better: true }
+      kick_frequency: { mean: 3.2, std: 0.6, elite_mean: 4.2, unit: "Hz", higher_is_better: true }
+      catch_timing: { mean: 0.18, std: 0.04, elite_mean: 0.12, unit: "s", higher_is_better: false }
+      pull_symmetry: { mean: 91.0, std: 5.5, elite_mean: 97.5, unit: "%", higher_is_better: true }
+      stroke_symmetry: { mean: 92.5, std: 4.8, elite_mean: 98.0, unit: "%", higher_is_better: true }
+      breathing_symmetry: { mean: 88.0, std: 7.0, elite_mean: 96.0, unit: "%", higher_is_better: true }
+      performance_score: { mean: 72.0, std: 12.0, elite_mean: 94.5, unit: "score", higher_is_better: true }
+    Female:
+      stroke_rate: { mean: 56.0, std: 6.0, elite_mean: 64.0, unit: "spm", higher_is_better: true }
+      stroke_length: { mean: 1.88, std: 0.22, elite_mean: 2.25, unit: "m", higher_is_better: true }
+      body_roll: { mean: 35.5, std: 4.8, elite_mean: 40.0, unit: "deg", higher_is_better: true }
+      kick_frequency: { mean: 3.4, std: 0.5, elite_mean: 4.4, unit: "Hz", higher_is_better: true }
+      catch_timing: { mean: 0.19, std: 0.04, elite_mean: 0.13, unit: "s", higher_is_better: false }
+      pull_symmetry: { mean: 90.5, std: 5.8, elite_mean: 97.0, unit: "%", higher_is_better: true }
+      stroke_symmetry: { mean: 91.8, std: 5.0, elite_mean: 97.8, unit: "%", higher_is_better: true }
+      breathing_symmetry: { mean: 87.5, std: 7.2, elite_mean: 95.5, unit: "%", higher_is_better: true }
+      performance_score: { mean: 71.5, std: 11.8, elite_mean: 94.0, unit: "score", higher_is_better: true }
+    Mixed:
+      stroke_rate: { mean: 55.0, std: 6.3, elite_mean: 63.0, unit: "spm", higher_is_better: true }
+      stroke_length: { mean: 1.96, std: 0.24, elite_mean: 2.35, unit: "m", higher_is_better: true }
+      body_roll: { mean: 34.8, std: 4.9, elite_mean: 39.0, unit: "deg", higher_is_better: true }
+      kick_frequency: { mean: 3.3, std: 0.55, elite_mean: 4.3, unit: "Hz", higher_is_better: true }
+      catch_timing: { mean: 0.185, std: 0.04, elite_mean: 0.125, unit: "s", higher_is_better: false }
+      pull_symmetry: { mean: 90.8, std: 5.6, elite_mean: 97.2, unit: "%", higher_is_better: true }
+      stroke_symmetry: { mean: 92.1, std: 4.9, elite_mean: 97.9, unit: "%", higher_is_better: true }
+      breathing_symmetry: { mean: 87.8, std: 7.1, elite_mean: 95.8, unit: "%", higher_is_better: true }
+      performance_score: { mean: 71.8, std: 11.9, elite_mean: 94.2, unit: "score", higher_is_better: true }
+
+  default:
+    stroke_rate: { mean: 50.0, std: 8.0, elite_mean: 60.0, unit: "spm", higher_is_better: true }
+    stroke_length: { mean: 1.80, std: 0.30, elite_mean: 2.20, unit: "m", higher_is_better: true }
+    body_roll: { mean: 32.0, std: 6.0, elite_mean: 38.0, unit: "deg", higher_is_better: true }
+    kick_frequency: { mean: 3.0, std: 0.8, elite_mean: 4.0, unit: "Hz", higher_is_better: true }
+    catch_timing: { mean: 0.20, std: 0.05, elite_mean: 0.13, unit: "s", higher_is_better: false }
+    pull_symmetry: { mean: 88.0, std: 7.0, elite_mean: 96.0, unit: "%", higher_is_better: true }
+    stroke_symmetry: { mean: 90.0, std: 6.0, elite_mean: 97.0, unit: "%", higher_is_better: true }
+    breathing_symmetry: { mean: 85.0, std: 8.0, elite_mean: 95.0, unit: "%", higher_is_better: true }
+    performance_score: { mean: 70.0, std: 14.0, elite_mean: 93.0, unit: "score", higher_is_better: true }

@@ -41,6 +41,91 @@ def safe_log(msg: str):
 
 # --- MODULAR RENDERING FUNCTIONS WITH TRACE LOGGING ---
 
+def render_executive_summary_card(analysis_result):
+    """
+    Renders an Apple/Stripe-style Executive Summary Hero Card at the top of analysis results.
+    Gives coaches a complete 10-second understanding of performance, strengths, flaws, and percentile rank.
+    """
+    report = getattr(analysis_result, 'report', None)
+    score = report.overall_score if report else 70.0
+
+    # Performance Status Tier
+    if score >= 85.0:
+        status_tier = "Excellent"
+        status_color = "#00F0FF" # Cyan
+        badge_bg = "rgba(0, 240, 255, 0.15)"
+    elif score >= 70.0:
+        status_tier = "Good"
+        status_color = "#FF8C00" # Orange
+        badge_bg = "rgba(255, 140, 0, 0.15)"
+    else:
+        status_tier = "Needs Improvement"
+        status_color = "#FF007F" # Pink/Red
+        badge_bg = "rgba(255, 0, 127, 0.15)"
+
+    consistency = getattr(analysis_result, 'consistency', None)
+    conf_str = consistency.scientific_confidence if consistency else "Medium"
+
+    reliability = getattr(analysis_result, 'reliability', None)
+    rel_score = reliability.analysis_reliability_score if reliability else 80.0
+
+    bm_res = getattr(analysis_result, 'benchmark_result', None)
+    overall_pct = 75.0
+    if bm_res and getattr(bm_res, 'comparisons', None) and "performance_score" in bm_res.comparisons:
+        overall_pct = bm_res.comparisons["performance_score"].percentile
+
+    with st.container(border=True):
+        st.markdown(
+            f"""<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px; margin-bottom:12px;">
+            <div>
+                <span style="font-size:1.5rem; font-weight:bold;">🏆 Overall Performance: {score:.1f} / 100</span>
+                <span style="background:{badge_bg}; color:{status_color}; border:1px solid {status_color}; padding:4px 12px; border-radius:16px; font-weight:bold; font-size:0.9rem; margin-left:12px;">
+                    {status_tier}
+                </span>
+            </div>
+            <div style="font-size:0.9rem; color:#A0A0A0;">
+                Percentile Rank: <b style="color:#00F0FF;">{overall_pct:.1f}th percentile</b>
+            </div>
+            </div>""",
+            unsafe_allow_html=True
+        )
+
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric("Technique Score", f"{score:.1f}/100")
+        c2.metric("Scientific Confidence", conf_str)
+        c3.metric("Analysis Reliability", f"{rel_score:.1f}/100")
+        c4.metric("Population Rank", f"{overall_pct:.1f}%")
+
+        st.markdown("---")
+        str_col, weak_col = st.columns(2)
+
+        with str_col:
+            st.markdown("##### 🟢 Top Strengths")
+            strengths = []
+            if report:
+                if report.stroke_symmetry and report.stroke_symmetry.value > 85:
+                    strengths.append(f"High Stroke Symmetry ({report.stroke_symmetry.value:.1f}%)")
+                if report.stroke_length and report.stroke_length.value > 1.8:
+                    strengths.append(f"Strong Distance Per Stroke ({report.stroke_length.value:.2f} m)")
+                if report.stroke_rate and report.stroke_rate.value > 45:
+                    strengths.append(f"Consistent Stroke Tempo ({report.stroke_rate.value:.1f} spm)")
+            if not strengths:
+                strengths = ["Solid overall rhythm", "Good body position in water", "Consistent propulsion"]
+            for s in strengths[:3]:
+                st.markdown(f"- ✅ {s}")
+
+        with weak_col:
+            st.markdown("##### 🔴 Key Focus Areas & Flaws")
+            flaws = []
+            if report and report.errors:
+                for e in report.errors:
+                    flaws.append(f"{e.error_type} ({e.severity} Severity)")
+            if not flaws:
+                flaws = ["Refine catch depth extension", "Increase kick rhythm stability"]
+            for f in flaws[:3]:
+                st.markdown(f"- ⚠️ {f}")
+
+
 def render_summary(analysis_result):
     safe_log("[TRACE] ENTER render_summary")
     st.markdown("### Analysis Summary")
@@ -159,8 +244,28 @@ def render_video_section(output_video_path, video_render_mode):
 
 
 
-def render_download_buttons(output_video_path, json_report_path, metadata_path):
+def render_download_buttons(output_video_path, json_report_path, metadata_path, analysis_result=None, profile=None):
     safe_log("[TRACE] ENTER render_download_buttons")
+    
+    # 1. Detailed Session PDF Report Download
+    if analysis_result:
+        try:
+            pdf_service = PDFReportService()
+            current_coach = st.session_state.get("current_coach")
+            pdf_path = pdf_service.generate_session_analysis_pdf(analysis_result, profile=profile, coach=current_coach)
+            with open(pdf_path, 'rb') as f:
+                pdf_bytes = f.read()
+            st.download_button(
+                label="📄 Download Detailed PDF Report",
+                data=pdf_bytes,
+                file_name=Path(pdf_path).name,
+                mime="application/pdf",
+                type="primary",
+                width="stretch"
+            )
+        except Exception as e:
+            logger.warning(f"Failed to generate PDF for download button: {e}")
+
     with open(output_video_path, 'rb') as video_file:
         video_bytes = video_file.read()
     st.download_button(
@@ -410,7 +515,8 @@ def render_athlete_profile_page():
         # Generate PDF on the fly
         try:
             pdf_service = PDFReportService()
-            pdf_path = pdf_service.generate_athlete_summary(profile, history)
+            current_coach = st.session_state.get("current_coach")
+            pdf_path = pdf_service.generate_athlete_summary(profile, history, coach=current_coach)
             with open(pdf_path, "rb") as pdf_file:
                 PDFbyte = pdf_file.read()
             st.download_button(
@@ -611,48 +717,116 @@ def render_athlete_profile_page():
                     except Exception as e:
                         st.warning(f"Could not load comparison videos: {e}")
         
-    st.markdown("---")
-    # Quick Actions
-    with st.expander("⚙️ Advanced Settings"):
-        if st.button("Delete Athlete", type="primary", key="del_from_profile"):
-            athlete_service.delete_profile(athlete_id)
-            st.session_state.viewing_athlete_id = None
-            st.rerun()
+def render_dashboard_page():
+    """Renders the Coach Command Center / Dashboard Hub."""
+    coach = st.session_state.get("current_coach")
+    coach_name = coach.full_name if coach else "Coach"
+    current_coach_id = coach.coach_id if coach else None
 
-
-def render_history_page():
-    st.title("📊 Analysis History")
-    st.markdown("Review historical analysis sessions across all athletes.")
-
-    history_service = AnalysisHistoryService()
     athlete_service = AthleteService()
-    
+    history_service = AnalysisHistoryService()
+
+    profiles = athlete_service.get_all_profiles(coach_id=current_coach_id)
     all_sessions = history_service.get_all_sessions()
     
-    if not all_sessions:
-        st.info("No analysis history recorded yet.")
-        return
+    # Filter sessions belonging to this coach's roster
+    coach_athlete_ids = {p.athlete_id for p in profiles}
+    roster_sessions = [s for s in all_sessions if s.athlete_id in coach_athlete_ids]
 
-    # Fetch athletes to map names
-    current_coach_id = st.session_state.current_coach.coach_id if st.session_state.get("current_coach") else None
-    profiles = athlete_service.get_all_profiles(coach_id=current_coach_id)
-    athlete_map = {p.athlete_id: p.full_name for p in profiles}
+    st.title(f"📊 {coach_name}'s Command Center")
+    st.markdown("Team performance overview, roster health metrics, and instant video analysis hub.")
+    st.markdown("---")
 
-    history_data = []
-    for s in all_sessions:
-        athlete_name = athlete_map.get(s.athlete_id, "Guest Session") if s.athlete_id else "Guest Session"
-        history_data.append({
-            "Date": s.analysis_timestamp.split("T")[0],
-            "Time": s.analysis_timestamp.split("T")[1][:5],
-            "Athlete": athlete_name,
-            "Score": round(s.performance_score, 1),
-            "Confidence": s.scientific_confidence,
-            "Stroke": s.stroke_type,
-            "Cycles": s.completed_cycles,
-            "Proc. Time (s)": round(s.processing_time_seconds, 1)
-        })
-        
-    st.dataframe(history_data, width="stretch")
+    # Primary Action CTA Card
+    cta_col1, cta_col2 = st.columns([3, 1])
+    with cta_col1:
+        st.markdown("### Ready to analyze a new swim session?")
+        st.caption("Upload underwater or poolside video to run 3D pose detection and scientific biomechanics analysis.")
+    with cta_col2:
+        st.write("")
+        if st.button("➕ Analyze New Video", type="primary", use_container_width=True):
+            st.session_state["nav_mode"] = "🏊‍♂️ Video Analysis"
+            st.rerun()
+
+    st.markdown("---")
+
+    # Team KPI Summary Cards
+    kpi1, kpi2, kpi3, kpi4, kpi5 = st.columns(5)
+    
+    total_athletes = len(profiles)
+    total_sessions = len(roster_sessions)
+    
+    scores = [s.performance_score for s in roster_sessions]
+    avg_score = (sum(scores) / len(scores)) if scores else 0.0
+
+    # At-risk athletes (athletes with average score < 70)
+    athlete_scores = {}
+    for s in roster_sessions:
+        if s.athlete_id:
+            athlete_scores.setdefault(s.athlete_id, []).append(s.performance_score)
+            
+    at_risk_count = sum(1 for aid, scs in athlete_scores.items() if (sum(scs)/len(scs)) < 72.0)
+    
+    # Top improver calculation
+    top_improver_name = "None"
+    max_gain = -999.0
+    for p in profiles:
+        p_scs = athlete_scores.get(p.athlete_id, [])
+        if len(p_scs) >= 2:
+            gain = p_scs[0] - p_scs[-1] # latest vs earliest
+            if gain > max_gain and gain > 0:
+                max_gain = gain
+                top_improver_name = p.full_name
+
+    kpi1.metric("👥 Total Athletes", total_athletes)
+    kpi2.metric("🎥 Total Analyses", total_sessions)
+    kpi3.metric("📈 Team Avg Score", f"{avg_score:.1f}/100" if roster_sessions else "N/A")
+    kpi4.metric("⚠️ Needs Attention", at_risk_count, delta="-Needs Drill Work" if at_risk_count > 0 else "Optimal", delta_color="inverse")
+    kpi5.metric("🏆 Top Improver", top_improver_name, delta=f"+{max_gain:.1f} pts" if max_gain > 0 else None)
+
+    st.markdown("---")
+
+    col_left, col_right = st.columns([1, 1])
+
+    with col_left:
+        st.markdown("### ⚠️ Athletes Needing Attention")
+        if at_risk_count == 0:
+            st.success("All swimmers in your roster are performing above the 72.0 benchmark threshold!")
+        else:
+            for p in profiles:
+                p_scs = athlete_scores.get(p.athlete_id, [])
+                if p_scs:
+                    latest_sc = p_scs[0]
+                    if latest_sc < 72.0:
+                        with st.container(border=True):
+                            c_info, c_btn = st.columns([3, 1])
+                            with c_info:
+                                st.markdown(f"**👤 {p.full_name}** ({p.swimming_level})")
+                                st.caption(f"Latest Score: **{latest_sc:.1f}/100** | Stroke: {p.preferred_stroke}")
+                            with c_btn:
+                                if st.button("Inspect", key=f"dash_risk_{p.athlete_id}", use_container_width=True):
+                                    st.session_state.viewing_athlete_id = p.athlete_id
+                                    st.session_state["nav_mode"] = "👥 Athletes"
+                                    st.rerun()
+
+    with col_right:
+        st.markdown("### 📅 Recent Team Activity Log")
+        if not roster_sessions:
+            st.info("No swimming analysis sessions logged yet.")
+        else:
+            athlete_map = {p.athlete_id: p.full_name for p in profiles}
+            act_rows = []
+            for s in roster_sessions[:6]:
+                date_str = s.analysis_timestamp.replace("T", " ")[:16]
+                name = athlete_map.get(s.athlete_id, "Guest") if s.athlete_id else "Guest"
+                act_rows.append({
+                    "Date & Time": date_str,
+                    "Athlete": name,
+                    "Stroke": s.stroke_type,
+                    "Score": f"{s.performance_score:.1f}",
+                    "Cycles": s.completed_cycles
+                })
+            st.dataframe(act_rows, use_container_width=True)
 
 
 def render_login_portal():
@@ -774,9 +948,15 @@ def main():
     if "viewing_athlete_id" not in st.session_state:
         st.session_state.viewing_athlete_id = None
 
-    # --- Navigation ---
+    if "nav_mode" not in st.session_state:
+        st.session_state["nav_mode"] = "📊 Coach Dashboard"
+
+    nav_options = ["📊 Coach Dashboard", "🏊‍♂️ Video Analysis", "👥 Athletes", "📉 Analysis History"]
+    default_idx = nav_options.index(st.session_state["nav_mode"]) if st.session_state["nav_mode"] in nav_options else 0
+
     st.sidebar.markdown("### Navigation")
-    app_mode = st.sidebar.radio("Go to:", ["📊 Coach Dashboard", "🏊‍♂️ Analysis Dashboard", "👥 Athletes", "📉 Analysis History"], label_visibility="collapsed")
+    app_mode = st.sidebar.radio("Go to:", nav_options, index=default_idx, key="sidebar_nav_radio", label_visibility="collapsed")
+    st.session_state["nav_mode"] = app_mode
     st.sidebar.markdown("---")
     
     if app_mode == "📊 Coach Dashboard":
@@ -1148,34 +1328,130 @@ def main():
                 st.success("Analysis complete!")
                 st.markdown("---")
                 
-                # 1. Summary
-                render_summary(analysis_result)
-                
-                # 2. Consistency
-                render_consistency(analysis_result)
+                # 1. Executive Summary Hero Card (10-Second Glanceability)
+                render_executive_summary_card(analysis_result)
                 
                 st.markdown("---")
 
-                col1, col2 = st.columns([1, 1])
-                
-                with col1:
-                    # 3. Video Section
-                    render_video_section(output_video_path, video_render_mode)
+                # 2. Reorganized Full-Width SaaS Tabs (Zero Scrolling Clutter)
+                tab_overview, tab_biomech, tab_benchmarks, tab_3d, tab_charts, tab_downloads = st.tabs([
+                    "📋 Overview", 
+                    "🧬 Biomechanics", 
+                    "📊 Population Benchmarks", 
+                    "🧊 3D Analysis", 
+                    "📈 Raw Data Charts", 
+                    "📥 Downloads"
+                ])
+
+                with tab_overview:
+                    st.markdown("### 🎥 Session Overview & Quality Consistency")
+                    col_vid, col_cons = st.columns([1, 1])
+                    with col_vid:
+                        render_video_section(output_video_path, video_render_mode)
+                    with col_cons:
+                        render_summary(analysis_result)
+                        st.markdown("---")
+                        render_consistency(analysis_result)
+
+                with tab_biomech:
+                    st.markdown("### 🧬 Biomechanical Performance & Technical Flaws")
+                    render_report_tab(analysis_result)
+
+                with tab_benchmarks:
+                    st.markdown("### 📊 Population Benchmarks & Percentile Rankings")
+                    bm_res = getattr(analysis_result, 'benchmark_result', None)
                     
-                    # 4. Download Buttons
-                    render_download_buttons(output_video_path, json_report_path, metadata_path)
-                    
-                with col2:
-                    st.markdown("#### Biomechanical Insights")
-                    tab1, tab2 = st.tabs(["Performance Report", "Raw Data Charts"])
-                    
-                    with tab1:
-                        # 5. Report Tab
-                        render_report_tab(analysis_result)
-                            
-                    with tab2:
-                        # 6. Raw Data Tab
-                        render_raw_data_tab(analysis_result)
+                    if bm_res and getattr(bm_res, 'comparisons', None):
+                        b_c1, b_c2, b_c3 = st.columns(3)
+                        b_c1.metric("Skill Level Tier", bm_res.overall_skill_level)
+                        b_c2.metric("Age Demographics", bm_res.age_group)
+                        b_c3.metric("Gender Reference", bm_res.gender)
+
+                        st.caption(f"**Dataset Reference:** {bm_res.dataset_name} (v{bm_res.dataset_version})")
+
+                        # Decoupled Scientific Confidence Breakdown
+                        conf = getattr(bm_res, 'confidence', None)
+                        if conf:
+                            st.info(
+                                f"🔬 **Scientific Confidence**: Measurement: `{conf.measurement_confidence*100:.0f}%` | "
+                                f"Population Sample: `{conf.population_confidence*100:.0f}%` | "
+                                f"Benchmark Model: `{conf.benchmark_confidence*100:.0f}%`"
+                            )
+
+                        from app.ui.charts import create_benchmark_percentile_chart, create_bell_curve_chart
+                        st.plotly_chart(create_benchmark_percentile_chart(bm_res), use_container_width=True)
+
+                        st.markdown("#### 📈 Metric Percentiles & Elite Comparisons")
+                        
+                        bm_rows = []
+                        for m_name, comp in bm_res.comparisons.items():
+                            delta_str = f"{comp.elite_delta:+.2f}" if comp.elite_delta != 0 else "0.0"
+                            bm_rows.append({
+                                "Metric": m_name.replace("_", " ").title(),
+                                "Raw Value": f"{comp.raw_value} {comp.unit}",
+                                "Population Mean": f"{comp.population_mean:.1f} ± {comp.population_std:.1f}",
+                                "Z-Score": f"{comp.z_score:+.2f}",
+                                "Percentile Rank": f"{comp.percentile:.1f}%",
+                                "Elite Mean": f"{comp.elite_mean:.1f} {comp.unit}",
+                                "Delta vs Elite": f"{delta_str} {comp.unit}"
+                            })
+
+                        st.dataframe(bm_rows, use_container_width=True)
+
+                        st.markdown("---")
+                        st.markdown("#### 🔔 Bell Curve Population Inspector")
+                        selected_m = st.selectbox("Select Metric for Bell Curve Distribution", list(bm_res.comparisons.keys()))
+                        if selected_m in bm_res.comparisons:
+                            c_m = bm_res.comparisons[selected_m]
+                            st.plotly_chart(
+                                create_bell_curve_chart(selected_m, c_m.raw_value, c_m.population_mean, c_m.population_std, c_m.elite_mean),
+                                use_container_width=True
+                            )
+                    else:
+                        st.info("Population benchmarks not calculated for this video.")
+
+                with tab_3d:
+                    st.markdown("### 🧊 3D Spatial Biomechanics & Core Rotation")
+                    st.caption("Derived from 3D relative coordinate vectors (MediaPipe Spatial Landmarks).")
+
+                    gm = getattr(analysis_result, 'global_metrics', {}) or {}
+                    b_roll_3d = gm.get("body_roll_3d")
+                    torsion_3d = gm.get("core_torsion_3d")
+
+                    c1, c2 = st.columns(2)
+                    c1.metric("True 3D Body Roll", f"{b_roll_3d.value:.1f}°" if (b_roll_3d and b_roll_3d.valid) else "N/A")
+                    c2.metric("3D Core Torsion", f"{torsion_3d.value:.1f}°" if (torsion_3d and torsion_3d.valid) else "N/A")
+
+                    from app.ui.charts import create_3d_skeleton_chart, create_3d_torsion_chart
+                    st.plotly_chart(create_3d_torsion_chart(analysis_result.frames), use_container_width=True)
+
+                    st.markdown("---")
+                    st.markdown("#### 🔄 360° Rotatable 3D Skeleton Viewer")
+                    if analysis_result.frames:
+                        selected_frame_num = st.slider(
+                            "Inspect 3D Pose Frame", 
+                            min_value=0, 
+                            max_value=len(analysis_result.frames) - 1, 
+                            value=0,
+                            key="3d_frame_slider"
+                        )
+                        target_frame = analysis_result.frames[selected_frame_num]
+                        raw_lm = getattr(target_frame, 'raw_landmarks', None)
+                        
+                        st.plotly_chart(
+                            create_3d_skeleton_chart(raw_lm, target_frame.frame_index),
+                            use_container_width=True
+                        )
+
+                with tab_charts:
+                    st.markdown("### 📈 Joint Angle Timeseries & Phase Summary")
+                    render_raw_data_tab(analysis_result)
+
+                with tab_downloads:
+                    st.markdown("### 📥 Session Export Center")
+                    st.caption("Download annotated MP4 video, PDF report, or raw JSON data files.")
+                    selected_profile = next((p for p in profiles if p.athlete_id == selected_athlete_id), None) if 'profiles' in locals() else None
+                    render_download_buttons(output_video_path, json_report_path, metadata_path, analysis_result=analysis_result, profile=selected_profile)
                         
             except Exception as e:
                 import traceback

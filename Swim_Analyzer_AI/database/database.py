@@ -32,11 +32,17 @@ def init_db():
                 conn.execute(text("ALTER TABLE athletes ADD COLUMN coach_id VARCHAR"))
                 conn.commit()
 
-            # Assign legacy unassigned athletes to default coach1
             res_coach = conn.execute(text("SELECT coach_id FROM coaches WHERE username = 'coach1'")).fetchone()
             if res_coach:
                 c1_id = res_coach[0]
                 conn.execute(text("UPDATE athletes SET coach_id = :cid WHERE coach_id IS NULL"), {"cid": c1_id})
+                conn.commit()
+
+            # Migration for benchmark_summary_json column in analysis_sessions table
+            res_sess = conn.execute(text("PRAGMA table_info(analysis_sessions)"))
+            sess_cols = [row[1] for row in res_sess.fetchall()]
+            if "benchmark_summary_json" not in sess_cols:
+                conn.execute(text("ALTER TABLE analysis_sessions ADD COLUMN benchmark_summary_json TEXT"))
                 conn.commit()
     except Exception:
         pass

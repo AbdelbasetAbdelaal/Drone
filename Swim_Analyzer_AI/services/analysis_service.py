@@ -100,8 +100,19 @@ class AnalysisService:
                 
             frame_conf = phase_conf if phase_conf > 0 else (0.95 if is_valid else 0.4)
                 
+            safe_landmarks = None
+            if landmarks:
+                safe_landmarks = [
+                    type('SimpleLandmark', (), {
+                        'x': float(lm.x),
+                        'y': float(lm.y),
+                        'z': float(getattr(lm, 'z', 0.0)),
+                        'visibility': float(getattr(lm, 'visibility', 1.0))
+                    })() for lm in landmarks
+                ]
+
             frame_data = FrameData(
-                frame_index=frames_processed, timestamp_ms=timestamp, raw_landmarks=landmarks,
+                frame_index=frames_processed, timestamp_ms=timestamp, raw_landmarks=safe_landmarks,
                 is_valid=is_valid, angles=angles, stroke_phase=stroke_phase, phase_confidence=phase_conf
             )
             analysis_result.frames.append(frame_data)
@@ -124,7 +135,7 @@ class AnalysisService:
     def _finalize_metrics_and_export(self, analysis_result: AnalysisResult, metadata: VideoMetadata, 
                                      stroke_analyzer: Any, BiomechanicsCalculator: Any, scoring_engine: Any, 
                                      calibration_engine: Any, processor: VideoProcessor, input_filename: str, 
-                                     output_video_path: str) -> Tuple[str, str, str]:
+                                     output_video_path: str, athlete_id: Optional[str] = None) -> Tuple[str, str, str]:
         """Finalize metrics, generate reports, run consistency validator, and export JSONs."""
         from models.data_models import StrokeStatistics
         stats = StrokeStatistics(
@@ -154,6 +165,12 @@ class AnalysisService:
         from analysis.consistency_validator import AnalysisConsistencyValidator
         analysis_result.consistency = AnalysisConsistencyValidator.validate(analysis_result)
         
+        # Phase 7: Benchmark Engine Evaluation
+        from services.benchmark_service import BenchmarkService
+        from services.athlete_service import AthleteService
+        athlete_profile = AthleteService().load_profile(athlete_id) if athlete_id else None
+        BenchmarkService().evaluate_session(analysis_result, athlete_profile)
+
         json_report_path, metadata_path, _ = ExportService.export_to_json(analysis_result, metadata, input_filename)
         
         if not VideoProcessor.validate_export(output_video_path):
@@ -248,7 +265,7 @@ class AnalysisService:
                 
             json_report_path, metadata_path, output_video_path = self._finalize_metrics_and_export(
                 analysis_result, metadata, stroke_analyzer, BiomechanicsCalculator, scoring_engine,
-                calibration_engine, processor, input_filename, output_video_path
+                calibration_engine, processor, input_filename, output_video_path, athlete_id=athlete_id
             )
             
         except Exception as e:
@@ -257,8 +274,4 @@ class AnalysisService:
         finally:
             if pose_detector: pose_detector.close()
                 
-        for frame in analysis_result.frames:
-            frame.raw_landmarks = None
-        logger.info("raw_landmarks cleared from all frames to prevent C extension GC crash.")
-        
         return output_video_path, json_report_path, metadata_path, analysis_result

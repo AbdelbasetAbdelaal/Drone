@@ -53,5 +53,6 @@ class AnalysisSessionModel(Base):
     completed_cycles = Column(Integer, nullable=False)
     stroke_type = Column(String, nullable=False)
     processing_time_seconds = Column(Float, nullable=False)
+    benchmark_summary_json = Column(Text, nullable=True)
 
     athlete = relationship("AthleteModel", back_populates="analyses")

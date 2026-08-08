@@ -16,6 +16,7 @@ class AnalysisSession:
     completed_cycles: int
     stroke_type: str
     processing_time_seconds: float
+    benchmark_summary_json: Optional[str] = None
     session_id: str = field(default_factory=lambda: str(uuid.uuid4()))
 
     def to_dict(self) -> dict:

@@ -106,6 +106,15 @@ class BreaststrokeBiomechanicsCalculator(FreestyleBiomechanicsCalculator):
                 reason_if_invalid="No valid knee angle data found."
             )
 
+            # Breaststroke 3D metrics
+            rolls_3d = [f.angles.body_roll_3d.value for f in frames if f.is_valid and f.angles and f.angles.body_roll_3d and f.angles.body_roll_3d.valid]
+            torsions = [f.angles.core_torsion_3d.value for f in frames if f.is_valid and f.angles and f.angles.core_torsion_3d and f.angles.core_torsion_3d.valid]
+
+            if rolls_3d:
+                metrics["body_roll_3d"] = ValidatedMetric(value=float(np.mean(rolls_3d)), valid=True)
+            if torsions:
+                metrics["core_torsion_3d"] = ValidatedMetric(value=float(np.mean(torsions)), valid=True)
+
         except Exception as e:
             logger.error(f"Error calculating breaststroke global metrics: {e}")
 
