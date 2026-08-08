@@ -168,12 +168,13 @@ class PDFReportService:
         pdf.set_xy(15, pdf.get_y() + 4)
         pdf.set_font("Helvetica", style="B", size=16)
         pdf.set_text_color(0, 50, 150)
-        pdf.cell(90, 8, f"Overall Technique Score: {overall_score:.1f} / 100")
+        pdf.cell(85, 8, f"Overall Technique Score: {overall_score:.1f} / 100")
         
         pdf.set_font("Helvetica", size=11)
         pdf.set_text_color(80, 80, 80)
-        pdf.cell(90, 8, f"Scientific Confidence: {scientific_conf}", ln=True, align="R")
-        pdf.ln(12)
+        pdf.cell(85, 8, f"Scientific Confidence: {scientific_conf}", align="R")
+        pdf.set_x(10)
+        pdf.ln(14)
 
         # Key Biomechanical Metrics Table
         pdf.set_font("Helvetica", style="B", size=13)
@@ -236,21 +237,35 @@ class PDFReportService:
             pdf.ln(4)
 
             pdf.set_fill_color(240, 244, 250)
-            pdf.set_font("Helvetica", style="B", size=9)
-            bm_widths = [45, 30, 40, 25, 25, 25] # Total 190 mm
-            bm_headers = ["Metric", "Value", "Pop Mean ± Std", "Z-Score", "Percentile", "Elite Mean"]
+            pdf.set_font("Helvetica", style="B", size=8)
+            bm_widths = [40, 25, 35, 20, 22, 48] # Total 190 mm
+            bm_headers = ["Metric", "Value", "Pop Mean +/- Std", "Z-Score", "Percentile", "Evidence Status"]
             for i, h in enumerate(bm_headers):
                 pdf.cell(bm_widths[i], 7, h, border=1, align="C", fill=True)
             pdf.ln()
 
-            pdf.set_font("Helvetica", size=9)
+            pdf.set_font("Helvetica", size=8)
+            cited_ids = set()
             for m_name, comp in bm_res.comparisons.items():
+                ev_meta = getattr(comp, 'evidence', None)
+                if ev_meta:
+                    val_enum = ev_meta.validation_status.value
+                    badge = val_enum.replace("_", " ").title()
+                else:
+                    badge = "Partially Validated"
+                    
+                if ev_meta and ev_meta.source_ids:
+                    cited_ids.update(ev_meta.source_ids)
+
+                z_str = f"{comp.z_score:+.2f}" if comp.z_score is not None else "N/A"
+                pct_str = f"{comp.percentile:.1f}%" if comp.percentile is not None else "N/A"
+
                 pdf.cell(bm_widths[0], 6, m_name.replace("_", " ").title(), border=1)
                 pdf.cell(bm_widths[1], 6, f"{comp.raw_value} {comp.unit}", border=1, align="C")
-                pdf.cell(bm_widths[2], 6, f"{comp.population_mean:.1f} ± {comp.population_std:.1f}", border=1, align="C")
-                pdf.cell(bm_widths[3], 6, f"{comp.z_score:+.2f}", border=1, align="C")
-                pdf.cell(bm_widths[4], 6, f"{comp.percentile:.1f}%", border=1, align="C")
-                pdf.cell(bm_widths[5], 6, f"{comp.elite_mean:.1f}", border=1, align="C")
+                pdf.cell(bm_widths[2], 6, f"{comp.population_mean:.1f} +/- {comp.population_std:.1f}", border=1, align="C")
+                pdf.cell(bm_widths[3], 6, z_str, border=1, align="C")
+                pdf.cell(bm_widths[4], 6, pct_str, border=1, align="C")
+                pdf.cell(bm_widths[5], 6, badge, border=1, align="C")
                 pdf.ln()
 
             pdf.ln(6)
@@ -266,6 +281,24 @@ class PDFReportService:
         pdf.set_text_color(40, 40, 40)
         pdf.multi_cell(0, 6, feedback_text)
         pdf.ln(6)
+
+        # Section 5: Scientific Literature References & Dataset Provenance
+        if bm_res and getattr(bm_res, 'comparisons', None):
+            pdf.set_font("Helvetica", style="B", size=11)
+            pdf.set_text_color(0, 0, 0)
+            pdf.cell(0, 7, "Scientific References & Literature Provenance", ln=True, border="B")
+            pdf.ln(3)
+
+            pdf.set_font("Helvetica", size=8)
+            pdf.set_text_color(80, 80, 80)
+            pdf.cell(0, 5, f"Dataset: {bm_res.dataset_name} (ID: {bm_res.dataset_id}, v{bm_res.dataset_version}, Revision: {bm_res.scientific_revision})", ln=True)
+
+            from services.scientific_evidence_service import ScientificEvidenceService
+            ev_service = ScientificEvidenceService()
+            sources = ev_service.get_sources_for_ids(list(cited_ids)) if cited_ids else []
+            for src in sources:
+                cit_str = ev_service.format_citation(src)
+                pdf.multi_cell(0, 4, f"- [{src.source_id}] {cit_str} (Level {src.evidence_quality.value}, N={src.sample_size})")
 
         # Phase Breakdown
         pdf.set_font("Helvetica", style="B", size=13)

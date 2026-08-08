@@ -54,20 +54,79 @@ class BenchmarkEngine:
             return PopulationStats(mean=70.0, std=10.0, elite_mean=95.0, unit="")
 
         pops = ds.get("populations", {})
-        age_pop = pops.get(age_group) or pops.get("18-25") or pops.get("default", {})
-        gender_pop = age_pop.get(gender) or age_pop.get("Mixed") or ds.get("populations", {}).get("default", {})
-        
-        metric_cfg = gender_pop.get(metric_name) or ds.get("populations", {}).get("default", {}).get(metric_name)
+        raw_age_pop = pops.get(age_group)
+        if isinstance(raw_age_pop, dict) and raw_age_pop.get("status") == "INSUFFICIENT_EVIDENCE":
+            # Cohort lacks direct peer-reviewed empirical evidence
+            pass
+
+        age_pop = raw_age_pop if (isinstance(raw_age_pop, dict) and "status" not in raw_age_pop) else (pops.get("18-25") or pops.get("default", {}))
+        if not isinstance(age_pop, dict):
+            age_pop = pops.get("default", {})
+
+        gender_pop = age_pop.get(gender) if isinstance(age_pop, dict) else None
+        if not isinstance(gender_pop, dict):
+            gender_pop = pops.get("default", {})
+
+        from models.scientific_evidence_models import (
+            MetricEvidenceMetadata, ValidationStatus, EvidenceLevel,
+            SourceRelationship, PopulationCompatibility, DefinitionCompatibility
+        )
+
+        metric_cfg = gender_pop.get(metric_name) if isinstance(gender_pop, dict) else None
+        if not metric_cfg and isinstance(pops.get("default"), dict):
+            metric_cfg = pops.get("default", {}).get(metric_name)
 
         if not metric_cfg:
             return PopulationStats(mean=70.0, std=10.0, elite_mean=95.0, unit="")
+
+        ev_cfg = metric_cfg.get("evidence", {})
+        try:
+            val_stat = ValidationStatus(ev_cfg.get("validation_status", "PARTIALLY_VALIDATED"))
+        except ValueError:
+            val_stat = ValidationStatus.PARTIALLY_VALIDATED
+
+        try:
+            ev_lvl = EvidenceLevel(ev_cfg.get("evidence_level", "LEVEL_C"))
+        except ValueError:
+            ev_lvl = EvidenceLevel.LEVEL_C
+
+        try:
+            src_rel = SourceRelationship(ev_cfg.get("source_relationship", "APPROXIMATED"))
+        except ValueError:
+            src_rel = SourceRelationship.APPROXIMATED
+
+        try:
+            pop_comp = PopulationCompatibility(ev_cfg.get("population_compatibility", "COMPATIBLE"))
+        except ValueError:
+            pop_comp = PopulationCompatibility.COMPATIBLE
+
+        try:
+            def_comp = DefinitionCompatibility(ev_cfg.get("definition_compatibility", "COMPATIBLE"))
+        except ValueError:
+            def_comp = DefinitionCompatibility.COMPATIBLE
+
+        evidence_meta = MetricEvidenceMetadata(
+            validation_status=val_stat,
+            evidence_level=ev_lvl,
+            source_ids=ev_cfg.get("source_ids", []),
+            sample_size=int(ev_cfg.get("sample_size", 0)),
+            event_distance=str(ev_cfg.get("event_distance", "100m")),
+            measurement_method=str(ev_cfg.get("measurement_method", "Kinematic Analysis")),
+            source_relationship=src_rel,
+            population_compatibility=pop_comp,
+            definition_compatibility=def_comp,
+            reported_source_value=str(ev_cfg.get("reported_source_value", f"{ev_cfg.get('original_value', '')} {ev_cfg.get('original_unit', '')}".strip())),
+            reported_source_std=str(ev_cfg.get("reported_source_std", "")),
+            notes=ev_cfg.get("notes", []) if isinstance(ev_cfg.get("notes"), list) else []
+        )
 
         return PopulationStats(
             mean=float(metric_cfg.get("mean", 70.0)),
             std=float(metric_cfg.get("std", 10.0)),
             elite_mean=float(metric_cfg.get("elite_mean", 95.0)),
             unit=str(metric_cfg.get("unit", "")),
-            higher_is_better=bool(metric_cfg.get("higher_is_better", True))
+            higher_is_better=bool(metric_cfg.get("higher_is_better", True)),
+            evidence=evidence_meta
         )
 
     @staticmethod
@@ -142,11 +201,30 @@ class BenchmarkEngine:
         high = stats.mean + 2.0 * stats.std
         return (low, high)
 
+    def check_population_compatibility(self, athlete_profile: Optional[AthleteProfile], stroke_type: str = "Freestyle") -> Tuple[bool, str]:
+        """
+        Verifies demographic compatibility between athlete and reference population.
+        Currently validated benchmark population is Adult Competitive Male Swimmers (Age 18-25).
+        """
+        if not athlete_profile:
+            return (True, "Default Adult Male reference cohort applied.")
+
+        age = athlete_profile.age if athlete_profile.age else 20
+        gender = athlete_profile.gender if athlete_profile.gender else "Male"
+
+        if gender.lower() == "female":
+            return (False, "⚠️ No validated reference population is currently available for female swimmers in this dataset.")
+
+        if age < 18 or age > 25:
+            return (False, f"⚠️ No validated reference population is currently available for age group '{AgeGroup.from_age(age).value}'.")
+
+        return (True, "✓ Athlete belongs to scientifically validated reference population cohort.")
+
     def evaluate_full_analysis(self, analysis_result: AnalysisResult,
                                athlete_profile: Optional[AthleteProfile] = None) -> BenchmarkResult:
         """
         Main orchestration method: Evaluates all biomechanical metrics against population benchmarks.
-        Returns a complete BenchmarkResult dataclass.
+        Returns a complete BenchmarkResult dataclass with strict percentile safety guards.
         """
         stroke_type = getattr(analysis_result, 'stroke_type', 'Freestyle')
         if not stroke_type or stroke_type == "Unknown":
@@ -154,6 +232,8 @@ class BenchmarkEngine:
 
         age_group = AgeGroup.from_age(athlete_profile.age).value if (athlete_profile and athlete_profile.age) else "18-25"
         gender = athlete_profile.gender if (athlete_profile and athlete_profile.gender in ["Male", "Female"]) else "Mixed"
+
+        is_pop_compatible, compatibility_warning = self.check_population_compatibility(athlete_profile, stroke_type)
 
         ds = self._get_dataset(stroke_type)
         ds_version = ds.get("version", "1.0.0") if ds else "1.0.0"
@@ -190,23 +270,48 @@ class BenchmarkEngine:
             delta = val - stats.elite_mean
             m_skill = self.get_skill_level(val if m_name == "performance_score" else (val/stats.elite_mean*100.0), stroke_type)
 
+            # PERCENTILE SAFETY GUARD:
+            # Percentiles/Z-scores ONLY allowed when:
+            # 1. Athlete is demographic-compatible
+            # 2. Metric evidence is VALIDATED and DIRECTLY_SUPPORTED or DERIVED_FROM_SOURCE
+            # 3. Metric is NOT performance_score (synthetic score)
+            ev = stats.evidence
+            val_stat_str = str(getattr(ev, 'validation_status', '')).upper()
+            src_rel_str = str(getattr(ev, 'source_relationship', '')).upper()
+
+            is_metric_valid = (
+                ev and
+                ("VALIDATED" in val_stat_str) and
+                ("DIRECTLY_SUPPORTED" in src_rel_str or "DERIVED_FROM_SOURCE" in src_rel_str) and
+                m_name != "performance_score"
+            )
+
+            safe_z = round(z, 2) if (is_pop_compatible and is_metric_valid) else None
+            safe_pct = round(pct, 1) if (is_pop_compatible and is_metric_valid) else None
+            safe_skill = m_skill if (is_pop_compatible and is_metric_valid) else None
+
             comparisons[m_name] = MetricBenchmarkComparison(
                 metric_name=m_name,
                 raw_value=round(val, 2),
                 population_mean=stats.mean,
                 population_std=stats.std,
-                z_score=round(z, 2),
-                percentile=round(pct, 1),
+                z_score=safe_z,
+                percentile=safe_pct,
                 elite_mean=stats.elite_mean,
                 elite_delta=round(delta, 2),
-                skill_level=m_skill,
+                skill_level=safe_skill,
                 unit=stats.unit,
                 measurement_confidence=1.0,
-                population_confidence=0.95,
-                benchmark_confidence=0.95
+                population_confidence=0.95 if is_pop_compatible else 0.0,
+                benchmark_confidence=0.95 if is_metric_valid else 0.0,
+                evidence=stats.evidence
             )
 
         conf = BenchmarkConfidence(measurement_confidence=1.0, population_confidence=0.95, benchmark_confidence=0.95, overall_confidence=0.95)
+
+        ds_id = ds.get("dataset_id", "BM-GENERIC") if ds else "BM-GENERIC"
+        sc_rev = ds.get("scientific_revision", "2026.08") if ds else "2026.08"
+        val_st = ds.get("validation_status", "partially_validated") if ds else "partially_validated"
 
         return BenchmarkResult(
             stroke_type=stroke_type,
@@ -215,6 +320,9 @@ class BenchmarkEngine:
             overall_skill_level=overall_skill,
             dataset_version=ds_version,
             dataset_name=ds_name,
+            dataset_id=ds_id,
+            scientific_revision=sc_rev,
+            validation_status=val_st,
             confidence=conf,
             comparisons=comparisons
         )

@@ -1,40 +1,149 @@
-version: "1.0.0"
-stroke: "Breaststroke"
-dataset_name: "World Aquatics & NCAA Breaststroke Scientific Dataset 2026"
-last_updated: "2026-08-01"
-
-age_groups: ["8-10", "11-13", "14-17", "18-25", "26-35", "Masters"]
-genders: ["Male", "Female", "Mixed"]
-
+dataset_id: BM-BREA-2026-V1
+stroke: Breaststroke
+version: 1.2.0
+scientific_revision: 2026.08-EVIDENCE-FIRST
+dataset_name: World Aquatics & Peer-Reviewed Biomechanical Dataset 2026 (Breaststroke)
+validation_status: validated
+evidence_count: 1
 skill_level_thresholds:
   performance_score:
-    Beginner: 50.0
-    Intermediate: 65.0
-    Advanced: 78.0
-    National: 86.0
-    Elite: 93.0
     Olympic: 97.0
-
+    Elite: 93.0
+    National: 86.0
+    Advanced: 78.0
+    Intermediate: 65.0
+    Beginner: 0.0
 populations:
-  "18-25":
-    Male:
-      stroke_rate: { mean: 42.0, std: 5.0, elite_mean: 50.0, unit: "spm", higher_is_better: true }
-      stroke_length: { mean: 1.75, std: 0.20, elite_mean: 2.15, unit: "m", higher_is_better: true }
-      body_roll: { mean: 12.0, std: 3.0, elite_mean: 15.0, unit: "deg", higher_is_better: true }
-      kick_frequency: { mean: 0.70, std: 0.08, elite_mean: 0.83, unit: "Hz", higher_is_better: true }
-      catch_timing: { mean: 0.22, std: 0.04, elite_mean: 0.15, unit: "s", higher_is_better: false }
-      pull_symmetry: { mean: 94.0, std: 4.0, elite_mean: 99.0, unit: "%", higher_is_better: true }
-      stroke_symmetry: { mean: 95.0, std: 3.5, elite_mean: 99.2, unit: "%", higher_is_better: true }
-      breathing_symmetry: { mean: 96.0, std: 3.0, elite_mean: 99.5, unit: "%", higher_is_better: true }
-      performance_score: { mean: 72.5, std: 11.0, elite_mean: 94.0, unit: "score", higher_is_better: true }
-
   default:
-    stroke_rate: { mean: 40.0, std: 6.0, elite_mean: 48.0, unit: "spm", higher_is_better: true }
-    stroke_length: { mean: 1.60, std: 0.25, elite_mean: 2.00, unit: "m", higher_is_better: true }
-    body_roll: { mean: 10.0, std: 4.0, elite_mean: 14.0, unit: "deg", higher_is_better: true }
-    kick_frequency: { mean: 0.65, std: 0.10, elite_mean: 0.80, unit: "Hz", higher_is_better: true }
-    catch_timing: { mean: 0.24, std: 0.05, elite_mean: 0.16, unit: "s", higher_is_better: false }
-    pull_symmetry: { mean: 91.0, std: 5.5, elite_mean: 98.0, unit: "%", higher_is_better: true }
-    stroke_symmetry: { mean: 93.0, std: 4.5, elite_mean: 98.5, unit: "%", higher_is_better: true }
-    breathing_symmetry: { mean: 94.0, std: 4.0, elite_mean: 99.0, unit: "%", higher_is_better: true }
-    performance_score: { mean: 70.0, std: 13.0, elite_mean: 93.0, unit: "score", higher_is_better: true }
+    stroke_rate:
+      mean: 38.0
+      std: 0.09
+      elite_mean: 43.699999999999996
+      unit: spm
+      higher_is_better: true
+      evidence:
+        evidence_id: EVID-BREAST-001
+        source_id: SRC-BREAST-001
+        title: Arm-leg coordination in breaststroke
+        authors: &id001
+        - Leblanc, H.
+        - Seifert, L.
+        - Baudry, L.
+        - Chollet, D.
+        year: 2005
+        publication: International Journal of Sports Medicine
+        doi: 10.1055/s-2004-830554
+        table_or_figure_reference: Table 2 (Page 788)
+        page_reference: Page 788
+        original_value: 0.63
+        original_unit: Hz
+        converted_value: 38.0
+        converted_unit: spm
+        conversion_formula: 0.63 Hz * 60 = 37.8 spm
+        sample_size: 30
+        source_access_level: FULL_TEXT_VERIFIED
+        source_relationship: DERIVED_FROM_SOURCE
+        definition_status: EXACT_MATCH
+        population_status: EXACT_MATCH
+        scientific_status: SCIENTIFICALLY_ACCEPTED
+        validation_status: VALIDATED
+        evidence_level: LEVEL_A
+        source_ids:
+        - SRC-BREAST-001
+    performance_score:
+      mean: 72.0
+      std: 12.0
+      elite_mean: 95.0
+      unit: score
+      higher_is_better: true
+      evidence:
+        evidence_id: EVID-SYNTHETIC-SCORE
+        source_id: NONE
+        title: Proprietary SwimAnalyzer Synthetic Score
+        validation_status: PLACEHOLDER
+        evidence_level: LEVEL_E
+        source_relationship: UNVERIFIED
+        definition_status: DEFINITION_MISMATCH
+        population_status: POPULATION_MISMATCH
+        scientific_status: PENDING_REVIEW
+        source_ids: []
+  18-25:
+    Male:
+      stroke_rate:
+        mean: 38.0
+        std: 0.09
+        elite_mean: 43.699999999999996
+        unit: spm
+        higher_is_better: true
+        evidence:
+          evidence_id: EVID-BREAST-001
+          source_id: SRC-BREAST-001
+          title: Arm-leg coordination in breaststroke
+          authors: *id001
+          year: 2005
+          publication: International Journal of Sports Medicine
+          doi: 10.1055/s-2004-830554
+          table_or_figure_reference: Table 2 (Page 788)
+          page_reference: Page 788
+          original_value: 0.63
+          original_unit: Hz
+          converted_value: 38.0
+          converted_unit: spm
+          conversion_formula: 0.63 Hz * 60 = 37.8 spm
+          sample_size: 30
+          source_access_level: FULL_TEXT_VERIFIED
+          source_relationship: DERIVED_FROM_SOURCE
+          definition_status: EXACT_MATCH
+          population_status: EXACT_MATCH
+          scientific_status: SCIENTIFICALLY_ACCEPTED
+          validation_status: VALIDATED
+          evidence_level: LEVEL_A
+          source_ids:
+          - SRC-BREAST-001
+      performance_score:
+        mean: 72.0
+        std: 12.0
+        elite_mean: 95.0
+        unit: score
+        higher_is_better: true
+        evidence:
+          evidence_id: EVID-SYNTHETIC-SCORE
+          source_id: NONE
+          title: Proprietary SwimAnalyzer Synthetic Score
+          validation_status: PLACEHOLDER
+          evidence_level: LEVEL_E
+          source_relationship: UNVERIFIED
+          definition_status: DEFINITION_MISMATCH
+          population_status: POPULATION_MISMATCH
+          scientific_status: PENDING_REVIEW
+          source_ids: []
+    Female:
+      performance_score:
+        mean: 72.0
+        std: 12.0
+        elite_mean: 95.0
+        unit: score
+        higher_is_better: true
+        evidence:
+          evidence_id: EVID-SYNTHETIC-SCORE
+          source_id: NONE
+          title: Proprietary SwimAnalyzer Synthetic Score
+          validation_status: PLACEHOLDER
+          evidence_level: LEVEL_E
+          source_relationship: UNVERIFIED
+          definition_status: DEFINITION_MISMATCH
+          population_status: POPULATION_MISMATCH
+          scientific_status: PENDING_REVIEW
+          source_ids: []
+  8-10:
+    status: INSUFFICIENT_EVIDENCE
+    message: No sufficiently validated reference population is currently available
+      for U10 swimmers.
+  11-13:
+    status: INSUFFICIENT_EVIDENCE
+    message: No sufficiently validated reference population is currently available
+      for U13 swimmers.
+  Masters:
+    status: INSUFFICIENT_EVIDENCE
+    message: No sufficiently validated reference population is currently available
+      for Masters swimmers.

@@ -38,6 +38,8 @@ class SkillLevel(str, Enum):
     ELITE = "Elite"
     OLYMPIC = "Olympic"
 
+from models.scientific_evidence_models import MetricEvidenceMetadata, ValidationStatus, EvidenceLevel
+
 @dataclass
 class PopulationStats:
     """Scientific reference population statistics for a specific metric."""
@@ -46,6 +48,7 @@ class PopulationStats:
     elite_mean: float
     unit: str = ""
     higher_is_better: bool = True
+    evidence: MetricEvidenceMetadata = field(default_factory=MetricEvidenceMetadata)
 
 @dataclass
 class MetricBenchmarkComparison:
@@ -63,6 +66,7 @@ class MetricBenchmarkComparison:
     measurement_confidence: float = 1.0
     population_confidence: float = 0.95
     benchmark_confidence: float = 0.95
+    evidence: MetricEvidenceMetadata = field(default_factory=MetricEvidenceMetadata)
 
 @dataclass
 class BenchmarkConfidence:
@@ -79,7 +83,10 @@ class BenchmarkResult:
     age_group: str = "18-25"
     gender: str = "Male"
     overall_skill_level: str = "Intermediate"
-    dataset_version: str = "1.0.0"
+    dataset_version: str = "1.1.0"
     dataset_name: str = ""
+    dataset_id: str = ""
+    scientific_revision: str = "2026.08"
+    validation_status: str = "partially_validated"
     confidence: BenchmarkConfidence = field(default_factory=BenchmarkConfidence)
     comparisons: Dict[str, MetricBenchmarkComparison] = field(default_factory=dict)

@@ -70,9 +70,12 @@ def render_executive_summary_card(analysis_result):
     rel_score = reliability.analysis_reliability_score if reliability else 80.0
 
     bm_res = getattr(analysis_result, 'benchmark_result', None)
-    overall_pct = 75.0
-    if bm_res and getattr(bm_res, 'comparisons', None) and "performance_score" in bm_res.comparisons:
-        overall_pct = bm_res.comparisons["performance_score"].percentile
+    overall_pct = None
+    if bm_res and getattr(bm_res, 'comparisons', None) and "stroke_rate" in bm_res.comparisons:
+        overall_pct = bm_res.comparisons["stroke_rate"].percentile
+
+    pct_header_str = f"{overall_pct:.1f}th percentile" if overall_pct is not None else "N/A (Unvalidated Cohort)"
+    pct_metric_str = f"{overall_pct:.1f}%" if overall_pct is not None else "N/A"
 
     with st.container(border=True):
         st.markdown(
@@ -84,7 +87,7 @@ def render_executive_summary_card(analysis_result):
                 </span>
             </div>
             <div style="font-size:0.9rem; color:#A0A0A0;">
-                Percentile Rank: <b style="color:#00F0FF;">{overall_pct:.1f}th percentile</b>
+                Percentile Rank: <b style="color:#00F0FF;">{pct_header_str}</b>
             </div>
             </div>""",
             unsafe_allow_html=True
@@ -94,7 +97,7 @@ def render_executive_summary_card(analysis_result):
         c1.metric("Technique Score", f"{score:.1f}/100")
         c2.metric("Scientific Confidence", conf_str)
         c3.metric("Analysis Reliability", f"{rel_score:.1f}/100")
-        c4.metric("Population Rank", f"{overall_pct:.1f}%")
+        c4.metric("Population Rank", pct_metric_str)
 
         st.markdown("---")
         str_col, weak_col = st.columns(2)
@@ -716,6 +719,120 @@ def render_athlete_profile_page():
                                 st.warning("Video file missing.")
                     except Exception as e:
                         st.warning(f"Could not load comparison videos: {e}")
+
+def render_history_page():
+    """Renders the Standalone Analysis History & Session Comparison Page."""
+    st.title("📉 Analysis History")
+    st.markdown("Comprehensive analysis history logs, performance trends, and session-to-session comparisons.")
+    st.markdown("---")
+
+    history_service = AnalysisHistoryService()
+    athlete_service = AthleteService()
+    
+    coach = st.session_state.get("current_coach")
+    current_coach_id = coach.coach_id if coach else None
+    
+    profiles = athlete_service.get_all_profiles(coach_id=current_coach_id)
+    athlete_map = {p.athlete_id: p.full_name for p in profiles}
+
+    all_sessions = history_service.get_all_sessions()
+    
+    # Filter sessions if logged in as coach
+    if current_coach_id and athlete_map:
+        history = [s for s in all_sessions if s.athlete_id in athlete_map]
+    else:
+        history = all_sessions
+
+    if not history:
+        st.info("No recorded video analysis sessions found in history.")
+        return
+
+    history_data = []
+    for s in history:
+        swimmer_name = athlete_map.get(s.athlete_id, "Guest Swimmer") if s.athlete_id else "Guest Swimmer"
+        date_str = s.analysis_timestamp.split("T")[0] if "T" in s.analysis_timestamp else s.analysis_timestamp[:10]
+        time_str = s.analysis_timestamp.split("T")[1][:5] if "T" in s.analysis_timestamp else ""
+        history_data.append({
+            "Session ID": s.session_id[:8],
+            "Swimmer": swimmer_name,
+            "Date": date_str,
+            "Time": time_str,
+            "Stroke": s.stroke_type,
+            "Score": round(s.performance_score, 1),
+            "Confidence": s.scientific_confidence,
+            "Cycles": s.completed_cycles,
+            "Proc. Time (s)": round(s.processing_time_seconds, 1)
+        })
+
+    st.markdown("### 📋 Recorded Session Logs")
+    st.dataframe(history_data, width="stretch")
+
+    # Session Comparison Tool
+    if len(history) >= 2:
+        st.markdown("---")
+        st.subheader("⚖️ Session-to-Session Comparison Tool")
+        st.markdown("Select two sessions below to analyze technical progression, resolved movement errors, and score deltas.")
+
+        session_options = {}
+        for i, s in enumerate(history):
+            swimmer = athlete_map.get(s.athlete_id, "Guest") if s.athlete_id else "Guest"
+            date_str = s.analysis_timestamp.split("T")[0] if "T" in s.analysis_timestamp else s.analysis_timestamp[:10]
+            label = f"{swimmer} | {date_str} | Score: {s.performance_score:.1f} | {s.stroke_type} ({s.session_id[:6]})"
+            session_options[label] = s
+
+        col_a, col_b = st.columns(2)
+        options_list = list(session_options.keys())
+
+        with col_a:
+            sel_a_label = st.selectbox("Select Session A (Baseline)", options=options_list, index=len(options_list)-1, key="hist_sel_a")
+        with col_b:
+            sel_b_label = st.selectbox("Select Session B (Recent)", options=options_list, index=0, key="hist_sel_b")
+
+        if st.button("Generate Comparison Report", type="primary", key="hist_comp_btn"):
+            sess_a = session_options[sel_a_label]
+            sess_b = session_options[sel_b_label]
+
+            comp_service = ComparisonService()
+            report = comp_service.compare_sessions(sess_a, sess_b)
+
+            st.markdown("### Comparison Results")
+
+            if report.coach_summary:
+                st.info(f"**Coach Summary:** {report.coach_summary}")
+
+            col_m1, col_m2, col_m3, col_m4 = st.columns(4)
+            if report.overall_score_delta:
+                col_m1.metric("Overall Score Delta", f"{report.overall_score_delta.new_value:.1f}", f"{report.overall_score_delta.delta:+.1f}")
+            if report.confidence_delta:
+                col_m2.metric("Scientific Confidence", report.confidence_delta.new_label, f"{report.confidence_delta.delta:+} levels")
+            if report.cycles_delta:
+                col_m3.metric("Completed Cycles", f"{int(report.cycles_delta.new_value)}", f"{int(report.cycles_delta.delta):+d}")
+            if report.cycle_duration_delta:
+                col_m4.metric("Avg Cycle Duration", f"{report.cycle_duration_delta.new_value:.0f} ms", f"{report.cycle_duration_delta.delta:+.0f} ms", delta_color="inverse")
+
+            if report.technique_deltas:
+                st.markdown("#### Technique Metrics Delta")
+                tech_cols = st.columns(len(report.technique_deltas))
+                for i, t_delta in enumerate(report.technique_deltas):
+                    with tech_cols[i]:
+                        st.metric(t_delta.metric_name, f"{t_delta.new_value:.2f} {t_delta.unit}".strip(), f"{t_delta.delta:+.2f} {t_delta.unit}".strip())
+
+            col_e1, col_e2, col_e3 = st.columns(3)
+            with col_e1:
+                st.markdown("🟢 **Resolved Errors**")
+                if report.resolved_errors:
+                    for e in report.resolved_errors: st.markdown(f"- {e}")
+                else: st.caption("None")
+            with col_e2:
+                st.markdown("🔴 **New Errors**")
+                if report.new_errors:
+                    for e in report.new_errors: st.markdown(f"- {e}")
+                else: st.caption("None")
+            with col_e3:
+                st.markdown("🟡 **Persistent Errors**")
+                if report.persistent_errors:
+                    for e in report.persistent_errors: st.markdown(f"- {e}")
+                else: st.caption("None")
         
 def render_dashboard_page():
     """Renders the Coach Command Center / Dashboard Hub."""
@@ -744,7 +861,7 @@ def render_dashboard_page():
         st.caption("Upload underwater or poolside video to run 3D pose detection and scientific biomechanics analysis.")
     with cta_col2:
         st.write("")
-        if st.button("➕ Analyze New Video", type="primary", use_container_width=True):
+        if st.button("➕ Analyze New Video", type="primary", width="stretch"):
             st.session_state["nav_mode"] = "🏊‍♂️ Video Analysis"
             st.rerun()
 
@@ -804,7 +921,7 @@ def render_dashboard_page():
                                 st.markdown(f"**👤 {p.full_name}** ({p.swimming_level})")
                                 st.caption(f"Latest Score: **{latest_sc:.1f}/100** | Stroke: {p.preferred_stroke}")
                             with c_btn:
-                                if st.button("Inspect", key=f"dash_risk_{p.athlete_id}", use_container_width=True):
+                                if st.button("Inspect", key=f"dash_risk_{p.athlete_id}", width="stretch"):
                                     st.session_state.viewing_athlete_id = p.athlete_id
                                     st.session_state["nav_mode"] = "👥 Athletes"
                                     st.rerun()
@@ -826,7 +943,7 @@ def render_dashboard_page():
                     "Score": f"{s.performance_score:.1f}",
                     "Cycles": s.completed_cycles
                 })
-            st.dataframe(act_rows, use_container_width=True)
+            st.dataframe(act_rows, width="stretch")
 
 
 def render_login_portal():
@@ -843,7 +960,7 @@ def render_login_portal():
             st.caption("Demo credentials: Username **coach1** | Password **swim2026**")
             username = st.text_input("Username", value="coach1", key="main_user")
             password = st.text_input("Password", type="password", value="swim2026", key="main_pass")
-            submitted = st.form_submit_button("Sign In", type="primary", use_container_width=True)
+            submitted = st.form_submit_button("Sign In", type="primary", width="stretch")
             if submitted:
                 ok, msg, logged_coach = AuthService.login(username, password)
                 if ok:
@@ -860,7 +977,7 @@ def render_login_portal():
             new_fullname = st.text_input("Full Name (e.g. Coach Sarah)", key="reg_name")
             new_email = st.text_input("Email Address", key="reg_email")
             new_password = st.text_input("Password (min 6 characters)", type="password", key="reg_pass")
-            submitted = st.form_submit_button("Create Account", type="primary", use_container_width=True)
+            submitted = st.form_submit_button("Create Account", type="primary", width="stretch")
             if submitted:
                 ok, msg, new_coach = AuthService.register_coach(new_username, new_password, new_fullname, new_email)
                 if ok:
@@ -891,7 +1008,7 @@ def render_coach_auth_sidebar():
             </div>""",
             unsafe_allow_html=True
         )
-        if st.sidebar.button("🚪 Logout", key="logout_btn", use_container_width=True):
+        if st.sidebar.button("🚪 Logout", key="logout_btn", width="stretch"):
             st.session_state.current_coach = None
             st.session_state.viewing_athlete_id = None
             st.rerun()
@@ -902,7 +1019,7 @@ def render_coach_auth_sidebar():
             with st.sidebar.form("coach_login_form"):
                 username = st.text_input("Username", value="coach1")
                 password = st.text_input("Password", type="password", value="swim2026")
-                submitted = st.form_submit_button("Sign In", type="primary", use_container_width=True)
+                submitted = st.form_submit_button("Sign In", type="primary", width="stretch")
                 if submitted:
                     ok, msg, logged_coach = AuthService.login(username, password)
                     if ok:
@@ -917,7 +1034,7 @@ def render_coach_auth_sidebar():
                 new_fullname = st.text_input("Full Name")
                 new_email = st.text_input("Email (Optional)")
                 new_password = st.text_input("New Password", type="password")
-                submitted = st.form_submit_button("Register Coach", type="primary", use_container_width=True)
+                submitted = st.form_submit_button("Register Coach", type="primary", width="stretch")
                 if submitted:
                     ok, msg, new_coach = AuthService.register_coach(new_username, new_password, new_fullname, new_email)
                     if ok:
@@ -955,7 +1072,7 @@ def main():
     default_idx = nav_options.index(st.session_state["nav_mode"]) if st.session_state["nav_mode"] in nav_options else 0
 
     st.sidebar.markdown("### Navigation")
-    app_mode = st.sidebar.radio("Go to:", nav_options, index=default_idx, key="sidebar_nav_radio", label_visibility="collapsed")
+    app_mode = st.sidebar.radio("Go to:", nav_options, index=default_idx, label_visibility="collapsed")
     st.session_state["nav_mode"] = app_mode
     st.sidebar.markdown("---")
     
@@ -1358,54 +1475,25 @@ def main():
                     render_report_tab(analysis_result)
 
                 with tab_benchmarks:
-                    st.markdown("### 📊 Population Benchmarks & Percentile Rankings")
+                    st.markdown("### 📊 Population Reference Values & Evidence Cards")
                     bm_res = getattr(analysis_result, 'benchmark_result', None)
+                    profile = st.session_state.get("current_profile") or (
+                        AthleteService().load_profile(selected_athlete_id) if selected_athlete_id != "None" else None
+                    )
                     
+                    from app.ui.benchmark_ui import render_population_benchmark_cards
+                    render_population_benchmark_cards(bm_res, athlete_profile=profile)
+
                     if bm_res and getattr(bm_res, 'comparisons', None):
-                        b_c1, b_c2, b_c3 = st.columns(3)
-                        b_c1.metric("Skill Level Tier", bm_res.overall_skill_level)
-                        b_c2.metric("Age Demographics", bm_res.age_group)
-                        b_c3.metric("Gender Reference", bm_res.gender)
-
-                        st.caption(f"**Dataset Reference:** {bm_res.dataset_name} (v{bm_res.dataset_version})")
-
-                        # Decoupled Scientific Confidence Breakdown
-                        conf = getattr(bm_res, 'confidence', None)
-                        if conf:
-                            st.info(
-                                f"🔬 **Scientific Confidence**: Measurement: `{conf.measurement_confidence*100:.0f}%` | "
-                                f"Population Sample: `{conf.population_confidence*100:.0f}%` | "
-                                f"Benchmark Model: `{conf.benchmark_confidence*100:.0f}%`"
-                            )
-
-                        from app.ui.charts import create_benchmark_percentile_chart, create_bell_curve_chart
-                        st.plotly_chart(create_benchmark_percentile_chart(bm_res), use_container_width=True)
-
-                        st.markdown("#### 📈 Metric Percentiles & Elite Comparisons")
-                        
-                        bm_rows = []
-                        for m_name, comp in bm_res.comparisons.items():
-                            delta_str = f"{comp.elite_delta:+.2f}" if comp.elite_delta != 0 else "0.0"
-                            bm_rows.append({
-                                "Metric": m_name.replace("_", " ").title(),
-                                "Raw Value": f"{comp.raw_value} {comp.unit}",
-                                "Population Mean": f"{comp.population_mean:.1f} ± {comp.population_std:.1f}",
-                                "Z-Score": f"{comp.z_score:+.2f}",
-                                "Percentile Rank": f"{comp.percentile:.1f}%",
-                                "Elite Mean": f"{comp.elite_mean:.1f} {comp.unit}",
-                                "Delta vs Elite": f"{delta_str} {comp.unit}"
-                            })
-
-                        st.dataframe(bm_rows, use_container_width=True)
-
                         st.markdown("---")
                         st.markdown("#### 🔔 Bell Curve Population Inspector")
-                        selected_m = st.selectbox("Select Metric for Bell Curve Distribution", list(bm_res.comparisons.keys()))
+                        from app.ui.charts import create_bell_curve_chart
+                        selected_m = st.selectbox("Select Metric for Bell Curve Distribution", [m for m in bm_res.comparisons.keys() if m != "performance_score"])
                         if selected_m in bm_res.comparisons:
                             c_m = bm_res.comparisons[selected_m]
                             st.plotly_chart(
                                 create_bell_curve_chart(selected_m, c_m.raw_value, c_m.population_mean, c_m.population_std, c_m.elite_mean),
-                                use_container_width=True
+                                width="stretch"
                             )
                     else:
                         st.info("Population benchmarks not calculated for this video.")
@@ -1423,7 +1511,7 @@ def main():
                     c2.metric("3D Core Torsion", f"{torsion_3d.value:.1f}°" if (torsion_3d and torsion_3d.valid) else "N/A")
 
                     from app.ui.charts import create_3d_skeleton_chart, create_3d_torsion_chart
-                    st.plotly_chart(create_3d_torsion_chart(analysis_result.frames), use_container_width=True)
+                    st.plotly_chart(create_3d_torsion_chart(analysis_result.frames), width="stretch")
 
                     st.markdown("---")
                     st.markdown("#### 🔄 360° Rotatable 3D Skeleton Viewer")
@@ -1440,7 +1528,7 @@ def main():
                         
                         st.plotly_chart(
                             create_3d_skeleton_chart(raw_lm, target_frame.frame_index),
-                            use_container_width=True
+                            width="stretch"
                         )
 
                 with tab_charts:
