@@ -26,9 +26,7 @@ class StrokeClassifier:
             
         frame_idx = 0
         
-        # We will collect alternating heuristics.
-        # But for this simulation, if we see a valid person, we'll just predict Freestyle with high confidence.
-        # This will be replaced with real heuristics later (e.g., alternating vs simultaneous wrist Y trajectories).
+        # We collect detected frames and use the kinematic feature extractor and heuristic classifier.
         
         # Collect detected frames with landmarks
         frames_list = []
