@@ -1,19 +1,19 @@
 # Scientific Database Update Report
 
 **Date**: None
-**Status**: SUCCESSFUL_UPDATE
+**Status**: SUCCESSFUL_UPDATE_WITH_LIMITED_COVERAGE
 
 ## Transaction Summary
 **Previous Version**: `2026.08.08`  
-**New Database Version**: `2026.08.08`  
+**New Database Version**: `2026.08.09`  
 
 | Metric | Count |
 |--------|-------|
-| **Sources Discovered** | 10 |
-| **New Sources Added** | 0 |
+| **Sources Discovered** | 82 |
+| **New Sources Added** | 2 |
 | **Full-Text Verified Sources** | 0 |
 | **Abstract-Only Sources** | 0 |
-| **Rejected Sources** | 0 |
+| **Rejected Sources** | 2 |
 | **Evidence Candidates Evaluated** | 0 |
 | **Evidence Records Accepted** | 0 |
 | **Evidence Review Required** | 0 |

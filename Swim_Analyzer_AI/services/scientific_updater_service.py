@@ -244,7 +244,7 @@ class ScientificUpdaterService:
                 pmids = set()
                 try:
                     req = urllib.request.Request(search_url, headers={'User-Agent': 'SwimAnalyzerAI/2.0'})
-                    with urllib.request.urlopen(req, context=self.ssl_ctx, timeout=10) as resp:
+                    with urllib.request.urlopen(req, context=self.ssl_ctx, timeout=30) as resp:
                         data = json.loads(resp.read().decode())
                         for p in data.get("esearchresult", {}).get("idlist", []):
                             pmids.add(p)
@@ -254,7 +254,7 @@ class ScientificUpdaterService:
                 try:
                     time.sleep(1)
                     req_epmc = urllib.request.Request(epmc_url, headers={'User-Agent': 'SwimAnalyzerAI/2.0'})
-                    with urllib.request.urlopen(req_epmc, context=self.ssl_ctx, timeout=10) as resp:
+                    with urllib.request.urlopen(req_epmc, context=self.ssl_ctx, timeout=30) as resp:
                         data = json.loads(resp.read().decode())
                         for res in data.get("resultList", {}).get("result", []):
                             if res.get("pmid"):
@@ -269,7 +269,7 @@ class ScientificUpdaterService:
                     time.sleep(1)
                     fetch_url = f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id={','.join(pmids)}&retmode=xml"
                     freq = urllib.request.Request(fetch_url, headers={'User-Agent': 'SwimAnalyzerAI/2.0'})
-                    with urllib.request.urlopen(freq, context=self.ssl_ctx, timeout=10) as fresp:
+                    with urllib.request.urlopen(freq, context=self.ssl_ctx, timeout=30) as fresp:
                         xml_data = fresp.read()
                         root = ET.fromstring(xml_data)
 
@@ -364,7 +364,7 @@ class ScientificUpdaterService:
 
         try:
             req = urllib.request.Request(pmc_url, headers={'User-Agent': 'SwimAnalyzerAI/2.0'})
-            with urllib.request.urlopen(req, context=self.ssl_ctx, timeout=10) as resp:
+            with urllib.request.urlopen(req, context=self.ssl_ctx, timeout=30) as resp:
                 xml_content = resp.read()
                 root = ET.fromstring(xml_content)
                 body = root.find('.//body')

@@ -28,6 +28,12 @@ class ScientificSemanticExtractor:
     def __init__(self, api_key: Optional[str] = None):
         self.degraded_mode = False
         
+        try:
+            from dotenv import load_dotenv
+            load_dotenv()
+        except ImportError:
+            pass
+            
         # Load key from argument, or environment
         key_to_use = api_key or os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
         
