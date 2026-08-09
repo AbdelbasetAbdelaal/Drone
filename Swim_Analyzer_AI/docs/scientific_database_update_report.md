@@ -9,15 +9,15 @@
 
 | Metric | Count |
 |--------|-------|
-| **Sources Discovered** | 82 |
-| **Sources Retrieved** | 80 |
+| **Sources Discovered** | 0 |
+| **Sources Retrieved** | 0 |
 | **Full-Text Verified Sources** | 0 |
 | **Candidate Evidence** | 0 |
 | **Accepted Evidence** | 0 |
 | **Rejected Evidence** | 0 |
 | **Review-Required Evidence** | 0 |
 | **Benchmarks Created** | 0 |
-| **Benchmarks Updated** | 0 |
+| **Benchmarks Updated** | 4 |
 | **Populations Still Insufficient** | 90 |
 | **Populations with Conflicting Evidence** | 0 |
 | **Network Failures** | 0 |

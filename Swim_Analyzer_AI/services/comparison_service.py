@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 from models.comparison_models import ComparisonReport, MetricDelta
 
 class ComparisonService:
@@ -32,13 +32,15 @@ class ComparisonService:
             unit=unit
         )
 
-    def _get_metric_val(self, data: Dict[str, Any], key: str) -> float:
-        """Safely extract metric value from nested ValidatedMetric structure."""
+    def _get_metric_val(self, data: Dict[str, Any], key: str) -> Optional[float]:
+        """Return a measured numeric value, or None when that metric is unavailable."""
         report = data.get("report", {})
         metric = report.get(key, {})
         if isinstance(metric, dict):
-            return float(metric.get("value", 0.0))
-        return float(metric) if metric else 0.0
+            value = metric.get("value")
+        else:
+            value = metric
+        return float(value) if value is not None else None
 
     def compare_sessions(self, session_a: Any, session_b: Any) -> ComparisonReport:
         """
@@ -57,29 +59,34 @@ class ComparisonService:
         )
 
         # 1. Overall Performance
+        # P0-8: None score = INSUFFICIENT_EVIDENCE — skip delta if either session lacks a score
         score_a = session_a.performance_score
         score_b = session_b.performance_score
-        report.overall_score_delta = self._calc_delta("Overall Score", score_a, score_b)
+        if score_a is not None and score_b is not None:
+            report.overall_score_delta = self._calc_delta("Overall Score", score_a, score_b)
+        # else: overall_score_delta remains None — no valid comparison possible
+
 
         # 2. Technique Metrics (Stroke-agnostic)
         sr_a = self._get_metric_val(data_a, "stroke_rate")
         sr_b = self._get_metric_val(data_b, "stroke_rate")
-        report.technique_deltas.append(self._calc_delta("Stroke Rate", sr_a, sr_b, higher_is_better=True, unit="strokes/min"))
+        if sr_a is not None and sr_b is not None:
+            report.technique_deltas.append(self._calc_delta("Stroke Rate", sr_a, sr_b, higher_is_better=True, unit="strokes/min"))
         
         # Future-proof: we can iterate dynamically over other keys in data["report"] if they are valid metrics.
         sl_a = self._get_metric_val(data_a, "stroke_length")
         sl_b = self._get_metric_val(data_b, "stroke_length")
-        if sl_a > 0 or sl_b > 0:
+        if sl_a is not None and sl_b is not None:
             report.technique_deltas.append(self._calc_delta("Stroke Length", sl_a, sl_b, higher_is_better=True))
             
         kf_a = self._get_metric_val(data_a, "kick_frequency")
         kf_b = self._get_metric_val(data_b, "kick_frequency")
-        if kf_a > 0 or kf_b > 0:
+        if kf_a is not None and kf_b is not None:
             report.technique_deltas.append(self._calc_delta("Kick Frequency", kf_a, kf_b, higher_is_better=True))
             
         ss_a = self._get_metric_val(data_a, "stroke_symmetry")
         ss_b = self._get_metric_val(data_b, "stroke_symmetry")
-        if ss_a > 0 or ss_b > 0:
+        if ss_a is not None and ss_b is not None:
             report.technique_deltas.append(self._calc_delta("Stroke Symmetry", ss_a, ss_b, higher_is_better=True, unit="%"))
 
         # 3. Scientific Confidence (Qualitative)
@@ -115,12 +122,15 @@ class ComparisonService:
         report.cycle_duration_delta = self._calc_delta("Cycle Duration", dur_a, dur_b, higher_is_better=False, unit="ms")
         
         # 6. Basic Coach Summary Rule-based Gen
-        if report.overall_score_delta.is_improvement:
+        if report.overall_score_delta is None:
+            report.coach_summary = "Score comparison unavailable (one or both sessions lack sufficient evidence). "
+        elif report.overall_score_delta.is_improvement:
             report.coach_summary = f"Athlete has improved overall score by {report.overall_score_delta.delta:.1f} points. "
         elif report.overall_score_delta.delta < 0:
             report.coach_summary = f"Athlete performance dropped by {abs(report.overall_score_delta.delta):.1f} points. "
         else:
             report.coach_summary = "Athlete performance is stable. "
+
             
         if report.resolved_errors:
             report.coach_summary += f"Excellent work resolving {len(report.resolved_errors)} previous movement error(s)."

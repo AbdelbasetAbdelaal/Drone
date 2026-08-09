@@ -78,10 +78,10 @@ class PDFReportService:
             
         # Athlete Performance Overview Stats
         if history:
-            scores = [s.performance_score for s in history]
+            scores = [s.performance_score for s in history if s.performance_score is not None]
             total_cycles = sum([s.completed_cycles for s in history])
-            avg_score = sum(scores) / len(scores) if scores else 0.0
-            max_score = max(scores) if scores else 0.0
+            avg_score = sum(scores) / len(scores) if scores else None
+            max_score = max(scores) if scores else None
 
             pdf.set_font("Helvetica", style="B", size=13)
             pdf.set_text_color(0, 85, 255)
@@ -94,8 +94,8 @@ class PDFReportService:
             
             pdf.set_xy(12, pdf.get_y() + 4)
             pdf.cell(47, 8, f"Total Sessions: {len(history)}", align="C")
-            pdf.cell(47, 8, f"Avg Score: {avg_score:.1f}", align="C")
-            pdf.cell(47, 8, f"Best Score: {max_score:.1f}", align="C")
+            pdf.cell(47, 8, f"Avg Score: {avg_score:.1f}" if avg_score is not None else "Avg Score: INSUFFICIENT_EVIDENCE", align="C")
+            pdf.cell(47, 8, f"Best Score: {max_score:.1f}" if max_score is not None else "Best Score: INSUFFICIENT_EVIDENCE", align="C")
             pdf.cell(47, 8, f"Total Cycles: {total_cycles}", align="C")
             pdf.ln(12)
 
@@ -124,7 +124,8 @@ class PDFReportService:
                 conf = getattr(s, 'scientific_confidence', 'Medium') or 'Medium'
                 pdf.cell(col_widths[0], 8, date_str, border=1, align="C")
                 pdf.cell(col_widths[1], 8, str(s.stroke_type), border=1, align="C")
-                pdf.cell(col_widths[2], 8, f"{s.performance_score:.1f}", border=1, align="C")
+                score_text = f"{s.performance_score:.1f}" if s.performance_score is not None else "INSUFFICIENT_EVIDENCE"
+                pdf.cell(col_widths[2], 8, score_text, border=1, align="C")
                 pdf.cell(col_widths[3], 8, str(s.completed_cycles), border=1, align="C")
                 pdf.cell(col_widths[4], 8, str(conf), border=1, align="C")
                 pdf.ln()
@@ -156,7 +157,7 @@ class PDFReportService:
 
         # Performance Score Banner
         report = getattr(analysis_result, 'report', None)
-        overall_score = report.overall_score if report else 0.0
+        overall_score = report.overall_score if report else None
         consistency = getattr(analysis_result, 'consistency', None)
         scientific_conf = consistency.scientific_confidence if consistency else "Medium"
         stroke_type = analysis_result.vqa_result.quality_class if hasattr(analysis_result, 'vqa_result') and analysis_result.vqa_result else "Freestyle"
@@ -168,7 +169,8 @@ class PDFReportService:
         pdf.set_xy(15, pdf.get_y() + 4)
         pdf.set_font("Helvetica", style="B", size=15)
         pdf.set_text_color(0, 50, 150)
-        pdf.cell(90, 8, f"Overall Technique Score: {overall_score:.1f} / 100")
+        overall_text = f"Overall Technique Score: {overall_score:.1f} / 100" if overall_score is not None else "Overall Technique Score: INSUFFICIENT_EVIDENCE"
+        pdf.cell(90, 8, overall_text)
         
         pdf.set_font("Helvetica", size=11)
         pdf.set_text_color(80, 80, 80)
@@ -187,7 +189,7 @@ class PDFReportService:
         def get_val(metric_obj):
             if not metric_obj:
                 return None
-            if hasattr(metric_obj, 'value') and metric_obj.value > 0:
+            if hasattr(metric_obj, 'value') and metric_obj.value is not None and metric_obj.value > 0:
                 return metric_obj.value
             if isinstance(metric_obj, (int, float)) and metric_obj > 0:
                 return float(metric_obj)
@@ -199,8 +201,8 @@ class PDFReportService:
         sym = get_val(getattr(report, 'stroke_symmetry', None))
 
         # 3D body roll & torsion averages from frames
-        rolls_3d = [f.angles.body_roll_3d.value for f in analysis_result.frames if f.is_valid and f.angles and f.angles.body_roll_3d and f.angles.body_roll_3d.value > 0] if analysis_result.frames else []
-        torsions = [f.angles.core_torsion_3d.value for f in analysis_result.frames if f.is_valid and f.angles and f.angles.core_torsion_3d and f.angles.core_torsion_3d.value > 0] if analysis_result.frames else []
+        rolls_3d = [f.angles.body_roll_3d.value for f in analysis_result.frames if f.is_valid and f.angles and f.angles.body_roll_3d and f.angles.body_roll_3d.value is not None and f.angles.body_roll_3d.value > 0] if analysis_result.frames else []
+        torsions = [f.angles.core_torsion_3d.value for f in analysis_result.frames if f.is_valid and f.angles and f.angles.core_torsion_3d and f.angles.core_torsion_3d.value is not None and f.angles.core_torsion_3d.value > 0] if analysis_result.frames else []
 
         b_roll = (sum(rolls_3d) / len(rolls_3d)) if rolls_3d else None
         torsion = (sum(torsions) / len(torsions)) if torsions else None
@@ -279,7 +281,7 @@ class PDFReportService:
         pdf.cell(0, 8, "Coaching Feedback & Recommended Drills", ln=True, border="B")
         pdf.ln(4)
 
-        feedback_text = report.feedback_summary if (report and report.feedback_summary) else "Technique is solid. Maintain smooth rhythm and full extension."
+        feedback_text = report.feedback_summary if (report and report.feedback_summary) else "INSUFFICIENT_EVIDENCE: No reliable coaching assessment is available."
         pdf.set_font("Helvetica", size=10)
         pdf.set_text_color(40, 40, 40)
         pdf.multi_cell(0, 6, feedback_text)

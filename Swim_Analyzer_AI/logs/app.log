@@ -322,3 +322,1145 @@
 2026-08-09 15:15:49,068 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
 2026-08-09 15:15:49,259 - services.auth_service - INFO - [SYSTEM] Coach logged in: coach1
 2026-08-09 15:15:49,486 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:16:41,975 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:16:50,074 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:16:50,095 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-09 15:16:54,457 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:16:54,478 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-09 15:16:59,024 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:16:59,044 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-09 15:16:59,236 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:16:59,257 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-09 15:16:59,396 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 15:16:59,757 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_2379335da84b44e2b75adb7163440c97.mp4
+2026-08-09 15:17:06,623 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 15:17:06,941 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:17:06,961 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-09 15:17:09,973 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:17:09,998 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-09 15:17:10,190 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:17:10,210 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-09 15:17:10,290 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-09 15:17:10,291 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_2379335da84b44e2b75adb7163440c97.mp4 (Effective FPS: 30.0, Frame Stride: 1)
+2026-08-09 15:17:10,299 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 15:17:10,647 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_2379335da84b44e2b75adb7163440c97.mp4 (720x1280 @ 30.0fps)
+2026-08-09 15:17:10,669 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_2379335da84b44e2b75adb7163440c97.mp4 (720x1280 @ 30.0fps)
+2026-08-09 15:17:10,673 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_2379335da84b44e2b75adb7163440c97.mp4 (Codec: mp4v)
+2026-08-09 15:17:39,789 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 210 frames.
+2026-08-09 15:17:39,798 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-09 15:17:39,839 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:17:39,850 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:17:39,857 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:17:39,864 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:17:39,890 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: Beginner, Dataset: Population Reference Dataset)
+2026-08-09 15:17:40,316 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_2379335da84b44e2b75adb7163440c97.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_2379335da84b44e2b75adb7163440c97.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_2379335da84b44e2b75adb7163440c97.json
+2026-08-09 15:17:53,358 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_2379335da84b44e2b75adb7163440c97.mp4
+2026-08-09 15:17:53,412 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 4.47 MB, Frames: 210, Duration: 7.00s
+2026-08-09 15:17:53,538 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 15:17:53,540 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-09 15:17:53,541 - __main__ - INFO - [SYSTEM] WARN: final_vqa_critical_but_results_available
+2026-08-09 15:17:53,542 - __main__ - INFO - [SYSTEM] WARN: consistency_critical_but_results_available
+2026-08-09 15:17:54,013 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:17:54,036 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-09 15:17:54,101 - __main__ - ERROR - [SYSTEM] An error occurred during rendering: '>' not supported between instances of 'NoneType' and 'float'
+2026-08-09 15:23:14,602 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 15:23:14,609 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:23:14,618 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:23:14,623 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 15:23:14,628 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:23:14,633 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 15:23:14,638 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:23:16,180 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: test_stability_video.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-09 15:23:16,185 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 15:23:16,507 - utils.video_utils - INFO - [VIDEO] Opened video: test_stability_video.mp4 (854x480 @ 30.0fps)
+2026-08-09 15:23:16,510 - utils.video_utils - INFO - [VIDEO] Opened video: test_stability_video.mp4 (854x480 @ 30.0fps)
+2026-08-09 15:23:16,512 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_test_stability_video.mp4 (Codec: mp4v)
+2026-08-09 15:23:22,306 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 75 frames.
+2026-08-09 15:23:22,314 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-09 15:23:23,058 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:23:23,065 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:23:23,069 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:23:23,077 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:23:23,077 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: INSUFFICIENT_EVIDENCE, Dataset: Population Reference Dataset)
+2026-08-09 15:23:23,100 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_test_stability_video.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_test_stability_video.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_test_stability_video.json
+2026-08-09 15:23:24,660 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_test_stability_video.mp4
+2026-08-09 15:23:24,688 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 0.08 MB, Frames: 75, Duration: 2.50s
+2026-08-09 15:23:25,555 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 15:38:04,643 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:44:13,733 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:44:13,984 - services.auth_service - INFO - [SYSTEM] Coach logged in: coach1
+2026-08-09 15:44:14,262 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:44:16,613 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:44:18,722 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:44:22,391 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:44:34,636 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:44:34,671 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525181466.mp4
+2026-08-09 15:46:36,698 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:46:36,743 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:46:36,753 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:46:36,797 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:46:37,124 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:46:37,132 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:46:37,136 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:46:37,142 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:46:37,564 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:46:37,569 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:46:37,574 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:46:37,581 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:46:37,589 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:46:37,598 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:46:37,603 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:46:37,610 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:46:37,621 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:46:37,629 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:46:37,635 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:46:37,640 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:46:37,651 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:46:37,657 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:46:37,664 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:46:37,671 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:46:37,736 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:46:37,746 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:46:37,752 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:46:37,756 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:46:37,764 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:46:38,058 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:46:38,064 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_a25ab312.pdf
+2026-08-09 15:46:38,073 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:46:38,079 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:46:38,084 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:46:38,089 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:46:38,101 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 15:46:38,103 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:46:38,108 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:46:38,111 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 15:46:38,114 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:46:38,116 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 15:46:38,118 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:47:48,975 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:47:48,984 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:47:48,989 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:47:48,995 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:47:49,181 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:47:49,188 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:47:49,193 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:47:49,201 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:47:49,212 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:47:49,221 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:47:49,225 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:47:49,235 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:47:49,243 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:47:49,252 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:47:49,257 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:47:49,264 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:47:49,276 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:47:49,284 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:47:49,289 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:47:49,297 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:47:49,309 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:47:49,321 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:47:49,329 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:47:49,336 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:47:49,407 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:47:49,417 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:47:49,424 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:47:49,429 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:47:49,437 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:47:49,760 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:47:49,765 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_32e8f6f8.pdf
+2026-08-09 15:47:49,774 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:47:49,782 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:47:49,790 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:47:49,800 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:47:49,803 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 15:47:49,806 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:47:49,811 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:47:49,815 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 15:47:49,820 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:47:49,822 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 15:47:49,825 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:48:38,857 - scientific_reference.validation.benchmark_eligibility_validator - INFO - [SYSTEM] Systematic review SR_BACKSTROKE_2025 lacks explicit primary study trace. Assigned REVIEW_REQUIRED.
+2026-08-09 15:48:38,905 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Sex leakage prohibited: candidate sex 'Male' vs target sex 'Female'
+2026-08-09 15:48:38,926 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Age leakage prohibited: adult candidate '18-25' vs target youth age '8-10'
+2026-08-09 15:48:38,957 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Stroke leakage prohibited: candidate stroke 'freestyle' vs target stroke 'backstroke'
+2026-08-09 15:48:38,983 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Meta-analysis MA_400M_FRONT_CRAWL restricted to 400m front crawl test context (attempted target distance: 100m)
+2026-08-09 15:48:38,993 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:48:39,007 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:48:39,013 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:48:39,022 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:48:39,028 - scientific_reference.validation.evidence_validator - WARNING - [SYSTEM] Provenance rejection for stroke_rate: Quote not found in source text.
+2026-08-09 15:48:39,032 - scientific_reference.validation.evidence_validator - WARNING - [SYSTEM] Stroke rejection for stroke_rate: Stroke 'Freestyle' not supported by context.
+2026-08-09 15:48:39,042 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:48:39,053 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:48:39,062 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:48:39,079 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:48:39,093 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:48:39,100 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:48:39,109 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:48:39,123 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:48:39,177 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Fabricated metadata detected for candidate SRC-FAKE-001
+2026-08-09 15:48:39,313 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:48:39,371 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 15:48:39,374 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:48:39,380 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:48:39,387 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 15:48:39,392 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:48:39,396 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 15:48:39,406 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:48:39,507 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:48:39,611 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:48:39,693 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:48:39,822 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:48:42,666 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: test_stability_video.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-09 15:48:42,699 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 15:48:45,370 - utils.video_utils - INFO - [VIDEO] Opened video: test_stability_video.mp4 (854x480 @ 30.0fps)
+2026-08-09 15:48:45,374 - utils.video_utils - INFO - [VIDEO] Opened video: test_stability_video.mp4 (854x480 @ 30.0fps)
+2026-08-09 15:48:45,387 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_test_stability_video.mp4 (Codec: mp4v)
+2026-08-09 15:48:52,171 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 75 frames.
+2026-08-09 15:48:52,176 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-09 15:48:52,226 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:48:52,231 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:48:52,235 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:48:52,242 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:48:52,242 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: INSUFFICIENT_EVIDENCE, Dataset: Population Reference Dataset)
+2026-08-09 15:48:52,264 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_test_stability_video.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_test_stability_video.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_test_stability_video.json
+2026-08-09 15:48:54,768 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_test_stability_video.mp4
+2026-08-09 15:48:55,072 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 0.08 MB, Frames: 75, Duration: 2.50s
+2026-08-09 15:48:55,863 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 15:48:56,732 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:48:57,556 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:48:57,569 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:48:57,576 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:48:57,583 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:48:57,810 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:48:57,821 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:48:57,835 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:48:57,849 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:48:57,862 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:48:57,873 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:48:57,882 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:48:57,895 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:48:57,907 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:48:57,918 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:48:57,927 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:48:57,933 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:48:57,945 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:48:57,954 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:48:57,962 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:48:57,971 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:48:57,986 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:48:57,995 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:48:57,999 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:48:58,006 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:48:58,069 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:48:58,080 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:48:58,086 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:48:58,092 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:48:58,099 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:48:58,332 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:48:58,335 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_56b87896.pdf
+2026-08-09 15:48:58,346 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:48:58,351 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:48:58,356 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:48:58,363 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:48:58,600 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:48:58,811 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:48:58,817 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:48:58,823 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:48:58,828 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:48:58,836 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:48:58,842 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:48:58,848 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:48:58,858 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:48:58,867 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:48:58,873 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:48:58,878 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:48:58,884 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:49:00,084 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:49:00,309 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:49:00,552 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:49:00,558 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:49:00,563 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:49:00,570 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:49:00,576 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:49:00,587 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:49:00,598 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:49:00,605 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:49:00,612 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:49:00,630 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:49:00,638 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:49:00,643 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:49:00,649 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:49:00,660 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:49:00,666 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:49:00,672 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:49:00,678 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:49:00,689 - scientific_reference.validation.statistical_validator - WARNING - [SYSTEM] Rejected: Sample size 4 is too small for benchmark aggregation.
+2026-08-09 15:49:00,694 - scientific_reference.validation.evidence_validator - WARNING - [SYSTEM] Provenance rejection for swimming velocity: Quote not found in source text.
+2026-08-09 15:49:00,698 - scientific_reference.evidence_aggregator - WARNING - [SYSTEM] Conflicting evidence detected for Freestyle stroke_rate Male 18-25. Range: 40.0-60.0, Pooled Std: 1.0
+2026-08-09 15:49:00,754 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:49:05,919 - services.scientific_updater_service - WARNING - [SYSTEM] PMC full text retrieval/parsing failed for PMC7548777: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:07,505 - services.scientific_updater_service - WARNING - [SYSTEM] PMC full text retrieval/parsing failed for 7548777: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:15,706 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:49:15,712 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:49:15,718 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:49:15,727 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:49:17,968 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:49:17,976 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:49:17,987 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:49:17,997 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:49:19,757 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:49:19,764 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:49:19,768 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:49:19,774 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:49:21,427 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:49:21,432 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:49:21,439 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:49:21,445 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:49:25,255 - services.scientific_updater_service - INFO - [SYSTEM] [5%] Initializing atomic update staging environment...
+2026-08-09 15:49:25,328 - services.scientific_updater_service - INFO - [SYSTEM] [20%] Searching external peer-reviewed literature & retrieving PMC full text...
+2026-08-09 15:49:26,619 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:27,747 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:28,831 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:29,856 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:30,866 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:31,870 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:32,874 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:33,894 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:34,919 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:35,924 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:36,927 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:37,930 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:38,935 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:39,938 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:40,943 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:41,945 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:42,949 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:43,953 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:44,956 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:45,961 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:46,988 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:47,992 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:49,011 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:50,019 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:51,024 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:52,038 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:53,069 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:54,073 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:55,078 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:56,080 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:57,084 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:58,088 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:49:59,130 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:00,133 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:01,148 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:02,150 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:03,153 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:04,166 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:05,194 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:06,262 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:07,267 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:08,273 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:09,278 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:10,304 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:11,307 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:12,320 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:13,340 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:14,370 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:14,639 - services.scientific_updater_service - INFO - [SYSTEM] [70%] Building strictly supported benchmarks...
+2026-08-09 15:50:14,919 - services.scientific_updater_service - INFO - [SYSTEM] [85%] Rebuilding population coverage matrix...
+2026-08-09 15:50:14,975 - services.scientific_updater_service - INFO - [SYSTEM] [90%] Running strict scientific safety tests...
+2026-08-09 15:50:15,311 - services.scientific_updater_service - INFO - [SYSTEM] [100%] Scientific Database Update complete.
+2026-08-09 15:50:15,312 - services.scientific_updater_service - INFO - [SYSTEM] [5%] Initializing atomic update staging environment...
+2026-08-09 15:50:15,343 - services.scientific_updater_service - INFO - [SYSTEM] [20%] Searching external peer-reviewed literature & retrieving PMC full text...
+2026-08-09 15:50:16,939 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:17,942 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:18,946 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:20,005 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:21,021 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:22,027 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:23,034 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:24,091 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:24,213 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:50:25,095 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:26,117 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:27,123 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:28,220 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:50:29,597 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:50:29,662 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525049393.mp4
+2026-08-09 15:50:34,558 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:50:34,608 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525049393.mp4
+2026-08-09 15:50:34,868 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:50:34,897 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525049393.mp4
+2026-08-09 15:50:34,983 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 15:50:35,404 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_c6e5bcdcb66c4c10bafac3aaf43af306.mp4
+2026-08-09 15:50:43,399 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 15:50:43,640 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:50:43,675 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525049393.mp4
+2026-08-09 15:50:45,464 - scientific_reference.validation.benchmark_eligibility_validator - INFO - [SYSTEM] Systematic review SR_BACKSTROKE_2025 lacks explicit primary study trace. Assigned REVIEW_REQUIRED.
+2026-08-09 15:50:45,503 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Sex leakage prohibited: candidate sex 'Male' vs target sex 'Female'
+2026-08-09 15:50:45,523 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Age leakage prohibited: adult candidate '18-25' vs target youth age '8-10'
+2026-08-09 15:50:45,545 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Stroke leakage prohibited: candidate stroke 'freestyle' vs target stroke 'backstroke'
+2026-08-09 15:50:45,567 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Meta-analysis MA_400M_FRONT_CRAWL restricted to 400m front crawl test context (attempted target distance: 100m)
+2026-08-09 15:50:45,577 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:50:45,585 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:50:45,589 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:50:45,595 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:50:45,600 - scientific_reference.validation.evidence_validator - WARNING - [SYSTEM] Provenance rejection for stroke_rate: Quote not found in source text.
+2026-08-09 15:50:45,603 - scientific_reference.validation.evidence_validator - WARNING - [SYSTEM] Stroke rejection for stroke_rate: Stroke 'Freestyle' not supported by context.
+2026-08-09 15:50:45,610 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:50:45,617 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:50:45,621 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:50:45,627 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:50:45,637 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:50:45,642 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:50:45,649 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:50:45,655 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:50:45,678 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Fabricated metadata detected for candidate SRC-FAKE-001
+2026-08-09 15:50:45,736 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:50:45,765 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 15:50:45,767 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:50:45,773 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:50:45,775 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 15:50:45,778 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:50:45,782 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 15:50:45,785 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:50:45,842 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:50:45,906 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:50:45,962 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:50:46,036 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:50:47,499 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: test_stability_video.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-09 15:50:47,504 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 15:50:47,880 - utils.video_utils - INFO - [VIDEO] Opened video: test_stability_video.mp4 (854x480 @ 30.0fps)
+2026-08-09 15:50:47,884 - utils.video_utils - INFO - [VIDEO] Opened video: test_stability_video.mp4 (854x480 @ 30.0fps)
+2026-08-09 15:50:47,886 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_test_stability_video.mp4 (Codec: mp4v)
+2026-08-09 15:50:53,083 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 75 frames.
+2026-08-09 15:50:53,088 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-09 15:50:53,100 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:50:53,106 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:50:53,112 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:50:53,119 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:50:53,119 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: INSUFFICIENT_EVIDENCE, Dataset: Population Reference Dataset)
+2026-08-09 15:50:53,152 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_test_stability_video.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_test_stability_video.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_test_stability_video.json
+2026-08-09 15:50:55,098 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_test_stability_video.mp4
+2026-08-09 15:50:55,163 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 0.08 MB, Frames: 75, Duration: 2.50s
+2026-08-09 15:50:55,209 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 15:50:55,782 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:50:55,821 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525049393.mp4
+2026-08-09 15:50:55,975 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:50:57,273 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:50:57,278 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:50:57,283 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:50:57,291 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:50:57,432 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:50:57,440 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:50:57,444 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:50:57,451 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:50:57,459 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:50:57,464 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:50:57,471 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:50:57,476 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:50:57,484 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:50:57,492 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:50:57,497 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:50:57,504 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:50:57,511 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:50:57,517 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:50:57,525 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:50:57,536 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:50:57,546 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:50:57,556 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:50:57,563 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:50:57,573 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:50:57,606 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:50:57,647 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525049393.mp4
+2026-08-09 15:50:57,691 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:50:57,709 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:50:57,729 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:50:57,739 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:50:57,745 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:50:57,924 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:50:57,968 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525049393.mp4
+2026-08-09 15:50:58,080 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-09 15:50:58,081 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_c6e5bcdcb66c4c10bafac3aaf43af306.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-09 15:50:58,087 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 15:50:58,292 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:50:58,302 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_62ea61f8.pdf
+2026-08-09 15:50:58,323 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:50:58,337 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:50:58,358 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:50:58,371 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:50:58,506 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_c6e5bcdcb66c4c10bafac3aaf43af306.mp4 (720x1280 @ 30.0fps)
+2026-08-09 15:50:58,536 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_c6e5bcdcb66c4c10bafac3aaf43af306.mp4 (720x1280 @ 30.0fps)
+2026-08-09 15:50:58,541 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_c6e5bcdcb66c4c10bafac3aaf43af306.mp4 (Codec: mp4v)
+2026-08-09 15:50:58,782 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:50:59,149 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:50:59,157 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:50:59,168 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:50:59,177 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:50:59,190 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:50:59,200 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:50:59,205 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:50:59,211 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:50:59,233 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:50:59,240 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:50:59,244 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:50:59,254 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:51:39,919 - scientific_reference.validation.benchmark_eligibility_validator - INFO - [SYSTEM] Systematic review SR_BACKSTROKE_2025 lacks explicit primary study trace. Assigned REVIEW_REQUIRED.
+2026-08-09 15:51:39,982 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Sex leakage prohibited: candidate sex 'Male' vs target sex 'Female'
+2026-08-09 15:51:40,007 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Age leakage prohibited: adult candidate '18-25' vs target youth age '8-10'
+2026-08-09 15:51:40,032 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Stroke leakage prohibited: candidate stroke 'freestyle' vs target stroke 'backstroke'
+2026-08-09 15:51:40,065 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Meta-analysis MA_400M_FRONT_CRAWL restricted to 400m front crawl test context (attempted target distance: 100m)
+2026-08-09 15:51:40,078 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:51:40,084 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:51:40,092 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:51:40,102 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:51:40,109 - scientific_reference.validation.evidence_validator - WARNING - [SYSTEM] Provenance rejection for stroke_rate: Quote not found in source text.
+2026-08-09 15:51:40,113 - scientific_reference.validation.evidence_validator - WARNING - [SYSTEM] Stroke rejection for stroke_rate: Stroke 'Freestyle' not supported by context.
+2026-08-09 15:51:40,124 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:51:40,132 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:51:40,137 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:51:40,145 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:51:40,157 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:51:40,167 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:51:40,178 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:51:40,190 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:51:40,214 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Fabricated metadata detected for candidate SRC-FAKE-001
+2026-08-09 15:51:40,281 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:51:40,328 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 15:51:40,332 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:51:40,341 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:51:40,345 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 15:51:40,349 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:51:40,356 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 15:51:40,362 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:51:40,435 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:51:40,500 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:51:40,579 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:51:40,693 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:51:42,226 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 208 frames.
+2026-08-09 15:51:42,239 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-09 15:51:42,249 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:51:42,327 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:51:42,337 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:51:42,342 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:51:42,353 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:51:42,354 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: Olympic, Dataset: Population Reference Dataset)
+2026-08-09 15:51:42,722 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: test_stability_video.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-09 15:51:42,728 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 15:51:42,927 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_c6e5bcdcb66c4c10bafac3aaf43af306.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_c6e5bcdcb66c4c10bafac3aaf43af306.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_c6e5bcdcb66c4c10bafac3aaf43af306.json
+2026-08-09 15:51:43,223 - utils.video_utils - INFO - [VIDEO] Opened video: test_stability_video.mp4 (854x480 @ 30.0fps)
+2026-08-09 15:51:43,227 - utils.video_utils - INFO - [VIDEO] Opened video: test_stability_video.mp4 (854x480 @ 30.0fps)
+2026-08-09 15:51:43,229 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_test_stability_video.mp4 (Codec: mp4v)
+2026-08-09 15:51:51,133 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 75 frames.
+2026-08-09 15:51:51,140 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-09 15:51:51,156 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:51:51,168 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:51:51,176 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:51:51,189 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:51:51,189 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: INSUFFICIENT_EVIDENCE, Dataset: Population Reference Dataset)
+2026-08-09 15:51:51,234 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_test_stability_video.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_test_stability_video.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_test_stability_video.json
+2026-08-09 15:51:54,078 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_test_stability_video.mp4
+2026-08-09 15:51:54,107 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 0.08 MB, Frames: 75, Duration: 2.50s
+2026-08-09 15:51:54,320 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 15:51:55,701 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:51:59,617 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:51:59,629 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:51:59,638 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:51:59,650 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:51:59,913 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:51:59,925 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:51:59,933 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:51:59,945 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:51:59,961 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:51:59,973 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:51:59,982 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:51:59,994 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:52:00,009 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:52:00,021 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:52:00,030 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:52:00,040 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:52:00,057 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:52:00,069 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:52:00,079 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:52:00,090 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:52:00,106 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:52:00,118 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:52:00,127 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:52:00,138 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:52:00,239 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:52:00,255 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:52:00,266 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:52:00,276 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:52:00,288 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:52:00,730 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:52:00,737 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_4c0acfc5.pdf
+2026-08-09 15:52:00,863 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:52:00,875 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:52:00,884 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:52:00,896 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:52:01,409 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:52:01,862 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:52:01,874 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:52:01,883 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:52:01,894 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:52:01,910 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:52:01,922 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:52:01,930 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:52:01,945 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:52:01,962 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:52:01,975 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:52:01,984 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:52:01,998 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:52:02,647 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:52:03,082 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:52:03,509 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:52:03,519 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:52:03,531 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:52:03,540 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:52:03,552 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:52:03,569 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:52:03,580 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:52:03,590 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:52:03,601 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:52:04,601 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:52:04,612 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:52:04,622 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:52:04,633 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:52:04,653 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:52:04,666 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:52:04,674 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:52:04,686 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:52:04,709 - scientific_reference.validation.statistical_validator - WARNING - [SYSTEM] Rejected: Sample size 4 is too small for benchmark aggregation.
+2026-08-09 15:52:04,722 - scientific_reference.validation.evidence_validator - WARNING - [SYSTEM] Provenance rejection for swimming velocity: Quote not found in source text.
+2026-08-09 15:52:04,733 - scientific_reference.evidence_aggregator - WARNING - [SYSTEM] Conflicting evidence detected for Freestyle stroke_rate Male 18-25. Range: 40.0-60.0, Pooled Std: 1.0
+2026-08-09 15:52:04,833 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:52:08,653 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_c6e5bcdcb66c4c10bafac3aaf43af306.mp4
+2026-08-09 15:52:08,722 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 5.25 MB, Frames: 208, Duration: 6.93s
+2026-08-09 15:52:08,778 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 15:52:08,778 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-09 15:52:09,293 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 15:52:09,348 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525049393.mp4
+2026-08-09 15:52:09,513 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-09 15:52:09,515 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-09 15:52:09,527 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-09 15:52:09,528 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-09 15:52:09,530 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-09 15:52:09,547 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-09 15:52:09,550 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-09 15:52:09,569 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-09 15:52:09,573 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-09 15:52:09,581 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-09 15:52:10,309 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:52:10,458 - __main__ - ERROR - [SYSTEM] An error occurred during rendering: '<=' not supported between instances of 'NoneType' and 'int'
+2026-08-09 15:52:12,861 - services.scientific_updater_service - WARNING - [SYSTEM] PMC full text retrieval/parsing failed for PMC7548777: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:12,641 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-08-09 15:52:13,430 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-08-09 15:52:14,480 - services.scientific_updater_service - WARNING - [SYSTEM] PMC full text retrieval/parsing failed for 7548777: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:21,244 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:52:21,250 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:52:21,254 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:52:21,260 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:52:22,816 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:52:22,821 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:52:22,827 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:52:22,833 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:52:24,655 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:52:24,663 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:52:24,670 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:52:24,680 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:52:27,205 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:52:27,212 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:52:27,218 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:52:27,224 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:52:30,717 - services.scientific_updater_service - INFO - [SYSTEM] [5%] Initializing atomic update staging environment...
+2026-08-09 15:52:30,774 - services.scientific_updater_service - INFO - [SYSTEM] [20%] Searching external peer-reviewed literature & retrieving PMC full text...
+2026-08-09 15:52:32,045 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:33,150 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:34,153 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:35,164 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:36,191 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:37,358 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:38,384 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:39,389 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:40,396 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:41,403 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:42,407 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:43,429 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:44,450 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:45,474 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:46,480 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:47,484 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:48,500 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:49,527 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:50,551 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:51,558 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:52,580 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:53,652 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:54,670 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:55,675 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:56,678 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:57,685 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:58,712 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:52:59,740 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:00,760 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:01,787 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:02,791 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:03,793 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:04,797 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:05,894 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:06,897 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:07,448 - scientific_reference.validation.benchmark_eligibility_validator - INFO - [SYSTEM] Systematic review SR_BACKSTROKE_2025 lacks explicit primary study trace. Assigned REVIEW_REQUIRED.
+2026-08-09 15:53:07,487 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Sex leakage prohibited: candidate sex 'Male' vs target sex 'Female'
+2026-08-09 15:53:07,508 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Age leakage prohibited: adult candidate '18-25' vs target youth age '8-10'
+2026-08-09 15:53:07,530 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Stroke leakage prohibited: candidate stroke 'freestyle' vs target stroke 'backstroke'
+2026-08-09 15:53:07,555 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Meta-analysis MA_400M_FRONT_CRAWL restricted to 400m front crawl test context (attempted target distance: 100m)
+2026-08-09 15:53:07,563 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:53:07,570 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:53:07,576 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:53:07,586 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:53:07,592 - scientific_reference.validation.evidence_validator - WARNING - [SYSTEM] Provenance rejection for stroke_rate: Quote not found in source text.
+2026-08-09 15:53:07,595 - scientific_reference.validation.evidence_validator - WARNING - [SYSTEM] Stroke rejection for stroke_rate: Stroke 'Freestyle' not supported by context.
+2026-08-09 15:53:07,602 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:53:07,610 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:53:07,614 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:53:07,620 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:53:07,631 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:53:07,638 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:53:07,645 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:53:07,651 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:53:07,672 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Fabricated metadata detected for candidate SRC-FAKE-001
+2026-08-09 15:53:07,725 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:53:07,750 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 15:53:07,753 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:53:07,759 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:53:07,761 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 15:53:07,763 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:53:07,766 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 15:53:07,768 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:53:07,823 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:53:07,875 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:53:07,899 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:07,928 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:53:08,001 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:53:08,903 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:09,543 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: test_stability_video.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-09 15:53:09,553 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 15:53:09,873 - utils.video_utils - INFO - [VIDEO] Opened video: test_stability_video.mp4 (854x480 @ 30.0fps)
+2026-08-09 15:53:09,877 - utils.video_utils - INFO - [VIDEO] Opened video: test_stability_video.mp4 (854x480 @ 30.0fps)
+2026-08-09 15:53:09,879 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_test_stability_video.mp4 (Codec: mp4v)
+2026-08-09 15:53:09,907 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:10,910 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:11,913 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:12,917 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:13,920 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:14,923 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:15,096 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 75 frames.
+2026-08-09 15:53:15,103 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-09 15:53:15,118 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:53:15,125 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:53:15,129 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:53:15,135 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:53:15,136 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: INSUFFICIENT_EVIDENCE, Dataset: Population Reference Dataset)
+2026-08-09 15:53:15,158 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_test_stability_video.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_test_stability_video.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_test_stability_video.json
+2026-08-09 15:53:15,926 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:16,616 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_test_stability_video.mp4
+2026-08-09 15:53:16,642 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 0.08 MB, Frames: 75, Duration: 2.50s
+2026-08-09 15:53:16,688 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 15:53:16,929 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:17,366 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:53:17,940 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:18,217 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:53:18,224 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:53:18,231 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:53:18,242 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:53:18,431 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:53:18,440 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:53:18,445 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:53:18,453 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:53:18,460 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:53:18,468 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:53:18,472 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:53:18,478 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:53:18,488 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:53:18,495 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:53:18,500 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:53:18,506 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:53:18,515 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:53:18,521 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:53:18,525 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:53:18,532 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:53:18,539 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:53:18,545 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:53:18,550 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:53:18,556 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:53:18,609 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-09 15:53:18,618 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:53:18,623 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:53:18,628 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:53:18,635 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:53:18,860 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:53:18,864 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_dd70c195.pdf
+2026-08-09 15:53:18,873 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:53:18,879 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:53:18,884 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:53:18,889 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:53:18,962 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:19,125 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:53:19,331 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:53:19,336 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:53:19,340 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:53:19,348 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:53:19,355 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:53:19,362 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:53:19,366 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:53:19,372 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:53:19,381 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:53:19,386 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:53:19,390 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:53:19,397 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:53:19,712 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:53:19,920 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:53:19,964 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:20,238 - services.scientific_updater_service - INFO - [SYSTEM] [70%] Building strictly supported benchmarks...
+2026-08-09 15:53:20,263 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:53:20,268 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:53:20,280 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:53:20,285 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:53:20,298 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:53:20,314 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:53:20,328 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:53:20,338 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:53:20,347 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:53:20,443 - services.scientific_updater_service - INFO - [SYSTEM] [85%] Rebuilding population coverage matrix...
+2026-08-09 15:53:20,519 - services.scientific_updater_service - INFO - [SYSTEM] [90%] Running strict scientific safety tests...
+2026-08-09 15:53:20,973 - services.scientific_updater_service - INFO - [SYSTEM] [100%] Scientific Database Update complete.
+2026-08-09 15:53:20,973 - services.scientific_updater_service - INFO - [SYSTEM] [5%] Initializing atomic update staging environment...
+2026-08-09 15:53:21,003 - services.scientific_updater_service - INFO - [SYSTEM] [20%] Searching external peer-reviewed literature & retrieving PMC full text...
+2026-08-09 15:53:22,355 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:23,358 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:24,372 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:25,425 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:26,430 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:27,458 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:28,486 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:29,493 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:30,518 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:31,544 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:32,569 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:33,597 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:34,615 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:35,641 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:36,669 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:37,850 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:38,874 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:39,898 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:40,921 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:41,946 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:42,970 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:43,996 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:45,020 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:46,042 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:47,061 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:48,081 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:49,105 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:50,113 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:51,126 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:52,149 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:53,171 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:54,193 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:55,215 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:56,222 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:57,246 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:58,267 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:53:59,292 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:00,299 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:01,322 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:02,349 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:03,372 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:04,396 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:05,420 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:06,427 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:07,434 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:08,462 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:09,479 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:10,495 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:10,662 - services.scientific_updater_service - INFO - [SYSTEM] [70%] Building strictly supported benchmarks...
+2026-08-09 15:54:10,754 - services.scientific_updater_service - INFO - [SYSTEM] [85%] Rebuilding population coverage matrix...
+2026-08-09 15:54:10,796 - services.scientific_updater_service - INFO - [SYSTEM] [90%] Running strict scientific safety tests...
+2026-08-09 15:54:11,083 - services.scientific_updater_service - INFO - [SYSTEM] [100%] Scientific Database Update complete.
+2026-08-09 15:54:12,683 - services.scientific_updater_service - INFO - [SYSTEM] [5%] Initializing atomic update staging environment...
+2026-08-09 15:54:12,710 - services.scientific_updater_service - INFO - [SYSTEM] [20%] Searching external peer-reviewed literature & retrieving PMC full text...
+2026-08-09 15:54:13,964 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:14,984 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:16,005 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:17,027 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:18,050 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:19,091 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:20,121 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:21,144 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:22,169 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:23,194 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:24,220 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Freestyle stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:25,224 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:26,252 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:27,276 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:28,300 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:29,436 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:30,454 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:31,475 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:32,495 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:33,520 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:34,546 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:35,564 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:36,585 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Backstroke stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:37,612 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Backstroke stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:38,616 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:39,619 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:40,642 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:41,671 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:42,688 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:43,716 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:44,740 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:45,827 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:46,848 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:47,868 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:48,886 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Breaststroke stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:49,892 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Breaststroke stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:50,909 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:51,916 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke kinematics rate': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:52,937 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:53,960 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke rate Female swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:54,967 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:55,995 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke rate Male swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:57,000 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:58,021 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke rate Youth swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:54:59,025 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:55:00,196 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke rate Masters swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:55:01,203 - services.scientific_updater_service - WARNING - [SYSTEM] PubMed search failed for 'Butterfly stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:55:02,233 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Butterfly stroke rate Elite swimming': <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:55:02,416 - services.scientific_updater_service - INFO - [SYSTEM] [70%] Building strictly supported benchmarks...
+2026-08-09 15:55:02,513 - services.scientific_updater_service - INFO - [SYSTEM] [85%] Rebuilding population coverage matrix...
+2026-08-09 15:55:02,559 - services.scientific_updater_service - INFO - [SYSTEM] [90%] Running strict scientific safety tests...
+2026-08-09 15:55:02,845 - services.scientific_updater_service - INFO - [SYSTEM] [100%] Scientific Database Update complete.
+2026-08-09 15:55:07,367 - services.scientific_updater_service - WARNING - [SYSTEM] PMC full text retrieval/parsing failed for INVALID_PMC_ID_99999: <urlopen error [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions>
+2026-08-09 15:55:07,381 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 15:55:07,621 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 15:55:08,057 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:55:08,252 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:55:08,440 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 15:55:08,466 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:55:08,471 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:55:08,476 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:55:08,482 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:55:08,908 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:55:08,916 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:55:08,927 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:55:08,935 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:55:08,984 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 15:55:08,990 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 15:55:08,993 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 15:55:08,998 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 15:55:10,936 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Passed. Scientific Confidence: High
+2026-08-09 15:55:10,942 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:55:10,947 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-09 15:55:10,951 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:55:10,954 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Passed. Scientific Confidence: High
+2026-08-09 15:55:10,958 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:55:10,963 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 15:55:18,502 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: C:\Users\DELL\AppData\Local\Temp\tmp0mhy10qm.mp4
+2026-08-09 15:55:18,568 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 7.02 MB, Frames: 90, Duration: 3.00s
+2026-08-09 15:55:18,575 - utils.video_utils - ERROR - [VIDEO] Export validation failed: File size is only 0 bytes (too small).
+2026-08-09 15:55:18,826 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: C:\Users\DELL\AppData\Local\Temp\tmpeneqf_1b.mp4
+2026-08-09 15:59:47,800 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:00:40,840 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:00:41,080 - services.auth_service - INFO - [SYSTEM] Coach logged in: coach1
+2026-08-09 16:00:41,405 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:00:50,427 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:00:50,623 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:00:52,700 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:00:55,448 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:00:55,645 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:00:55,689 - services.pdf_report_service - INFO - [SYSTEM] Generated athlete summary PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Athlete_Laila_0c7cd1.pdf
+2026-08-09 16:01:04,825 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:01:09,250 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:01:17,987 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:01:18,021 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:01:22,581 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:01:22,606 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:01:25,812 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:01:25,839 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:01:26,053 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:01:26,083 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:01:26,154 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 16:01:26,741 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_997cca91dc434302820bef44e0bf1559.mp4
+2026-08-09 16:01:33,273 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 16:01:33,446 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:01:33,476 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:01:37,607 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:01:37,634 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:01:37,842 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:01:37,874 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:01:37,942 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-09 16:01:37,942 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_997cca91dc434302820bef44e0bf1559.mp4 (Effective FPS: 30.0, Frame Stride: 1)
+2026-08-09 16:01:37,980 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 16:01:38,624 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_997cca91dc434302820bef44e0bf1559.mp4 (720x1280 @ 30.0fps)
+2026-08-09 16:01:38,640 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_997cca91dc434302820bef44e0bf1559.mp4 (720x1280 @ 30.0fps)
+2026-08-09 16:01:38,643 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_997cca91dc434302820bef44e0bf1559.mp4 (Codec: mp4v)
+2026-08-09 16:01:44,810 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Critical at early halt check. Halting video processing.
+2026-08-09 16:01:44,856 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-09 16:01:45,003 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 16:01:45,005 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-09 16:01:45,009 - __main__ - INFO - [SYSTEM] EXIT: process_video_aborted_vqa_critical_early_halt
+2026-08-09 16:02:21,960 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:02:22,614 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:02:22,645 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:02:22,710 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-09 16:02:22,711 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_997cca91dc434302820bef44e0bf1559.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-09 16:02:22,719 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 16:02:23,113 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_997cca91dc434302820bef44e0bf1559.mp4 (720x1280 @ 30.0fps)
+2026-08-09 16:02:23,129 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_997cca91dc434302820bef44e0bf1559.mp4 (720x1280 @ 30.0fps)
+2026-08-09 16:02:23,132 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_997cca91dc434302820bef44e0bf1559.mp4 (Codec: mp4v)
+2026-08-09 16:02:25,672 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:02:25,875 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:02:26,658 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:02:26,821 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:02:27,200 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 16:02:27,871 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_997cca91dc434302820bef44e0bf1559.mp4
+2026-08-09 16:02:27,944 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-09 16:02:28,090 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 16:02:34,040 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 16:02:34,187 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:02:34,223 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:02:37,647 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:02:37,678 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:02:37,899 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:02:37,930 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:02:37,997 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-09 16:02:37,998 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_997cca91dc434302820bef44e0bf1559.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-09 16:02:38,004 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 16:02:38,440 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_997cca91dc434302820bef44e0bf1559.mp4 (720x1280 @ 30.0fps)
+2026-08-09 16:02:38,460 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_997cca91dc434302820bef44e0bf1559.mp4 (720x1280 @ 30.0fps)
+2026-08-09 16:02:38,463 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_997cca91dc434302820bef44e0bf1559.mp4 (Codec: mp4v)
+2026-08-09 16:02:44,899 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Critical at early halt check. Halting video processing.
+2026-08-09 16:02:44,938 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-09 16:02:45,093 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 16:02:45,095 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-09 16:02:45,098 - __main__ - INFO - [SYSTEM] EXIT: process_video_aborted_vqa_critical_early_halt
+2026-08-09 16:02:55,831 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:02:58,685 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:03:02,451 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:03:02,488 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-09 16:03:02,675 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-09 16:03:02,676 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_9fa00b207d5843cabdfabd44ee3417d4.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-09 16:03:02,683 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 16:03:03,106 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_9fa00b207d5843cabdfabd44ee3417d4.mp4 (720x1280 @ 30.0fps)
+2026-08-09 16:03:03,134 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_9fa00b207d5843cabdfabd44ee3417d4.mp4 (720x1280 @ 30.0fps)
+2026-08-09 16:03:03,137 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_9fa00b207d5843cabdfabd44ee3417d4.mp4 (Codec: mp4v)
+2026-08-09 16:03:05,105 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:03:05,152 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-09 16:03:05,412 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:03:05,453 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-09 16:03:05,494 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-09 16:03:05,522 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 16:03:05,673 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 16:03:05,937 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_9fa00b207d5843cabdfabd44ee3417d4.mp4
+2026-08-09 16:03:13,501 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 16:03:13,641 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:03:13,673 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-09 16:03:20,255 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:03:20,282 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-09 16:03:20,489 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:03:20,517 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-09 16:03:20,600 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-09 16:03:20,601 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_9fa00b207d5843cabdfabd44ee3417d4.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-09 16:03:20,608 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 16:03:21,043 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_9fa00b207d5843cabdfabd44ee3417d4.mp4 (720x1280 @ 30.0fps)
+2026-08-09 16:03:21,066 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_9fa00b207d5843cabdfabd44ee3417d4.mp4 (720x1280 @ 30.0fps)
+2026-08-09 16:03:21,068 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_9fa00b207d5843cabdfabd44ee3417d4.mp4 (Codec: mp4v)
+2026-08-09 16:03:39,507 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 105 frames.
+2026-08-09 16:03:39,533 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-09 16:03:39,739 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 16:03:39,753 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 16:03:39,759 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 16:03:39,773 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 16:03:39,800 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: Beginner, Dataset: Population Reference Dataset)
+2026-08-09 16:03:40,003 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_9fa00b207d5843cabdfabd44ee3417d4.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_9fa00b207d5843cabdfabd44ee3417d4.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_9fa00b207d5843cabdfabd44ee3417d4.json
+2026-08-09 16:03:51,509 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_9fa00b207d5843cabdfabd44ee3417d4.mp4
+2026-08-09 16:03:51,620 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 2.53 MB, Frames: 105, Duration: 3.50s
+2026-08-09 16:03:51,795 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 16:03:51,796 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-09 16:03:51,798 - __main__ - INFO - [SYSTEM] WARN: final_vqa_critical_but_results_available
+2026-08-09 16:03:51,799 - __main__ - INFO - [SYSTEM] WARN: consistency_critical_but_results_available
+2026-08-09 16:03:52,139 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:03:52,164 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-09 16:03:52,227 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-09 16:03:52,229 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-09 16:03:52,236 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-09 16:03:52,237 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-09 16:03:52,237 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-09 16:03:52,244 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-09 16:03:52,246 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-09 16:03:52,253 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-09 16:03:52,254 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-09 16:03:52,265 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-09 16:03:52,776 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 16:03:53,262 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-09 16:03:53,444 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-09 16:03:57,843 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-09 16:03:57,845 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-09 16:03:58,233 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-09 16:03:58,236 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-09 16:03:58,484 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-09 16:03:58,485 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-09 16:03:58,525 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-09 16:03:58,526 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-09 16:03:58,528 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-09 16:03:58,859 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 16:03:58,864 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_650eda46.pdf
+2026-08-09 16:03:59,050 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-09 16:06:40,249 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:06:40,281 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-09 16:06:40,354 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-09 16:06:40,360 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-09 16:06:40,375 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-09 16:06:40,377 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-09 16:06:40,378 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-09 16:06:40,387 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-09 16:06:40,390 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-09 16:06:40,398 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-09 16:06:40,401 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-09 16:06:40,410 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-09 16:06:40,791 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 16:06:41,208 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-09 16:06:41,254 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-09 16:06:41,666 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-09 16:06:41,667 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-09 16:06:42,012 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-09 16:06:42,022 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-09 16:06:42,397 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-09 16:06:42,399 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-09 16:06:42,415 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-09 16:06:42,426 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-09 16:06:42,448 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-09 16:06:42,900 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 16:06:42,905 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_a347d242.pdf
+2026-08-09 16:06:42,961 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons

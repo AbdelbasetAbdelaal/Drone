@@ -178,7 +178,9 @@ class AnalysisConsistencyValidator:
         # Rule 8: Performance Score Decoupling
         # Performance score reflects movement mechanics strictly.
         # Video quality, phase confidence, and reliability govern Scientific Confidence level, not technique.
-        report.overall_score = raw_score if cycles > 0 else 0.0
+        # A missing cycle makes a performance score scientifically unavailable; do not
+        # replace it with a numeric sentinel that consumers could mistake for a result.
+        report.overall_score = raw_score if cycles > 0 else None
         
         # Sync the final score to the report so UI can pick it up
         if result.report:

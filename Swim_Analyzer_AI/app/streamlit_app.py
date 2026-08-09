@@ -49,10 +49,14 @@ def render_executive_summary_card(analysis_result):
     Gives coaches a complete 10-second understanding of performance, strengths, flaws, and percentile rank.
     """
     report = getattr(analysis_result, 'report', None)
-    score = report.overall_score if report else 70.0
+    score = report.overall_score if report else None
 
-    # Performance Status Tier
-    if score >= 85.0:
+    # P0-7/P0-8: None score = INSUFFICIENT_EVIDENCE
+    if score is None:
+        status_tier = "Insufficient Evidence"
+        status_color = "#888888"
+        badge_bg = "rgba(136, 136, 136, 0.15)"
+    elif score >= 85.0:
         status_tier = "Excellent"
         status_color = "#00F0FF" # Cyan
         badge_bg = "rgba(0, 240, 255, 0.15)"
@@ -69,7 +73,7 @@ def render_executive_summary_card(analysis_result):
     conf_str = consistency.scientific_confidence if consistency else "Medium"
 
     reliability = getattr(analysis_result, 'reliability', None)
-    rel_score = reliability.analysis_reliability_score if reliability else 80.0
+    rel_score = reliability.analysis_reliability_score if reliability else None
 
     bm_res = getattr(analysis_result, 'benchmark_result', None)
     overall_pct = None
@@ -83,7 +87,7 @@ def render_executive_summary_card(analysis_result):
         st.markdown(
             f"""<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px; margin-bottom:12px;">
             <div>
-                <span style="font-size:1.5rem; font-weight:bold;">🏆 Overall Performance: {score:.1f} / 100</span>
+                <span style="font-size:1.5rem; font-weight:bold;">🏆 Overall Performance: {f'{score:.1f} / 100' if score is not None else '⚠ INSUFFICIENT_EVIDENCE'}</span>
                 <span style="background:{badge_bg}; color:{status_color}; border:1px solid {status_color}; padding:4px 12px; border-radius:16px; font-weight:bold; font-size:0.9rem; margin-left:12px;">
                     {status_tier}
                 </span>
@@ -96,9 +100,9 @@ def render_executive_summary_card(analysis_result):
         )
 
         c1, c2, c3, c4 = st.columns(4)
-        c1.metric("Technique Score", f"{score:.1f}/100")
+        c1.metric("Technique Score", f"{score:.1f}/100" if score is not None else "⚠ INSUFFICIENT_EVIDENCE")
         c2.metric("Scientific Confidence", conf_str)
-        c3.metric("Analysis Reliability", f"{rel_score:.1f}/100")
+        c3.metric("Analysis Reliability", f"{rel_score:.1f}/100" if rel_score is not None else "UNAVAILABLE")
         c4.metric("Population Rank", pct_metric_str)
 
         st.markdown("---")
@@ -108,14 +112,17 @@ def render_executive_summary_card(analysis_result):
             st.markdown("##### 🟢 Top Strengths")
             strengths = []
             if report:
-                if report.stroke_symmetry and report.stroke_symmetry.value > 85:
-                    strengths.append(f"High Stroke Symmetry ({report.stroke_symmetry.value:.1f}%)")
-                if report.stroke_length and report.stroke_length.value > 1.8:
-                    strengths.append(f"Strong Distance Per Stroke ({report.stroke_length.value:.2f} m)")
-                if report.stroke_rate and report.stroke_rate.value > 45:
-                    strengths.append(f"Consistent Stroke Tempo ({report.stroke_rate.value:.1f} spm)")
+                sym_v = getattr(report.stroke_symmetry, 'value', None) if report.stroke_symmetry else None
+                sl_v = getattr(report.stroke_length, 'value', None) if report.stroke_length else None
+                sr_v = getattr(report.stroke_rate, 'value', None) if report.stroke_rate else None
+                if sym_v is not None and sym_v > 85:
+                    strengths.append(f"High Stroke Symmetry ({sym_v:.1f}%)")
+                if sl_v is not None and sl_v > 1.8:
+                    strengths.append(f"Strong Distance Per Stroke ({sl_v:.2f} m)")
+                if sr_v is not None and sr_v > 45:
+                    strengths.append(f"Consistent Stroke Tempo ({sr_v:.1f} spm)")
             if not strengths:
-                strengths = ["Solid overall rhythm", "Good body position in water", "Consistent propulsion"]
+                strengths = ["No reliable strength assessment is available from this evidence."]
             for s in strengths[:3]:
                 st.markdown(f"- ✅ {s}")
 
@@ -126,7 +133,7 @@ def render_executive_summary_card(analysis_result):
                 for e in report.errors:
                     flaws.append(f"{e.error_type} ({e.severity} Severity)")
             if not flaws:
-                flaws = ["Refine catch depth extension", "Increase kick rhythm stability"]
+                flaws = ["No reliable technique-flaw assessment is available from this evidence."]
             for f in flaws[:3]:
                 st.markdown(f"- ⚠️ {f}")
 
@@ -158,27 +165,31 @@ def render_summary(analysis_result):
     
     summary_col1, summary_col2, summary_col3, summary_col4 = st.columns(4)
     
-    vqa_score = analysis_result.vqa_result.overall_score if analysis_result.vqa_result else 0
+    vqa_score = analysis_result.vqa_result.overall_score if analysis_result.vqa_result else None
     vqa_class = analysis_result.vqa_result.quality_class if analysis_result.vqa_result else "Unknown"
     
-    conf_score = 0.0
-    rel_score = 0.0
+    conf_score = None
+    rel_score = None
     if analysis_result.reliability:
         conf_score = analysis_result.reliability.analysis_confidence_score
         rel_score = analysis_result.reliability.analysis_reliability_score
     
-    tech_score = analysis_result.report.overall_score if analysis_result.report else 0.0
-    tech_score_str = f"{tech_score:.1f}/100" if (tech_score > 0.0 or rel_score >= 50.0) else "N/A"
+    tech_score = analysis_result.report.overall_score if analysis_result.report else None
+    # P0-7/P0-8: None = INSUFFICIENT_EVIDENCE — never show a fabricated number
+    if tech_score is not None:
+        tech_score_str = f"{tech_score:.1f}/100"
+    else:
+        tech_score_str = "⚠ INSUFFICIENT_EVIDENCE"
     
     with summary_col1:
         st.metric("Overall Technique Score", tech_score_str)
     with summary_col2:
-        st.metric("Video Quality", f"{vqa_score}/100", delta=vqa_class, delta_color="off")
+        st.metric("Video Quality", f"{vqa_score}/100" if vqa_score is not None else "UNAVAILABLE", delta=vqa_class, delta_color="off")
     with summary_col3:
-        st.metric("Analysis Confidence", f"{conf_score:.1f}/100", delta="Pose AI", delta_color="off")
+        st.metric("Analysis Confidence", f"{conf_score:.1f}/100" if conf_score is not None else "UNAVAILABLE", delta="Pose AI", delta_color="off")
     with summary_col4:
-        color = "normal" if rel_score >= 50 else "inverse"
-        st.metric("Analysis Reliability", f"{rel_score:.1f}/100", delta="Biomechanics Engine", delta_color=color)
+        color = "normal" if (rel_score is not None and rel_score >= 50) else "inverse"
+        st.metric("Analysis Reliability", f"{rel_score:.1f}/100" if rel_score is not None else "UNAVAILABLE", delta="Biomechanics Engine", delta_color=color)
     safe_log("[TRACE] EXIT render_summary")
 
 
@@ -190,7 +201,8 @@ def render_consistency(analysis_result):
             cons_col1, cons_col2, cons_col3 = st.columns(3)
             cons_col1.metric("Validation Status", cons.validation_status)
             cons_col2.metric("Scientific Confidence", cons.scientific_confidence)
-            cons_col3.metric("Consistency Score", f"{cons.overall_score:.1f}/100")
+            cons_score_str = f"{cons.overall_score:.1f}/100" if cons.overall_score is not None else "⚠ INSUFFICIENT_EVIDENCE"
+            cons_col3.metric("Consistency Score", cons_score_str)
             
             if cons.warnings:
                 for w in cons.warnings:
@@ -312,6 +324,8 @@ def render_report_tab(analysis_result):
                 return "Insufficient Data"
             if not m_obj.valid:
                 return "N/A"
+            if m_obj.value is None:
+                return "UNAVAILABLE"
             val_str = f"{m_obj.value:.2f}" if is_length else f"{m_obj.value:.1f}"
             est_str = " (est)" if getattr(m_obj, 'is_estimated', False) else ""
             return f"{val_str}{est_str}"
@@ -321,13 +335,13 @@ def render_report_tab(analysis_result):
         with m_col1:
             sr_str = format_metric(analysis_result.report.stroke_rate)
             sym_str = format_metric(analysis_result.report.stroke_symmetry)
-            st.metric("Stroke Rate", f"{sr_str}" + (" spm" if "N/A" not in sr_str else ""))
-            st.metric("Stroke Symmetry", f"{sym_str}" + ("%" if "N/A" not in sym_str else ""))
+        st.metric("Stroke Rate", f"{sr_str}" + (" spm" if sr_str not in {"N/A", "UNAVAILABLE", "Insufficient Data"} else ""))
+        st.metric("Stroke Symmetry", f"{sym_str}" + ("%" if sym_str not in {"N/A", "UNAVAILABLE", "Insufficient Data"} else ""))
         with m_col2:
             sl_str = format_metric(analysis_result.report.stroke_length, is_length=True)
             kf_str = format_metric(analysis_result.report.kick_frequency)
-            st.metric("Stroke Length", f"{sl_str}" + (" (rel)" if "N/A" not in sl_str else ""))
-            st.metric("Kick Frequency", f"{kf_str}" + (" Hz" if "N/A" not in kf_str else ""))
+            st.metric("Stroke Length", f"{sl_str}" + (" (rel)" if sl_str not in {"N/A", "UNAVAILABLE", "Insufficient Data"} else ""))
+            st.metric("Kick Frequency", f"{kf_str}" + (" Hz" if kf_str not in {"N/A", "UNAVAILABLE", "Insufficient Data"} else ""))
         
         st.caption("*Legend: (est) = Estimated Value. N/A = Unavailable Value.*")
         
@@ -586,7 +600,7 @@ def render_athlete_profile_page():
             history_data.append({
                 "Date": s.analysis_timestamp.split("T")[0],
                 "Time": s.analysis_timestamp.split("T")[1][:5],
-                "Score": round(s.performance_score, 1),
+                "Score": round(s.performance_score, 1) if s.performance_score is not None else None,
                 "Confidence": s.scientific_confidence,
                 "Stroke": s.stroke_type,
                 "Cycles": s.completed_cycles,
@@ -618,7 +632,8 @@ def render_athlete_profile_page():
                 # Using index to ensure uniqueness if timestamp is identical
                 date_str = s.analysis_timestamp.split("T")[0]
                 time_str = s.analysis_timestamp.split("T")[1][:5]
-                label = f"{date_str} {time_str} | Score: {s.performance_score:.1f} | {s.stroke_type} ({i})"
+                score_label = f"{s.performance_score:.1f}" if s.performance_score is not None else "INSUFFICIENT_EVIDENCE"
+                label = f"{date_str} {time_str} | Score: {score_label} | {s.stroke_type} ({i})"
                 session_options[label] = s
                 
             col_sel_a, col_sel_b = st.columns(2)
@@ -760,7 +775,7 @@ def render_history_page():
             "Date": date_str,
             "Time": time_str,
             "Stroke": s.stroke_type,
-            "Score": round(s.performance_score, 1),
+            "Score": round(s.performance_score, 1) if s.performance_score is not None else None,
             "Confidence": s.scientific_confidence,
             "Cycles": s.completed_cycles,
             "Proc. Time (s)": round(s.processing_time_seconds, 1)
@@ -779,7 +794,8 @@ def render_history_page():
         for i, s in enumerate(history):
             swimmer = athlete_map.get(s.athlete_id, "Guest") if s.athlete_id else "Guest"
             date_str = s.analysis_timestamp.split("T")[0] if "T" in s.analysis_timestamp else s.analysis_timestamp[:10]
-            label = f"{swimmer} | {date_str} | Score: {s.performance_score:.1f} | {s.stroke_type} ({s.session_id[:6]})"
+            score_label = f"{s.performance_score:.1f}" if s.performance_score is not None else "INSUFFICIENT_EVIDENCE"
+            label = f"{swimmer} | {date_str} | Score: {score_label} | {s.stroke_type} ({s.session_id[:6]})"
             session_options[label] = s
 
         col_a, col_b = st.columns(2)
@@ -875,14 +891,15 @@ def render_dashboard_page():
     total_athletes = len(profiles)
     total_sessions = len(roster_sessions)
     
-    scores = [s.performance_score for s in roster_sessions]
-    avg_score = (sum(scores) / len(scores)) if scores else 0.0
+    scores = [s.performance_score for s in roster_sessions if s.performance_score is not None]
+    avg_score = (sum(scores) / len(scores)) if scores else None
 
     # At-risk athletes (athletes with average score < 70)
     athlete_scores = {}
     for s in roster_sessions:
         if s.athlete_id:
-            athlete_scores.setdefault(s.athlete_id, []).append(s.performance_score)
+            if s.performance_score is not None:
+                athlete_scores.setdefault(s.athlete_id, []).append(s.performance_score)
             
     at_risk_count = sum(1 for aid, scs in athlete_scores.items() if (sum(scs)/len(scs)) < 72.0)
     
@@ -899,7 +916,7 @@ def render_dashboard_page():
 
     kpi1.metric("👥 Total Athletes", total_athletes)
     kpi2.metric("🎥 Total Analyses", total_sessions)
-    kpi3.metric("📈 Team Avg Score", f"{avg_score:.1f}/100" if roster_sessions else "N/A")
+    kpi3.metric("📈 Team Avg Score", f"{avg_score:.1f}/100" if avg_score is not None else "INSUFFICIENT_EVIDENCE")
     kpi4.metric("⚠️ Needs Attention", at_risk_count, delta="-Needs Drill Work" if at_risk_count > 0 else "Optimal", delta_color="inverse")
     kpi5.metric("🏆 Top Improver", top_improver_name, delta=f"+{max_gain:.1f} pts" if max_gain > 0 else None)
 
@@ -942,7 +959,7 @@ def render_dashboard_page():
                     "Date & Time": date_str,
                     "Athlete": name,
                     "Stroke": s.stroke_type,
-                    "Score": f"{s.performance_score:.1f}",
+                    "Score": f"{s.performance_score:.1f}" if s.performance_score is not None else "INSUFFICIENT_EVIDENCE",
                     "Cycles": s.completed_cycles
                 })
             st.dataframe(act_rows, width="stretch")
@@ -1471,7 +1488,7 @@ def main():
                             processed_video_filename=Path(output_video_path).name if output_video_path else "",
                             metadata_json_path=str(metadata_path),
                             report_json_path=str(json_report_path),
-                            performance_score=analysis_result.report.overall_score if analysis_result.report else 0.0,
+                            performance_score=analysis_result.report.overall_score if analysis_result.report else None,
                             scientific_confidence=analysis_result.consistency.scientific_confidence if getattr(analysis_result, 'consistency', None) else "Low",
                             completed_cycles=analysis_result.stroke_statistics.completed_cycles if analysis_result.stroke_statistics else 0,
                             stroke_type=st.session_state.stroke_result.selected_stroke.value,
@@ -1570,8 +1587,8 @@ def main():
                     torsion_3d = gm.get("core_torsion_3d")
 
                     c1, c2 = st.columns(2)
-                    c1.metric("True 3D Body Roll", f"{b_roll_3d.value:.1f}°" if (b_roll_3d and b_roll_3d.valid) else "N/A")
-                    c2.metric("3D Core Torsion", f"{torsion_3d.value:.1f}°" if (torsion_3d and torsion_3d.valid) else "N/A")
+                    c1.metric("True 3D Body Roll", f"{b_roll_3d.value:.1f}°" if (b_roll_3d and b_roll_3d.valid and b_roll_3d.value is not None) else "UNAVAILABLE")
+                    c2.metric("3D Core Torsion", f"{torsion_3d.value:.1f}°" if (torsion_3d and torsion_3d.valid and torsion_3d.value is not None) else "UNAVAILABLE")
 
                     from app.ui.charts import create_3d_skeleton_chart, create_3d_torsion_chart
                     st.plotly_chart(create_3d_torsion_chart(analysis_result.frames), width="stretch")

@@ -29,6 +29,14 @@ def create_performance_trend_chart(df: pd.DataFrame) -> go.Figure:
     """
     Creates a premium line chart for Performance Score over time using Plotly.
     """
+    # Historical sessions can legitimately have no score. Plot only measured
+    # values rather than coercing unavailable measurements to zero.
+    df = df[df["Score"].notna()].copy()
+    if df.empty:
+        fig = go.Figure()
+        fig.add_annotation(text="No measured performance scores available", showarrow=False, font=dict(size=14, color=TEXT_COLOR))
+        return apply_premium_layout(fig, "Performance Score Progression")
+
     if "DateTime" not in df.columns:
         df["DateTime"] = pd.to_datetime(df["Date"] + " " + df["Time"])
         
@@ -226,8 +234,10 @@ def create_benchmark_percentile_chart(benchmark_result) -> go.Figure:
     colors = []
 
     for name, comp in benchmark_result.comparisons.items():
+        pct = getattr(comp, 'percentile', None)
+        if pct is None:
+            continue
         metrics.append(name.replace("_", " ").title())
-        pct = comp.percentile
         percentiles.append(pct)
         if pct >= 85:
             colors.append(PRIMARY_CYAN)
@@ -237,6 +247,9 @@ def create_benchmark_percentile_chart(benchmark_result) -> go.Figure:
             colors.append(ACCENT_PINK)
 
     fig = go.Figure()
+    if not metrics:
+        fig.add_annotation(text="No validated percentiles available", showarrow=False, font=dict(size=14, color=TEXT_COLOR))
+        return apply_premium_layout(fig, "Population Percentile Rankings")
     fig.add_trace(go.Bar(
         y=metrics,
         x=percentiles,
@@ -262,6 +275,11 @@ def create_bell_curve_chart(metric_name: str, raw_value: float, mean: float, std
     Renders a Gaussian Normal Distribution Bell Curve showing athlete position vs population.
     """
     import numpy as np
+
+    if any(value is None for value in (raw_value, mean, std, elite_mean)):
+        fig = go.Figure()
+        fig.add_annotation(text="Distribution unavailable: insufficient validated evidence", showarrow=False, font=dict(size=14, color=TEXT_COLOR))
+        return apply_premium_layout(fig, f"Normal Distribution: {metric_name.replace('_', ' ').title()}")
 
     if std <= 0:
         std = 1.0
@@ -301,4 +319,3 @@ def create_bell_curve_chart(metric_name: str, raw_value: float, mean: float, std
     fig.update_xaxes(title=metric_name.replace("_", " ").title())
     fig.update_yaxes(showticklabels=False, title="Probability Density")
     return fig
-

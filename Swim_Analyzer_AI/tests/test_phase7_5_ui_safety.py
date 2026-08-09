@@ -6,8 +6,8 @@ from services.pdf_report_service import PDFReportService
 from scientific_reference.storage.scientific_evidence_registry import ScientificEvidenceRegistry
 from models.scientific_evidence_models import AuditDecision, SourceRelationship
 
-def test_rule_1_compatible_adult_male_receives_percentile():
-    """Rule 1: Compatible adult male athlete (Age 22) receives valid Z-score and percentile."""
+def test_rule_1_compatible_adult_male_without_verified_reference_is_suppressed():
+    """P0: absent verified reference values remain unavailable, even for a compatible cohort."""
     engine = BenchmarkEngine()
     ar = AnalysisResult()
     ar.stroke_type = "Freestyle"
@@ -21,9 +21,8 @@ def test_rule_1_compatible_adult_male_receives_percentile():
     res = engine.evaluate_full_analysis(ar, prof)
     sr_comp = res.comparisons["stroke_rate"]
 
-    assert sr_comp.z_score is not None, "Adult male athlete must receive Z-score for valid metric"
-    assert sr_comp.percentile is not None, "Adult male athlete must receive Percentile for valid metric"
-    assert sr_comp.percentile == 50.0
+    assert sr_comp.z_score is None
+    assert sr_comp.percentile is None
 
 def test_rule_2_youth_athlete_percentile_suppressed():
     """Rule 2: Youth athlete (Age 12) does NOT receive adult benchmark percentile (percentile = None)."""
@@ -133,5 +132,5 @@ def test_rule_10_stroke_isolation():
     fs_stats = engine._get_population_stats("Freestyle", "18-25", "Male", "stroke_rate")
     bk_stats = engine._get_population_stats("Backstroke", "18-25", "Male", "stroke_rate")
 
-    assert fs_stats.mean == 54.0
-    assert bk_stats.mean == 48.0
+    assert fs_stats.mean is None
+    assert bk_stats.mean is None

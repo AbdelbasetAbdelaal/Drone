@@ -35,19 +35,22 @@ def render_dashboard_page():
         if sessions:
             latest_score = sessions[0].performance_score
             last_analysis_date = sessions[0].analysis_timestamp.split("T")[0]
-            total_score_sum += latest_score
-            athletes_with_sessions += 1
+            # P0-8: only count sessions with a real (non-None) score in team averages
+            if latest_score is not None:
+                total_score_sum += latest_score
+                athletes_with_sessions += 1
+
             
         athlete_stats.append({
             "Athlete Name": p.full_name,
             "Level": p.swimming_level,
             "Stroke": p.preferred_stroke,
-            "Latest Score": round(latest_score, 1) if latest_score else None,
+            "Latest Score": round(latest_score, 1) if latest_score is not None else None,
             "Sessions Count": len(sessions),
             "Last Analysis": last_analysis_date
         })
         
-    avg_team_score = (total_score_sum / athletes_with_sessions) if athletes_with_sessions > 0 else 0
+    avg_team_score = (total_score_sum / athletes_with_sessions) if athletes_with_sessions > 0 else None
     
     # --- Top Metrics ---
     st.markdown("### 📈 Team Summary")

@@ -173,8 +173,10 @@ class BenchmarkEngine:
         percentile = cdf if higher_is_better else (100.0 - cdf)
         return float(min(99.9, max(0.1, percentile)))
 
-    def get_skill_level(self, performance_score: float, stroke_type: str = "Freestyle") -> str:
+    def get_skill_level(self, performance_score: Optional[float], stroke_type: str = "Freestyle") -> str:
         """Classifies performance score into skill level tiers."""
+        if performance_score is None:
+            return "INSUFFICIENT_EVIDENCE"
         ds = self._get_dataset(stroke_type)
         thresholds = ds.get("skill_level_thresholds", {}).get("performance_score", {}) if ds else {}
 
@@ -193,31 +195,35 @@ class BenchmarkEngine:
 
     # --- Clean Public APIs for Future AI Coach Compatibility ---
 
-    def get_percentile(self, metric_name: str, raw_value: float, stroke_type: str = "Freestyle",
-                       age_group: str = "18-25", gender: str = "Male") -> float:
+    def get_percentile(self, metric_name: str, raw_value: Optional[float], stroke_type: str = "Freestyle",
+                       age_group: str = "18-25", gender: str = "Male") -> Optional[float]:
+        if raw_value is None:
+            return None
         stats = self._get_population_stats(stroke_type, age_group, gender, metric_name)
         z = self.calculate_z_score(raw_value, stats.mean, stats.std)
         return self.calculate_percentile(z, stats.higher_is_better)
 
-    def compare_with_elite(self, metric_name: str, raw_value: float, stroke_type: str = "Freestyle",
-                           age_group: str = "18-25", gender: str = "Male") -> Dict[str, float]:
+    def compare_with_elite(self, metric_name: str, raw_value: Optional[float], stroke_type: str = "Freestyle",
+                           age_group: str = "18-25", gender: str = "Male") -> Dict[str, Optional[float]]:
         stats = self._get_population_stats(stroke_type, age_group, gender, metric_name)
+        if raw_value is None or stats.elite_mean is None or stats.elite_mean <= 0:
+            return {"raw_value": raw_value, "elite_mean": stats.elite_mean, "delta": None, "pct_of_elite": None}
         delta = raw_value - stats.elite_mean
-        pct_of_elite = (raw_value / stats.elite_mean * 100.0) if stats.elite_mean > 0 else 0.0
+        pct_of_elite = raw_value / stats.elite_mean * 100.0
         return {"raw_value": raw_value, "elite_mean": stats.elite_mean, "delta": delta, "pct_of_elite": pct_of_elite}
 
-    def compare_with_population(self, metric_name: str, raw_value: float, stroke_type: str = "Freestyle",
+    def compare_with_population(self, metric_name: str, raw_value: Optional[float], stroke_type: str = "Freestyle",
                                 age_group: str = "18-25", gender: str = "Male") -> Dict[str, Any]:
         stats = self._get_population_stats(stroke_type, age_group, gender, metric_name)
-        z = self.calculate_z_score(raw_value, stats.mean, stats.std)
+        z = self.calculate_z_score(raw_value, stats.mean, stats.std) if raw_value is not None else None
         pct = self.calculate_percentile(z, stats.higher_is_better)
         return {
             "metric_name": metric_name,
             "raw_value": raw_value,
             "population_mean": stats.mean,
             "population_std": stats.std,
-            "z_score": round(z, 2),
-            "percentile": round(pct, 1),
+            "z_score": round(z, 2) if z is not None else None,
+            "percentile": round(pct, 1) if pct is not None else None,
             "unit": stats.unit
         }
 
@@ -291,7 +297,7 @@ class BenchmarkEngine:
 
         # 3D metrics from frames if available
         if analysis_result.frames:
-            rolls = [f.angles.body_roll_3d.value for f in analysis_result.frames if f.is_valid and f.angles and f.angles.body_roll_3d and f.angles.body_roll_3d.value > 0]
+            rolls = [f.angles.body_roll_3d.value for f in analysis_result.frames if f.is_valid and f.angles and f.angles.body_roll_3d and f.angles.body_roll_3d.value is not None and f.angles.body_roll_3d.value > 0]
             if rolls:
                 metrics_to_eval["body_roll"] = sum(rolls) / len(rolls)
 
@@ -319,8 +325,8 @@ class BenchmarkEngine:
                 m_name != "performance_score"
             )
 
-            safe_z = round(z, 2) if (is_pop_compatible and is_metric_valid) else None
-            safe_pct = round(pct, 1) if (is_pop_compatible and is_metric_valid) else None
+            safe_z = round(z, 2) if (is_pop_compatible and is_metric_valid and z is not None) else None
+            safe_pct = round(pct, 1) if (is_pop_compatible and is_metric_valid and pct is not None) else None
             safe_skill = m_skill if (is_pop_compatible and is_metric_valid) else None
 
             if m_name == "performance_score":

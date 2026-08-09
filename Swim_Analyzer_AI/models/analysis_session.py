@@ -11,7 +11,7 @@ class AnalysisSession:
     processed_video_filename: str
     metadata_json_path: str
     report_json_path: str
-    performance_score: float
+    performance_score: Optional[float]  # None = INSUFFICIENT_EVIDENCE (no complete cycle detected)
     scientific_confidence: str
     completed_cycles: int
     stroke_type: str
