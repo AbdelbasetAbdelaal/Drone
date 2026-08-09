@@ -265,21 +265,29 @@ class BenchmarkEngine:
         ds_name = ds.get("dataset_name", "Population Reference Dataset") if ds else "Population Reference Dataset"
 
         report = getattr(analysis_result, 'report', None)
-        overall_score = report.overall_score if report else 70.0
-        overall_skill = self.get_skill_level(overall_score, stroke_type)
+        overall_score = report.overall_score if report else None
+        # P0-8: If overall_score is None (INSUFFICIENT_EVIDENCE), skip skill level calculation
+        overall_skill = self.get_skill_level(overall_score, stroke_type) if overall_score is not None else "INSUFFICIENT_EVIDENCE"
 
         # Extract metric values to benchmark
+        # P0-8: Guard against None values from INSUFFICIENT_EVIDENCE metrics
         metrics_to_eval = {}
         if report:
-            if getattr(report, 'stroke_rate', None) and report.stroke_rate.value > 0:
-                metrics_to_eval["stroke_rate"] = report.stroke_rate.value
-            if getattr(report, 'stroke_length', None) and report.stroke_length.value > 0:
-                metrics_to_eval["stroke_length"] = report.stroke_length.value
-            if getattr(report, 'kick_frequency', None) and report.kick_frequency.value > 0:
-                metrics_to_eval["kick_frequency"] = report.kick_frequency.value
-            if getattr(report, 'stroke_symmetry', None) and report.stroke_symmetry.value > 0:
-                metrics_to_eval["stroke_symmetry"] = report.stroke_symmetry.value
-            metrics_to_eval["performance_score"] = report.overall_score
+            sr = getattr(report, 'stroke_rate', None)
+            if sr and sr.valid and sr.value is not None and sr.value > 0:
+                metrics_to_eval["stroke_rate"] = sr.value
+            sl = getattr(report, 'stroke_length', None)
+            if sl and sl.valid and sl.value is not None and sl.value > 0:
+                metrics_to_eval["stroke_length"] = sl.value
+            kf = getattr(report, 'kick_frequency', None)
+            if kf and kf.valid and kf.value is not None and kf.value > 0:
+                metrics_to_eval["kick_frequency"] = kf.value
+            ss = getattr(report, 'stroke_symmetry', None)
+            if ss and ss.valid and ss.value is not None and ss.value > 0:
+                metrics_to_eval["stroke_symmetry"] = ss.value
+            # Only include performance_score if available
+            if overall_score is not None:
+                metrics_to_eval["performance_score"] = overall_score
 
         # 3D metrics from frames if available
         if analysis_result.frames:

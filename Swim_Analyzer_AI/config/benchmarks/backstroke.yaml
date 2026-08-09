@@ -16,3 +16,14 @@ populations:
           - SRC-BACK-001
           source_relationship: DIRECT_MEASUREMENT
     status: VALIDATED
+  # P0-4 / P0-8: Non-adult cohorts lack peer-reviewed backstroke biomechanics benchmarks
+  # These cohorts MUST NOT be populated with interpolated or fabricated values
+  "8-10":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No validated backstroke biomechanics benchmarks for age 8-10. Adult data cannot be scaled."
+  "11-13":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No validated backstroke biomechanics benchmarks for age 11-13. Adult data cannot be scaled."
+  Masters:
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No validated backstroke biomechanics benchmarks for Masters cohort. Adult data cannot be extrapolated."

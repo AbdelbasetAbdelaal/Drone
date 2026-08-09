@@ -27,3 +27,13 @@ populations:
           source_ids:
           - SRC-BREAST-002
           source_relationship: DIRECT_MEASUREMENT
+  # P0-4 / P0-8: Non-adult cohorts lack validated breaststroke benchmarks
+  "8-10":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No validated breaststroke biomechanics benchmarks for age 8-10. Adult data cannot be scaled."
+  "11-13":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No validated breaststroke biomechanics benchmarks for age 11-13. Adult data cannot be scaled."
+  Masters:
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No validated breaststroke biomechanics benchmarks for Masters cohort. Adult data cannot be extrapolated."

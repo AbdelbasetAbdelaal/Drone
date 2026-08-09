@@ -32,7 +32,16 @@ class AnalysisConsistencyValidator:
             return report
             
         # Initial score is the raw score from the ScoringEngine
+        # P0-8: overall_score=None means INSUFFICIENT_EVIDENCE — propagate this state
         raw_score = result.report.overall_score
+        if raw_score is None:
+            report.validation_status = "Inconclusive"
+            report.scientific_confidence = "Inconclusive"
+            report.warnings.append("INSUFFICIENT_EVIDENCE: No valid performance score available. No complete stroke cycle detected or reliability below threshold.")
+            report.failed_rules.append("Rule_Missing_Score")
+            report.overall_score = None
+            return report
+
         
         # Rule 3: Critical Video Quality
         if result.vqa_result and result.vqa_result.quality_class == "Critical":

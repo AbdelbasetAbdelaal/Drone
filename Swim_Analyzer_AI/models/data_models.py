@@ -30,14 +30,37 @@ class StrokeDetectionResult:
 
 @dataclass
 class ValidatedMetric:
-    """A generic metric with confidence, reliability, and validation status."""
-    value: float = 0.0
+    """A generic metric with confidence, reliability, validation status, and measurement domain."""
+    name: str = ""
+    value: Optional[float] = 0.0
+    unit: str = ""
+    measurement_domain: str = "unavailable" # "calibrated_physical", "relative_body_normalized", "pose_relative_3d", "image_space", "unavailable"
+    status: str = "available" # "available", "unavailable", "low_confidence", "insufficient_evidence"
     confidence: float = 1.0
     reliability: float = 1.0
     valid: bool = True
     is_estimated: bool = False
     is_insufficient_data: bool = False
     reason_if_invalid: str = ""
+    calibration_required: bool = False
+    calibration_status: str = "uncalibrated" # "calibrated", "uncalibrated", "missing", "invalid"
+    method: str = "computed"
+    dependencies: List[str] = field(default_factory=list)
+
+@dataclass
+class StrokeEvent:
+    """Canonical stroke phase event."""
+    stroke: str = "Unknown"
+    phase: str = "Unknown"
+    start_frame: int = 0
+    end_frame: int = 0
+    start_time_sec: float = 0.0
+    end_time_sec: float = 0.0
+    confidence: float = 1.0
+    detection_method: str = "heuristic"  # "heuristic", "model", "manual"
+    validity: bool = True
+    reason: str = ""
+
     
 @dataclass
 class JointAngles:
@@ -143,8 +166,11 @@ class MovementError:
 
 @dataclass
 class PerformanceReport:
-    """Aggregates the overall performance score and all detected errors."""
-    overall_score: float = 100.0
+    """Aggregates the overall performance score and all detected errors.
+    overall_score=None means the score is INSUFFICIENT_EVIDENCE or METRIC_UNAVAILABLE.
+    """
+    overall_score: Optional[float] = None  # None = insufficient evidence, never default to 100.0
+    status: str = "available"  # "available", "insufficient_evidence", "metric_unavailable"
     stroke_rate: ValidatedMetric = field(default_factory=ValidatedMetric)
     stroke_length: ValidatedMetric = field(default_factory=ValidatedMetric)
     kick_frequency: ValidatedMetric = field(default_factory=ValidatedMetric)
@@ -165,13 +191,16 @@ class ReliabilityResult:
 
 @dataclass
 class ConsistencyReport:
-    """Final layer validation to ensure scientific trustworthiness of the report."""
-    overall_score: float = 0.0
+    """Final layer validation to ensure scientific trustworthiness of the report.
+    overall_score=None propagates INSUFFICIENT_EVIDENCE from upstream scoring engines.
+    """
+    overall_score: Optional[float] = None  # None = INSUFFICIENT_EVIDENCE
     validation_status: str = "Inconclusive" # "Passed", "Warning", "Critical", "Inconclusive"
     warnings: List[str] = field(default_factory=list)
     failed_rules: List[str] = field(default_factory=list)
     passed_rules: List[str] = field(default_factory=list)
     scientific_confidence: str = "Inconclusive" # "High", "Medium", "Low", "Inconclusive"
+
 
 @dataclass
 class AnalysisResult:

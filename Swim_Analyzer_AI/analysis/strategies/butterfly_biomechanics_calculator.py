@@ -36,8 +36,8 @@ class ButterflyBiomechanicsCalculator(FreestyleBiomechanicsCalculator):
             avg_diff = float(np.mean(diffs))
             # Convert to a 0-100 score (0 diff = 100, 0.3 diff = 0)
             sym_score = max(0.0, 100.0 - (avg_diff / 0.3) * 100.0)
-            return ValidatedMetric(value=sym_score, valid=True)
-        return ValidatedMetric(value=100.0, valid=False,
+            return ValidatedMetric(name="stroke_symmetry", value=sym_score, unit="percent", measurement_domain="calibrated_physical", status="available", valid=True)
+        return ValidatedMetric(name="stroke_symmetry", value=None, unit="percent", measurement_domain="unavailable", status="unavailable", valid=False,
                                reason_if_invalid="No wrist landmark data for symmetry comparison.")
 
     @classmethod
@@ -81,18 +81,26 @@ class ButterflyBiomechanicsCalculator(FreestyleBiomechanicsCalculator):
 
             undulation = float(max(hip_y_values) - min(hip_y_values)) if len(hip_y_values) > 10 else 0.0
             metrics["hip_undulation_amplitude"] = ValidatedMetric(
-                value=undulation,
+                name="hip_undulation_amplitude",
+                value=undulation if undulation > 0 else None,
+                unit="body_length",
+                measurement_domain="relative_body_normalized",
+                status="available" if undulation > 0 else "unavailable",
                 valid=undulation > 0,
                 confidence=1.0,
-                reason_if_invalid="Insufficient frames for undulation measurement."
+                reason_if_invalid="" if undulation > 0 else "Insufficient frames for undulation measurement."
             )
 
             avg_asym = float(np.mean(wrist_asymmetries)) if wrist_asymmetries else 0.0
             metrics["avg_wrist_asymmetry"] = ValidatedMetric(
-                value=avg_asym,
-                valid=True,
+                name="avg_wrist_asymmetry",
+                value=avg_asym if wrist_asymmetries else None,
+                unit="image_space",
+                measurement_domain="image_space",
+                status="available" if wrist_asymmetries else "unavailable",
+                valid=len(wrist_asymmetries) > 0,
                 confidence=1.0,
-                reason_if_invalid=""
+                reason_if_invalid="" if wrist_asymmetries else "No wrist landmark data"
             )
 
             # Butterfly 3D metrics
@@ -100,9 +108,9 @@ class ButterflyBiomechanicsCalculator(FreestyleBiomechanicsCalculator):
             torsions = [f.angles.core_torsion_3d.value for f in frames if f.is_valid and f.angles and f.angles.core_torsion_3d and f.angles.core_torsion_3d.valid]
 
             if rolls_3d:
-                metrics["body_roll_3d"] = ValidatedMetric(value=float(np.mean(rolls_3d)), valid=True)
+                metrics["body_roll_3d"] = ValidatedMetric(name="body_roll_3d", value=float(np.mean(rolls_3d)), unit="deg", measurement_domain="pose_relative_3d", status="available", valid=True)
             if torsions:
-                metrics["core_torsion_3d"] = ValidatedMetric(value=float(np.mean(torsions)), valid=True)
+                metrics["core_torsion_3d"] = ValidatedMetric(name="core_torsion_3d", value=float(np.mean(torsions)), unit="deg", measurement_domain="pose_relative_3d", status="available", valid=True)
 
         except Exception as e:
             logger.error(f"Error calculating butterfly global metrics: {e}")

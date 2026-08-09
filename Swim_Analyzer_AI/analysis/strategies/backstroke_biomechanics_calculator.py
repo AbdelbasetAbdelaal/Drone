@@ -60,9 +60,9 @@ class BackstrokeBiomechanicsCalculator(FreestyleBiomechanicsCalculator):
             torsions = [f.angles.core_torsion_3d.value for f in frames if f.is_valid and f.angles and f.angles.core_torsion_3d and f.angles.core_torsion_3d.valid]
 
             if rolls_3d:
-                metrics["body_roll_3d"] = ValidatedMetric(value=float(np.mean(rolls_3d)), valid=True)
+                metrics["body_roll_3d"] = ValidatedMetric(name="body_roll_3d", value=float(np.mean(rolls_3d)), unit="deg", measurement_domain="pose_relative_3d", status="available", valid=True)
             if torsions:
-                metrics["core_torsion_3d"] = ValidatedMetric(value=float(np.mean(torsions)), valid=True)
+                metrics["core_torsion_3d"] = ValidatedMetric(name="core_torsion_3d", value=float(np.mean(torsions)), unit="deg", measurement_domain="pose_relative_3d", status="available", valid=True)
 
         except Exception as e:
             logger.error(f"Error calculating backstroke global metrics: {e}")

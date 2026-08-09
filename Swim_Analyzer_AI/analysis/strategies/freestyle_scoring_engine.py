@@ -62,10 +62,16 @@ class FreestyleScoringEngine(BaseScoringEngine):
 
         # 1. Stroke Symmetry
         sym_weight = self.weights.get("symmetry_weight", 0.20)
-        sym_score = report.stroke_symmetry.value if report.stroke_symmetry.valid else MAX_SCORE
-        score_components.append(sym_score * sym_weight)
-        if report.stroke_symmetry.valid and sym_score < SYMMETRY_SCORE_PENALTY_THRESHOLD:
-            errors.append(MovementError(-1, 0, "Asymmetrical Pull", "Left and right arms have significantly different mechanics.", "High", confidence=report.stroke_symmetry.confidence))
+        sym_score = None
+        if report.stroke_symmetry and report.stroke_symmetry.valid and report.stroke_symmetry.value is not None:
+            sym_score = report.stroke_symmetry.value
+            score_components.append(sym_score * sym_weight)
+            if sym_score < SYMMETRY_SCORE_PENALTY_THRESHOLD:
+                errors.append(MovementError(-1, 0, "Asymmetrical Pull", "Left and right arms have significantly different mechanics.", "High", confidence=report.stroke_symmetry.confidence))
+        else:
+            # P0-7: Do NOT default to MAX_SCORE. Skip this component and note unavailability.
+            logger.debug("Symmetry metric unavailable; component omitted from scoring.")
+
 
         # 2. Elbow Angle during Pull
         elb_weight = self.weights.get("elbow_weight", 0.25)
@@ -101,9 +107,9 @@ class FreestyleScoringEngine(BaseScoringEngine):
             errors.append(sh_err)
         
         # 4. Hip Angle
-        hip_weight = self.weights.get("hip_weight", 0.20)
-        # We don't have hip angle in JointAngles yet, assuming MAX_SCORE for MVP
-        score_components.append(MAX_SCORE * hip_weight)
+        # P0-7: Hip angle not yet calculated; do NOT inject MAX_SCORE as a placeholder.
+        # This component is explicitly omitted until hip angle is added to JointAngles.
+        logger.debug("Hip angle not yet available; component omitted from scoring (P0-7).")
         
         # 5. Knee Angle
         knee_weight = self.weights.get("knee_weight", 0.15)
@@ -121,20 +127,35 @@ class FreestyleScoringEngine(BaseScoringEngine):
             kn_err.timestamp_ms = ts
             errors.append(kn_err)
 
-        report.overall_score = sum(score_components)
-        report.overall_score = max(0.0, min(MAX_SCORE, report.overall_score))
-        report.errors = errors
-        
+        # P0-8: Downstream propagation — score is only valid when upstream dependencies are met
         cycles = analysis_result.stroke_statistics.completed_cycles if analysis_result.stroke_statistics else 0
-        reliability_score = analysis_result.reliability.analysis_reliability_score if analysis_result.reliability else MAX_SCORE
-        
+        reliability_score = analysis_result.reliability.analysis_reliability_score if analysis_result.reliability else 0.0
+
         if cycles == 0:
-            report.overall_score = 0.0
-            report.feedback_summary = "No complete stroke cycle detected. Performance scoring is incomplete."
-        elif reliability_score < RELIABILITY_MIN_ACCEPTABLE_SCORE:
-            report.feedback_summary = "Analysis is inconclusive due to insufficient reliable biomechanical data. Metrics are marked as estimates."
-        else:
-            report.feedback_summary = self._generate_feedback_summary(report.overall_score, len(errors))
+            # P0-7: No complete stroke cycle → no valid score
+            report.overall_score = None
+            report.feedback_summary = "INSUFFICIENT_EVIDENCE: No complete stroke cycle detected. Scoring requires at least one full cycle."
+            report.errors = errors
+            return report
+
+        if reliability_score < RELIABILITY_MIN_ACCEPTABLE_SCORE:
+            # P0-7: Reliability too low → no valid score
+            report.overall_score = None
+            report.feedback_summary = f"INSUFFICIENT_EVIDENCE: Reliability score {reliability_score:.0f} below minimum threshold ({RELIABILITY_MIN_ACCEPTABLE_SCORE}). Biomechanical data is insufficient for scoring."
+            report.errors = errors
+            return report
+
+        if not score_components:
+            report.overall_score = None
+            report.feedback_summary = "METRIC_UNAVAILABLE: No scoreable metrics available. Ensure pose detection is working correctly."
+            report.errors = errors
+            return report
+
+        raw_score = sum(score_components)
+        # Normalize to available components (not total weight which may have missing items)
+        report.overall_score = max(0.0, min(MAX_SCORE, raw_score))
+        report.errors = errors
+        report.feedback_summary = self._generate_feedback_summary(report.overall_score, len(errors))
         
         return report
 

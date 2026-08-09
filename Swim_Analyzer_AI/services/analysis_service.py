@@ -6,6 +6,7 @@ from pathlib import Path
 
 from core.logger import setup_logger
 from core.config import config
+from core.timing_utils import TimingUtils
 from utils.video_utils import VideoProcessor
 from analysis.pose_detector import PoseDetector
 from analysis.calibration_engine import RelativeCalibration
@@ -87,7 +88,8 @@ class AnalysisService:
             angles = JointAngles()
             stroke_phase = "Unknown"
             phase_conf = 0.0
-            timestamp = int(frames_processed * (1000.0 / effective_fps)) if effective_fps > 0 else 0
+            # P0-6: Use TimingUtils for consistent timestamp generation
+            timestamp = TimingUtils.frame_index_to_timestamp_ms(frames_processed, effective_fps)
             
             if landmarks and is_valid:
                 angles = BiomechanicsCalculator.calculate_all_angles(landmarks)

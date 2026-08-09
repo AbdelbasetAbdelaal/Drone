@@ -140,7 +140,10 @@ class FreestyleBiomechanicsCalculator(BaseBiomechanicsCalculator):
             else:
                 roll_3d = 0.0
                 
-            angles.body_roll_3d = ValidatedMetric(value=min(90.0, max(0.0, roll_3d)), valid=True)
+            angles.body_roll_3d = ValidatedMetric(
+                name="body_roll_3d", value=min(90.0, max(0.0, roll_3d)), unit="deg",
+                measurement_domain="pose_relative_3d", status="available", valid=True
+            )
 
             # Core Torsion: 3D angle difference between shoulder line and hip line
             sh_mag = np.linalg.norm(sh_v)
@@ -150,14 +153,23 @@ class FreestyleBiomechanicsCalculator(BaseBiomechanicsCalculator):
                 torsion = float(np.degrees(np.arccos(dot_prod)))
             else:
                 torsion = 0.0
-            angles.core_torsion_3d = ValidatedMetric(value=min(90.0, max(0.0, torsion)), valid=True)
+            angles.core_torsion_3d = ValidatedMetric(
+                name="core_torsion_3d", value=min(90.0, max(0.0, torsion)), unit="deg",
+                measurement_domain="pose_relative_3d", status="available", valid=True
+            )
 
-            # 3D Hand Depth (Z offset from chest plane midpoint)
+            # 3D Hand Depth (Z offset from chest plane midpoint in pose-relative units)
             chest_z = mid_sh[2]
             l_depth = float(getattr(l_wr, 'z', 0.0) - chest_z)
             r_depth = float(getattr(r_wr, 'z', 0.0) - chest_z)
-            angles.hand_depth_left_3d = ValidatedMetric(value=l_depth, valid=True)
-            angles.hand_depth_right_3d = ValidatedMetric(value=r_depth, valid=True)
+            angles.hand_depth_left_3d = ValidatedMetric(
+                name="hand_depth_left_3d", value=l_depth, unit="pose_relative_units",
+                measurement_domain="pose_relative_3d", status="available", valid=True
+            )
+            angles.hand_depth_right_3d = ValidatedMetric(
+                name="hand_depth_right_3d", value=r_depth, unit="pose_relative_units",
+                measurement_domain="pose_relative_3d", status="available", valid=True
+            )
 
         except Exception as e:
             logger.debug(f"Error calculating 3D metrics: {e}")
@@ -189,24 +201,43 @@ class FreestyleBiomechanicsCalculator(BaseBiomechanicsCalculator):
                 if curr_phase != "Unknown":
                     prev_phase = curr_phase
                     
-        duration_minutes = (len(frames) / effective_fps) / 60.0
+        duration_minutes = (len(frames) / effective_fps) / 60.0 if effective_fps > 0 else 0.0
         if duration_minutes > 0:
             sr = float(catch_count / duration_minutes)
             if sr == 0.0 and catch_count == 0:
-                return ValidatedMetric(value=0.0, valid=False, is_estimated=False, reason_if_invalid="No complete stroke cycle detected.")
+                return ValidatedMetric(
+                    name="stroke_rate", value=None, unit="spm", measurement_domain="calibrated_physical",
+                    status="unavailable", valid=False, is_estimated=False, reason_if_invalid="No complete stroke cycle detected."
+                )
             
             valid = 15 <= sr <= 120
             reason = "" if valid else f"Stroke rate {sr:.1f} spm is outside valid range (15-120)."
             is_estimated = catch_count < 3
             if not valid: logger.debug(reason)
-            return ValidatedMetric(value=sr, valid=valid, is_estimated=is_estimated, reason_if_invalid=reason)
-        return ValidatedMetric()
+            return ValidatedMetric(
+                name="stroke_rate", value=sr, unit="spm", measurement_domain="calibrated_physical",
+                status="available" if valid else "unavailable", valid=valid, is_estimated=is_estimated, reason_if_invalid=reason
+            )
+        return ValidatedMetric(name="stroke_rate", value=None, unit="spm", status="unavailable", valid=False)
 
     @classmethod
     def _calculate_stroke_length(cls, frames: List[FrameData], calibration_engine: Any, frame_width: int, frame_height: int) -> ValidatedMetric:
         if not calibration_engine or frame_width <= 0 or frame_height <= 0:
-            return ValidatedMetric()
+            return ValidatedMetric(
+                name="stroke_length", value=None, unit="meters", measurement_domain="unavailable",
+                status="unavailable", valid=False, calibration_required=True, calibration_status="missing",
+                reason_if_invalid="Physical pool calibration missing"
+            )
             
+        # P0-1 & P0-2 Policy Check: If physical calibration is missing, return unavailable
+        is_physical = getattr(calibration_engine, 'is_physical_calibration', False)
+        if not is_physical:
+            return ValidatedMetric(
+                name="stroke_length", value=None, unit="meters", measurement_domain="unavailable",
+                status="unavailable", valid=False, calibration_required=True, calibration_status="missing",
+                reason_if_invalid="Physical calibration unavailable. Relative Body Length measurements cannot be labeled as meters."
+            )
+
         stroke_lengths = []
         current_cycle_min_x = 999.0
         current_cycle_max_x = -999.0
@@ -245,7 +276,12 @@ class FreestyleBiomechanicsCalculator(BaseBiomechanicsCalculator):
             is_est = True
         
         valid = sl > 0 
-        return ValidatedMetric(value=sl, valid=valid, is_estimated=is_est, reason_if_invalid="" if valid else "Insufficient tracking to calculate length.")
+        return ValidatedMetric(
+            name="stroke_length", value=sl if valid else None, unit="meters",
+            measurement_domain="calibrated_physical", status="available" if valid else "unavailable",
+            valid=valid, is_estimated=is_est, calibration_required=True, calibration_status="calibrated",
+            reason_if_invalid="" if valid else "Insufficient tracking to calculate length."
+        )
 
     @classmethod
     def _evaluate_symmetry(cls, frames: List[FrameData]) -> ValidatedMetric:

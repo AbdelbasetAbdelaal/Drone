@@ -52,8 +52,8 @@ class BreaststrokeBiomechanicsCalculator(FreestyleBiomechanicsCalculator):
         if l_insweep and r_insweep:
             diff = abs(np.mean(l_insweep) - np.mean(r_insweep))
             sym = max(0.0, 100.0 - diff)
-            return ValidatedMetric(value=sym, valid=True)
-        return ValidatedMetric(value=100.0, valid=False,
+            return ValidatedMetric(name="stroke_symmetry", value=sym, unit="percent", measurement_domain="calibrated_physical", status="available", valid=True)
+        return ValidatedMetric(name="stroke_symmetry", value=None, unit="percent", measurement_domain="unavailable", status="unavailable", valid=False,
                                reason_if_invalid="No Insweep phase data for symmetry comparison.")
 
     @classmethod
@@ -84,7 +84,11 @@ class BreaststrokeBiomechanicsCalculator(FreestyleBiomechanicsCalculator):
             glide_frames = sum(1 for f in frames if f.stroke_phase == "Glide")
             glide_ratio = glide_frames / total_frames if total_frames > 0 else 0.0
             metrics["glide_ratio"] = ValidatedMetric(
+                name="glide_ratio",
                 value=glide_ratio,
+                unit="ratio",
+                measurement_domain="relative_body_normalized",
+                status="available",
                 valid=True,
                 confidence=1.0,
                 reason_if_invalid=""
@@ -100,10 +104,14 @@ class BreaststrokeBiomechanicsCalculator(FreestyleBiomechanicsCalculator):
 
             max_bend = float(max(knee_bends)) if knee_bends else 0.0
             metrics["max_knee_bend_deg"] = ValidatedMetric(
-                value=max_bend,
+                name="max_knee_bend_deg",
+                value=max_bend if max_bend > 0 else None,
+                unit="deg",
+                measurement_domain="relative_body_normalized",
+                status="available" if max_bend > 0 else "unavailable",
                 valid=max_bend > 0,
                 confidence=1.0,
-                reason_if_invalid="No valid knee angle data found."
+                reason_if_invalid="" if max_bend > 0 else "No valid knee angle data found."
             )
 
             # Breaststroke 3D metrics
@@ -111,9 +119,9 @@ class BreaststrokeBiomechanicsCalculator(FreestyleBiomechanicsCalculator):
             torsions = [f.angles.core_torsion_3d.value for f in frames if f.is_valid and f.angles and f.angles.core_torsion_3d and f.angles.core_torsion_3d.valid]
 
             if rolls_3d:
-                metrics["body_roll_3d"] = ValidatedMetric(value=float(np.mean(rolls_3d)), valid=True)
+                metrics["body_roll_3d"] = ValidatedMetric(name="body_roll_3d", value=float(np.mean(rolls_3d)), unit="deg", measurement_domain="pose_relative_3d", status="available", valid=True)
             if torsions:
-                metrics["core_torsion_3d"] = ValidatedMetric(value=float(np.mean(torsions)), valid=True)
+                metrics["core_torsion_3d"] = ValidatedMetric(name="core_torsion_3d", value=float(np.mean(torsions)), unit="deg", measurement_domain="pose_relative_3d", status="available", valid=True)
 
         except Exception as e:
             logger.error(f"Error calculating breaststroke global metrics: {e}")

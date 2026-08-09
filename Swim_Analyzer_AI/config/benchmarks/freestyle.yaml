@@ -27,3 +27,13 @@ populations:
           source_ids:
           - SRC-FREE-004
           source_relationship: DIRECT_MEASUREMENT
+  # P0-4 / P0-8: Non-adult cohorts lack validated freestyle benchmarks
+  "8-10":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No validated freestyle biomechanics benchmarks for age 8-10. Adult data cannot be scaled."
+  "11-13":
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No validated freestyle biomechanics benchmarks for age 11-13. Adult data cannot be scaled."
+  Masters:
+    status: INSUFFICIENT_EVIDENCE
+    reason: "No validated freestyle biomechanics benchmarks for Masters cohort. Adult data cannot be extrapolated."

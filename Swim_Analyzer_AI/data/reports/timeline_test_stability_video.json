@@ -23,7 +23,7 @@
     },
     {
         "Frame": 1,
-        "Timestamp": 66,
+        "Timestamp": 67,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -89,7 +89,7 @@
     },
     {
         "Frame": 4,
-        "Timestamp": 266,
+        "Timestamp": 267,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -155,7 +155,7 @@
     },
     {
         "Frame": 7,
-        "Timestamp": 466,
+        "Timestamp": 467,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -221,7 +221,7 @@
     },
     {
         "Frame": 10,
-        "Timestamp": 666,
+        "Timestamp": 667,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -287,7 +287,7 @@
     },
     {
         "Frame": 13,
-        "Timestamp": 866,
+        "Timestamp": 867,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -353,7 +353,7 @@
     },
     {
         "Frame": 16,
-        "Timestamp": 1066,
+        "Timestamp": 1067,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -419,7 +419,7 @@
     },
     {
         "Frame": 19,
-        "Timestamp": 1266,
+        "Timestamp": 1267,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -485,7 +485,7 @@
     },
     {
         "Frame": 22,
-        "Timestamp": 1466,
+        "Timestamp": 1467,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -551,7 +551,7 @@
     },
     {
         "Frame": 25,
-        "Timestamp": 1666,
+        "Timestamp": 1667,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -617,7 +617,7 @@
     },
     {
         "Frame": 28,
-        "Timestamp": 1866,
+        "Timestamp": 1867,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -683,7 +683,7 @@
     },
     {
         "Frame": 31,
-        "Timestamp": 2066,
+        "Timestamp": 2067,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -749,7 +749,7 @@
     },
     {
         "Frame": 34,
-        "Timestamp": 2266,
+        "Timestamp": 2267,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -815,7 +815,7 @@
     },
     {
         "Frame": 37,
-        "Timestamp": 2466,
+        "Timestamp": 2467,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -881,7 +881,7 @@
     },
     {
         "Frame": 40,
-        "Timestamp": 2666,
+        "Timestamp": 2667,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -947,7 +947,7 @@
     },
     {
         "Frame": 43,
-        "Timestamp": 2866,
+        "Timestamp": 2867,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -1013,7 +1013,7 @@
     },
     {
         "Frame": 46,
-        "Timestamp": 3066,
+        "Timestamp": 3067,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -1079,7 +1079,7 @@
     },
     {
         "Frame": 49,
-        "Timestamp": 3266,
+        "Timestamp": 3267,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -1145,7 +1145,7 @@
     },
     {
         "Frame": 52,
-        "Timestamp": 3466,
+        "Timestamp": 3467,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -1211,7 +1211,7 @@
     },
     {
         "Frame": 55,
-        "Timestamp": 3666,
+        "Timestamp": 3667,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -1277,7 +1277,7 @@
     },
     {
         "Frame": 58,
-        "Timestamp": 3866,
+        "Timestamp": 3867,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -1343,7 +1343,7 @@
     },
     {
         "Frame": 61,
-        "Timestamp": 4066,
+        "Timestamp": 4067,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -1409,7 +1409,7 @@
     },
     {
         "Frame": 64,
-        "Timestamp": 4266,
+        "Timestamp": 4267,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -1475,7 +1475,7 @@
     },
     {
         "Frame": 67,
-        "Timestamp": 4466,
+        "Timestamp": 4467,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -1541,7 +1541,7 @@
     },
     {
         "Frame": 70,
-        "Timestamp": 4666,
+        "Timestamp": 4667,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,
@@ -1607,7 +1607,7 @@
     },
     {
         "Frame": 73,
-        "Timestamp": 4866,
+        "Timestamp": 4867,
         "Stroke_Phase": "Unknown",
         "Joint_Angles": {
             "left_elbow": null,

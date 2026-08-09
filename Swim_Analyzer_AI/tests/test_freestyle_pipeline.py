@@ -67,9 +67,10 @@ def test_freestyle_pipeline_stability(mock_video):
     
     assert result is not None
     assert result.report is not None
-    # 0 cycles should result in an inconclusive report score of 0
-    assert result.report.overall_score == 0.0 
-    assert ("No complete stroke cycle detected" in result.report.feedback_summary) or ("Inconclusive" in result.report.feedback_summary)
+    # P0-7/P0-8: 0 cycles must result in overall_score=None (INSUFFICIENT_EVIDENCE), never 0.0 or 100.0
+    assert result.report.overall_score is None, f"Expected None for no-cycle video, got {result.report.overall_score}"
+    assert any(kw in result.report.feedback_summary for kw in ["INSUFFICIENT_EVIDENCE", "Inconclusive", "No complete stroke cycle"])
+
     
     # Check that performance stats were populated
     assert result.video_path == mock_video
