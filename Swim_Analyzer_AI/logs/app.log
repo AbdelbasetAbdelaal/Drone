@@ -1464,3 +1464,106 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 2026-08-09 16:06:42,900 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
 2026-08-09 16:06:42,905 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_a347d242.pdf
 2026-08-09 16:06:42,961 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-09 16:38:21,690 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:38:48,739 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:38:48,973 - services.auth_service - INFO - [SYSTEM] Coach logged in: coach1
+2026-08-09 16:38:49,259 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:39:35,107 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:39:35,295 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:39:41,332 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:39:50,487 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:39:50,534 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:39:55,008 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:39:55,046 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:39:55,228 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:39:55,273 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:39:55,346 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 16:39:56,313 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_beb2761f402947549fa310ac50bcff47.mp4
+2026-08-09 16:40:02,917 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 16:40:03,198 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:40:03,223 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:41:58,199 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:41:58,231 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:41:58,441 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:41:58,473 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:41:58,543 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-09 16:41:58,543 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_beb2761f402947549fa310ac50bcff47.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-09 16:41:58,600 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 16:41:59,025 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_beb2761f402947549fa310ac50bcff47.mp4 (720x1280 @ 30.0fps)
+2026-08-09 16:41:59,043 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_beb2761f402947549fa310ac50bcff47.mp4 (720x1280 @ 30.0fps)
+2026-08-09 16:41:59,047 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_beb2761f402947549fa310ac50bcff47.mp4 (Codec: mp4v)
+2026-08-09 16:42:05,817 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Critical at early halt check. Halting video processing.
+2026-08-09 16:42:05,835 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-09 16:42:06,177 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 16:42:06,178 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-09 16:42:06,180 - __main__ - INFO - [SYSTEM] EXIT: process_video_aborted_vqa_critical_early_halt
+2026-08-09 16:47:23,804 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:47:23,833 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:47:23,986 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-09 16:47:23,988 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_beb2761f402947549fa310ac50bcff47.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-09 16:47:23,995 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 16:47:24,565 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_beb2761f402947549fa310ac50bcff47.mp4 (720x1280 @ 30.0fps)
+2026-08-09 16:47:24,591 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_beb2761f402947549fa310ac50bcff47.mp4 (720x1280 @ 30.0fps)
+2026-08-09 16:47:24,618 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_beb2761f402947549fa310ac50bcff47.mp4 (Codec: mp4v)
+2026-08-09 16:47:26,561 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:47:26,611 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:47:26,856 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:47:26,907 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:47:27,014 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 16:47:27,617 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_beb2761f402947549fa310ac50bcff47.mp4
+2026-08-09 16:47:27,902 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-09 16:47:29,219 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 16:47:34,135 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 16:47:34,329 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:47:34,368 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:48:57,884 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:48:57,918 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:48:58,140 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:48:58,174 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:48:58,240 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-09 16:48:58,243 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_beb2761f402947549fa310ac50bcff47.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-09 16:48:58,259 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 16:48:58,670 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_beb2761f402947549fa310ac50bcff47.mp4 (720x1280 @ 30.0fps)
+2026-08-09 16:48:58,715 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_beb2761f402947549fa310ac50bcff47.mp4 (720x1280 @ 30.0fps)
+2026-08-09 16:48:58,718 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_beb2761f402947549fa310ac50bcff47.mp4 (Codec: mp4v)
+2026-08-09 16:49:05,327 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Critical at early halt check, but override is enabled. Continuing video processing.
+2026-08-09 16:49:55,792 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 321 frames.
+2026-08-09 16:49:55,808 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-09 16:49:55,854 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-09 16:49:55,974 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 16:49:55,990 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 16:49:55,996 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 16:49:56,010 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 16:49:56,035 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: Beginner, Dataset: Population Reference Dataset)
+2026-08-09 16:49:57,146 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_beb2761f402947549fa310ac50bcff47.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_beb2761f402947549fa310ac50bcff47.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_beb2761f402947549fa310ac50bcff47.json
+2026-08-09 16:50:34,891 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_beb2761f402947549fa310ac50bcff47.mp4
+2026-08-09 16:50:34,941 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 7.70 MB, Frames: 321, Duration: 10.70s
+2026-08-09 16:50:34,992 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 16:50:34,993 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-09 16:50:35,347 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 16:50:35,383 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525341014.mp4
+2026-08-09 16:50:35,456 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-09 16:50:35,458 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-09 16:50:35,468 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-09 16:50:35,473 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-09 16:50:35,475 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-09 16:50:35,489 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-09 16:50:35,494 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-09 16:50:35,506 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-09 16:50:35,509 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-09 16:50:35,524 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-09 16:50:36,188 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 16:50:36,794 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-09 16:50:37,252 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-09 16:50:40,917 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-09 16:50:40,922 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-09 16:50:41,280 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-09 16:50:41,284 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-09 16:50:41,557 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-09 16:50:41,560 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-09 16:50:41,591 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-09 16:50:41,595 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-09 16:50:41,599 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-09 16:50:41,979 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 16:50:41,985 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_99c477eb.pdf
+2026-08-09 16:50:42,689 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons

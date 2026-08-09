@@ -1,7 +1,7 @@
 """
 Service layer orchestrating the video analysis workflow.
 """
-from typing import Tuple, Any
+from typing import Tuple, Any, Optional
 from pathlib import Path
 
 from core.logger import setup_logger
@@ -41,7 +41,7 @@ class AnalysisService:
     def _process_frames_loop(self, processor: VideoProcessor, vqa: Any, pose_detector: Any, annotator: Any, 
                              BiomechanicsCalculator: Any, stroke_analyzer: Any, effective_fps: float, 
                              visualization_mode: str, progress_callback, vqa_callback, analysis_result: AnalysisResult,
-                             frame_stride: int = 1) -> Tuple[bool, int, float, float]:
+                             frame_stride: int = 1, allow_vqa_critical_override: bool = False) -> Tuple[bool, int, float, float]:
         """Process video frames in a loop, extract poses, calculate biomechanics, and annotate."""
         import time
         import psutil
@@ -77,10 +77,12 @@ class AnalysisService:
             if frames_processed == config.vqa_early_halt_frames:
                 early_vqa = vqa.get_current_result()
                 if early_vqa.quality_class == "Critical":
-                    logger.warning("VQA returned Critical at early halt check. Halting video processing.")
                     analysis_result.vqa_result = early_vqa
                     if vqa_callback: vqa_callback(early_vqa)
-                    return True, valid_frames_count, peak_ram, peak_cpu
+                    if not allow_vqa_critical_override and not config.vqa_allow_critical_override:
+                        logger.warning("VQA returned Critical at early halt check. Halting video processing.")
+                        return True, valid_frames_count, peak_ram, peak_cpu
+                    logger.warning("VQA returned Critical at early halt check, but override is enabled. Continuing video processing.")
                 elif vqa_callback:
                     vqa_callback(early_vqa)
 
@@ -186,7 +188,7 @@ class AnalysisService:
                       visualization_mode: str = "User Mode", progress_callback=None, vqa_callback=None,
                       trajectory_duration_sec: float = 2.0,
                       stroke_detection: StrokeDetectionResult = None, athlete_id: str = None,
-                      frame_stride: int = None) -> Tuple[str, str, str, AnalysisResult]:
+                      frame_stride: int = None, allow_vqa_critical_override: bool = False) -> Tuple[str, str, str, AnalysisResult]:
         """
         Process a video file to detect poses, calculate angles, and generate an output video.
         """
@@ -242,7 +244,7 @@ class AnalysisService:
                 early_halt, valid_frames_count, peak_ram, peak_cpu = self._process_frames_loop(
                     processor, vqa, pose_detector, annotator, BiomechanicsCalculator, stroke_analyzer,
                     adjusted_effective_fps, visualization_mode, progress_callback, vqa_callback, analysis_result,
-                    frame_stride=stride
+                    frame_stride=stride, allow_vqa_critical_override=allow_vqa_critical_override
                 )
                 
                 if early_halt:

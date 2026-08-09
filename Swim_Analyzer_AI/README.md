@@ -20,6 +20,7 @@ It transforms raw video of swimming technique into auditable, 3D kinematic measu
 
 ### 2. 🛡️ Video Quality Assessment (VQA) & Reliability Engine
 - **VQA Diagnostic Engine**: Evaluates resolution, frame rate, lighting, occlusion, and camera stability before analysis.
+- **VQA Safety Mode**: Allows coaches to choose strict abort on critical video quality or continue analysis with a warning for edge-case footage.
 - **Reliability Scoring**: Calculates confidence scores based on landmark visibility, jitter, and pose stability.
 - **Scientific Consistency Validator**: Enforces 7 mathematical consistency rules (e.g. flagging contradictions between high technique scores and poor video quality).
 

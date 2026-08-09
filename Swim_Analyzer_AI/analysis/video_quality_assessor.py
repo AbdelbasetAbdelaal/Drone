@@ -16,7 +16,7 @@ class VideoQualityAssessor:
     processed by the main analysis loop.
     """
     
-    def __init__(self):
+    def __init__(self, sample_count: int = None):
         self.sharpness_scores = []
         self.brightness_scores = []
         self.confidence_scores = []
@@ -30,6 +30,7 @@ class VideoQualityAssessor:
         self.height = 0
         self.fps = 0
         self.frames_processed = 0
+        self.sample_count = sample_count
 
     def set_video_metadata(self, width: int, height: int, fps: float):
         self.width = width
@@ -257,3 +258,42 @@ class VideoQualityAssessor:
             passed=False,
             warning_message=f"Critical VQA Failure: {message}"
         )
+
+    def assess_video(self, video_path: str):
+        """Assess an entire video file and return the final VQA result."""
+        cap = cv2.VideoCapture(video_path)
+        if not cap.isOpened():
+            return self._fail_fast("Video could not be opened for VQA assessment.")
+
+        try:
+            frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0)
+            self.fps = float(cap.get(cv2.CAP_PROP_FPS) or 0)
+            self.width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH) or 0)
+            self.height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT) or 0)
+
+            if frame_count == 0:
+                return self._fail_fast("Video has no frames.")
+
+            self.frames_processed = 0
+            pose_detector = self._get_pose_detector()
+            try:
+                while cap.isOpened():
+                    ret, frame = cap.read()
+                    if not ret or frame is None:
+                        break
+
+                    landmarks, is_valid = pose_detector.detect_pose(frame)
+                    self.assess_frame(frame, landmarks, is_valid)
+
+                    if self.sample_count and self.frames_processed >= self.sample_count:
+                        break
+
+                return self.get_current_result()
+            finally:
+                pose_detector.close()
+        finally:
+            cap.release()
+
+    def _get_pose_detector(self):
+        from analysis.pose_detector import PoseDetector
+        return PoseDetector()

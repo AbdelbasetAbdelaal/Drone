@@ -5,10 +5,7 @@ import unittest
 from unittest.mock import MagicMock, patch
 import numpy as np
 
-# Mock config before importing the module since setup_logger might hit config
-import sys
-sys.modules['core.config'] = MagicMock()
-
+from core.config import config
 from analysis.video_quality_assessor import VideoQualityAssessor
 
 class DummyLandmark:
@@ -23,7 +20,7 @@ class TestVideoQualityAssessor(unittest.TestCase):
         self.vqa = VideoQualityAssessor(sample_count=2)
 
     @patch('analysis.video_quality_assessor.cv2.VideoCapture')
-    @patch('analysis.video_quality_assessor.PoseDetector')
+    @patch('analysis.pose_detector.PoseDetector')
     def test_critical_failure_no_frames(self, mock_pose, mock_cap_class):
         mock_cap = mock_cap_class.return_value
         mock_cap.isOpened.return_value = True
@@ -35,7 +32,7 @@ class TestVideoQualityAssessor(unittest.TestCase):
         self.assertIn("Video has no frames", result.warning_message)
 
     @patch('analysis.video_quality_assessor.cv2.VideoCapture')
-    @patch('analysis.video_quality_assessor.PoseDetector')
+    @patch('analysis.pose_detector.PoseDetector')
     def test_orientation_score(self, mock_pose, mock_cap_class):
         mock_cap = mock_cap_class.return_value
         mock_cap.isOpened.return_value = True
@@ -68,7 +65,7 @@ class TestVideoQualityAssessor(unittest.TestCase):
         self.assertFalse(orient_crit.passed)
         
     @patch('analysis.video_quality_assessor.cv2.VideoCapture')
-    @patch('analysis.video_quality_assessor.PoseDetector')
+    @patch('analysis.pose_detector.PoseDetector')
     def test_excellent_video(self, mock_pose, mock_cap_class):
         mock_cap = mock_cap_class.return_value
         mock_cap.isOpened.return_value = True

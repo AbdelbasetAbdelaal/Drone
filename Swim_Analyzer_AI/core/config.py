@@ -38,7 +38,8 @@ class AppConfig:
     vqa_brightness_max: float = 220.0
     vqa_reflection_threshold: float = 0.10
     vqa_early_halt_frames: int = 40
-    
+    vqa_allow_critical_override: bool = False
+
     # Video Settings
     video_downscale_width: int = 854
     video_downscale_height: int = 480
@@ -73,6 +74,7 @@ class AppConfig:
                 self.vqa_brightness_max = float(vqa_cfg.get("brightness_max", self.vqa_brightness_max))
                 self.vqa_reflection_threshold = float(vqa_cfg.get("reflection_threshold", self.vqa_reflection_threshold))
                 self.vqa_early_halt_frames = int(vqa_cfg.get("early_halt_frames", self.vqa_early_halt_frames))
+                self.vqa_allow_critical_override = bool(vqa_cfg.get("allow_critical_override", self.vqa_allow_critical_override))
                 
                 video_cfg = data.get("video", {})
                 self.video_downscale_width = int(video_cfg.get("downscale_width", self.video_downscale_width))

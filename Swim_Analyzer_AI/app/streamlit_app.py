@@ -1232,6 +1232,15 @@ def main():
         st.sidebar.markdown("### Visualization")
         viz_mode = st.sidebar.selectbox("Mode", ["User Mode", "Coach Mode", "Developer Mode"])
         
+        st.sidebar.markdown("### Video Quality Safety")
+        vqa_mode = st.sidebar.selectbox(
+            "VQA Safety Mode",
+            ["Strict (Abort on Critical)", "Warn and continue on Critical"],
+            index=0,
+            help="Choose whether the analysis should stop immediately when the video quality is classified as Critical."
+        )
+        allow_vqa_critical_override = (vqa_mode == "Warn and continue on Critical") or st.session_state.get("vqa_critical_override", False)
+        
         trajectory_duration_sec = 2.0
         if viz_mode == "Developer Mode":
             traj_option = st.sidebar.selectbox("Trajectory Length", ["Short (1s)", "Normal (2s)", "Long (4s)"], index=1)
@@ -1320,6 +1329,7 @@ def main():
 
         if st.sidebar.button("Analyze Swimming Technique", type="primary"):
             st.session_state.analysis_state = "checking_stroke"
+            st.session_state["vqa_critical_override"] = False
             import time
             st.session_state["_processing_start_time"] = time.time()
             st.session_state.stroke_result = None
@@ -1453,7 +1463,8 @@ def main():
                         trajectory_duration_sec=trajectory_duration_sec,
                         stroke_detection=st.session_state.stroke_result,
                         athlete_id=selected_athlete_id if selected_athlete_id != "None" else None,
-                        frame_stride=selected_stride
+                        frame_stride=selected_stride,
+                        allow_vqa_critical_override=allow_vqa_critical_override
                     )
                     safe_log("EXIT: process_video")
                     progress_bar.progress(100, text="✅ Analysis complete!")
@@ -1463,9 +1474,16 @@ def main():
                     # Only abort (st.stop) if the analysis was early-halted with no output.
                     # If we have a real output_video_path, show warnings but ALWAYS display results.
                     if analysis_result.vqa_result and analysis_result.vqa_result.quality_class == "Critical":
-                        if not output_video_path:
+                        if not output_video_path and not allow_vqa_critical_override:
                             safe_log("EXIT: process_video_aborted_vqa_critical_early_halt")
                             st.error("⛔ Video quality is too poor to analyze. Please upload a clearer video.")
+                            if st.button("Continue anyway with Critical VQA"):
+                                st.session_state["vqa_critical_override"] = True
+                                st.rerun()
+                            st.stop()
+                        elif not output_video_path and allow_vqa_critical_override:
+                            safe_log("WARN: critical_vqa_override_no_output")
+                            st.error("⛔ Video quality is critical and no valid analysis output could be produced even with override.")
                             st.stop()
                         else:
                             safe_log("WARN: final_vqa_critical_but_results_available")

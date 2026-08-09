@@ -25,6 +25,7 @@ vqa:
   brightness_max: 220.0
   reflection_threshold: 0.10
   early_halt_frames: 40
+  allow_critical_override: false
 
 video:
   downscale_width: 854
