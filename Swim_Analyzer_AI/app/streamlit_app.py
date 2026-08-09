@@ -1539,7 +1539,7 @@ def main():
             st.rerun()
 
         if st.session_state.analysis_state == "checking_stroke":
-            with st.spinner("Analyzing stroke type..."):
+            with st.spinner("Analyzing stroke type via Hybrid Decision Engine..."):
                 from analysis.stroke_classifier import StrokeClassifier
                 from models.data_models import StrokeType
                 
@@ -1549,7 +1549,7 @@ def main():
                 
                 if selected_stroke == "Auto Detect":
                     result.selected_stroke = StrokeType.AUTO_DETECT
-                    if result.confidence < 0.80:
+                    if result.confidence is None or result.classification_status in ["REVIEW_REQUIRED", "INSUFFICIENT_EVIDENCE", "INSUFFICIENT_VISIBILITY"] or result.confidence < 0.80:
                         st.session_state.stroke_result = result
                         st.session_state.analysis_state = "needs_override"
                     else:
@@ -1560,7 +1560,7 @@ def main():
                 else:
                     result.selected_stroke = StrokeType(selected_stroke)
                     result.manual_override = True
-                    if result.predicted_stroke != result.selected_stroke:
+                    if result.predicted_stroke != StrokeType.UNKNOWN and result.predicted_stroke != result.selected_stroke:
                         result.is_inconsistent = True
                         st.session_state.stroke_result = result
                         st.session_state.analysis_state = "inconsistent_warning"
@@ -1571,39 +1571,77 @@ def main():
 
         if st.session_state.analysis_state == "needs_override":
             res = st.session_state.stroke_result
-            st.info("🤖 **Hybrid Stroke Decision Engine Summary**")
+            st.info("🔬 **Hybrid Scientific Stroke Decision Engine Summary**")
             
-            pred_stroke_name = res.predicted_stroke.value if res.predicted_stroke else "Freestyle"
-            uncertainty = res.feature_values.get("uncertainty", 0.15) if (res and res.feature_values) else 0.15
+            pred_stroke_name = res.predicted_stroke.value if (res and getattr(res, 'predicted_stroke', None)) else "Unknown"
+            conf_val = getattr(res, 'confidence', None)
+            conf_display = f"{conf_val*100:.1f}%" if conf_val is not None else "N/A (Uncalibrated / Low Evidence)"
             
+            unc_val = getattr(res, 'uncertainty', None)
+            unc_display = f"{unc_val*100:.1f}%" if unc_val is not None else "100.0%"
+            status_str = getattr(res, 'classification_status', "INSUFFICIENT_EVIDENCE")
+
+            if status_str == "REVIEW_REQUIRED":
+                st.warning("⚠️ **Review Required:** Rule-based classifier and AI Agent disagree on stroke prediction. Please confirm stroke type below.")
+            elif status_str in ["INSUFFICIENT_EVIDENCE", "INSUFFICIENT_VISIBILITY"]:
+                st.error(f"⚠️ **{status_str}:** Pose landmarks or kinematic signals were insufficient for automated classification.")
+
             with st.container(border=True):
-                c1, c2, c3 = st.columns(3)
+                c1, c2, c3, c4 = st.columns(4)
                 c1.metric("Stroke Type", pred_stroke_name)
-                c2.metric("Confidence", f"{res.confidence*100:.1f}%")
-                c3.metric("Uncertainty Score", f"{uncertainty*100:.1f}%")
+                c2.metric("Status", status_str)
+                c3.metric("Decision Confidence", conf_display)
+                c4.metric("Uncertainty Margin", unc_display)
+
+                m1, m2, m3 = st.columns(3)
+                rule_pred_obj = getattr(res, 'rule_prediction', None)
+                ai_pred_obj = getattr(res, 'ai_prediction', None)
+                agree_obj = getattr(res, 'agreement', None)
+
+                rule_pred_str = rule_pred_obj.value if rule_pred_obj else "None"
+                ai_pred_str = ai_pred_obj.value if ai_pred_obj else "None"
+                agree_str = "True" if agree_obj is True else ("False" if agree_obj is False else "N/A")
                 
-                with st.expander("🔬 Hybrid Decision Breakdown (Rule + AI Engine)", expanded=True):
+                m1.metric("Rule Prediction", rule_pred_str)
+                m2.metric("AI Prediction", ai_pred_str)
+                m3.metric("Agreement", agree_str)
+                
+                with st.expander("🔬 Complete Scientific Decision Contract", expanded=True):
                     e_col1, e_col2 = st.columns(2)
                     with e_col1:
-                        st.markdown("**Rule Contributions:**")
-                        if res.feature_contributions:
-                            for k, v in res.feature_contributions.items():
+                        st.markdown("**Rule Evidence & Contributions:**")
+                        contribs = getattr(res, 'feature_contributions', {})
+                        if contribs:
+                            for k, v in contribs.items():
                                 st.markdown(f"- `{k}`: {v}")
                         else:
-                            st.caption("Standard kinematic rule evaluation passed.")
+                            st.caption("No valid rule contributions computed.")
                     with e_col2:
-                        st.markdown("**AI Agent Evidence Summary:**")
-                        reason_text = res.classification_reason or "Multi-feature landmark sequence analyzed."
+                        st.markdown("**AI Evidence & Observed Signals:**")
+                        reason_text = getattr(res, 'classification_reason', "No reasoning available.")
                         st.write(reason_text)
-                        if res.feature_values:
-                            for fk, fv in res.feature_values.items():
+                        fvals = getattr(res, 'feature_values', {})
+                        if fvals:
+                            for fk, fv in fvals.items():
                                 if fk not in ["uncertainty", "visibility_ratio"] and fv is not None:
                                     st.markdown(f"- `{fk}`: {fv}")
-            
+
+                    missing_ev = getattr(res, 'missing_evidence', [])
+                    if missing_ev:
+                        st.markdown("⚠️ **Missing Evidence (Not Fabricated):**")
+                        for me in missing_ev:
+                            st.markdown(f"- `{me}`: Unavailable / Low Visibility")
+
+                    confls = getattr(res, 'conflicts', [])
+                    if confls:
+                        st.markdown("🚨 **Conflict Warnings:**")
+                        for c in confls:
+                            st.markdown(f"- {c}")
+
             from models.data_models import StrokeType
             opts = ["Freestyle", "Backstroke", "Breaststroke", "Butterfly"]
             default_idx = opts.index(pred_stroke_name) if pred_stroke_name in opts else 0
-            override_choice = st.selectbox("Confirm or select stroke type:", opts, index=default_idx)
+            override_choice = st.selectbox("Confirm or select stroke type for analysis:", opts, index=default_idx)
             if st.button("Confirm Stroke & Analyze", type="primary"):
                 st.session_state.stroke_result.selected_stroke = StrokeType(override_choice)
                 st.session_state.stroke_result.manual_override = True

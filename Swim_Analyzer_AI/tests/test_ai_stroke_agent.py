@@ -72,8 +72,9 @@ def test_ai_stroke_agent_breaststroke_detection():
     assert res.confidence >= 0.50
 
 def test_ai_stroke_agent_fallback_empty_frames():
-    """Verify AIStrokeAgent handles empty or short frame lists gracefully."""
+    """Verify AIStrokeAgent handles empty or short frame lists gracefully without fabricated fallbacks."""
     agent = AIStrokeAgent()
     res = agent.analyze_sequence([])
-    assert res.predicted_stroke == StrokeType.FREESTYLE
-    assert res.classification_status == "FALLBACK_DEFAULT"
+    assert res.predicted_stroke == StrokeType.UNKNOWN
+    assert res.confidence is None
+    assert res.classification_status == "INSUFFICIENT_EVIDENCE"

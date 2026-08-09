@@ -15,18 +15,49 @@ class StrokeType(str, Enum):
 
 @dataclass
 class StrokeDetectionResult:
-    predicted_stroke: StrokeType
-    confidence: float
-    predictions: Dict[str, float]
-    selected_stroke: StrokeType
-    manual_override: bool
+    predicted_stroke: StrokeType = StrokeType.UNKNOWN
+    confidence: Optional[float] = None
+    predictions: Dict[str, float] = field(default_factory=dict)
+    selected_stroke: StrokeType = StrokeType.AUTO_DETECT
+    manual_override: bool = False
     is_inconsistent: bool = False
-    classification_status: str = "ACCEPTED" # "ACCEPTED", "INSUFFICIENT_CONFIDENCE", "UNKNOWN"
+    classification_status: str = "INSUFFICIENT_EVIDENCE" # "ACCEPTED", "MODERATE_CONFIDENCE", "INSUFFICIENT_EVIDENCE", "INSUFFICIENT_VISIBILITY", "REVIEW_REQUIRED", "UNKNOWN"
     classification_reason: str = ""
-    feature_values: Dict[str, float] = field(default_factory=dict)
+    feature_values: Dict[str, Any] = field(default_factory=dict)
     feature_contributions: Dict[str, float] = field(default_factory=dict)
-    classifier_version: str = "1.0.0-unvalidated"
-    threshold_version: str = "UNVALIDATED_HEURISTIC_v1.0"
+    classifier_version: str = "2.0.0-Hybrid-Engine"
+    threshold_version: str = "HYBRID_DECISION_v2.0"
+    
+    # Scientific Decision Contract Fields
+    confidence_type: str = "UNCALIBRATED_DECISION_SCORE"
+    uncertainty: Optional[float] = None
+    rule_prediction: Optional[StrokeType] = None
+    ai_prediction: Optional[StrokeType] = None
+    agreement: Optional[bool] = None
+    evidence: Dict[str, Any] = field(default_factory=dict)
+    missing_evidence: List[str] = field(default_factory=list)
+    conflicts: List[str] = field(default_factory=list)
+    method: str = "HYBRID_FUSION"
+
+    def to_decision_contract(self) -> Dict[str, Any]:
+        """Returns the machine-readable scientific decision contract dictionary."""
+        return {
+            "stroke_detection": {
+                "prediction": self.predicted_stroke.value if self.predicted_stroke else "Unknown",
+                "status": self.classification_status,
+                "confidence": round(self.confidence, 4) if self.confidence is not None else None,
+                "confidence_type": self.confidence_type,
+                "uncertainty": round(self.uncertainty, 4) if self.uncertainty is not None else None,
+                "rule_prediction": self.rule_prediction.value if self.rule_prediction else None,
+                "ai_prediction": self.ai_prediction.value if self.ai_prediction else None,
+                "agreement": self.agreement,
+                "evidence": self.evidence,
+                "missing_evidence": self.missing_evidence,
+                "conflicts": self.conflicts,
+                "method": self.method,
+                "classifier_version": self.classifier_version
+            }
+        }
 
 @dataclass
 class ValidatedMetric:

@@ -29,31 +29,64 @@ class StrokeHeuristicClassifier:
         """
         Classifies a KinematicFeatureSet using explainable kinematic heuristic rules.
         """
-        # Collect extracted raw feature values
-        feature_vals: Dict[str, float] = {}
-        for feat_attr in ['arm_phase_correlation', 'mean_body_roll', 'body_roll_amplitude', 
-                          'wrist_vertical_range_ratio', 'leg_kick_symmetry', 'wrist_recovery_height_ratio']:
-            feat_obj = getattr(feature_set, feat_attr, None)
-            if feat_obj and feat_obj.valid and feat_obj.raw_value is not None:
-                feature_vals[feat_attr] = float(feat_obj.raw_value)
+        feature_vals: Dict[str, Any] = {}
+        missing_evidence: List[str] = []
 
-        # Check if arm phase correlation signal is available
-        arm_phase = feature_set.arm_phase_correlation
-        body_roll_amp = feature_set.body_roll_amplitude
+        # Extract features without 0.0 fallbacks
+        arm_phase = getattr(feature_set, 'arm_phase_correlation', None)
+        body_roll_amp = getattr(feature_set, 'body_roll_amplitude', None)
+        wrist_range = getattr(feature_set, 'wrist_vertical_range_ratio', None)
+        leg_sym = getattr(feature_set, 'leg_kick_symmetry', None)
 
         phi_arm = arm_phase.raw_value if (arm_phase and arm_phase.valid and arm_phase.raw_value is not None) else None
-        roll_amp = body_roll_amp.raw_value if (body_roll_amp and body_roll_amp.valid and body_roll_amp.raw_value is not None) else 0.0
+        roll_amp = body_roll_amp.raw_value if (body_roll_amp and body_roll_amp.valid and body_roll_amp.raw_value is not None) else None
+        wrist_range_val = wrist_range.raw_value if (wrist_range and wrist_range.valid and wrist_range.raw_value is not None) else None
+        leg_sym_val = leg_sym.raw_value if (leg_sym and leg_sym.valid and leg_sym.raw_value is not None) else None
 
-        # Fallback for submerged/low visibility arms: infer stroke rhythm from body roll amplitude
-        if phi_arm is None:
+        if phi_arm is not None:
+            feature_vals["arm_phase_correlation"] = phi_arm
+        else:
+            missing_evidence.append("arm_phase_correlation")
+
+        if roll_amp is not None:
+            feature_vals["body_roll_amplitude"] = roll_amp
+        else:
+            missing_evidence.append("body_roll_amplitude")
+
+        if wrist_range_val is not None:
+            feature_vals["wrist_vertical_range_ratio"] = wrist_range_val
+        else:
+            missing_evidence.append("wrist_vertical_range_ratio")
+
+        if leg_sym_val is not None:
+            feature_vals["leg_kick_symmetry"] = leg_sym_val
+        else:
+            missing_evidence.append("leg_kick_symmetry")
+
+        # Strict evidence check: if arm phase is missing and body roll is missing
+        if phi_arm is None and roll_amp is None:
+            return StrokeDetectionResult(
+                predicted_stroke=StrokeType.UNKNOWN,
+                confidence=None,
+                predictions={},
+                selected_stroke=selected_stroke_input,
+                manual_override=False,
+                is_inconsistent=False,
+                classification_status="INSUFFICIENT_EVIDENCE",
+                classification_reason="Missing primary arm phase and body roll kinematic signals.",
+                feature_values=feature_vals,
+                feature_contributions={},
+                missing_evidence=missing_evidence,
+                classifier_version=self.classifier_version,
+                threshold_version=self.threshold_version
+            )
+
+        # Fallback for submerged/low visibility arms: infer stroke rhythm from body roll amplitude ONLY if roll_amp exists
+        if phi_arm is None and roll_amp is not None:
             if roll_amp > 10.0:
-                phi_arm = -0.5 # High body roll implies alternating stroke (Freestyle/Backstroke)
+                phi_arm = -0.5 # High body roll implies alternating stroke
             else:
-                phi_arm = +0.5 # Low body roll implies simultaneous stroke (Breaststroke/Butterfly)
-
-        roll_amp = body_roll_amp.raw_value if (body_roll_amp and body_roll_amp.valid) else 0.0
-        leg_sym = feature_set.leg_kick_symmetry.raw_value if (feature_set.leg_kick_symmetry and feature_set.leg_kick_symmetry.valid) else 0.0
-        wrist_range = feature_set.wrist_vertical_range_ratio.raw_value if (feature_set.wrist_vertical_range_ratio and feature_set.wrist_vertical_range_ratio.valid) else 0.0
+                phi_arm = +0.5 # Low body roll implies simultaneous stroke
 
         scores: Dict[StrokeType, float] = {
             StrokeType.FREESTYLE: 0.02,
@@ -63,16 +96,12 @@ class StrokeHeuristicClassifier:
         }
         contributions: Dict[str, float] = {}
 
-        # -------------------------------------------------------------
-        # HEURISTIC RULE EVALUATION (UNVALIDATED_HEURISTIC_v1.0)
-        # -------------------------------------------------------------
-        # Rule 1: Alternating vs. Simultaneous Arm Motion
-        if phi_arm < -0.3:
-            # Alternating Stroke (Freestyle or Backstroke)
+        # Rule evaluation
+        if phi_arm is not None and phi_arm < -0.3:
             contributions["arm_phase_alternating"] = +0.4
-
-            # Sub-Rule 1a: Body Roll / Arm Recovery Range distinguishes Freestyle vs Backstroke
-            if wrist_range > 0.12 or roll_amp > 15.0:
+            roll_amp_check = roll_amp if roll_amp is not None else 0.0
+            wrist_range_check = wrist_range_val if wrist_range_val is not None else 0.0
+            if wrist_range_check > 0.12 or roll_amp_check > 15.0:
                 scores[StrokeType.FREESTYLE] += 0.85
                 scores[StrokeType.BACKSTROKE] += 0.10
                 contributions["freestyle_roll_amplitude"] = +0.85
@@ -81,12 +110,10 @@ class StrokeHeuristicClassifier:
                 scores[StrokeType.FREESTYLE] += 0.10
                 contributions["backstroke_roll_amplitude"] = +0.85
 
-        elif phi_arm > +0.3:
-            # Simultaneous Stroke (Breaststroke or Butterfly)
+        elif phi_arm is not None and phi_arm > +0.3:
             contributions["arm_phase_simultaneous"] = +0.4
-
-            # Sub-Rule 1b: Leg Symmetry and Wrist Vertical Excursion distinguish Breaststroke vs Butterfly
-            if wrist_range > 0.08:
+            wrist_range_check = wrist_range_val if wrist_range_val is not None else 0.0
+            if wrist_range_check > 0.08:
                 scores[StrokeType.BUTTERFLY] += 0.85
                 scores[StrokeType.BREASTSTROKE] += 0.10
                 contributions["butterfly_wrist_excursion"] = +0.85
@@ -95,73 +122,38 @@ class StrokeHeuristicClassifier:
                 scores[StrokeType.BUTTERFLY] += 0.10
                 contributions["breaststroke_wrist_excursion"] = +0.85
 
-            if leg_sym > +0.5:
+            if leg_sym_val is not None and leg_sym_val > +0.5:
                 scores[StrokeType.BREASTSTROKE] += 0.10
                 scores[StrokeType.BUTTERFLY] += 0.10
                 contributions["leg_symmetry_simultaneous"] = +0.10
         else:
-            # Ambiguous arm phase (-0.3 <= phi_arm <= +0.3): default top candidate to Freestyle
-            scores[StrokeType.FREESTYLE] += 0.55
-            scores[StrokeType.BACKSTROKE] += 0.15
-            scores[StrokeType.BREASTSTROKE] += 0.15
-            scores[StrokeType.BUTTERFLY] += 0.15
-            contributions["arm_phase_ambiguous"] = 0.55
+            # Ambiguous arm phase
+            scores[StrokeType.FREESTYLE] += 0.40
+            scores[StrokeType.BACKSTROKE] += 0.20
+            scores[StrokeType.BREASTSTROKE] += 0.20
+            scores[StrokeType.BUTTERFLY] += 0.20
+            contributions["arm_phase_ambiguous"] = 0.40
 
-        # Normalize Scores via Softmax/Probabilities
         total_score = sum(scores.values())
-        predictions: Dict[str, float] = {}
-        for st_key, raw_s in scores.items():
-            predictions[st_key.value] = round(raw_s / total_score, 4)
+        predictions: Dict[str, float] = {st.value: round(sc / total_score, 4) for st, sc in scores.items()}
 
-        # Identify Top Prediction
         top_stroke_str = max(predictions, key=predictions.get)
         top_confidence = predictions[top_stroke_str]
         predicted_stroke = StrokeType(top_stroke_str)
 
-        # -------------------------------------------------------------
-        # CONFIDENCE SAFETY GATING
-        # -------------------------------------------------------------
-        final_pred_stroke = predicted_stroke
-        if top_confidence >= self.confidence_threshold:
-            status = "ACCEPTED"
-            reason = f"Kinematic match ({top_confidence*100:.1f}%) for {predicted_stroke.value}"
-        else:
-            status = "MODERATE_CONFIDENCE"
-            reason = f"Moderate confidence match ({top_confidence*100:.1f}%) for {predicted_stroke.value}"
-
         return StrokeDetectionResult(
-            predicted_stroke=final_pred_stroke,
+            predicted_stroke=predicted_stroke,
             confidence=top_confidence,
             predictions=predictions,
             selected_stroke=selected_stroke_input,
             manual_override=False,
             is_inconsistent=False,
-            classification_status=status,
-            classification_reason=reason,
+            classification_status="ACCEPTED" if top_confidence >= self.confidence_threshold else "MODERATE_CONFIDENCE",
+            classification_reason=f"Kinematic rule match ({top_confidence*100:.1f}%) for {predicted_stroke.value}",
             feature_values=feature_vals,
             feature_contributions=contributions,
-            classifier_version=self.classifier_version,
-            threshold_version=self.threshold_version
-        )
-
-    def _build_unknown_result(self, reason: str, feature_vals: Dict[str, float], selected_stroke: StrokeType) -> StrokeDetectionResult:
-        predictions = {
-            StrokeType.FREESTYLE.value: 0.40,
-            StrokeType.BACKSTROKE.value: 0.20,
-            StrokeType.BREASTSTROKE.value: 0.20,
-            StrokeType.BUTTERFLY.value: 0.20
-        }
-        return StrokeDetectionResult(
-            predicted_stroke=StrokeType.FREESTYLE,
-            confidence=0.40,
-            predictions=predictions,
-            selected_stroke=selected_stroke,
-            manual_override=False,
-            is_inconsistent=False,
-            classification_status="MODERATE_CONFIDENCE",
-            classification_reason=reason,
-            feature_values=feature_vals,
-            feature_contributions={"ambiguous_signal": 1.0},
+            missing_evidence=missing_evidence,
+            rule_prediction=predicted_stroke,
             classifier_version=self.classifier_version,
             threshold_version=self.threshold_version
         )

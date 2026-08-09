@@ -51,10 +51,14 @@ class AIStrokeAgent:
     def analyze_sequence(self, frames: List[Any], selected_stroke_input: StrokeType = StrokeType.AUTO_DETECT) -> StrokeDetectionResult:
         """
         Analyzes a sequence of landmark frames and returns an explainable StrokeDetectionResult.
+        Missing evidence propagates as None without fabricated default values.
         """
         valid_frames = [f for f in frames if getattr(f, 'raw_landmarks', None) and len(f.raw_landmarks) > 28]
+        missing_evidence: List[str] = []
+
         if len(valid_frames) < 3:
-            return self._build_default_result(selected_stroke_input, "Insufficient valid landmark frames in video clip.")
+            missing_evidence.append("valid_landmark_frames")
+            return self._build_insufficient_evidence_result(selected_stroke_input, "Insufficient valid landmark frames in video clip.", missing_evidence)
 
         # 1. Extract Biomechanical Trajectories
         lw_y, rw_y = [], []
@@ -73,13 +77,13 @@ class AIStrokeAgent:
             l_ak, r_ak = lms[LEFT_ANKLE], lms[RIGHT_ANKLE]
             nose = lms[NOSE]
 
-            if l_wr and r_wr:
+            if l_wr and r_wr and getattr(l_wr, 'visibility', 1.0) > 0.1 and getattr(r_wr, 'visibility', 1.0) > 0.1:
                 lw_y.append(l_wr.y)
                 rw_y.append(r_wr.y)
             if l_el and r_el:
                 le_y.append(l_el.y)
                 re_y.append(r_el.y)
-            if l_ak and r_ak:
+            if l_ak and r_ak and getattr(l_ak, 'visibility', 1.0) > 0.1 and getattr(r_ak, 'visibility', 1.0) > 0.1:
                 la_y.append(l_ak.y)
                 ra_y.append(r_ak.y)
 
@@ -90,36 +94,46 @@ class AIStrokeAgent:
                 roll_deg = abs(math.degrees(math.atan2(dy, dx)))
                 body_rolls.append(roll_deg)
 
-                # Wrist elevation relative to shoulder
                 if l_wr and r_wr:
                     avg_sh_y = (l_sh.y + r_sh.y) / 2.0
                     min_wr_y = min(l_wr.y, r_wr.y)
                     wrist_rel_shoulder.append(min_wr_y - avg_sh_y)
 
-                # Chest orientation (supine vs prone)
-                # In Backstroke, nose y is higher in frame (smaller Y coordinate in MediaPipe) relative to shoulders/hips
                 if nose and l_hip and r_hip:
-                    avg_hip_y = (l_hip.y + r_hip.y) / 2.0
                     avg_sh_y = (l_sh.y + r_sh.y) / 2.0
-                    # Check if face/nose is above shoulder level (supine float position)
                     if nose.y < avg_sh_y and (avg_sh_y - nose.y) > 0.05:
                         supine_indicators.append(1)
                     else:
                         supine_indicators.append(0)
 
-        # Use elbows as trajectory fallback if wrists are submerged
+        # Trajectory fallbacks without fabricated constants
         y1_series = lw_y if len(lw_y) >= 3 else le_y
         y2_series = rw_y if len(rw_y) >= 3 else re_y
 
-        # Compute Phase Correlation
         arm_phase_corr = self._calc_corr(y1_series, y2_series)
         kick_symmetry = self._calc_corr(la_y, ra_y)
-        body_roll_amp = (max(body_rolls) - min(body_rolls)) if len(body_rolls) >= 3 else 15.0
-        wrist_range_y = ((max(y1_series) - min(y1_series)) + (max(y2_series) - min(y2_series))) / 2.0 if len(y1_series) >= 3 else 0.15
-        wrist_recovery_height = min(wrist_rel_shoulder) if wrist_rel_shoulder else 0.0
-        is_supine = (sum(supine_indicators) / max(1, len(supine_indicators))) > 0.6
+        body_roll_amp = (max(body_rolls) - min(body_rolls)) if len(body_rolls) >= 3 else None
+        wrist_range_y = ((max(y1_series) - min(y1_series)) + (max(y2_series) - min(y2_series))) / 2.0 if len(y1_series) >= 3 else None
+        wrist_recovery_height = min(wrist_rel_shoulder) if wrist_rel_shoulder else None
+        is_supine = (sum(supine_indicators) / max(1, len(supine_indicators))) > 0.6 if supine_indicators else False
 
-        # 2. Multi-Feature Weighted Voting Classifier
+        feature_vals: Dict[str, Any] = {}
+        if arm_phase_corr is not None: feature_vals["arm_phase_correlation"] = arm_phase_corr
+        else: missing_evidence.append("arm_phase_correlation")
+
+        if body_roll_amp is not None: feature_vals["body_roll_amplitude"] = body_roll_amp
+        else: missing_evidence.append("body_roll_amplitude")
+
+        if wrist_range_y is not None: feature_vals["wrist_vertical_range_ratio"] = wrist_range_y
+        else: missing_evidence.append("wrist_vertical_range_ratio")
+
+        if kick_symmetry is not None: feature_vals["kick_symmetry"] = kick_symmetry
+        else: missing_evidence.append("kick_symmetry")
+
+        if arm_phase_corr is None and body_roll_amp is None:
+            return self._build_insufficient_evidence_result(selected_stroke_input, "Missing valid arm phase and body roll landmark data.", missing_evidence)
+
+        # Multi-Feature Weighted Classifier
         scores: Dict[StrokeType, float] = {
             StrokeType.FREESTYLE: 0.05,
             StrokeType.BACKSTROKE: 0.05,
@@ -128,49 +142,48 @@ class AIStrokeAgent:
         }
         reasons: List[str] = []
 
-        # Feature A: Arm Phase (Alternating vs Simultaneous)
-        if arm_phase_corr < -0.15:
-            # Alternating arm motion -> Freestyle or Backstroke
+        if arm_phase_corr is not None and arm_phase_corr < -0.15:
             reasons.append(f"Alternating arm rhythm (correlation: {arm_phase_corr:.2f})")
+            roll_amp_check = body_roll_amp if body_roll_amp is not None else 0.0
+            wrist_range_check = wrist_range_y if wrist_range_y is not None else 0.0
             if is_supine:
                 scores[StrokeType.BACKSTROKE] += 0.80
                 scores[StrokeType.FREESTYLE] += 0.10
                 reasons.append("Supine chest orientation (face-up)")
-            elif body_roll_amp > 12.0 or wrist_range_y > 0.08:
+            elif roll_amp_check > 12.0 or wrist_range_check > 0.08:
                 scores[StrokeType.FREESTYLE] += 0.85
                 scores[StrokeType.BACKSTROKE] += 0.10
-                reasons.append(f"Prone position with active body roll ({body_roll_amp:.1f}°)")
+                reasons.append(f"Prone position with active body roll ({roll_amp_check:.1f}°)")
             else:
                 scores[StrokeType.FREESTYLE] += 0.60
                 scores[StrokeType.BACKSTROKE] += 0.35
 
-        elif arm_phase_corr > +0.15:
-            # Simultaneous arm motion -> Breaststroke or Butterfly
+        elif arm_phase_corr is not None and arm_phase_corr > +0.15:
             reasons.append(f"Simultaneous arm rhythm (correlation: {arm_phase_corr:+.2f})")
+            wrist_range_check = wrist_range_y if wrist_range_y is not None else 0.0
+            wrist_rec_check = wrist_recovery_height if wrist_recovery_height is not None else 0.0
             
-            if wrist_range_y > 0.08 or wrist_recovery_height < -0.02:
+            if wrist_range_check > 0.08 or wrist_rec_check < -0.02:
                 scores[StrokeType.BUTTERFLY] += 0.85
                 scores[StrokeType.BREASTSTROKE] += 0.10
-                reasons.append(f"High vertical arm recovery (range: {wrist_range_y:.2f})")
+                reasons.append("High vertical arm recovery")
             else:
                 scores[StrokeType.BREASTSTROKE] += 0.85
                 scores[StrokeType.BUTTERFLY] += 0.10
                 reasons.append("Underwater arm pull & recovery pattern")
 
-            if kick_symmetry > 0.3:
+            if kick_symmetry is not None and kick_symmetry > 0.3:
                 scores[StrokeType.BREASTSTROKE] += 0.10
                 scores[StrokeType.BUTTERFLY] += 0.10
                 reasons.append(f"Symmetrical kick motion (symmetry: {kick_symmetry:.2f})")
 
         else:
-            # Ambiguous phase signal -> Default to Freestyle baseline
-            scores[StrokeType.FREESTYLE] += 0.60
-            scores[StrokeType.BACKSTROKE] += 0.15
-            scores[StrokeType.BREASTSTROKE] += 0.15
-            scores[StrokeType.BUTTERFLY] += 0.10
-            reasons.append("Defaulted candidate to Freestyle baseline")
+            scores[StrokeType.FREESTYLE] += 0.40
+            scores[StrokeType.BACKSTROKE] += 0.20
+            scores[StrokeType.BREASTSTROKE] += 0.20
+            scores[StrokeType.BUTTERFLY] += 0.20
+            reasons.append("Ambiguous kinematic phase signal")
 
-        # Normalize Scores
         total = sum(scores.values())
         predictions = {st.value: round(sc / total, 4) for st, sc in scores.items()}
 
@@ -179,7 +192,6 @@ class AIStrokeAgent:
         predicted_stroke = StrokeType(top_stroke_str)
 
         explanation = f"AI Agent Analysis: Top candidate {predicted_stroke.value} ({top_confidence*100:.1f}% confidence). Key signals: " + "; ".join(reasons) + "."
-        logger.info(explanation)
 
         return StrokeDetectionResult(
             predicted_stroke=predicted_stroke,
@@ -190,45 +202,38 @@ class AIStrokeAgent:
             is_inconsistent=False,
             classification_status="ACCEPTED" if top_confidence >= self.confidence_threshold else "MODERATE_CONFIDENCE",
             classification_reason=explanation,
-            feature_values={
-                "arm_phase_correlation": arm_phase_corr,
-                "body_roll_amplitude": body_roll_amp,
-                "wrist_vertical_range_ratio": wrist_range_y,
-                "kick_symmetry": kick_symmetry
-            },
+            feature_values=feature_vals,
             feature_contributions={"ai_agent_ensemble": top_confidence},
+            missing_evidence=missing_evidence,
+            ai_prediction=predicted_stroke,
             classifier_version=self.version,
             threshold_version="AI_AGENT_v2.0"
         )
 
-    def _calc_corr(self, s1: List[float], s2: List[float]) -> float:
+    def _calc_corr(self, s1: List[float], s2: List[float]) -> Optional[float]:
         if len(s1) < 3 or len(s2) < 3 or len(s1) != len(s2):
-            return 0.0
+            return None
         a1, a2 = np.array(s1), np.array(s2)
         v1, v2 = np.std(a1), np.std(a2)
         if v1 < 1e-4 or v2 < 1e-4:
-            return 0.0
+            return None
         r = float(np.corrcoef(a1, a2)[0, 1])
-        return 0.0 if math.isnan(r) else r
+        return None if math.isnan(r) else r
 
-    def _build_default_result(self, selected_stroke: StrokeType, reason: str) -> StrokeDetectionResult:
-        predictions = {
-            StrokeType.FREESTYLE.value: 0.40,
-            StrokeType.BACKSTROKE.value: 0.20,
-            StrokeType.BREASTSTROKE.value: 0.20,
-            StrokeType.BUTTERFLY.value: 0.20
-        }
+    def _build_insufficient_evidence_result(self, selected_stroke: StrokeType, reason: str, missing: List[str]) -> StrokeDetectionResult:
         return StrokeDetectionResult(
-            predicted_stroke=StrokeType.FREESTYLE,
-            confidence=0.40,
-            predictions=predictions,
+            predicted_stroke=StrokeType.UNKNOWN,
+            confidence=None,
+            predictions={},
             selected_stroke=selected_stroke,
             manual_override=False,
             is_inconsistent=False,
-            classification_status="FALLBACK_DEFAULT",
-            classification_reason=f"AI Agent Fallback: {reason}",
+            classification_status="INSUFFICIENT_EVIDENCE",
+            classification_reason=f"AI Agent: {reason}",
             feature_values={},
-            feature_contributions={"fallback": 1.0},
+            feature_contributions={},
+            missing_evidence=missing,
+            ai_prediction=None,
             classifier_version=self.version,
             threshold_version="AI_AGENT_v2.0"
         )

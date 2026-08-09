@@ -115,23 +115,18 @@ class StrokeClassifier:
         return res
         
     def _fallback(self) -> StrokeDetectionResult:
-        from analysis.classification.stroke_heuristic_classifier import CLASSIFIER_VERSION, THRESHOLD_VERSION
         return StrokeDetectionResult(
-            predicted_stroke=StrokeType.FREESTYLE,
-            confidence=0.40,
-            predictions={
-                StrokeType.FREESTYLE.value: 0.40,
-                StrokeType.BACKSTROKE.value: 0.20,
-                StrokeType.BREASTSTROKE.value: 0.20,
-                StrokeType.BUTTERFLY.value: 0.20
-            },
+            predicted_stroke=StrokeType.UNKNOWN,
+            confidence=None,
+            predictions={},
             selected_stroke=StrokeType.AUTO_DETECT,
             manual_override=False,
             is_inconsistent=False,
-            classification_status="FALLBACK_DEFAULT",
-            classification_reason="No person detected during stroke classification; defaulted candidate to Freestyle.",
+            classification_status="INSUFFICIENT_EVIDENCE",
+            classification_reason="Could not open video file or read frame landmarks for stroke detection.",
             feature_values={},
-            feature_contributions={"no_landmarks": 1.0},
-            classifier_version=CLASSIFIER_VERSION,
-            threshold_version=THRESHOLD_VERSION
+            feature_contributions={},
+            missing_evidence=["video_read_failure"],
+            classifier_version="2.0.0-Hybrid-Engine",
+            threshold_version="HYBRID_DECISION_v2.0"
         )
