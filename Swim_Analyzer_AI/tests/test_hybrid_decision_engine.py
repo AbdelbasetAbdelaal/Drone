@@ -46,6 +46,7 @@ def test_hybrid_stroke_decision_engine_fusion():
     vis_res = VisibilityGateResult(
         is_sufficient=True, total_frames=100, valid_frames=90,
         visibility_ratio=0.90, wrist_visibility=0.85, shoulder_visibility=0.90,
+        ankle_visibility=0.85, missing_landmarks=[],
         gate_reason="Good visibility"
     )
 
@@ -53,7 +54,7 @@ def test_hybrid_stroke_decision_engine_fusion():
 
     assert decision.stroke_type == StrokeType.FREESTYLE
     assert decision.confidence >= 0.85
-    assert "visibility_gate_status" in decision.evidence
+    assert "visibility_ratio" in decision.evidence
     assert "arm_phase_alternating" in decision.rule_contributions
     assert "ai_ensemble" in decision.ai_contributions
     assert 0.0 <= decision.uncertainty <= 1.0

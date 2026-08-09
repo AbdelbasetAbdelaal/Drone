@@ -77,13 +77,13 @@ class AIStrokeAgent:
             l_ak, r_ak = lms[LEFT_ANKLE], lms[RIGHT_ANKLE]
             nose = lms[NOSE]
 
-            if l_wr and r_wr and getattr(l_wr, 'visibility', 1.0) > 0.1 and getattr(r_wr, 'visibility', 1.0) > 0.1:
+            if l_wr and r_wr:
                 lw_y.append(l_wr.y)
                 rw_y.append(r_wr.y)
             if l_el and r_el:
                 le_y.append(l_el.y)
                 re_y.append(r_el.y)
-            if l_ak and r_ak and getattr(l_ak, 'visibility', 1.0) > 0.1 and getattr(r_ak, 'visibility', 1.0) > 0.1:
+            if l_ak and r_ak:
                 la_y.append(l_ak.y)
                 ra_y.append(r_ak.y)
 
@@ -101,21 +101,31 @@ class AIStrokeAgent:
 
                 if nose and l_hip and r_hip:
                     avg_sh_y = (l_sh.y + r_sh.y) / 2.0
-                    if nose.y < avg_sh_y and (avg_sh_y - nose.y) > 0.05:
+                    if nose.y <= avg_sh_y + 0.05:
                         supine_indicators.append(1)
                     else:
                         supine_indicators.append(0)
 
-        # Trajectory fallbacks without fabricated constants
-        y1_series = lw_y if len(lw_y) >= 3 else le_y
-        y2_series = rw_y if len(rw_y) >= 3 else re_y
+        # Compute arm phase correlation (prefer wrist, fallback to elbow)
+        wrist_corr = self._calc_corr(lw_y, rw_y)
+        elbow_corr = self._calc_corr(le_y, re_y)
 
-        arm_phase_corr = self._calc_corr(y1_series, y2_series)
+        # If elbow correlation indicates strong alternating motion (-1.0 to -0.15) while wrist is submerged, use elbow
+        if elbow_corr is not None and elbow_corr < -0.15:
+            arm_phase_corr = elbow_corr
+        elif wrist_corr is not None:
+            arm_phase_corr = wrist_corr
+        else:
+            arm_phase_corr = elbow_corr
+
         kick_symmetry = self._calc_corr(la_y, ra_y)
         body_roll_amp = (max(body_rolls) - min(body_rolls)) if len(body_rolls) >= 3 else None
+        
+        y1_series = lw_y if len(lw_y) >= 3 else le_y
+        y2_series = rw_y if len(rw_y) >= 3 else re_y
         wrist_range_y = ((max(y1_series) - min(y1_series)) + (max(y2_series) - min(y2_series))) / 2.0 if len(y1_series) >= 3 else None
         wrist_recovery_height = min(wrist_rel_shoulder) if wrist_rel_shoulder else None
-        is_supine = (sum(supine_indicators) / max(1, len(supine_indicators))) > 0.6 if supine_indicators else False
+        is_supine = (sum(supine_indicators) / max(1, len(supine_indicators))) > 0.5 if supine_indicators else False
 
         feature_vals: Dict[str, Any] = {}
         if arm_phase_corr is not None: feature_vals["arm_phase_correlation"] = arm_phase_corr

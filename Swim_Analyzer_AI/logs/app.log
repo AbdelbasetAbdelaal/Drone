@@ -4769,3 +4769,85 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 2026-08-09 21:23:48,087 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_e63b46229be345dd99e8f6b1057897f0.mp4 (720x1280 @ 30.0fps)
 2026-08-09 21:23:48,106 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_e63b46229be345dd99e8f6b1057897f0.mp4 (720x1280 @ 30.0fps)
 2026-08-09 21:23:48,108 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_e63b46229be345dd99e8f6b1057897f0.mp4 (Codec: mp4v)
+2026-08-09 21:24:48,863 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 299 frames.
+2026-08-09 21:24:48,876 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-09 21:24:48,887 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-09 21:24:48,899 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-09 21:24:48,906 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-09 21:24:48,916 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-09 21:24:48,917 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: INSUFFICIENT_EVIDENCE, Dataset: Population Reference Dataset)
+2026-08-09 21:24:49,872 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_e63b46229be345dd99e8f6b1057897f0.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_e63b46229be345dd99e8f6b1057897f0.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_e63b46229be345dd99e8f6b1057897f0.json
+2026-08-09 21:25:24,905 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_e63b46229be345dd99e8f6b1057897f0.mp4
+2026-08-09 21:25:25,033 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 3.50 MB, Frames: 299, Duration: 9.97s
+2026-08-09 21:25:25,067 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 21:25:25,068 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-09 21:25:25,076 - services.analysis_history_service - ERROR - Error saving analysis session 9aa0c7d5-cffa-47a2-ba61-cb21462a7c6d to database.
+2026-08-09 21:25:25,399 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 21:25:25,433 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Olympic swimmer training backstroke ⚡️ _ 📹_ (IG) silviasscalia.mp4
+2026-08-09 21:25:25,520 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-09 21:25:25,524 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-09 21:25:25,535 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-09 21:25:25,537 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-09 21:25:25,539 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-09 21:25:25,549 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-09 21:25:25,551 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-09 21:25:25,561 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-09 21:25:25,564 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-09 21:25:25,573 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-09 21:25:26,028 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 21:25:26,228 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-09 21:25:26,245 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-09 21:25:26,551 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-09 21:25:26,557 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-09 21:25:26,942 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-09 21:25:26,944 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-09 21:25:27,250 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-09 21:25:27,251 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-09 21:25:27,262 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-09 21:25:27,263 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-09 21:25:27,266 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-09 21:25:27,708 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-09 21:25:27,714 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_d2e4d915.pdf
+2026-08-09 21:25:27,877 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-09 21:25:30,514 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-08-09 21:42:09,637 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 21:43:01,016 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 21:44:39,773 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 21:44:40,000 - services.auth_service - INFO - [SYSTEM] Account logged in: coach1 (coach)
+2026-08-09 21:44:40,147 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 21:44:41,564 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 21:44:44,584 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 21:44:48,472 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 21:44:48,546 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Olympic swimmer training backstroke ⚡️ _ 📹_ (IG) silviasscalia.mp4
+2026-08-09 21:44:55,959 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 21:44:55,990 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Olympic swimmer training backstroke ⚡️ _ 📹_ (IG) silviasscalia.mp4
+2026-08-09 21:44:58,163 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 21:44:58,191 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Olympic swimmer training backstroke ⚡️ _ 📹_ (IG) silviasscalia.mp4
+2026-08-09 21:44:58,395 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 21:44:58,431 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Olympic swimmer training backstroke ⚡️ _ 📹_ (IG) silviasscalia.mp4
+2026-08-09 21:44:58,498 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 21:44:59,087 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_0f6c30a6e1564ce687948887813a6ab5.mp4
+2026-08-09 21:45:07,416 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-09 21:45:07,573 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 21:45:07,600 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Olympic swimmer training backstroke ⚡️ _ 📹_ (IG) silviasscalia.mp4
+2026-08-09 21:47:45,553 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 21:47:45,586 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Olympic swimmer training backstroke ⚡️ _ 📹_ (IG) silviasscalia.mp4
+2026-08-09 21:47:46,429 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 21:47:46,461 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Olympic swimmer training backstroke ⚡️ _ 📹_ (IG) silviasscalia.mp4
+2026-08-09 21:47:46,683 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-09 21:47:46,716 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Olympic swimmer training backstroke ⚡️ _ 📹_ (IG) silviasscalia.mp4
+2026-08-09 21:47:46,806 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-09 21:47:46,808 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_0f6c30a6e1564ce687948887813a6ab5.mp4 (Effective FPS: 30.0, Frame Stride: 1)
+2026-08-09 21:47:46,955 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-09 21:47:47,320 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_0f6c30a6e1564ce687948887813a6ab5.mp4 (720x1280 @ 30.0fps)
+2026-08-09 21:47:47,347 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_0f6c30a6e1564ce687948887813a6ab5.mp4 (720x1280 @ 30.0fps)
+2026-08-09 21:47:47,352 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_0f6c30a6e1564ce687948887813a6ab5.mp4 (Codec: mp4v)
