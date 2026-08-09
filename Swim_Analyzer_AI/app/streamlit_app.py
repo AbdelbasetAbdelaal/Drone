@@ -1570,11 +1570,41 @@ def main():
             st.rerun()
 
         if st.session_state.analysis_state == "needs_override":
-            st.warning("We are not confident about the detected swimming style.")
-            st.write(f"Predicted: {st.session_state.stroke_result.predicted_stroke.value} (Confidence: {st.session_state.stroke_result.confidence*100:.1f}%)")
+            res = st.session_state.stroke_result
+            st.info("🤖 **Hybrid Stroke Decision Engine Summary**")
+            
+            pred_stroke_name = res.predicted_stroke.value if res.predicted_stroke else "Freestyle"
+            uncertainty = res.feature_values.get("uncertainty", 0.15) if (res and res.feature_values) else 0.15
+            
+            with st.container(border=True):
+                c1, c2, c3 = st.columns(3)
+                c1.metric("Stroke Type", pred_stroke_name)
+                c2.metric("Confidence", f"{res.confidence*100:.1f}%")
+                c3.metric("Uncertainty Score", f"{uncertainty*100:.1f}%")
+                
+                with st.expander("🔬 Hybrid Decision Breakdown (Rule + AI Engine)", expanded=True):
+                    e_col1, e_col2 = st.columns(2)
+                    with e_col1:
+                        st.markdown("**Rule Contributions:**")
+                        if res.feature_contributions:
+                            for k, v in res.feature_contributions.items():
+                                st.markdown(f"- `{k}`: {v}")
+                        else:
+                            st.caption("Standard kinematic rule evaluation passed.")
+                    with e_col2:
+                        st.markdown("**AI Agent Evidence Summary:**")
+                        reason_text = res.classification_reason or "Multi-feature landmark sequence analyzed."
+                        st.write(reason_text)
+                        if res.feature_values:
+                            for fk, fv in res.feature_values.items():
+                                if fk not in ["uncertainty", "visibility_ratio"] and fv is not None:
+                                    st.markdown(f"- `{fk}`: {fv}")
+            
             from models.data_models import StrokeType
-            override_choice = st.selectbox("Please confirm the stroke type:", ["Freestyle", "Backstroke", "Breaststroke", "Butterfly"])
-            if st.button("Confirm Stroke & Analyze"):
+            opts = ["Freestyle", "Backstroke", "Breaststroke", "Butterfly"]
+            default_idx = opts.index(pred_stroke_name) if pred_stroke_name in opts else 0
+            override_choice = st.selectbox("Confirm or select stroke type:", opts, index=default_idx)
+            if st.button("Confirm Stroke & Analyze", type="primary"):
                 st.session_state.stroke_result.selected_stroke = StrokeType(override_choice)
                 st.session_state.stroke_result.manual_override = True
                 st.session_state.analysis_state = "processing"

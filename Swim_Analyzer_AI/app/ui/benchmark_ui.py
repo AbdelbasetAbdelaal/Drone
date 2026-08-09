@@ -62,6 +62,12 @@ def render_population_benchmark_cards(bm_res: BenchmarkResult, athlete_profile: 
     b_c3.metric("Reference Cohort", ref_cohort_name if is_demographic_compatible else "Adult Male (18–25) Baseline")
 
     st.caption(f"**Evidence Registry Dataset:** {bm_res.dataset_name} (ID: `{bm_res.dataset_id}`, v{bm_res.dataset_version}, Revision: {bm_res.scientific_revision})")
+    
+    if is_demographic_compatible:
+        from app.ui.charts import create_benchmark_radar_chart
+        radar_fig = create_benchmark_radar_chart(bm_res)
+        st.plotly_chart(radar_fig, use_container_width=True)
+
     st.markdown("---")
 
     # 2. Render Cards for each Metric

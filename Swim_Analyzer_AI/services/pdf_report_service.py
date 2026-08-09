@@ -21,6 +21,25 @@ class PDFReportService:
     def __init__(self):
         self.output_dir = config.data_dir / "pdf_reports"
         os.makedirs(self.output_dir, exist_ok=True)
+
+    def _clean_text(self, text: Any) -> str:
+        if text is None:
+            return ""
+        s = str(text)
+        replacements = {
+            "—": "-",
+            "–": "-",
+            "•": "*",
+            "“": '"',
+            "”": '"',
+            "‘": "'",
+            "’": "'",
+            "±": "+/-",
+            "°": " deg",
+        }
+        for orig, repl in replacements.items():
+            s = s.replace(orig, repl)
+        return s.encode('latin-1', 'replace').decode('latin-1')
         
     def generate_athlete_summary(self, profile: AthleteProfile, history: List[AnalysisSession], coach: Optional[CoachProfile] = None) -> str:
         """Generates an Athlete Profile & Performance History PDF report."""
@@ -284,7 +303,7 @@ class PDFReportService:
         feedback_text = report.feedback_summary if (report and report.feedback_summary) else "INSUFFICIENT_EVIDENCE: No reliable coaching assessment is available."
         pdf.set_font("Helvetica", size=10)
         pdf.set_text_color(40, 40, 40)
-        pdf.multi_cell(0, 6, feedback_text)
+        pdf.multi_cell(0, 6, self._clean_text(feedback_text))
         pdf.ln(6)
 
         # Section 5: Scientific Literature References & Dataset Provenance
@@ -296,14 +315,14 @@ class PDFReportService:
 
             pdf.set_font("Helvetica", size=8)
             pdf.set_text_color(80, 80, 80)
-            pdf.cell(0, 5, f"Dataset: {bm_res.dataset_name} (ID: {bm_res.dataset_id}, v{bm_res.dataset_version}, Revision: {bm_res.scientific_revision})", ln=True)
+            pdf.cell(0, 5, self._clean_text(f"Dataset: {bm_res.dataset_name} (ID: {bm_res.dataset_id}, v{bm_res.dataset_version}, Revision: {bm_res.scientific_revision})"), ln=True)
 
             from services.scientific_evidence_service import ScientificEvidenceService
             ev_service = ScientificEvidenceService()
             sources = ev_service.get_sources_for_ids(list(cited_ids)) if cited_ids else []
             for src in sources:
                 cit_str = ev_service.format_citation(src)
-                pdf.multi_cell(0, 4, f"- [{src.source_id}] {cit_str} (Level {src.evidence_quality.value}, N={src.sample_size})")
+                pdf.multi_cell(0, 4, self._clean_text(f"- [{src.source_id}] {cit_str} (Level {src.evidence_quality.value}, N={src.sample_size})"))
 
         # Phase Breakdown
         pdf.set_font("Helvetica", style="B", size=13)

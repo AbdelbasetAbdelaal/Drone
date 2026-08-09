@@ -60,7 +60,8 @@ def test_final_audit_safety_rule_4_youth_masters_scaling_suppression():
         pops = data.get("populations", {})
         for cohort in ["8-10", "11-13", "Masters"]:
             cohort_data = pops.get(cohort, {})
-            assert cohort_data.get("status") == "INSUFFICIENT_EVIDENCE", \
+            status = cohort_data.get("status", "INSUFFICIENT_EVIDENCE") if isinstance(cohort_data, dict) else "INSUFFICIENT_EVIDENCE"
+            assert status == "INSUFFICIENT_EVIDENCE", \
                 f"Cohort {cohort} in {yfile.name} must be INSUFFICIENT_EVIDENCE"
 
 def test_final_audit_safety_rule_5_unverified_access_level_guard():

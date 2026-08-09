@@ -50,6 +50,27 @@ class AnalysisHistoryService:
         """Load all analysis sessions across all athletes."""
         return self.repository.get_all()
 
+    def get_performance_history_df(self, athlete_id: Optional[str] = None):
+        """Returns a Pandas DataFrame of performance progression for historical charting."""
+        import pandas as pd
+        sessions = self.get_sessions_by_athlete(athlete_id) if athlete_id else self.get_all_sessions()
+        rows = []
+        for s in sessions:
+            dt_parts = s.analysis_timestamp.split("T")
+            date_str = dt_parts[0]
+            time_str = dt_parts[1][:5] if len(dt_parts) > 1 else "00:00"
+            rows.append({
+                "SessionID": s.session_id,
+                "AthleteID": s.athlete_id,
+                "Date": date_str,
+                "Time": time_str,
+                "Score": s.performance_score,
+                "Confidence": s.scientific_confidence,
+                "Cycles": s.completed_cycles,
+                "Stroke": s.stroke_type
+            })
+        return pd.DataFrame(rows)
+
     def delete_session(self, session_id: str) -> bool:
         """Delete an analysis session by ID."""
         success = self.repository.delete(session_id)
@@ -58,3 +79,4 @@ class AnalysisHistoryService:
         else:
             logger.error(f"Error deleting analysis session {session_id}")
         return success
+

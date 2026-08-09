@@ -319,3 +319,73 @@ def create_bell_curve_chart(metric_name: str, raw_value: float, mean: float, std
     fig.update_xaxes(title=metric_name.replace("_", " ").title())
     fig.update_yaxes(showticklabels=False, title="Probability Density")
     return fig
+
+
+def create_benchmark_radar_chart(benchmark_result) -> go.Figure:
+    """
+    Renders a 5-axis Radar / Spider Chart comparing Athlete percentile profile against elite benchmark (90th percentile).
+    """
+    if not benchmark_result or not getattr(benchmark_result, 'comparisons', None):
+        fig = go.Figure()
+        fig.add_annotation(text="No Population Benchmark Data Available", showarrow=False, font=dict(size=14, color=TEXT_COLOR))
+        fig.update_layout(paper_bgcolor=BACKGROUND_COLOR, plot_bgcolor=BACKGROUND_COLOR)
+        return fig
+
+    categories = []
+    athlete_pcts = []
+
+    for name, comp in benchmark_result.comparisons.items():
+        if name == "performance_score":
+            continue
+        pct = getattr(comp, 'percentile', None)
+        if pct is not None:
+            categories.append(name.replace("_", " ").title())
+            athlete_pcts.append(pct)
+
+    if not categories:
+        fig = go.Figure()
+        fig.add_annotation(text="Radar chart unavailable: unvalidated demographic cohort", showarrow=False, font=dict(size=14, color=TEXT_COLOR))
+        return apply_premium_layout(fig, "🕸️ Biomechanical Percentile Radar Profile")
+
+    # Close the radar loop
+    categories_loop = categories + [categories[0]]
+    athlete_pcts_loop = athlete_pcts + [athlete_pcts[0]]
+    elite_loop = [90.0] * len(categories_loop)
+    mean_loop = [50.0] * len(categories_loop)
+
+    fig = go.Figure()
+
+    fig.add_trace(go.Scatterpolar(
+        r=mean_loop, theta=categories_loop,
+        mode='lines', name='Population Mean (50th)',
+        line=dict(color=TEXT_COLOR, width=1.5, dash='dash')
+    ))
+
+    fig.add_trace(go.Scatterpolar(
+        r=elite_loop, theta=categories_loop,
+        mode='lines', name='Elite Target (90th)',
+        line=dict(color=PRIMARY_CYAN, width=2, dash='dot')
+    ))
+
+    fig.add_trace(go.Scatterpolar(
+        r=athlete_pcts_loop, theta=categories_loop,
+        mode='lines+markers', name='Athlete Percentile',
+        fill='toself', fillcolor='rgba(255, 0, 127, 0.2)',
+        line=dict(color=ACCENT_PINK, width=3),
+        marker=dict(size=6, color=ACCENT_PINK)
+    ))
+
+    fig.update_layout(
+        title=dict(text="🕸️ Biomechanical Percentile Radar Profile", font=dict(size=18, color=TEXT_COLOR, family="Inter, sans-serif")),
+        polar=dict(
+            bgcolor=BACKGROUND_COLOR,
+            radialaxis=dict(visible=True, range=[0, 100], gridcolor=GRID_COLOR, tickfont=dict(color=TEXT_COLOR)),
+            angularaxis=dict(gridcolor=GRID_COLOR, tickfont=dict(color=TEXT_COLOR))
+        ),
+        paper_bgcolor=BACKGROUND_COLOR,
+        plot_bgcolor=BACKGROUND_COLOR,
+        font=dict(color=TEXT_COLOR, family="Inter, sans-serif"),
+        legend=dict(orientation="h", yanchor="bottom", y=-0.15, xanchor="center", x=0.5)
+    )
+    return fig
+

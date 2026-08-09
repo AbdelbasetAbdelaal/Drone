@@ -149,8 +149,9 @@ class VideoQualityAssessor:
         avg_contrast = int(np.mean(self.contrast_scores)) if self.contrast_scores else 50
         
         avg_stability = 90 # Placeholder MVP
-        orientation_score = 100 if self.width > self.height else 0
-        resolution_score = 100 if (self.width >= 1280 and self.height >= 720) else (50 if self.width >= 640 else 20)
+        # Orientation & Resolution (Vertical smartphone videos HD are supported)
+        orientation_score = 100 if self.width >= self.height else (80 if self.height >= 1280 else 60)
+        resolution_score = 100 if (max(self.width, self.height) >= 1280 and min(self.width, self.height) >= 720) else (60 if max(self.width, self.height) >= 640 else 30)
         fps_score = 100 if self.fps >= 29 else (60 if self.fps >= 20 else 20)
         swimmer_visibility = avg_confidence # Alias
         
@@ -215,19 +216,19 @@ class VideoQualityAssessor:
         overall_score = int(sum(c.score * (c.weight / total_weight) for c in criteria))
         
         # Classify
-        if overall_score >= 90:
+        if overall_score >= 85:
             quality_class = "Excellent"
             conf = "High"
             passed = True
-        elif overall_score >= 80:
+        elif overall_score >= 70:
             quality_class = "Good"
             conf = "High"
             passed = True
-        elif overall_score >= 70:
+        elif overall_score >= 55:
             quality_class = "Fair"
             conf = "Medium"
             passed = True
-        elif overall_score >= 50:
+        elif overall_score >= 40:
             quality_class = "Poor"
             conf = "Low"
             passed = True

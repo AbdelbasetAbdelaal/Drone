@@ -16,6 +16,7 @@ class AthleteProfile:
     shoulder_width_cm: Optional[float] = None
     notes: str = ""
     training_goals: str = ""
+    swimmer_tags: list = field(default_factory=list)
     schema_version: str = "1.0"
 
     def to_dict(self) -> dict:
@@ -32,7 +33,8 @@ class AthleteProfile:
             "swimming_level": self.swimming_level,
             "preferred_stroke": self.preferred_stroke,
             "notes": self.notes,
-            "training_goals": self.training_goals
+            "training_goals": self.training_goals,
+            "swimmer_tags": self.swimmer_tags
         }
 
     @classmethod
@@ -50,5 +52,6 @@ class AthleteProfile:
             preferred_stroke=data.get("preferred_stroke", "Freestyle"),
             notes=data.get("notes", ""),
             training_goals=data.get("training_goals", ""),
+            swimmer_tags=data.get("swimmer_tags", []),
             schema_version=data.get("schema_version", "1.0")
         )

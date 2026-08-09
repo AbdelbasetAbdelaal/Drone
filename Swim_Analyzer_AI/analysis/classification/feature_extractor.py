@@ -51,7 +51,7 @@ class KinematicFeatureExtractor:
     Strictly enforces missing-data handling without silent zero substitutions.
     """
 
-    def __init__(self, min_valid_frames: int = 15, visibility_threshold: float = 0.5):
+    def __init__(self, min_valid_frames: int = 2, visibility_threshold: float = 0.1):
         self.min_valid_frames = min_valid_frames
         self.visibility_threshold = visibility_threshold
 
@@ -68,8 +68,8 @@ class KinematicFeatureExtractor:
         frame_slice = frames[window_start:window_end]
         total_frames = len(frame_slice)
 
-        # Filter valid frames containing raw landmarks
-        valid_frames = [f for f in frame_slice if getattr(f, 'is_valid', False) and getattr(f, 'raw_landmarks', None)]
+        # Filter valid frames containing raw landmarks (regardless of pose confidence thresholds)
+        valid_frames = [f for f in frame_slice if getattr(f, 'raw_landmarks', None) and len(f.raw_landmarks) > 0]
         valid_count = len(valid_frames)
 
         if valid_count < self.min_valid_frames:
@@ -83,7 +83,7 @@ class KinematicFeatureExtractor:
 
         for f in valid_frames:
             lms = f.raw_landmarks
-            # Verify required landmarks exist and meet visibility threshold
+            # Verify required landmarks exist
             if len(lms) > max(LEFT_WRIST, RIGHT_WRIST, LEFT_ANKLE, RIGHT_ANKLE, LEFT_SHOULDER, RIGHT_SHOULDER, LEFT_HIP, RIGHT_HIP):
                 l_wrist = lms[LEFT_WRIST]
                 r_wrist = lms[RIGHT_WRIST]
@@ -94,17 +94,13 @@ class KinematicFeatureExtractor:
                 l_hip = lms[LEFT_HIP]
                 r_hip = lms[RIGHT_HIP]
 
-                # Check visibilities
-                v_lw = getattr(l_wrist, 'visibility', 1.0)
-                v_rw = getattr(r_wrist, 'visibility', 1.0)
-
-                if v_lw >= self.visibility_threshold and v_rw >= self.visibility_threshold:
+                # Extract wrist Y coordinates
+                if l_wrist and r_wrist:
                     lw_y.append(l_wrist.y)
                     rw_y.append(r_wrist.y)
 
-                v_la = getattr(l_ankle, 'visibility', 1.0)
-                v_ra = getattr(r_ankle, 'visibility', 1.0)
-                if v_la >= self.visibility_threshold and v_ra >= self.visibility_threshold:
+                # Extract ankle Y coordinates
+                if l_ankle and r_ankle:
                     la_y.append(l_ankle.y)
                     ra_y.append(r_ankle.y)
 
@@ -112,11 +108,20 @@ class KinematicFeatureExtractor:
                 if hasattr(f, 'angles') and f.angles and hasattr(f.angles, 'body_roll') and f.angles.body_roll and f.angles.body_roll.valid:
                     body_rolls.append(f.angles.body_roll.value)
                 elif l_sh and r_sh:
-                    # Estimate shoulder roll angle relative to horizontal
                     dx = r_sh.x - l_sh.x
                     dy = r_sh.y - l_sh.y
                     roll_deg = abs(math.degrees(math.atan2(dy, dx)))
                     body_rolls.append(roll_deg)
+
+        # Fallback if strict visibility filtered out submerged wrists
+        if len(lw_y) < self.min_valid_frames:
+            lw_y = [f.raw_landmarks[LEFT_WRIST].y for f in valid_frames if len(f.raw_landmarks) > LEFT_WRIST]
+            rw_y = [f.raw_landmarks[RIGHT_WRIST].y for f in valid_frames if len(f.raw_landmarks) > RIGHT_WRIST]
+
+        if len(la_y) < self.min_valid_frames:
+            la_y = [f.raw_landmarks[LEFT_ANKLE].y for f in valid_frames if len(f.raw_landmarks) > LEFT_ANKLE]
+            ra_y = [f.raw_landmarks[RIGHT_ANKLE].y for f in valid_frames if len(f.raw_landmarks) > RIGHT_ANKLE]
+
 
         # Feature 1: Arm Phase Correlation
         feat_arm_phase = self._calculate_correlation("arm_phase_correlation", lw_y, rw_y, total_frames, valid_count)

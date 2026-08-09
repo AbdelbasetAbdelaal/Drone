@@ -32,11 +32,13 @@ class ExportService:
         try:
             # We don't want to export raw_landmarks due to size and serialization issues.
             # We'll create a lightweight dict.
+            bm_res = getattr(analysis_result, 'benchmark_result', None)
             export_data = {
                 "video_path": analysis_result.video_path,
                 "average_stroke_rate": analysis_result.average_stroke_rate,
                 "report": dataclasses.asdict(analysis_result.report) if analysis_result.report else None,
                 "consistency": dataclasses.asdict(analysis_result.consistency) if getattr(analysis_result, 'consistency', None) else None,
+                "benchmark_result": dataclasses.asdict(bm_res) if bm_res and dataclasses.is_dataclass(bm_res) else None,
                 "frames": []
             }
             
