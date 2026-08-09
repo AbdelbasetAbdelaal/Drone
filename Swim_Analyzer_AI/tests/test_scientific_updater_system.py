@@ -62,20 +62,20 @@ def test_8_9_table_and_page_location_requirement(updater):
 
 def test_10_11_no_fabricated_sample_size_or_demographics(updater):
     engine = BenchmarkEngine()
-    stats = engine._get_population_stats("freestyle", "U10", "Female", "stroke_rate")
-    assert stats.mean is None, "U10 Female Freestyle stats must remain None"
+    stats = engine._get_population_stats("freestyle", "8-10", "Female", "stroke_rate")
+    assert stats.mean is None, "8-10 Female Freestyle stats must remain None"
 
 def test_12_no_adult_to_youth_leakage(updater):
     engine = BenchmarkEngine()
     adult = engine._get_population_stats("freestyle", "18-25", "Male", "stroke_rate")
-    youth = engine._get_population_stats("freestyle", "U10", "Male", "stroke_rate")
+    youth = engine._get_population_stats("freestyle", "8-10", "Male", "stroke_rate")
     if adult.mean is not None and youth.mean is not None:
         assert adult.mean != youth.mean
 
 def test_13_no_male_to_female_leakage(updater):
     engine = BenchmarkEngine()
     male = engine._get_population_stats("freestyle", "18-25", "Male", "stroke_rate")
-    female = engine._get_population_stats("freestyle", "26-35", "Female", "stroke_rate")
+    female = engine._get_population_stats("freestyle", "Masters", "Female", "stroke_rate")
     assert female.mean is None or male.mean != female.mean
 
 def test_14_no_stroke_to_stroke_leakage(updater):

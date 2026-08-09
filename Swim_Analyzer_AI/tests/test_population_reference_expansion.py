@@ -52,8 +52,8 @@ def test_4_no_accepted_benchmark_without_sex(evidence_data):
             assert gender in ["Male", "Female", "Mixed"], f"Evidence {eid} missing valid gender"
 
 def test_5_no_adult_to_youth_automatic_scaling(benchmark_engine):
-    stats = benchmark_engine._get_population_stats("freestyle", "U10", "Male", "stroke_rate")
-    assert stats.mean is None, "U10 Male Freestyle must return None mean due to INSUFFICIENT_EVIDENCE"
+    stats = benchmark_engine._get_population_stats("freestyle", "8-10", "Male", "stroke_rate")
+    assert stats.mean is None, "8-10 Male Freestyle must return None mean due to INSUFFICIENT_EVIDENCE"
 
 def test_6_no_male_to_female_copying(benchmark_engine):
     m_stats = benchmark_engine._get_population_stats("freestyle", "18-25", "Male", "stroke_rate")
@@ -122,5 +122,5 @@ def test_15_population_taxonomy_mapping():
     assert c_adult.sex == SexCategory.FEMALE
 
 def test_16_absence_of_fabricated_values(benchmark_engine):
-    stats = benchmark_engine._get_population_stats("freestyle", "55+", "Female", "stroke_rate")
-    assert stats.mean is None, "Missing demographic group 55+ Female must return None mean"
+    stats = benchmark_engine._get_population_stats("freestyle", "Masters", "Female", "stroke_rate")
+    assert stats.mean is None, "Missing demographic group Masters Female must return None mean"

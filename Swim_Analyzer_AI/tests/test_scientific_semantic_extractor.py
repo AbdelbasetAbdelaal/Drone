@@ -12,19 +12,11 @@ def test_semantic_extractor_degraded_mode():
         pass
 
 def test_extract_evidence_candidates_degraded():
-    # If initialized with no key in env
-    old_key = os.environ.get("GEMINI_API_KEY")
-    if "GEMINI_API_KEY" in os.environ:
-        del os.environ["GEMINI_API_KEY"]
-    
-    extractor = ScientificSemanticExtractor(api_key=None)
+    extractor = ScientificSemanticExtractor(api_key="")
     assert extractor.is_degraded() is True
     
     res = extractor.extract_evidence_candidates("Some text with 0.90 Hz.")
     assert res is None
-    
-    if old_key is not None:
-        os.environ["GEMINI_API_KEY"] = old_key
 
 @pytest.mark.skipif(not HAS_GEMINI or not os.environ.get("GEMINI_API_KEY"), reason="Requires GEMINI_API_KEY and google-generativeai")
 def test_extract_evidence_candidates_real():

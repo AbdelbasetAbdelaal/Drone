@@ -58,7 +58,7 @@ def test_final_audit_safety_rule_4_youth_masters_scaling_suppression():
             data = yaml.safe_load(f)
 
         pops = data.get("populations", {})
-        for cohort in ["U10", "U11-U12", "U13", "45-54", "55+"]:
+        for cohort in ["8-10", "11-13", "Masters"]:
             cohort_data = pops.get(cohort, {})
             assert cohort_data.get("status") == "INSUFFICIENT_EVIDENCE", \
                 f"Cohort {cohort} in {yfile.name} must be INSUFFICIENT_EVIDENCE"

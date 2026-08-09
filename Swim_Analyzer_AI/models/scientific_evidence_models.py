@@ -12,7 +12,8 @@ class EvidenceLevel(str, Enum):
 class ValidationStatus(str, Enum):
     VALIDATED = "VALIDATED"                   # Fully supported by Level A/B empirical evidence
     PARTIALLY_VALIDATED = "PARTIALLY_VALIDATED" # Supported by Level C/D or adjacent cohort extrapolation
-    INSUFFICIENT_EVIDENCE = "INSUFFICIENT_EVIDENCE" # Insufficient sample size or contradictory data
+    INSUFFICIENT_EVIDENCE = "INSUFFICIENT_EVIDENCE" # Insufficient sample size or missing data
+    CONFLICTING_EVIDENCE = "CONFLICTING_EVIDENCE"   # Multiple valid studies report statistically incompatible bounds
     PLACEHOLDER = "PLACEHOLDER"               # Derived index or heuristic baseline awaiting empirical field study
 
     @property
@@ -23,6 +24,8 @@ class ValidationStatus(str, Enum):
             return "⚠ Partially Validated"
         elif self == ValidationStatus.INSUFFICIENT_EVIDENCE:
             return "⚠ Insufficient Evidence"
+        elif self == ValidationStatus.CONFLICTING_EVIDENCE:
+            return "✕ Conflicting Evidence"
         else:
             return "! Placeholder"
 
@@ -34,6 +37,8 @@ class ValidationStatus(str, Enum):
             return "#FF8C00" # Orange
         elif self == ValidationStatus.INSUFFICIENT_EVIDENCE:
             return "#FFD700" # Gold/Yellow
+        elif self == ValidationStatus.CONFLICTING_EVIDENCE:
+            return "#F44336" # Red
         else:
             return "#FF007F" # Pink/Red
 
@@ -93,6 +98,17 @@ class DefinitionCompatibility(str, Enum):
     COMPATIBLE = "COMPATIBLE"
     DEFINITION_MISMATCH = "DEFINITION_MISMATCH"
 
+class BenchmarkPolicy(str, Enum):
+    PRIMARY_STUDY_TRACE_REQUIRED = "PRIMARY_STUDY_TRACE_REQUIRED"
+    CONDITIONAL_PRIMARY_STUDY_TRACE = "CONDITIONAL_PRIMARY_STUDY_TRACE"
+    TEST_SPECIFIC_ONLY = "TEST_SPECIFIC_ONLY"
+    AGE_STRATIFIED_PRIMARY_STUDY_REQUIRED = "AGE_STRATIFIED_PRIMARY_STUDY_REQUIRED"
+
+class StudyType(str, Enum):
+    PRIMARY_STUDY = "primary_study"
+    SYSTEMATIC_REVIEW = "systematic_review"
+    META_ANALYSIS = "meta_analysis"
+
 @dataclass
 class ScientificEvidenceRecord:
     """
@@ -128,6 +144,7 @@ class ScientificEvidenceRecord:
     statistical_method: str = "Mean +/- SD"
     table_or_figure_reference: str = ""
     page_reference: str = ""
+    source_quote: str = ""
     source_access_level: SourceAccessLevel = SourceAccessLevel.FULL_TEXT_VERIFIED
     source_quality: SourceQuality = SourceQuality.PEER_REVIEWED_FULL_TEXT
     extraction_method: str = "Manual Scientific Audit & Open API Retrieval"
@@ -142,7 +159,55 @@ class ScientificEvidenceRecord:
     converted_unit: Optional[str] = None
     reviewed_by: str = "Lead Scientific Software Architect"
     reviewed_at: str = "2026-08-08"
+    study_type: str = "primary_study"
+    primary_study_identifier: Optional[str] = None
+    test_distance_m: Optional[int] = None
     notes: str = ""
+
+@dataclass
+class CandidateEvidence:
+    """
+    Untrusted semantic extraction payload directly from Gemini.
+    Must never be used as a benchmark until deterministic validation converts it to an EvidenceRecord.
+    """
+    source_id: str
+    pmid: Optional[str]
+    pmcid: Optional[str]
+    doi: Optional[str]
+    title: str
+    stroke: Optional[str]
+    population_sex: Optional[str]
+    population_age: Optional[str]
+    competitive_level: Optional[str]
+    metric: Optional[str]
+    mean: Optional[float]
+    sd: Optional[float]
+    unit: Optional[str]
+    sample_size: Optional[int]
+    table_or_figure: Optional[str]
+    source_quote: Optional[str]
+    xml_block_type: str
+    confidence: Optional[str] = None
+    study_type: str = "primary_study"
+    primary_study_identifier: Optional[str] = None
+    test_distance_m: Optional[int] = None
+    notes: Optional[str] = None
+
+@dataclass
+class AggregatedEvidence:
+    """
+    Represents the output of the EvidenceAggregator combining multiple SCIENTIFICALLY_ACCEPTED studies.
+    """
+    metric_name: str
+    stroke: str
+    gender: str
+    age_group: str
+    aggregated_mean: float
+    aggregated_std: float
+    unit: str
+    total_sample_size: int
+    source_records: List[ScientificEvidenceRecord]
+    is_conflicting: bool = False
 
 @dataclass
 class ScientificSource:
@@ -165,6 +230,10 @@ class ScientificSource:
     evidence_quality: EvidenceLevel = EvidenceLevel.LEVEL_A
     access_level: str = "FULL_TEXT_VERIFIED"
     verification_status: str = "VERIFIED_CORRECT"
+    study_type: str = "primary_study"
+    benchmark_policy: Optional[str] = None
+    priority: int = 1
+    test_context: Optional[Dict[str, Any]] = None
     notes: str = ""
 
 @dataclass

@@ -91,11 +91,12 @@ class BenchmarkEngine:
                     if k not in metric_cfg["evidence"]:
                         metric_cfg["evidence"][k] = v
 
-        if not metric_cfg:
+        if not metric_cfg or metric_cfg.get("status") in ("CONFLICTING_EVIDENCE", "INSUFFICIENT_EVIDENCE"):
+            val_status = ValidationStatus.CONFLICTING_EVIDENCE if metric_cfg and metric_cfg.get("status") == "CONFLICTING_EVIDENCE" else ValidationStatus.INSUFFICIENT_EVIDENCE
             return PopulationStats(
                 mean=None, std=None, elite_mean=None, unit="",
                 evidence=MetricEvidenceMetadata(
-                    validation_status=ValidationStatus.INSUFFICIENT_EVIDENCE,
+                    validation_status=val_status,
                     evidence_level=EvidenceLevel.LEVEL_E,
                     source_relationship=SourceRelationship.UNVERIFIED,
                     population_compatibility=PopulationCompatibility.POPULATION_MISMATCH,

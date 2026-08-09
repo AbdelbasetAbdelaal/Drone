@@ -10,18 +10,18 @@
 | Metric | Count |
 |--------|-------|
 | **Sources Discovered** | 82 |
-| **New Sources Added** | 2 |
+| **Sources Retrieved** | 80 |
 | **Full-Text Verified Sources** | 0 |
-| **Abstract-Only Sources** | 0 |
-| **Rejected Sources** | 2 |
-| **Evidence Candidates Evaluated** | 0 |
-| **Evidence Records Accepted** | 0 |
-| **Evidence Review Required** | 0 |
-| **Evidence Rejected** | 0 |
-| **Benchmarks Added** | 0 |
+| **Candidate Evidence** | 0 |
+| **Accepted Evidence** | 0 |
+| **Rejected Evidence** | 0 |
+| **Review-Required Evidence** | 0 |
+| **Benchmarks Created** | 0 |
 | **Benchmarks Updated** | 0 |
-| **Newly Verified Demographic Cohorts** | 6 |
-| **Remaining INSUFFICIENT_EVIDENCE Cohorts** | 90 |
+| **Populations Still Insufficient** | 90 |
+| **Populations with Conflicting Evidence** | 0 |
+| **Network Failures** | 0 |
+| **Extraction Failures** | 0 |
 | **Scientific Safety Tests** | PASS (100%) |
 
 ## Process Details

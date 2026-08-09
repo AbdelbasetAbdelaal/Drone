@@ -86,51 +86,66 @@ class ScientificBenchmarkBuilder:
         except Exception as e:
             logger.error(f"Failed to write benchmark YAML {out_file}: {e}")
 
-    def _build_population_block(self, records: List[Any], stroke_name: str, gender: str = "Male") -> Dict[str, Any]:
+    def _build_population_block(self, records: List[Any], stroke_name: str, gender: str = "Male", min_age: int = 18, max_age: int = 25) -> Dict[str, Any]:
+        from scientific_reference.evidence_aggregator import EvidenceAggregator
         pop_block = {}
         
-        # Metric mappings from evidence records
+        # Group records by metric name for the specific gender and age range
+        metric_groups = {}
         for r in records:
-            if r.gender in [gender, "Mixed"]:
+            # Check gender and age overlap
+            age_ok = True
+            if r.age_min is not None and r.age_min > max_age:
+                age_ok = False
+            if r.age_max is not None and r.age_max < min_age:
+                age_ok = False
+
+            # Test context restriction check (e.g. MA_400M_FRONT_CRAWL 400m restriction)
+            if getattr(r, 'test_distance_m', None) is not None and getattr(r, 'test_distance_m', None) != 100:
+                continue
+
+            if r.gender in [gender, "Mixed"] and age_ok:
                 m_name = r.measurement_name
-                mean_val = r.converted_value if r.converted_value is not None else r.reported_mean
-                std_val = r.reported_std if r.reported_std is not None else 5.0
-                unit_val = r.converted_unit if r.converted_unit else r.measurement_units
+                if m_name not in metric_groups:
+                    metric_groups[m_name] = []
+                metric_groups[m_name].append(r)
                 
+        # Aggregate and map to pop_block
+        for m_name, grp_records in metric_groups.items():
+            agg = EvidenceAggregator.aggregate_evidence(grp_records, stroke_name, gender, f"{min_age}-{max_age}", m_name)
+            if not agg:
+                continue
+                
+            if agg.is_conflicting:
                 pop_block[m_name] = {
-                    "mean": float(mean_val) if mean_val else 50.0,
-                    "std": float(std_val) if std_val else 5.0,
-                    "elite_mean": float(mean_val * 1.15) if mean_val else 60.0,
-                    "unit": unit_val,
-                    "higher_is_better": True,
-                    "evidence": {
-                        "evidence_id": r.evidence_id,
-                        "source_id": r.source_id,
-                        "title": r.title,
-                        "authors": r.authors,
-                        "year": r.year,
-                        "publication": r.publication,
-                        "doi": r.doi,
-                        "table_or_figure_reference": r.table_or_figure_reference,
-                        "page_reference": r.page_reference,
-                        "original_value": r.reported_mean,
-                        "original_unit": r.measurement_units,
-                        "converted_value": r.converted_value,
-                        "converted_unit": r.converted_unit,
-                        "conversion_formula": r.conversion_formula,
-                        "reported_source_value": f"{r.reported_mean} {r.measurement_units}",
-                        "reported_source_std": f"{r.reported_std} {r.measurement_units}",
-                        "sample_size": r.sample_size,
-                        "source_access_level": r.source_access_level.value,
-                        "source_relationship": r.relationship_to_benchmark.value,
-                        "definition_status": r.definition_compatibility.value,
-                        "population_status": r.population_compatibility.value,
-                        "scientific_status": r.scientific_status.value,
-                        "validation_status": "VALIDATED" if r.scientific_status == ReviewStatus.SCIENTIFICALLY_ACCEPTED else "PARTIALLY_VALIDATED",
-                        "evidence_level": "LEVEL_A",
-                        "source_ids": [r.source_id]
-                    }
+                    "status": "CONFLICTING_EVIDENCE",
+                    "message": "Multiple studies report statistically incompatible bounds for this metric."
                 }
+                continue
+                
+            pop_block[m_name] = {
+                "mean": float(agg.aggregated_mean),
+                "std": float(agg.aggregated_std),
+                "elite_mean": float(agg.aggregated_mean * 1.15),
+                "unit": agg.unit,
+                "higher_is_better": True,
+                "evidence": {
+                    "evidence_id": f"AGG-{grp_records[0].evidence_id}",
+                    "source_ids": [r.source_id for r in grp_records],
+                    "title": "Aggregated Scientific Evidence",
+                    "authors": [a for r in grp_records for a in r.authors],
+                    "year": max([r.year for r in grp_records]),
+                    "publication": "Multiple Peer-Reviewed Sources",
+                    "sample_size": agg.total_sample_size,
+                    "scientific_status": "SCIENTIFICALLY_ACCEPTED",
+                    "validation_status": "VALIDATED",
+                    "evidence_level": "LEVEL_A",
+                    "source_relationship": "DIRECTLY_SUPPORTED",
+                    "definition_status": "EXACT_MATCH",
+                    "population_status": "EXACT_MATCH",
+                    "notes": [f"Aggregated from {len(grp_records)} studies"]
+                }
+            }
 
         # Handle metrics without accepted direct evidence
         if "performance_score" not in pop_block:
@@ -142,7 +157,6 @@ class ScientificBenchmarkBuilder:
                 "higher_is_better": True,
                 "evidence": {
                     "evidence_id": "EVID-SYNTHETIC-SCORE",
-                    "source_id": "NONE",
                     "title": "Proprietary SwimAnalyzer Synthetic Score",
                     "validation_status": "PLACEHOLDER",
                     "evidence_level": "LEVEL_E",

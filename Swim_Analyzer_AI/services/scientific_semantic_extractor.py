@@ -35,7 +35,7 @@ class ScientificSemanticExtractor:
             pass
             
         # Load key from argument, or environment
-        key_to_use = api_key or os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+        key_to_use = api_key if api_key is not None else (os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY"))
         
         if not HAS_GEMINI or not key_to_use:
             logger.warning("ScientificSemanticExtractor initialized in DEGRADED_MODE. Missing google-genai or GEMINI_API_KEY.")

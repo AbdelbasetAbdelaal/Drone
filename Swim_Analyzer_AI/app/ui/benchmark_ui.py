@@ -109,7 +109,10 @@ def render_population_benchmark_cards(bm_res: BenchmarkResult, athlete_profile: 
             # Metric Values
             c_val1, c_val2, c_val3, c_val4 = st.columns(4)
             c_val1.metric("Athlete Measurement", f"{comp.raw_value} {comp.unit}".strip())
-            c_val2.metric("Scientific Reference", f"{comp.population_mean:.1f} {comp.unit}".strip())
+            
+            ref_val = f"{comp.population_mean:.1f} {comp.unit}".strip() if comp.population_mean is not None else "N/A"
+            c_val2.metric("Scientific Reference", ref_val)
+            
             c_val3.metric("Reference Population", "Adult Competitive Males (18–25)")
             
             z_display = f"{comp.z_score:+.2f}" if comp.z_score is not None else "N/A"
@@ -154,5 +157,5 @@ def render_population_benchmark_cards(bm_res: BenchmarkResult, athlete_profile: 
     with st.container(border=True):
         st.markdown("#### 🏆 SwimAnalyzer Composite Score")
         ps_comp = bm_res.comparisons.get('performance_score') if bm_res and bm_res.comparisons else None
-        ps_val = ps_comp.raw_value if ps_comp else 70.0
+        ps_val = ps_comp.raw_value if (ps_comp and ps_comp.raw_value is not None) else 70.0
         st.metric("Composite Technique Index", f"{ps_val:.1f} / 100")

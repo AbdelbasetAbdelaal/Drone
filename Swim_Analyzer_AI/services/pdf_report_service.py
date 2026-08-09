@@ -262,7 +262,10 @@ class PDFReportService:
 
                 pdf.cell(bm_widths[0], 6, m_name.replace("_", " ").title(), border=1)
                 pdf.cell(bm_widths[1], 6, f"{comp.raw_value} {comp.unit}", border=1, align="C")
-                pdf.cell(bm_widths[2], 6, f"{comp.population_mean:.1f} +/- {comp.population_std:.1f}", border=1, align="C")
+                if comp.population_mean is not None and comp.population_std is not None:
+                    pdf.cell(bm_widths[2], 6, f"{comp.population_mean:.1f} +/- {comp.population_std:.1f}", border=1, align="C")
+                else:
+                    pdf.cell(bm_widths[2], 6, "N/A", border=1, align="C")
                 pdf.cell(bm_widths[3], 6, z_str, border=1, align="C")
                 pdf.cell(bm_widths[4], 6, pct_str, border=1, align="C")
                 pdf.cell(bm_widths[5], 6, badge, border=1, align="C")

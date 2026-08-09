@@ -3,7 +3,9 @@ import yaml
 from pathlib import Path
 
 from scientific_reference.storage.scientific_evidence_registry import ScientificEvidenceRegistry
-from scientific_reference.validation.scientific_evidence_validator import ScientificEvidenceValidator
+from scientific_reference.validation.population_validator import PopulationValidator
+from scientific_reference.validation.metric_validator import MetricValidator
+from scientific_reference.validation.statistical_validator import StatisticalValidator
 from models.scientific_evidence_models import (
     ReviewStatus, DefinitionMatchingStatus, PopulationMatchingStatus, SourceAccessLevel
 )
@@ -25,22 +27,22 @@ def test_evidence_registry_records():
 
 def test_unit_conversion_layer():
     """Verify unit conversion layer produces traceable conversion formulas."""
-    val, unit, formula = ScientificEvidenceValidator.convert_unit(0.90, "Hz", "spm")
+    val, unit, formula = StatisticalValidator.convert_unit(0.90, "Hz", "spm")
     assert val == 54.0
     assert unit == "spm"
     assert "0.9" in formula and "60" in formula and "54" in formula
 
 def test_definition_matching():
     """Verify definition matching flags definition mismatches."""
-    status1 = ScientificEvidenceValidator.evaluate_definition_match("Stroke rate in Hz", "stroke_rate")
+    status1 = MetricValidator.evaluate_definition_match("Stroke rate in Hz", "stroke_rate")
     assert status1 == DefinitionMatchingStatus.EXACT_MATCH
 
-    status2 = ScientificEvidenceValidator.evaluate_definition_match("Shoulder roll angle", "torso normal vector roll")
+    status2 = MetricValidator.evaluate_definition_match("Shoulder roll angle", "torso normal vector roll")
     assert status2 == DefinitionMatchingStatus.DEFINITION_MISMATCH
 
 def test_population_matching_adult_to_youth_guard():
     """CRITICAL RULE: Adult data extrapolated to youth MUST return POPULATION_MISMATCH."""
-    status = ScientificEvidenceValidator.evaluate_population_match(
+    status = PopulationValidator.evaluate_population_match(
         study_pop="Elite adult males",
         target_pop="U10 Junior Swimmers",
         study_age_range=(18, 25),
@@ -72,7 +74,7 @@ def test_yaml_benchmark_provenance_integrity():
             if val_stat == "VALIDATED":
                 # Rule 1 & 3: Validated benchmark must have source & evidence record
                 assert ev.get("evidence_id") is not None, f"Metric {m_name} in {yfile.name} missing evidence_id"
-                assert ev.get("source_id") is not None, f"Metric {m_name} in {yfile.name} missing source_id"
+                assert "source_ids" in ev, f"Metric {m_name} in {yfile.name} missing source_ids"
                 
                 # Rule 4: Validated benchmark cannot have UNKNOWN_DEFINITION
                 assert ev.get("definition_status") != "UNKNOWN_DEFINITION", f"Metric {m_name} has unknown definition"
