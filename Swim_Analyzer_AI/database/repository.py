@@ -48,6 +48,18 @@ class CoachRepository:
         db_coaches = self.db.query(CoachModel).all()
         return [CoachProfile.from_dict({c.name: getattr(coach, c.name) for c in coach.__table__.columns}) for coach in db_coaches]
 
+    def delete(self, coach_id: str) -> bool:
+        db_coach = self.db.query(CoachModel).filter(CoachModel.coach_id == coach_id).first()
+        if db_coach:
+            try:
+                self.db.delete(db_coach)
+                self.db.commit()
+                return True
+            except Exception:
+                self.db.rollback()
+                return False
+        return False
+
 
 class AthleteRepository:
     """
@@ -134,6 +146,14 @@ class AnalysisHistoryRepository:
 
     def get_by_athlete(self, athlete_id: Optional[str]) -> List[AnalysisSession]:
         db_sessions = self.db.query(AnalysisSessionModel).filter(AnalysisSessionModel.athlete_id == athlete_id).order_by(AnalysisSessionModel.analysis_timestamp.desc()).all()
+        sessions = []
+        for db_session in db_sessions:
+            data = {c.name: getattr(db_session, c.name) for c in db_session.__table__.columns}
+            sessions.append(AnalysisSession.from_dict(data))
+        return sessions
+
+    def get_by_account(self, account_id: str) -> List[AnalysisSession]:
+        db_sessions = self.db.query(AnalysisSessionModel).filter(AnalysisSessionModel.account_id == account_id).order_by(AnalysisSessionModel.analysis_timestamp.desc()).all()
         sessions = []
         for db_session in db_sessions:
             data = {c.name: getattr(db_session, c.name) for c in db_session.__table__.columns}

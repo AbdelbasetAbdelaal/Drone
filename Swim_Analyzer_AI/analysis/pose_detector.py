@@ -61,7 +61,11 @@ class PoseDetector:
         rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_frame)
         
-        result = self.detector.detect(mp_image)
+        try:
+            result = self.detector.detect(mp_image)
+        except Exception as exc:
+            logger.warning(f"Pose detection failed on frame: {exc}")
+            return None, False
         
         is_valid = False
         smoothed_landmarks = None
@@ -69,11 +73,12 @@ class PoseDetector:
         if result.pose_landmarks and len(result.pose_landmarks) > 0:
             raw_landmarks = result.pose_landmarks[0]
             
-            # Check average confidence
-            avg_confidence = sum(lm.visibility for lm in raw_landmarks) / len(raw_landmarks)
-            is_valid = avg_confidence >= config.landmark_confidence_threshold
+            # Check average confidence and visible landmark count
+            visible_count = sum(1 for lm in raw_landmarks if getattr(lm, 'visibility', 0.0) > 0.4)
+            avg_confidence = sum(getattr(lm, 'visibility', 0.0) for lm in raw_landmarks) / len(raw_landmarks)
+            is_valid = avg_confidence >= config.landmark_confidence_threshold and visible_count >= 18
             
-            # Smooth the landmarks
+            # Smooth the landmarks for downstream processing even if low confidence
             smoothed_landmarks = self.smoother.smooth(raw_landmarks)
             
         return smoothed_landmarks, is_valid

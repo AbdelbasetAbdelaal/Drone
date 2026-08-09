@@ -8,6 +8,7 @@ class CoachProfile:
     password_hash: str
     salt: str
     full_name: str
+    role: str = "coach"
     email: Optional[str] = None
     coach_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     created_at: str = ""
@@ -19,6 +20,7 @@ class CoachProfile:
             "password_hash": self.password_hash,
             "salt": self.salt,
             "full_name": self.full_name,
+            "role": self.role,
             "email": self.email,
             "created_at": self.created_at
         }
@@ -31,6 +33,7 @@ class CoachProfile:
             password_hash=data["password_hash"],
             salt=data["salt"],
             full_name=data.get("full_name", data["username"]),
+            role=data.get("role", "coach"),
             email=data.get("email"),
             created_at=data.get("created_at", "")
         )

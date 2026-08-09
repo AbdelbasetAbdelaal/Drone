@@ -42,6 +42,10 @@ class AnalysisHistoryService:
         """Load all analysis sessions for a specific athlete (or None for guest)."""
         return self.repository.get_by_athlete(athlete_id)
 
+    def get_sessions_by_account(self, account_id: str) -> List[AnalysisSession]:
+        """Load all analysis sessions for a specific account."""
+        return self.repository.get_by_account(account_id)
+
     def get_all_sessions(self) -> List[AnalysisSession]:
         """Load all analysis sessions across all athletes."""
         return self.repository.get_all()

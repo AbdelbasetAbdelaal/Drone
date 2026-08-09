@@ -23,6 +23,7 @@ class VideoQualityAssessor:
         self.body_visibility_scores = []
         self.size_scores = []
         self.angle_scores = []
+        self.contrast_scores = []
         self.reflection_scores = []
         self.motion_blur_scores = []
         
@@ -66,6 +67,14 @@ class VideoQualityAssessor:
         else:
             dist = abs(brightness - 130.0)
             self.brightness_scores.append(max(0.0, 100.0 - dist))
+
+        # 2b. Contrast
+        contrast_min = float(config.vqa_precheck_contrast_min) if isinstance(config.vqa_precheck_contrast_min, (int, float)) else 20.0
+        contrast_value = float(np.std(gray))
+        if contrast_value < contrast_min:
+            self.contrast_scores.append(max(0.0, 100.0 - (contrast_min - contrast_value) * 2.0))
+        else:
+            self.contrast_scores.append(100.0)
             
         # 3. Reflections (count > 240 intensity pixels)
         high_intensity = float(np.sum(gray > 240) / (gray.shape[0] * gray.shape[1]))
@@ -137,6 +146,7 @@ class VideoQualityAssessor:
         avg_angle = int(np.mean(self.angle_scores)) if self.angle_scores else 50
         avg_refl = int(np.mean(self.reflection_scores)) if self.reflection_scores else 50
         avg_mblur = int(np.mean(self.motion_blur_scores)) if self.motion_blur_scores else avg_sharpness
+        avg_contrast = int(np.mean(self.contrast_scores)) if self.contrast_scores else 50
         
         avg_stability = 90 # Placeholder MVP
         orientation_score = 100 if self.width > self.height else 0
@@ -174,6 +184,10 @@ class VideoQualityAssessor:
                                    "Proper contrast differentiates the body from the water.",
                                    "Extreme shadows or overexposure blind the pose tracking model.",
                                    "Ensure the pool is well-lit and avoid shooting directly into the sun."),
+            self._create_criterion("Contrast", avg_contrast, 0.05, 50,
+                                   "Good contrast helps distinguish the swimmer from the water.",
+                                   "Low contrast can hide limbs and joints in flat lighting.",
+                                   "Use a camera with a wider dynamic range or increase scene lighting."),
             self._create_criterion("Water Reflections", avg_refl, 0.05, 50,
                                    "Sunlight reflecting off the water surface creates visual noise.",
                                    "Highlights can be falsely detected as limbs.",

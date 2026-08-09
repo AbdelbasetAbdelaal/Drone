@@ -39,6 +39,17 @@ class AppConfig:
     vqa_reflection_threshold: float = 0.10
     vqa_early_halt_frames: int = 40
     vqa_allow_critical_override: bool = False
+    vqa_precheck_frames: int = 8
+    vqa_precheck_stride: int = 5
+    vqa_precheck_contrast_min: float = 20.0
+
+    # Video Preprocessing
+    preprocess_enable: bool = False
+    preprocess_auto_exposure: bool = True
+    preprocess_auto_contrast: bool = True
+    preprocess_stabilization: bool = False
+    preprocess_clahe_clip_limit: float = 2.0
+    preprocess_min_valid_frames: int = 6
 
     # Video Settings
     video_downscale_width: int = 854
@@ -75,6 +86,17 @@ class AppConfig:
                 self.vqa_reflection_threshold = float(vqa_cfg.get("reflection_threshold", self.vqa_reflection_threshold))
                 self.vqa_early_halt_frames = int(vqa_cfg.get("early_halt_frames", self.vqa_early_halt_frames))
                 self.vqa_allow_critical_override = bool(vqa_cfg.get("allow_critical_override", self.vqa_allow_critical_override))
+                self.vqa_precheck_frames = int(vqa_cfg.get("precheck_frames", self.vqa_precheck_frames))
+                self.vqa_precheck_stride = int(vqa_cfg.get("precheck_stride", self.vqa_precheck_stride))
+                self.vqa_precheck_contrast_min = float(vqa_cfg.get("precheck_contrast_min", self.vqa_precheck_contrast_min))
+
+                preprocess_cfg = data.get("preprocess", {})
+                self.preprocess_enable = bool(preprocess_cfg.get("enable", self.preprocess_enable))
+                self.preprocess_auto_exposure = bool(preprocess_cfg.get("auto_exposure", self.preprocess_auto_exposure))
+                self.preprocess_auto_contrast = bool(preprocess_cfg.get("auto_contrast", self.preprocess_auto_contrast))
+                self.preprocess_stabilization = bool(preprocess_cfg.get("stabilization", self.preprocess_stabilization))
+                self.preprocess_clahe_clip_limit = float(preprocess_cfg.get("clahe_clip_limit", self.preprocess_clahe_clip_limit))
+                self.preprocess_min_valid_frames = int(preprocess_cfg.get("min_valid_frames", self.preprocess_min_valid_frames))
                 
                 video_cfg = data.get("video", {})
                 self.video_downscale_width = int(video_cfg.get("downscale_width", self.video_downscale_width))

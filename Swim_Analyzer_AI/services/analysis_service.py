@@ -7,7 +7,7 @@ from pathlib import Path
 from core.logger import setup_logger
 from core.config import config
 from core.timing_utils import TimingUtils
-from utils.video_utils import VideoProcessor
+from utils.video_utils import VideoProcessor, VideoPreprocessor
 from analysis.pose_detector import PoseDetector
 from analysis.calibration_engine import RelativeCalibration
 from models.data_models import AnalysisResult, FrameData, JointAngles, VideoMetadata, StrokeDetectionResult, StrokeType
@@ -26,8 +26,8 @@ class AnalysisService:
     def __init__(self):
         pass
         
-    def _initialize_components(self, effective_fps: float, visualization_mode: str, trajectory_duration_sec: float) -> Tuple[Any, Any, Any]:
-        """Initialize detectors and annotators."""
+    def _initialize_components(self, effective_fps: float, visualization_mode: str, trajectory_duration_sec: float) -> Tuple[Any, Any, Any, Optional[VideoPreprocessor]]:
+        """Initialize detectors, annotators, and optional preprocessing."""
         from analysis.video_quality_assessor import VideoQualityAssessor
         from analysis.video_annotator import VideoAnnotator
         
@@ -35,13 +35,57 @@ class AnalysisService:
         pose_detector = PoseDetector()
         trajectory_frames = int(effective_fps * trajectory_duration_sec)
         annotator = VideoAnnotator(mode=visualization_mode, trajectory_frames=trajectory_frames)
+        preprocessor = VideoPreprocessor() if config.preprocess_enable else None
         
-        return vqa, pose_detector, annotator
+        return vqa, pose_detector, annotator, preprocessor
+
+    def _run_vqa_precheck(self, processor: VideoProcessor, pose_detector: Any, preprocessor: Optional[VideoPreprocessor] = None):
+        """Run a short VQA sampling pass on the first part of the video."""
+        from analysis.video_quality_assessor import VideoQualityAssessor
+
+        if not processor.rewind():
+            logger.warning("Could not rewind video capture for VQA precheck.")
+
+        vqa_precheck = VideoQualityAssessor()
+        vqa_precheck.set_video_metadata(processor.width, processor.height, processor.fps)
+
+        target_frames = max(1, config.vqa_precheck_frames)
+        stride = max(1, config.vqa_precheck_stride)
+        checked_frames = 0
+        raw_frame_index = 0
+
+        for frame in processor.generate_frames():
+            if raw_frame_index % stride != 0:
+                raw_frame_index += 1
+                continue
+
+            if preprocessor is not None:
+                frame = preprocessor.preprocess(
+                    frame,
+                    auto_exposure=config.preprocess_auto_exposure,
+                    auto_contrast=config.preprocess_auto_contrast,
+                    stabilization=config.preprocess_stabilization,
+                    clahe_clip_limit=config.preprocess_clahe_clip_limit
+                )
+
+            landmarks, is_valid = pose_detector.detect_pose(frame)
+            vqa_precheck.assess_frame(frame, landmarks, is_valid)
+            checked_frames += 1
+            raw_frame_index += 1
+
+            if checked_frames >= target_frames:
+                break
+
+        if not processor.rewind():
+            logger.warning("Could not rewind video capture after VQA precheck.")
+
+        return vqa_precheck.get_current_result()
 
     def _process_frames_loop(self, processor: VideoProcessor, vqa: Any, pose_detector: Any, annotator: Any, 
                              BiomechanicsCalculator: Any, stroke_analyzer: Any, effective_fps: float, 
                              visualization_mode: str, progress_callback, vqa_callback, analysis_result: AnalysisResult,
-                             frame_stride: int = 1, allow_vqa_critical_override: bool = False) -> Tuple[bool, int, float, float]:
+                             frame_stride: int = 1, allow_vqa_critical_override: bool = False,
+                             preprocessor: Optional[VideoPreprocessor] = None) -> Tuple[bool, int, float, float]:
         """Process video frames in a loop, extract poses, calculate biomechanics, and annotate."""
         import time
         import psutil
@@ -67,24 +111,34 @@ class AnalysisService:
             if current_ram > peak_ram: peak_ram = current_ram
             if current_cpu > peak_cpu: peak_cpu = current_cpu
             
+            if preprocessor is not None:
+                frame = preprocessor.preprocess(
+                    frame,
+                    auto_exposure=config.preprocess_auto_exposure,
+                    auto_contrast=config.preprocess_auto_contrast,
+                    stabilization=config.preprocess_stabilization,
+                    clahe_clip_limit=config.preprocess_clahe_clip_limit
+                )
+
             # 1. Detect Pose
             landmarks, is_valid = pose_detector.detect_pose(frame)
             if is_valid:
                 valid_frames_count += 1
-                
+            
             # 2. VQA
             vqa.assess_frame(frame, landmarks, is_valid)
-            if frames_processed == config.vqa_early_halt_frames:
+            if frames_processed >= config.vqa_early_halt_frames:
                 early_vqa = vqa.get_current_result()
+                if vqa_callback:
+                    vqa_callback(early_vqa)
                 if early_vqa.quality_class == "Critical":
                     analysis_result.vqa_result = early_vqa
-                    if vqa_callback: vqa_callback(early_vqa)
                     if not allow_vqa_critical_override and not config.vqa_allow_critical_override:
                         logger.warning("VQA returned Critical at early halt check. Halting video processing.")
                         return True, valid_frames_count, peak_ram, peak_cpu
                     logger.warning("VQA returned Critical at early halt check, but override is enabled. Continuing video processing.")
-                elif vqa_callback:
-                    vqa_callback(early_vqa)
+                elif early_vqa.quality_class == "Poor":
+                    logger.warning("VQA returned Poor quality at early halt check. Continuing analysis with caution.")
 
             # 3. Biomechanics
             angles = JointAngles()
@@ -222,7 +276,7 @@ class AnalysisService:
         )
         
         try:
-            vqa, pose_detector, annotator = self._initialize_components(adjusted_effective_fps, visualization_mode, trajectory_duration_sec)
+            vqa, pose_detector, annotator, preprocessor = self._initialize_components(adjusted_effective_fps, visualization_mode, trajectory_duration_sec)
             
             with VideoProcessor(input_video_path) as processor:
                 if not processor.open(): raise RuntimeError(f"Could not open input video: {input_video_path}")
@@ -238,25 +292,44 @@ class AnalysisService:
                 metadata.resolution_width = processor.width
                 metadata.resolution_height = processor.height
                 vqa.set_video_metadata(processor.width, processor.height, processor.fps)
-                
+
+                if config.vqa_precheck_frames > 0:
+                    precheck_result = self._run_vqa_precheck(processor, pose_detector, preprocessor)
+                    analysis_result.vqa_result = precheck_result
+                    if vqa_callback:
+                        vqa_callback(precheck_result)
+                    if precheck_result.quality_class == "Critical" and not allow_vqa_critical_override and not config.vqa_allow_critical_override:
+                        logger.warning("Early precheck VQA critical failure. Aborting before full processing.")
+                        return "", "", "", analysis_result
+                    if precheck_result.quality_class == "Poor":
+                        logger.warning("Early precheck VQA flagged Poor quality. Continuing with caution.")
+
                 import time
                 start_time = time.time()
                 early_halt, valid_frames_count, peak_ram, peak_cpu = self._process_frames_loop(
                     processor, vqa, pose_detector, annotator, BiomechanicsCalculator, stroke_analyzer,
                     adjusted_effective_fps, visualization_mode, progress_callback, vqa_callback, analysis_result,
-                    frame_stride=stride, allow_vqa_critical_override=allow_vqa_critical_override
+                    frame_stride=stride, allow_vqa_critical_override=allow_vqa_critical_override,
+                    preprocessor=preprocessor
                 )
-                
+                processing_time = time.time() - start_time
+
                 if early_halt:
                     return "", "", "", analysis_result
-                    
+
                 frames_processed = len(analysis_result.frames)
-                logger.info(f"Successfully processed {frames_processed} frames.")
                 analysis_result.vqa_result = vqa.get_current_result()
-                
-                processing_time = time.time() - start_time
-                metadata.total_frames = frames_processed
-                metadata.duration_seconds = frames_processed / effective_fps if effective_fps > 0 else 0
+                if valid_frames_count < config.preprocess_min_valid_frames:
+                    analysis_result.vqa_result.quality_class = "Critical"
+                    analysis_result.vqa_result.passed = False
+                    analysis_result.vqa_result.warning_message = (
+                        "Too few valid pose frames were detected for reliable analysis. "
+                        "Consider re-recording with better lighting, camera stability, and swimmer visibility."
+                    )
+                    logger.warning("Insufficient valid frames after processing. Marking analysis as unreliable.")
+                    if not allow_vqa_critical_override and not config.vqa_allow_critical_override:
+                        return "", "", "", analysis_result
+                logger.info(f"Successfully processed {frames_processed} frames.")
                 metadata.processing_time_sec = processing_time
                 metadata.peak_ram_mb = peak_ram
                 metadata.peak_cpu_percent = peak_cpu

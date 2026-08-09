@@ -104,3 +104,50 @@ def test_get_sessions_by_athlete_ordering(db_session):
     # Should be sorted newest first
     assert sessions[0].session_id == s2.session_id
     assert sessions[1].session_id == s1.session_id
+
+
+def test_get_sessions_by_account_filtering(db_session):
+    service = AnalysisHistoryService(db_session=db_session)
+
+    user_session = AnalysisSession(
+        athlete_id=None,
+        account_id="user_abc",
+        analysis_timestamp="2026-08-01T09:00:00.000000",
+        original_video_filename="user.mp4",
+        processed_video_filename="user_out.mp4",
+        metadata_json_path="meta_user.json",
+        report_json_path="report_user.json",
+        performance_score=75.0,
+        scientific_confidence="Medium",
+        completed_cycles=8,
+        stroke_type="Backstroke",
+        processing_time_seconds=22.0
+    )
+    coach_session = AnalysisSession(
+        athlete_id="athlete_3",
+        account_id="coach_xyz",
+        analysis_timestamp="2026-08-01T11:00:00.000000",
+        original_video_filename="coach.mp4",
+        processed_video_filename="coach_out.mp4",
+        metadata_json_path="meta_coach.json",
+        report_json_path="report_coach.json",
+        performance_score=88.0,
+        scientific_confidence="High",
+        completed_cycles=14,
+        stroke_type="Freestyle",
+        processing_time_seconds=35.0
+    )
+
+    service.save_session(user_session)
+    service.save_session(coach_session)
+
+    user_sessions = service.get_sessions_by_account("user_abc")
+    coach_sessions = service.get_sessions_by_account("coach_xyz")
+
+    assert len(user_sessions) == 1
+    assert user_sessions[0].account_id == "user_abc"
+    assert user_sessions[0].original_video_filename == "user.mp4"
+
+    assert len(coach_sessions) == 1
+    assert coach_sessions[0].account_id == "coach_xyz"
+    assert coach_sessions[0].original_video_filename == "coach.mp4"

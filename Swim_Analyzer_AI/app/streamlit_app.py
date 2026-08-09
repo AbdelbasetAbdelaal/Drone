@@ -216,6 +216,125 @@ def render_consistency(analysis_result):
     safe_log("[TRACE] EXIT render_consistency")
 
 
+def render_admin_dashboard_page():
+    """Renders the Admin Console for site-wide account and athlete management."""
+    st.title("🏛 Admin Console")
+    st.markdown("Admin users can review accounts, manage athlete profiles, and delete records across the site.")
+
+    account_list = AuthService.get_all_accounts()
+    coach_count = sum(1 for a in account_list if a.role == "coach")
+    user_count = sum(1 for a in account_list if a.role == "user")
+    admin_count = sum(1 for a in account_list if a.role == "admin")
+
+    athlete_service = AthleteService()
+    all_athletes = athlete_service.get_all_profiles(coach_id=None)
+
+    history_service = AnalysisHistoryService()
+    all_sessions = history_service.get_all_sessions()
+
+    st.markdown("### 🔐 Account Summary")
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Total Accounts", len(account_list))
+    c2.metric("Coaches", coach_count)
+    c3.metric("Users", user_count)
+    c4.metric("Admins", admin_count)
+
+    st.markdown("---")
+    st.markdown("### 🔬 Scientific Database Management")
+    st.caption("Admin-only action: refresh the verified scientific literature database and benchmark coverage.")
+    if st.button("🔄 Update Scientific Database", key="btn_update_sci_db_admin_page"):
+        st.session_state["trigger_sci_db_update"] = True
+
+    if "last_sci_db_update_res" in st.session_state:
+        res = st.session_state["last_sci_db_update_res"]
+        verdict = res.get('verdict', '')
+        if res.get('database_changed') is False and verdict == "SUCCESSFUL_UPDATE":
+            st.success(f"✓ **Scientific Database Already Up To Date** — No new literature found.")
+        elif verdict == "INTERNET_UNAVAILABLE":
+            st.warning(f"⚠️ **Internet Literature Update Could Not Be Completed** — External scientific sources were unavailable. Previous verified database preserved intact. (Version: `{res.get('previous_version', '2026.08.08')}`)")
+        elif verdict == "UPDATE_ABORTED":
+            st.error(f"❌ **Scientific Database Update Aborted** — Safety validation tests failed. Previous verified database preserved intact. (Version: `{res.get('previous_version', '2026.08.08')}`)")
+        else:
+            st.success(f"✓ **Scientific Database Update Complete!** (Version: `{res.get('previous_version')}` → `{res.get('new_version')}`)")
+
+        with st.container(border=True):
+            st.markdown("### 🔬 Scientific Database Update Summary")
+            c1, c2, c3, c4 = st.columns(4)
+            c1.metric("Sources Discovered", res.get("sources_discovered", 0))
+            c2.metric("New Sources", res.get("new_sources", 0))
+            c3.metric("Full-Text Verified", res.get("full_text_verified", 0))
+            c4.metric("Evidence Candidates", res.get("evidence_candidates", 0))
+
+            c5, c6, c7, c8 = st.columns(4)
+            c5.metric("Benchmarks Added", res.get("benchmarks_added", 0))
+            c6.metric("Benchmarks Updated", res.get("benchmarks_updated", 0))
+            c7.metric("Newly Verified Cohorts", res.get("newly_verified_cohorts", 0))
+            c8.metric("Insufficient Evidence Cohorts", res.get("remaining_insufficient_cohorts", 0))
+
+            c9, c10, c11, c12 = st.columns(4)
+            c9.metric("Database Changed", "Yes" if res.get('database_changed') else "No")
+            test_status_str = "PASS (100%)" if res.get('tests_passed') else ("N/A (Offline)" if verdict == "INTERNET_UNAVAILABLE" else "FAIL")
+            st.caption(f"**Update Status**: `{res.get('verdict')}` | **Tests**: `{test_status_str}` | **Timestamp**: {res.get('timestamp')}")
+    
+    st.markdown("### 👥 Athlete Profiles")
+    if not all_athletes:
+        st.info("No athlete profiles are currently registered.")
+    else:
+        for athlete in all_athletes:
+            owner = "Unassigned" if not athlete.coach_id else athlete.coach_id
+            with st.container(border=True):
+                col1, col2 = st.columns([4, 1])
+                with col1:
+                    st.markdown(f"**{athlete.full_name}** | {athlete.swimming_level} | {athlete.preferred_stroke}")
+                    st.caption(f"Owner Coach ID: {owner}")
+                with col2:
+                    if st.button("Delete", key=f"delete_athlete_{athlete.athlete_id}", type="secondary"):
+                        if athlete_service.delete_profile(athlete.athlete_id):
+                            st.success(f"Deleted athlete {athlete.full_name}.")
+                            st.rerun()
+                        else:
+                            st.error("Unable to delete athlete profile.")
+
+    st.markdown("### 🧾 Account Management")
+    if not account_list:
+        st.info("No accounts registered.")
+    else:
+        for account in account_list:
+            with st.container(border=True):
+                col1, col2 = st.columns([4, 1])
+                with col1:
+                    st.markdown(f"**{account.full_name}** (@{account.username})")
+                    st.caption(f"Role: {account.role.title()} | Created: {account.created_at}")
+                with col2:
+                    if account.role != "admin":
+                        if st.button("Delete", key=f"delete_account_{account.coach_id}", type="secondary"):
+                            if AuthService.delete_account(account.coach_id):
+                                st.success(f"Deleted account {account.username}.")
+                                st.rerun()
+                            else:
+                                st.error("Unable to delete account.")
+                    else:
+                        st.markdown("*Protected*", unsafe_allow_html=True)
+
+    st.markdown("### 📊 System Activity")
+    st.write(f"Total analysis sessions: {len(all_sessions)}")
+    if all_sessions:
+        account_map = {a.coach_id: f"{a.username} ({a.role.title()})" for a in account_list}
+        latest = sorted(all_sessions, key=lambda s: s.analysis_timestamp, reverse=True)[:8]
+        for s in latest:
+            if s.athlete_id:
+                actor = s.athlete_id
+            elif s.account_id:
+                actor = "Personal Account Upload"
+            else:
+                actor = "Guest Session"
+            account_info = account_map.get(s.account_id, f"Unknown Account ({s.account_id})") if s.account_id else "No Account"
+            score_text = f"{s.performance_score:.1f}" if s.performance_score is not None else "N/A"
+            st.markdown(
+                f"- {s.analysis_timestamp}: {actor} | {s.stroke_type} | Score {score_text} | Uploaded by: {account_info} | Account ID: {s.account_id or 'None'}"
+            )
+
+
 def render_video_section(output_video_path, video_render_mode):
     safe_log("[TRACE] ENTER render_video_section")
     st.markdown("#### Annotated Video")
@@ -739,34 +858,54 @@ def render_athlete_profile_page():
 
 def render_history_page():
     """Renders the Standalone Analysis History & Session Comparison Page."""
-    st.title("📉 Analysis History")
-    st.markdown("Comprehensive analysis history logs, performance trends, and session-to-session comparisons.")
+    coach = st.session_state.get("current_coach")
+    current_coach_id = coach.coach_id if coach else None
+    current_role = coach.role if coach else None
+
+    if current_role == "admin":
+        st.title("🏛 Admin Analysis History")
+        st.markdown("Review site-wide analysis history and session records across all accounts.")
+    elif current_role == "coach":
+        st.title("📉 My Team Analysis History")
+        st.markdown("Review analysis sessions linked to your coach account and roster.")
+    else:
+        st.title("📉 My Analysis History")
+        st.markdown("Review analysis sessions uploaded using your user account.")
     st.markdown("---")
 
     history_service = AnalysisHistoryService()
     athlete_service = AthleteService()
     
-    coach = st.session_state.get("current_coach")
-    current_coach_id = coach.coach_id if coach else None
-    
-    profiles = athlete_service.get_all_profiles(coach_id=current_coach_id)
+    profiles = athlete_service.get_all_profiles(coach_id=current_coach_id) if current_role == "coach" else []
     athlete_map = {p.athlete_id: p.full_name for p in profiles}
 
-    all_sessions = history_service.get_all_sessions()
-    
-    # Filter sessions if logged in as coach
-    if current_coach_id and athlete_map:
-        history = [s for s in all_sessions if s.athlete_id in athlete_map]
+    if current_role == "admin":
+        history = history_service.get_all_sessions()
+    elif current_coach_id:
+        history = history_service.get_sessions_by_account(current_coach_id)
     else:
-        history = all_sessions
+        history = []
+
+    if current_coach_id:
+        st.info(f"Signed in as **{coach.full_name}** ({coach.role.title()}) — account ID: `{current_coach_id}`")
 
     if not history:
-        st.info("No recorded video analysis sessions found in history.")
+        if current_role == "admin":
+            st.info("No analysis sessions are currently recorded in the system.")
+        elif current_role == "coach":
+            st.info("No analysis sessions have been saved for your coach account yet.")
+        else:
+            st.info("No personal analysis session uploads found for your account yet.")
         return
 
     history_data = []
     for s in history:
-        swimmer_name = athlete_map.get(s.athlete_id, "Guest Swimmer") if s.athlete_id else "Guest Swimmer"
+        if s.athlete_id:
+            swimmer_name = athlete_map.get(s.athlete_id, "Guest Swimmer")
+        elif s.account_id:
+            swimmer_name = "Personal Account Upload"
+        else:
+            swimmer_name = "Guest Swimmer"
         date_str = s.analysis_timestamp.split("T")[0] if "T" in s.analysis_timestamp else s.analysis_timestamp[:10]
         time_str = s.analysis_timestamp.split("T")[1][:5] if "T" in s.analysis_timestamp else ""
         history_data.append({
@@ -792,7 +931,12 @@ def render_history_page():
 
         session_options = {}
         for i, s in enumerate(history):
-            swimmer = athlete_map.get(s.athlete_id, "Guest") if s.athlete_id else "Guest"
+            if s.athlete_id:
+                swimmer = athlete_map.get(s.athlete_id, "Guest")
+            elif s.account_id:
+                swimmer = "Personal Account Upload"
+            else:
+                swimmer = "Guest"
             date_str = s.analysis_timestamp.split("T")[0] if "T" in s.analysis_timestamp else s.analysis_timestamp[:10]
             score_label = f"{s.performance_score:.1f}" if s.performance_score is not None else "INSUFFICIENT_EVIDENCE"
             label = f"{swimmer} | {date_str} | Score: {score_label} | {s.stroke_type} ({s.session_id[:6]})"
@@ -966,24 +1110,44 @@ def render_dashboard_page():
 
 
 def render_login_portal():
-    """Renders main page Login / Registration Portal when no coach is logged in."""
-    st.title("🏊‍♂️ SwimAnalyzer AI — Coach Portal")
+    """Renders main page Login / Registration Portal when no account is logged in."""
+    st.title("🏊‍♂️ SwimAnalyzer AI — Account Portal")
     st.markdown("### Welcome to Professional Swimming Performance Analysis")
-    st.info("Please sign in or register a coach account to manage your team roster and video analyses.")
+    st.info("Sign in to continue with your account, or register as a user to analyze videos without coaching access.")
 
-    tab1, tab2 = st.tabs(["🔐 Sign In", "📝 Register New Coach"])
+    tab1, tab2 = st.tabs(["🔐 Sign In", "📝 Register New Account"])
 
     with tab1:
         with st.form("main_login_form"):
-            st.markdown("#### Coach Sign In")
-            st.caption("Demo credentials: Username **coach1** | Password **swim2026**")
-            username = st.text_input("Username", value="coach1", key="main_user")
-            password = st.text_input("Password", type="password", value="swim2026", key="main_pass")
+            st.markdown("#### Account Sign In")
+            sign_in_role = st.radio(
+                "Sign in as:",
+                ["User", "Coach", "Admin"],
+                index=1,
+                horizontal=True
+            )
+
+            role_help_text = {
+                "User": "Create or use a personal user account for your own analysis history.",
+                "Coach": "Sign in as a coach to manage athletes, rosters, and team sessions.",
+                "Admin": "Sign in as admin to manage accounts, athletes, and site-wide records."
+            }
+            st.caption(role_help_text[sign_in_role])
+
+            demo_credentials = {
+                "User": "Register a new user account or sign in with an existing user.",
+                "Coach": "Demo coach credentials: Username coach1 | Password swim2026",
+                "Admin": "Demo admin credentials: Username admin | Password admin2026"
+            }
+            st.info(demo_credentials[sign_in_role])
+
+            username = st.text_input("Username", value="coach1" if sign_in_role == "Coach" else "admin" if sign_in_role == "Admin" else "", key="main_user")
+            password = st.text_input("Password", type="password", value="swim2026" if sign_in_role == "Coach" else "admin2026" if sign_in_role == "Admin" else "", key="main_pass")
             submitted = st.form_submit_button("Sign In", type="primary", width="stretch")
             if submitted:
-                ok, msg, logged_coach = AuthService.login(username, password)
+                ok, msg, logged_account = AuthService.login(username, password)
                 if ok:
-                    st.session_state.current_coach = logged_coach
+                    st.session_state.current_coach = logged_account
                     st.success(msg)
                     st.rerun()
                 else:
@@ -991,16 +1155,18 @@ def render_login_portal():
 
     with tab2:
         with st.form("main_register_form"):
-            st.markdown("#### Create Coach Account")
+            st.markdown("#### Create New Account")
             new_username = st.text_input("Username", key="reg_user")
-            new_fullname = st.text_input("Full Name (e.g. Coach Sarah)", key="reg_name")
+            new_fullname = st.text_input("Full Name", key="reg_name")
             new_email = st.text_input("Email Address", key="reg_email")
             new_password = st.text_input("Password (min 6 characters)", type="password", key="reg_pass")
+            account_type = st.radio("Account Type", ["User", "Coach"], index=0, horizontal=True)
             submitted = st.form_submit_button("Create Account", type="primary", width="stretch")
             if submitted:
-                ok, msg, new_coach = AuthService.register_coach(new_username, new_password, new_fullname, new_email)
+                role = "user" if account_type == "User" else "coach"
+                ok, msg, new_account = AuthService.register_coach(new_username, new_password, new_fullname, new_email, role=role)
                 if ok:
-                    st.session_state.current_coach = new_coach
+                    st.session_state.current_coach = new_account
                     st.success(msg)
                     st.rerun()
                 else:
@@ -1008,10 +1174,10 @@ def render_login_portal():
 
 
 def render_coach_auth_sidebar():
-    """Renders Coach Authentication card in sidebar."""
-    st.sidebar.markdown("### 🔐 Coach Account")
+    """Renders Authentication card in sidebar."""
+    st.sidebar.markdown("### 🔐 Account")
     
-    # Ensure default demo coach exists in DB
+    # Ensure default demo accounts exist in DB
     AuthService.seed_default_coach()
     
     if "current_coach" not in st.session_state:
@@ -1023,7 +1189,7 @@ def render_coach_auth_sidebar():
             f"""<div style="background:linear-gradient(135deg,#0055FF,#00F0FF); color:white;
             padding:10px 14px; border-radius:10px; margin-bottom:10px;">
             <div style="font-weight:bold; font-size:1.05rem;">📋 {coach.full_name}</div>
-            <div style="font-size:0.8rem; opacity:0.9;">Coach ID: @{coach.username}</div>
+            <div style="font-size:0.8rem; opacity:0.9;">Role: {coach.role.title()} | @{coach.username}</div>
             </div>""",
             unsafe_allow_html=True
         )
@@ -1033,7 +1199,7 @@ def render_coach_auth_sidebar():
             st.rerun()
     else:
         st.sidebar.warning("Not Logged In")
-        auth_mode = st.sidebar.radio("Account Action", ["Sign In", "Register New Coach"], label_visibility="collapsed")
+        auth_mode = st.sidebar.radio("Account Action", ["Sign In", "Register New Account"], label_visibility="collapsed")
         if auth_mode == "Sign In":
             with st.sidebar.form("coach_login_form"):
                 username = st.text_input("Username", value="coach1")
@@ -1053,9 +1219,11 @@ def render_coach_auth_sidebar():
                 new_fullname = st.text_input("Full Name")
                 new_email = st.text_input("Email (Optional)")
                 new_password = st.text_input("New Password", type="password")
-                submitted = st.form_submit_button("Register Coach", type="primary", width="stretch")
+                account_type = st.radio("Account Type", ["User", "Coach"], index=0, horizontal=True)
+                submitted = st.form_submit_button("Register Account", type="primary", width="stretch")
                 if submitted:
-                    ok, msg, new_coach = AuthService.register_coach(new_username, new_password, new_fullname, new_email)
+                    role = "user" if account_type == "User" else "coach"
+                    ok, msg, new_coach = AuthService.register_coach(new_username, new_password, new_fullname, new_email, role=role)
                     if ok:
                         st.session_state.current_coach = new_coach
                         st.sidebar.success(msg)
@@ -1087,14 +1255,44 @@ def main():
     if "nav_mode" not in st.session_state:
         st.session_state["nav_mode"] = "📊 Coach Dashboard"
 
-    nav_options = ["📊 Coach Dashboard", "🏊‍♂️ Video Analysis", "👥 Athletes", "📉 Analysis History"]
+    current_role = st.session_state.current_coach.role if st.session_state.get("current_coach") else None
+    if current_role == "admin":
+        nav_options = ["🏛 Admin Console", "📊 Coach Dashboard", "🏊‍♂️ Video Analysis", "👥 Athletes", "📉 Analysis History"]
+    elif current_role == "coach":
+        nav_options = ["📊 Coach Dashboard", "🏊‍♂️ Video Analysis", "👥 Athletes", "📉 Analysis History"]
+    else:
+        nav_options = ["🏊‍♂️ Video Analysis", "📉 Analysis History"]
+
     default_idx = nav_options.index(st.session_state["nav_mode"]) if st.session_state["nav_mode"] in nav_options else 0
 
     st.sidebar.markdown("### Navigation")
     app_mode = st.sidebar.radio("Go to:", nav_options, index=default_idx, label_visibility="collapsed")
     st.session_state["nav_mode"] = app_mode
     st.sidebar.markdown("---")
-    
+
+    if current_role == "admin" and st.session_state.get("trigger_sci_db_update", False):
+        st.markdown("---")
+        st.info("🔄 Initiating ONE Scientific Literature Database Update Transaction...")
+        st.caption("Searching PubMed, PMC, Europe PMC for peer-reviewed swimming literature, verifying provenance, and rebuilding coverage matrix...")
+
+        prog_bar = st.progress(0, text="Starting scientific database update...")
+        prog_status = st.empty()
+
+        def ui_progress_cb(msg: str, pct: int):
+            prog_bar.progress(pct, text=f"{msg} ({pct}%)")
+            prog_status.markdown(f"⏳ **{msg}**")
+
+        from services.scientific_updater_service import ScientificUpdaterService
+        updater = ScientificUpdaterService()
+        res = updater.run_update_cycle(progress_callback=ui_progress_cb)
+
+        st.session_state["trigger_sci_db_update"] = False
+        st.session_state["last_sci_db_update_res"] = res
+        st.rerun()
+
+    if app_mode == "🏛 Admin Console":
+        render_admin_dashboard_page()
+        return
     if app_mode == "📊 Coach Dashboard":
         render_dashboard_page()
         return
@@ -1116,34 +1314,41 @@ def main():
     st.sidebar.markdown("### Current Athlete")
     athlete_service = AthleteService()
     current_coach_id = st.session_state.current_coach.coach_id if st.session_state.get("current_coach") else None
-    profiles = athlete_service.get_all_profiles(coach_id=current_coach_id)
+    current_role = st.session_state.current_coach.role if st.session_state.get("current_coach") else None
+    profiles = athlete_service.get_all_profiles(coach_id=current_coach_id) if current_role == "coach" else []
     
-    athlete_options = {"None": "Guest Session"}
-    for p in profiles:
-        athlete_options[p.athlete_id] = f"{p.full_name} ({p.swimming_level})"
-        
-    selected_athlete_id = st.sidebar.selectbox(
-        "Select Profile", 
-        options=list(athlete_options.keys()), 
-        format_func=lambda x: athlete_options[x],
-        label_visibility="collapsed"
-    )
+    if current_role == "coach":
+        athlete_options = {"None": "Guest Session"}
+        for p in profiles:
+            athlete_options[p.athlete_id] = f"{p.full_name} ({p.swimming_level})"
+        selected_athlete_id = st.sidebar.selectbox(
+            "Select Profile", 
+            options=list(athlete_options.keys()), 
+            format_func=lambda x: athlete_options[x],
+            label_visibility="collapsed"
+        )
+    else:
+        selected_athlete_id = "None"
+        st.sidebar.markdown("**Upload type:** Personal account analysis")
+
     st.sidebar.markdown("---")
 
-    # Main UI: Athlete Summary Card
-    if selected_athlete_id == "None":
-        st.info("ℹ️ **Guest Session:** Analysis will not be linked to an athlete profile.")
+    # Main UI: Athlete / Account Summary Card
+    if current_role == "coach":
+        if selected_athlete_id == "None":
+            st.info("ℹ️ **Guest Session:** Analysis will not be linked to an athlete profile.")
+        else:
+            selected_profile = next((p for p in profiles if p.athlete_id == selected_athlete_id), None)
+            if selected_profile:
+                with st.container(border=True):
+                    st.markdown(f"#### 👤 Active Athlete: {selected_profile.full_name}")
+                    col1, col2, col3, col4 = st.columns(4)
+                    col1.metric("Age", selected_profile.age)
+                    col2.metric("Height", f"{selected_profile.height_cm} cm")
+                    col3.metric("Level", selected_profile.swimming_level)
+                    col4.metric("Preferred Stroke", selected_profile.preferred_stroke)
     else:
-        # Find the selected profile
-        selected_profile = next((p for p in profiles if p.athlete_id == selected_athlete_id), None)
-        if selected_profile:
-            with st.container(border=True):
-                st.markdown(f"#### 👤 Active Athlete: {selected_profile.full_name}")
-                col1, col2, col3, col4 = st.columns(4)
-                col1.metric("Age", selected_profile.age)
-                col2.metric("Height", f"{selected_profile.height_cm} cm")
-                col3.metric("Level", selected_profile.swimming_level)
-                col4.metric("Preferred Stroke", selected_profile.preferred_stroke)
+        st.info("ℹ️ **Personal Account Upload:** This analysis will be saved to your user account and not treated as a guest session.")
 
     # Sidebar: Video Upload
     st.sidebar.markdown("### Video Upload")
@@ -1259,10 +1464,7 @@ def main():
             index=0
         )
 
-        st.sidebar.markdown("---")
-        st.sidebar.markdown("### 🔬 Scientific Database Management")
-        if st.sidebar.button("🔄 Update Scientific Database", key="btn_update_sci_db_sidebar"):
-            st.session_state["trigger_sci_db_update"] = True
+        current_role = st.session_state.current_coach.role if st.session_state.get("current_coach") else None
 
         if "analysis_state" not in st.session_state:
             st.session_state.analysis_state = "ready"
@@ -1271,7 +1473,7 @@ def main():
         if "completed_analysis" not in st.session_state:
             st.session_state.completed_analysis = None
 
-        if st.session_state.get("trigger_sci_db_update", False):
+        if current_role == "admin" and st.session_state.get("trigger_sci_db_update", False):
             st.markdown("---")
             st.info("🔄 Initiating ONE Scientific Literature Database Update Transaction...")
             st.caption("Searching PubMed, PMC, Europe PMC for peer-reviewed swimming literature, verifying provenance, and rebuilding coverage matrix...")
@@ -1501,6 +1703,7 @@ def main():
                         history_service = AnalysisHistoryService()
                         session = AnalysisSession(
                             athlete_id=selected_athlete_id if selected_athlete_id != "None" else None,
+                            account_id=st.session_state.current_coach.coach_id if st.session_state.get("current_coach") else None,
                             analysis_timestamp=datetime.now().isoformat(),
                             original_video_filename=uploaded_file.name,
                             processed_video_filename=Path(output_video_path).name if output_video_path else "",

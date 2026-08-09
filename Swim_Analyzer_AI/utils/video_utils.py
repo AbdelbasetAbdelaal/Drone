@@ -63,19 +63,17 @@ class VideoProcessor:
             self.height = int(self.height * scale)
             logger.info(f"Output video will be downscaled to {self.width}x{self.height} (480p max) for stability.")
             
-        # Fallback codec strategy: try 'mp4v' first, then 'avc1'
-        codec_str = 'mp4v'
-        fourcc = cv2.VideoWriter_fourcc(*codec_str)
-        self._writer = cv2.VideoWriter(
-            output_path, 
-            fourcc, 
-            self.fps, 
-            (self.width, self.height)
-        )
-        
-        if not self._writer.isOpened():
-            logger.error(f"Failed to create video writer at: {output_path}")
-            return False
+        # Fallback codec strategy: try 'mp4v' first, then 'avc1', then 'XVID'
+        for codec_str in ('mp4v', 'avc1', 'XVID'):
+            fourcc = cv2.VideoWriter_fourcc(*codec_str)
+            self._writer = cv2.VideoWriter(output_path, fourcc, self.fps, (self.width, self.height))
+            if self._writer.isOpened():
+                logger.info(f"Writer setup complete for: {output_path} (Codec: {codec_str})")
+                return True
+            logger.warning(f"Video writer failed with codec {codec_str}, trying next codec.")
+
+        logger.error(f"Failed to create video writer at: {output_path} with available codecs.")
+        return False
             
         logger.info(f"Writer setup complete for: {output_path} (Codec: {codec_str})")
         return True
@@ -88,6 +86,13 @@ class VideoProcessor:
             
         self._writer.write(frame)
         
+    def rewind(self) -> bool:
+        """Seeks the capture back to the first frame."""
+        if self._cap is None:
+            logger.warning("Cannot rewind: capture is not initialized.")
+            return False
+        return self._cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+
     def generate_frames(self) -> Generator[np.ndarray, None, None]:
         """
         Yields frames from the video sequentially.
@@ -227,6 +232,69 @@ class VideoProcessor:
     def __exit__(self, exc_type, exc_val, exc_tb):
         """Context manager support."""
         self.close()
+
+class VideoPreprocessor:
+    """Applies optional auto exposure, contrast enhancement, and stabilization."""
+    def __init__(self):
+        self.prev_gray = None
+        self.prev_transform = np.eye(3, dtype=np.float32)
+        self.clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+
+    def preprocess(self, frame: np.ndarray, auto_exposure: bool = True,
+                   auto_contrast: bool = True, stabilization: bool = False,
+                   clahe_clip_limit: float = 2.0) -> np.ndarray:
+        if frame is None:
+            return frame
+
+        processed = frame.copy()
+        if auto_exposure or auto_contrast:
+            processed = self._apply_clahe(processed, clahe_clip_limit)
+
+        if stabilization:
+            processed = self._stabilize_frame(processed)
+
+        return processed
+
+    def _apply_clahe(self, frame: np.ndarray, clip_limit: float) -> np.ndarray:
+        lab = cv2.cvtColor(frame, cv2.COLOR_BGR2LAB)
+        l, a, b = cv2.split(lab)
+        cl = self.clahe.apply(l)
+        merged = cv2.merge((cl, a, b))
+        return cv2.cvtColor(merged, cv2.COLOR_LAB2BGR)
+
+    def _stabilize_frame(self, frame: np.ndarray) -> np.ndarray:
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        if self.prev_gray is None:
+            self.prev_gray = gray
+            return frame
+
+        prev_pts = cv2.goodFeaturesToTrack(
+            self.prev_gray, maxCorners=200, qualityLevel=0.01, minDistance=32, blockSize=7
+        )
+        if prev_pts is None:
+            self.prev_gray = gray
+            return frame
+
+        next_pts, status, _ = cv2.calcOpticalFlowPyrLK(self.prev_gray, gray, prev_pts, None)
+        if next_pts is None or status is None:
+            self.prev_gray = gray
+            return frame
+
+        good_prev = prev_pts[status.flatten() == 1]
+        good_next = next_pts[status.flatten() == 1]
+        if len(good_prev) < 8 or len(good_next) < 8:
+            self.prev_gray = gray
+            return frame
+
+        transform, inliers = cv2.estimateAffinePartial2D(good_prev, good_next)
+        if transform is None:
+            self.prev_gray = gray
+            return frame
+
+        stabilized = cv2.warpAffine(frame, transform, (frame.shape[1], frame.shape[0]), flags=cv2.INTER_LINEAR)
+        self.prev_gray = gray
+        return stabilized
+
 
 def get_video_info(video_path: str) -> dict:
     """

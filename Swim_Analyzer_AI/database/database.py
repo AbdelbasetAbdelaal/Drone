@@ -31,16 +31,24 @@ def init_db():
             if "coach_id" not in columns:
                 conn.execute(text("ALTER TABLE athletes ADD COLUMN coach_id VARCHAR"))
                 conn.commit()
-
+            coach_columns = [row[1] for row in conn.execute(text("PRAGMA table_info(coaches)")).fetchall()]
+            if "role" not in coach_columns:
+                conn.execute(text("ALTER TABLE coaches ADD COLUMN role VARCHAR DEFAULT 'coach'"))
+                conn.commit()
+                conn.execute(text("UPDATE coaches SET role = 'coach' WHERE role IS NULL"))
+                conn.commit()
             res_coach = conn.execute(text("SELECT coach_id FROM coaches WHERE username = 'coach1'")).fetchone()
             if res_coach:
                 c1_id = res_coach[0]
                 conn.execute(text("UPDATE athletes SET coach_id = :cid WHERE coach_id IS NULL"), {"cid": c1_id})
                 conn.commit()
 
-            # Migration for benchmark_summary_json column in analysis_sessions table
+            # Migration for account_id column in analysis_sessions table
             res_sess = conn.execute(text("PRAGMA table_info(analysis_sessions)"))
             sess_cols = [row[1] for row in res_sess.fetchall()]
+            if "account_id" not in sess_cols:
+                conn.execute(text("ALTER TABLE analysis_sessions ADD COLUMN account_id VARCHAR"))
+                conn.commit()
             if "benchmark_summary_json" not in sess_cols:
                 conn.execute(text("ALTER TABLE analysis_sessions ADD COLUMN benchmark_summary_json TEXT"))
                 conn.commit()

@@ -26,6 +26,17 @@ vqa:
   reflection_threshold: 0.10
   early_halt_frames: 40
   allow_critical_override: false
+  precheck_frames: 8
+  precheck_stride: 5
+  precheck_contrast_min: 20.0
+
+preprocess:
+  enable: false
+  auto_exposure: true
+  auto_contrast: true
+  stabilization: false
+  clahe_clip_limit: 2.0
+  min_valid_frames: 6
 
 video:
   downscale_width: 854

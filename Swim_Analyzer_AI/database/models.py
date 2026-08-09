@@ -10,6 +10,7 @@ class CoachModel(Base):
     password_hash = Column(String, nullable=False)
     salt = Column(String, nullable=False)
     full_name = Column(String, nullable=False)
+    role = Column(String, nullable=False, default="coach")
     email = Column(String, nullable=True)
     created_at = Column(String, nullable=False)
 
@@ -41,6 +42,7 @@ class AnalysisSessionModel(Base):
 
     session_id = Column(String, primary_key=True, index=True)
     athlete_id = Column(String, ForeignKey("athletes.athlete_id"), nullable=True, index=True)
+    account_id = Column(String, nullable=True, index=True)
     
     analysis_timestamp = Column(String, nullable=False)
     original_video_filename = Column(String, nullable=False)
