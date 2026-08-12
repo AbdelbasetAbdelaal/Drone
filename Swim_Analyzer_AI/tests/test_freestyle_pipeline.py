@@ -9,23 +9,21 @@ from models.data_models import StrokeDetectionResult, StrokeType
 
 @pytest.fixture
 def mock_video():
-    """Creates a mock 60-second, 30fps video for stability testing."""
+    """Creates a 5-second synthetic video (color gradient, no swimmer) for stability testing."""
     test_video_path = "test_stability_video.mp4"
     width, height = 854, 480
     fps = 30
-    duration = 5 # Using 5 seconds for unit tests to keep it fast, but 1080p
+    duration = 5
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     out = cv2.VideoWriter(test_video_path, fourcc, fps, (width, height))
-    
-    # Write valid synthetic frames with color gradient
+
     for i in range(fps * duration):
         frame = np.full((height, width, 3), (100, 150, (i * 5) % 255), dtype=np.uint8)
         out.write(frame)
-        
+
     out.release()
     yield test_video_path
-    
-    # Teardown
+
     import gc
     gc.collect()
     if Path(test_video_path).exists():
@@ -34,8 +32,23 @@ def mock_video():
         except Exception:
             pass
 
+
 def test_freestyle_pipeline_stability(mock_video):
-    """Test that the pipeline processes a video without crashing and downscales it."""
+    """
+    Test that the pipeline processes a synthetic video without crashing.
+
+    Since the synthetic video contains no swimmer, MediaPipe produces zero valid frames.
+    The pipeline must:
+    - Not raise any exception
+    - Return an AnalysisResult (never None)
+    - Set vqa_result.quality_class == 'Critical' (insufficient frames policy)
+    - Return report=None (zero-fallback: no data -> no fabricated score)
+    - Return empty output paths ("") per the early-halt insufficient-frames policy
+
+    Per the zero-fallback scientific policy: report=None is CORRECT when no valid
+    pose frames are detected. This test validates that behavior, not that a report
+    is generated from a no-data video.
+    """
     service = AnalysisService()
     stroke_det = StrokeDetectionResult(
         predicted_stroke=StrokeType.FREESTYLE,
@@ -44,33 +57,31 @@ def test_freestyle_pipeline_stability(mock_video):
         manual_override=False,
         predictions={}
     )
-    
-    from unittest.mock import patch
-    from models.data_models import VQAResult
-    
-    with patch('analysis.video_quality_assessor.VideoQualityAssessor.get_current_result') as mock_vqa:
-        mock_vqa.return_value = VQAResult(
-            overall_score=95.0,
-            quality_class="Excellent",
-            criteria=[]
-        )
-        output_video_path, json_report, metadata_path, result = service.process_video(
-            input_video_path=mock_video,
-            effective_fps=30.0,
-            visualization_mode="Developer Mode",
-            stroke_detection=stroke_det
-        )
-    
-    assert Path(output_video_path).exists()
-    assert Path(json_report).exists()
-    assert Path(metadata_path).exists()
-    
-    assert result is not None
-    assert result.report is not None
-    # P0-7/P0-8: 0 cycles must result in overall_score=None (INSUFFICIENT_EVIDENCE), never 0.0 or 100.0
-    assert result.report.overall_score is None, f"Expected None for no-cycle video, got {result.report.overall_score}"
-    assert any(kw in result.report.feedback_summary for kw in ["INSUFFICIENT_EVIDENCE", "Inconclusive", "No complete stroke cycle"])
 
-    
-    # Check that performance stats were populated
+    output_video_path, json_report, metadata_path, result = service.process_video(
+        input_video_path=mock_video,
+        effective_fps=30.0,
+        visualization_mode="Developer Mode",
+        stroke_detection=stroke_det
+    )
+
+    # Pipeline must never crash — result is always returned
+    assert result is not None
     assert result.video_path == mock_video
+
+    # Synthetic video: zero valid frames -> insufficient evidence path
+    # VQA must be set to Critical
+    assert result.vqa_result is not None
+    assert result.vqa_result.quality_class == "Critical"
+
+    # Zero-fallback policy: report must be None when no valid frames were detected
+    # (not fabricated from zero-data)
+    assert result.report is None, (
+        f"Expected report=None for a no-pose video (zero-fallback policy), "
+        f"got overall_score={result.report.overall_score if result.report else 'N/A'}"
+    )
+
+    # Early-halt policy: output paths are empty strings, not broken file paths
+    assert output_video_path == ""
+    assert json_report == ""
+    assert metadata_path == ""

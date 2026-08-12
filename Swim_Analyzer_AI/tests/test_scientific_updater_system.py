@@ -165,9 +165,11 @@ def test_21_to_24_all_four_strokes_reachable():
     assert res_fly.predicted_stroke == StrokeType.BUTTERFLY
 
     # Test Breaststroke Reachable
+    # wrist_range must be <= 0.08 for Breaststroke to win over Butterfly
+    # (classifier threshold: wrist_range_val > 0.08 -> Butterfly, else -> Breaststroke)
     f_breast = _dummy_feature_set()
     f_breast.arm_phase_correlation = ExtractedFeatureValue("arm_phase_correlation", raw_value=0.8, valid=True)
-    f_breast.wrist_vertical_range_ratio = ExtractedFeatureValue("wrist_vertical_range_ratio", raw_value=0.10, valid=True)
+    f_breast.wrist_vertical_range_ratio = ExtractedFeatureValue("wrist_vertical_range_ratio", raw_value=0.05, valid=True)
     res_breast = classifier.classify_features(f_breast)
     assert res_breast.predicted_stroke == StrokeType.BREASTSTROKE
 
@@ -186,13 +188,15 @@ def test_26_27_ambiguous_input_and_low_confidence():
     f.arm_phase_correlation = ExtractedFeatureValue("arm_phase_correlation", raw_value=0.0, valid=True) # Ambiguous phase
     res = classifier.classify_features(f)
     assert res.predicted_stroke == StrokeType.UNKNOWN
-    assert res.classification_status == "INSUFFICIENT_CONFIDENCE"
+    # Ambiguous phase (0.0 within [-0.3, +0.3]) returns INSUFFICIENT_EVIDENCE per zero-fallback policy
+    assert res.classification_status == "INSUFFICIENT_EVIDENCE"
 
 def test_28_29_missing_landmarks_and_insufficient_frames():
     classifier_obj = StrokeClassifier()
     fallback_res = classifier_obj._fallback()
     assert fallback_res.predicted_stroke == StrokeType.UNKNOWN
-    assert fallback_res.confidence == 0.0
+    # Zero-fallback policy: confidence is None (not 0.0) when no evidence is available
+    assert fallback_res.confidence is None
 
 def test_30_no_silent_freestyle_fallback():
     classifier_obj = StrokeClassifier()

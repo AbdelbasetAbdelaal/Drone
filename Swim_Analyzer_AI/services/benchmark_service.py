@@ -22,7 +22,7 @@ class BenchmarkService:
         Attaches benchmark_result to analysis_result.
         """
         try:
-            benchmark_result = self.engine.evaluate_full_analysis(analysis_result, athlete_profile)
+            benchmark_result = self.engine.evaluate_analysis(analysis_result, athlete_profile)
             analysis_result.benchmark_result = benchmark_result
             logger.info(f"Successfully evaluated benchmarks (Skill: {benchmark_result.overall_skill_level}, Dataset: {benchmark_result.dataset_name})")
             return benchmark_result

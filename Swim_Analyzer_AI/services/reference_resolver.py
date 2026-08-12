@@ -25,6 +25,14 @@ class ResolvedReferenceMatch:
     disclaimers: List[str] = field(default_factory=list)
 
 class ReferenceDataResolver:
+    @staticmethod
+    def _normalize_metric_name(name: str) -> str:
+        """Normalize a metric name for comparison: lowercase, spaces→underscores.
+        Allows 'Stroke Rate' to match 'stroke_rate', 'DPS' to match 'dps', etc.
+        """
+        return name.lower().replace(" ", "_").replace("-", "_")
+
+
     """
     Evaluates reference dataset priority.
     Enforces compatibility-first policy: demographic incompatibility (age, sex, stroke)
@@ -126,7 +134,16 @@ class ReferenceDataResolver:
                 continue
 
             # Find matching metric in dataset
-            m_match = next((m for m in ds.metrics if m.metric_name.lower() == metric_name.lower() or m.display_name.lower() == metric_name.lower()), None)
+            # Find matching metric in dataset — normalized comparison handles
+            # display-name vs snake_case mismatches (e.g. "Stroke Rate" == "stroke_rate")
+            _norm = cls._normalize_metric_name
+            m_match = next(
+                (m for m in ds.metrics
+                 if _norm(m.metric_name) == _norm(metric_name)
+                 or _norm(m.display_name) == _norm(metric_name)),
+                None
+            )
+
             if not m_match:
                 continue
 

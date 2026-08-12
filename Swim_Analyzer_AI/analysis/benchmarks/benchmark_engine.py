@@ -285,7 +285,9 @@ class BenchmarkEngine:
 
     def evaluate_analysis(self, result: AnalysisResult, athlete_profile: Optional[AthleteProfile] = None) -> BenchmarkResult:
         """Runs population benchmark evaluation across all available biomechanical metrics."""
-        stroke = result.stroke_detection.selected_stroke.value if result.stroke_detection else "Freestyle"
+        # stroke_detection lives on VideoMetadata, not AnalysisResult — use getattr for safety
+        stroke_det = getattr(result, 'stroke_detection', None)
+        stroke = stroke_det.selected_stroke.value if stroke_det else "Freestyle"
         if stroke not in ["Freestyle", "Backstroke", "Breaststroke", "Butterfly"]:
             stroke = "Freestyle"
 
@@ -351,3 +353,5 @@ class BenchmarkEngine:
             bm_res.comparisons[m_name] = comp
 
         return bm_res
+
+    evaluate_full_analysis = evaluate_analysis
