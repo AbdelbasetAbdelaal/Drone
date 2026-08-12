@@ -1,0 +1,6 @@
+stroke: Freestyle
+populations:
+  '18-25':
+    Male:
+      stroke_rate:
+        unit: spm

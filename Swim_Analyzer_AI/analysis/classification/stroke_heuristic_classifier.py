@@ -115,31 +115,35 @@ class StrokeHeuristicClassifier:
             is_freestyle_roll = (roll_amp is not None and roll_amp > 15.0)
             is_freestyle_wrist = (wrist_range_val is not None and wrist_range_val > 0.12)
 
+            # Alternating arm motion is shared by Freestyle and Backstroke.
+            # Without explicit supine orientation, high roll/excursion gives slight edge to Freestyle,
+            # but maintains an ambiguous candidate margin so AI Verifier is invoked for validation.
             if is_freestyle_wrist or is_freestyle_roll:
-                scores[StrokeType.FREESTYLE] += 0.85
-                scores[StrokeType.BACKSTROKE] += 0.15
-                contributions["freestyle_roll_amplitude"] = +0.85
+                scores[StrokeType.FREESTYLE] += 0.60
+                scores[StrokeType.BACKSTROKE] += 0.40
+                contributions["freestyle_roll_amplitude"] = +0.60
             else:
-                scores[StrokeType.BACKSTROKE] += 0.85
-                scores[StrokeType.FREESTYLE] += 0.15
-                contributions["backstroke_roll_amplitude"] = +0.85
+                scores[StrokeType.BACKSTROKE] += 0.60
+                scores[StrokeType.FREESTYLE] += 0.40
+                contributions["backstroke_roll_amplitude"] = +0.60
 
         elif phi_arm > +0.3:
             contributions["arm_phase_simultaneous"] = +0.4
 
             if wrist_range_val is not None and wrist_range_val > 0.08:
-                scores[StrokeType.BUTTERFLY] += 0.85
-                scores[StrokeType.BREASTSTROKE] += 0.15
-                contributions["butterfly_wrist_excursion"] = +0.85
+                scores[StrokeType.BUTTERFLY] += 0.60
+                scores[StrokeType.BREASTSTROKE] += 0.40
+                contributions["butterfly_wrist_excursion"] = +0.60
             else:
-                scores[StrokeType.BREASTSTROKE] += 0.85
-                scores[StrokeType.BUTTERFLY] += 0.15
-                contributions["breaststroke_wrist_excursion"] = +0.85
+                scores[StrokeType.BREASTSTROKE] += 0.60
+                scores[StrokeType.BUTTERFLY] += 0.40
+                contributions["breaststroke_wrist_excursion"] = +0.60
 
             if leg_sym_val is not None and leg_sym_val > +0.5:
-                scores[StrokeType.BREASTSTROKE] += 0.10
-                scores[StrokeType.BUTTERFLY] += 0.10
-                contributions["leg_symmetry_simultaneous"] = +0.10
+                scores[StrokeType.BREASTSTROKE] += 0.15
+                scores[StrokeType.BUTTERFLY] += 0.05
+                contributions["leg_symmetry_simultaneous"] = +0.15
+
 
         total_score = sum(scores.values())
         if total_score <= 0.0:
@@ -165,6 +169,8 @@ class StrokeHeuristicClassifier:
         top_confidence = predictions[top_stroke_str]
         predicted_stroke = StrokeType(top_stroke_str)
 
+        evidence_list = [f"Rule contribution: {k} ({v:+.2f})" for k, v in contributions.items()]
+
         return StrokeDetectionResult(
             predicted_stroke=predicted_stroke,
             confidence=top_confidence,
@@ -178,6 +184,9 @@ class StrokeHeuristicClassifier:
             feature_contributions=contributions,
             missing_evidence=missing_evidence,
             rule_prediction=predicted_stroke,
+            confidence_type="UNCALIBRATED_DECISION_SCORE",
+            evidence={"rule_evidence": evidence_list},
             classifier_version=self.classifier_version,
             threshold_version=self.threshold_version
         )
+
