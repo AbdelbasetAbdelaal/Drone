@@ -72,7 +72,45 @@ class HybridStrokeDecisionEngine:
         ))
         conflicts = list(set((rule_result.conflicts or []) + ai_conflicts))
 
-        # Rule 1: Visibility Gate Enforcement
+        rule_valid = rule_result.classification_status not in ["INSUFFICIENT_EVIDENCE", "INSUFFICIENT_VISIBILITY", "FALLBACK_DEFAULT"] and rule_result.predicted_stroke != StrokeType.UNKNOWN
+        ai_valid = ai_result is not None and ai_result.classification_status not in ["INSUFFICIENT_EVIDENCE", "INSUFFICIENT_VISIBILITY", "FALLBACK_DEFAULT"] and ai_result.predicted_stroke != StrokeType.UNKNOWN
+
+        # Case A / Python Primary Accepted (AI verifier disabled or not invoked)
+        if ai_result is None:
+            if rule_result.predicted_stroke != StrokeType.UNKNOWN and rule_result.confidence is not None:
+                res = StrokeDetectionResult(
+                    predicted_stroke=rule_result.predicted_stroke,
+                    confidence=rule_result.confidence,
+                    predictions=rule_result.predictions or {},
+                    selected_stroke=selected_stroke_input,
+                    manual_override=False,
+                    is_inconsistent=False,
+                    classification_status=rule_result.classification_status,
+                    classification_reason=f"Primary Python Kinematic Classifier: {rule_result.classification_reason}",
+                    feature_values=rule_result.feature_values or {},
+                    feature_contributions=rule_result.feature_contributions or {},
+                    confidence_type="UNCALIBRATED_DECISION_SCORE",
+                    uncertainty=round(1.0 - (rule_result.confidence or 0.0), 4),
+                    rule_prediction=rule_result.predicted_stroke,
+                    ai_prediction=None,
+                    agreement=None,
+                    evidence=rule_result.evidence or {"reason": "Python Kinematic Engine Primary Accepted"},
+                    missing_evidence=missing_evidence,
+                    conflicts=conflicts,
+                    method="PYTHON_PRIMARY_ACCEPTED"
+                )
+                return HybridStrokeDecision(
+                    stroke_type=rule_result.predicted_stroke,
+                    confidence=rule_result.confidence,
+                    evidence=res.evidence,
+                    rule_contributions=rule_result.feature_contributions or {},
+                    ai_contributions={},
+                    uncertainty=res.uncertainty,
+                    raw_detection_result=res
+                )
+
+
+        # Rule 1: Visibility Gate Enforcement (for hybrid AI mode)
         if not visibility_result.is_sufficient:
             conflicts.append(f"Visibility Gate failed: {visibility_result.gate_reason}")
             res = StrokeDetectionResult(
@@ -101,68 +139,34 @@ class HybridStrokeDecisionEngine:
                 rule_contributions={}, ai_contributions={}, uncertainty=1.0, raw_detection_result=res
             )
 
-        rule_valid = rule_result.classification_status not in ["INSUFFICIENT_EVIDENCE", "INSUFFICIENT_VISIBILITY", "FALLBACK_DEFAULT"] and rule_result.predicted_stroke != StrokeType.UNKNOWN
-        ai_valid = ai_result is not None and ai_result.classification_status not in ["INSUFFICIENT_EVIDENCE", "INSUFFICIENT_VISIBILITY", "FALLBACK_DEFAULT"] and ai_result.predicted_stroke != StrokeType.UNKNOWN
+        # Rule 2: Insufficient Python Kinematic Evidence
+        if rule_result.predicted_stroke == StrokeType.UNKNOWN or rule_result.confidence is None:
+            res = StrokeDetectionResult(
+                predicted_stroke=StrokeType.UNKNOWN,
+                confidence=None,
+                predictions={},
+                selected_stroke=selected_stroke_input,
+                manual_override=False,
+                is_inconsistent=False,
+                classification_status="INSUFFICIENT_EVIDENCE",
+                classification_reason="Primary Python Kinematic Classifier reported insufficient evidence.",
+                feature_values=rule_result.feature_values or {},
+                feature_contributions={},
+                confidence_type="UNCALIBRATED_DECISION_SCORE",
+                uncertainty=1.0,
+                rule_prediction=None,
+                ai_prediction=None,
+                agreement=None,
+                evidence={},
+                missing_evidence=missing_evidence,
+                conflicts=conflicts,
+                method="PYTHON_PRIMARY"
+            )
+            return HybridStrokeDecision(
+                stroke_type=StrokeType.UNKNOWN, confidence=None, evidence=res.evidence,
+                rule_contributions={}, ai_contributions={}, uncertainty=1.0, raw_detection_result=res
+            )
 
-        # Case A / Python Primary Accepted (AI verifier skipped or not invoked)
-        if ai_result is None:
-            if rule_valid:
-                res = StrokeDetectionResult(
-                    predicted_stroke=rule_result.predicted_stroke,
-                    confidence=rule_result.confidence,
-                    predictions=rule_result.predictions or {},
-                    selected_stroke=selected_stroke_input,
-                    manual_override=False,
-                    is_inconsistent=False,
-                    classification_status=rule_result.classification_status,
-                    classification_reason=f"Primary Python Kinematic Classifier: {rule_result.classification_reason} (AI verification skipped)",
-                    feature_values=rule_result.feature_values or {},
-                    feature_contributions=rule_result.feature_contributions or {},
-                    confidence_type="UNCALIBRATED_DECISION_SCORE",
-                    uncertainty=round(1.0 - (rule_result.confidence or 0.0), 4),
-                    rule_prediction=rule_result.predicted_stroke,
-                    ai_prediction=None,
-                    agreement=None,
-                    evidence=rule_result.evidence or {"reason": "Python Kinematic Engine Primary Accepted"},
-                    missing_evidence=missing_evidence,
-                    conflicts=conflicts,
-                    method="PYTHON_PRIMARY_ACCEPTED"
-                )
-                return HybridStrokeDecision(
-                    stroke_type=rule_result.predicted_stroke,
-                    confidence=rule_result.confidence,
-                    evidence=res.evidence,
-                    rule_contributions=rule_result.feature_contributions or {},
-                    ai_contributions={},
-                    uncertainty=res.uncertainty,
-                    raw_detection_result=res
-                )
-            else:
-                res = StrokeDetectionResult(
-                    predicted_stroke=StrokeType.UNKNOWN,
-                    confidence=None,
-                    predictions={},
-                    selected_stroke=selected_stroke_input,
-                    manual_override=False,
-                    is_inconsistent=False,
-                    classification_status="INSUFFICIENT_EVIDENCE",
-                    classification_reason="Primary Python Kinematic Classifier reported insufficient evidence.",
-                    feature_values=rule_result.feature_values or {},
-                    feature_contributions={},
-                    confidence_type="UNCALIBRATED_DECISION_SCORE",
-                    uncertainty=1.0,
-                    rule_prediction=None,
-                    ai_prediction=None,
-                    agreement=None,
-                    evidence={},
-                    missing_evidence=missing_evidence,
-                    conflicts=conflicts,
-                    method="PYTHON_PRIMARY"
-                )
-                return HybridStrokeDecision(
-                    stroke_type=StrokeType.UNKNOWN, confidence=None, evidence=res.evidence,
-                    rule_contributions={}, ai_contributions={}, uncertainty=1.0, raw_detection_result=res
-                )
 
 
         # Rule 2: Both Engines Unavailable

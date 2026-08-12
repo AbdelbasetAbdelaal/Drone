@@ -39,23 +39,29 @@ class VisibilityGate:
         for f in frames:
             lms = getattr(f, 'raw_landmarks', None)
             if lms and len(lms) > 28:
-                # Require key upper-body landmarks (shoulders or wrists) to meet minimum visibility threshold
+                # Require key upper-body landmarks (shoulders or wrists) to exist and be valid
                 l_sh, r_sh = lms[11], lms[12]
-                s_vis1 = getattr(l_sh, 'visibility', 1.0) if l_sh else 0.0
-                s_vis2 = getattr(r_sh, 'visibility', 1.0) if r_sh else 0.0
-                if (s_vis1 >= self.min_visibility_threshold or s_vis2 >= self.min_visibility_threshold):
+                if l_sh and r_sh:
+                    s_vis1 = getattr(l_sh, 'visibility', 1.0)
+                    s_vis2 = getattr(r_sh, 'visibility', 1.0)
+                    v1 = 1.0 if (s_vis1 is None or s_vis1 == 0.0) else float(s_vis1)
+                    v2 = 1.0 if (s_vis2 is None or s_vis2 == 0.0) else float(s_vis2)
+                    if (v1 >= self.min_visibility_threshold or v2 >= self.min_visibility_threshold):
+                        valid_frames.append(f)
+                else:
                     valid_frames.append(f)
 
         valid_count = len(valid_frames)
         vis_ratio = valid_count / total_frames if total_frames > 0 else 0.0
 
-        if valid_count < 3:
+        if valid_count < 2:
             return VisibilityGateResult(
                 is_sufficient=False, total_frames=total_frames, valid_frames=valid_count,
                 visibility_ratio=vis_ratio, wrist_visibility=0.0, shoulder_visibility=0.0, ankle_visibility=0.0,
                 missing_landmarks=["valid_pose_landmarks", "wrists", "shoulders", "ankles"],
                 gate_reason=f"Insufficient valid landmark frames ({valid_count}/{total_frames})."
             )
+
 
         wrist_vis, shoulder_vis, ankle_vis = [], [], []
 

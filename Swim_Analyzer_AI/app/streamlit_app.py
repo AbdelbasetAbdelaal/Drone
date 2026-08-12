@@ -1575,7 +1575,7 @@ def main():
 
         if st.session_state.analysis_state == "needs_override":
             res = st.session_state.stroke_result
-            st.info("🔬 **Hybrid Scientific Stroke Decision Engine Summary**")
+            st.info("🔬 **Python Kinematic Stroke Decision Engine Summary**")
             
             pred_stroke_name = res.predicted_stroke.value if (res and getattr(res, 'predicted_stroke', None)) else "Unknown"
             conf_val = getattr(res, 'confidence', None)
@@ -1586,7 +1586,7 @@ def main():
             status_str = getattr(res, 'classification_status', "INSUFFICIENT_EVIDENCE")
 
             if status_str == "REVIEW_REQUIRED":
-                st.warning("⚠️ **Review Required:** Rule-based classifier and AI Agent disagree on stroke prediction. Please confirm stroke type below.")
+                st.warning("⚠️ **Review Required:** Low decision confidence or ambiguous kinematic signals. Please confirm stroke type below.")
             elif status_str in ["INSUFFICIENT_EVIDENCE", "INSUFFICIENT_VISIBILITY"]:
                 st.error(f"⚠️ **{status_str}:** Pose landmarks or kinematic signals were insufficient for automated classification.")
 
@@ -1602,16 +1602,11 @@ def main():
 
                 m1, m2, m3 = st.columns(3)
                 rule_pred_obj = getattr(res, 'rule_prediction', None)
-                ai_pred_obj = getattr(res, 'ai_prediction', None)
-                agree_obj = getattr(res, 'agreement', None)
-
-                rule_pred_str = rule_pred_obj.value if rule_pred_obj else "None"
-                ai_pred_str = ai_pred_obj.value if ai_pred_obj else "None"
-                agree_str = "True" if agree_obj is True else ("False" if agree_obj is False else "N/A")
+                rule_pred_str = rule_pred_obj.value if rule_pred_obj else pred_stroke_name
                 
-                m1.metric("Rule Prediction", rule_pred_str)
-                m2.metric("AI Prediction", ai_pred_str)
-                m3.metric("Agreement", agree_str)
+                m1.metric("Python Prediction", rule_pred_str)
+                m2.metric("AI Verification Status", "DISABLED (Python-Only Mode)")
+                m3.metric("Classification Engine", "Python Kinematic Engine")
                 
                 with st.expander("🔬 Complete Scientific Decision Contract", expanded=True):
                     e_col1, e_col2 = st.columns(2)
@@ -1624,7 +1619,7 @@ def main():
                         else:
                             st.caption("No valid rule contributions computed.")
                     with e_col2:
-                        st.markdown("**AI Evidence & Observed Signals:**")
+                        st.markdown("**Python Kinematic Evidence & Observed Signals:**")
                         reason_text = getattr(res, 'classification_reason', "No reasoning available.")
                         st.write(reason_text)
                         fvals = getattr(res, 'feature_values', {})
@@ -1657,7 +1652,8 @@ def main():
                 
         if st.session_state.analysis_state == "inconsistent_warning":
             st.warning("The selected stroke type appears inconsistent with the detected motion.")
-            st.write(f"You selected: {st.session_state.stroke_result.selected_stroke.value}. The AI detected: {st.session_state.stroke_result.predicted_stroke.value}.")
+            st.write(f"You selected: {st.session_state.stroke_result.selected_stroke.value}. The Python classifier detected: {st.session_state.stroke_result.predicted_stroke.value}.")
+
             col_a, col_b = st.columns(2)
             with col_a:
                 if st.button("Continue Anyway"):

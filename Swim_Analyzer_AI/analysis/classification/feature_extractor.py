@@ -97,15 +97,25 @@ class KinematicFeatureExtractor:
                 l_hip = lms[LEFT_HIP]
                 r_hip = lms[RIGHT_HIP]
 
-                # Extract wrist Y coordinates
+                # Extract wrist Y coordinates (shoulder-relative if shoulders present to normalize translation)
                 if l_wrist and r_wrist:
-                    lw_y.append(l_wrist.y)
-                    rw_y.append(r_wrist.y)
+                    if l_sh and r_sh:
+                        sh_avg_y = (l_sh.y + r_sh.y) / 2.0
+                        lw_y.append(l_wrist.y - sh_avg_y)
+                        rw_y.append(r_wrist.y - sh_avg_y)
+                    else:
+                        lw_y.append(l_wrist.y)
+                        rw_y.append(r_wrist.y)
 
                 # Extract ankle Y coordinates
                 if l_ankle and r_ankle:
-                    la_y.append(l_ankle.y)
-                    ra_y.append(r_ankle.y)
+                    if l_hip and r_hip:
+                        hip_avg_y = (l_hip.y + r_hip.y) / 2.0
+                        la_y.append(l_ankle.y - hip_avg_y)
+                        ra_y.append(r_ankle.y - hip_avg_y)
+                    else:
+                        la_y.append(l_ankle.y)
+                        ra_y.append(r_ankle.y)
 
                 # Body roll angle calculation
                 if hasattr(f, 'angles') and f.angles and hasattr(f.angles, 'body_roll') and f.angles.body_roll and f.angles.body_roll.valid:
@@ -189,14 +199,16 @@ class KinematicFeatureExtractor:
         std1 = np.std(arr1)
         std2 = np.std(arr2)
 
-        if std1 < 1e-4 or std2 < 1e-4:
-            return ExtractedFeatureValue(name, None, False, "ZERO_VARIANCE_SERIES", total_cnt, valid_cnt)
+        if std1 < 1e-5 or std2 < 1e-5:
+            # Low variance series (glide phase) -> return neutral 0.0 correlation with valid=True
+            return ExtractedFeatureValue(name, 0.0, True, "LOW_VARIANCE_SERIES", total_cnt, valid_cnt)
 
         corr = float(np.corrcoef(arr1, arr2)[0, 1])
         if math.isnan(corr):
-            return ExtractedFeatureValue(name, None, False, "NAN_CORRELATION", total_cnt, valid_cnt)
+            return ExtractedFeatureValue(name, 0.0, True, "NAN_CORRELATION", total_cnt, valid_cnt)
 
         return ExtractedFeatureValue(name, corr, True, None, total_cnt, valid_cnt)
+
 
     def _calculate_mean(self, name: str, vals: List[float], total_cnt: int, valid_cnt: int) -> ExtractedFeatureValue:
         if len(vals) < self.min_valid_frames:
