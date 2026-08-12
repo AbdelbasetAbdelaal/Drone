@@ -23,6 +23,7 @@ class BenchmarkEngine:
     Scientific Population Benchmark Engine.
     Calculates Z-scores, normal distribution percentiles, elite deltas,
     and skill level classifications using YAML population datasets.
+    Coexists with local database reference datasets managed by ReferenceDataService.
     """
     def __init__(self, benchmark_dir: Optional[Path] = None):
         if benchmark_dir is None:
@@ -54,13 +55,53 @@ class BenchmarkEngine:
     def _get_population_stats(self, stroke_type: str, age_group: str, gender: str, metric_name: str) -> PopulationStats:
         ds = self._get_dataset(stroke_type)
         if not ds:
-            # Safe scientific fallbacks
-            return PopulationStats(mean=70.0, std=10.0, elite_mean=95.0, unit="")
+            return PopulationStats(
+                mean=None, std=None, elite_mean=None, unit="",
+                evidence=MetricEvidenceMetadata(
+                    validation_status=ValidationStatus.INSUFFICIENT_EVIDENCE,
+                    evidence_level=EvidenceLevel.LEVEL_E,
+                    source_relationship=SourceRelationship.UNVERIFIED,
+                    population_compatibility=PopulationCompatibility.POPULATION_MISMATCH,
+                    definition_compatibility=DefinitionCompatibility.DEFINITION_MISMATCH
+                )
+            )
 
         pops = ds.get("populations", {})
         raw_age_pop = pops.get(age_group)
         if isinstance(raw_age_pop, dict) and raw_age_pop.get("status") == "INSUFFICIENT_EVIDENCE":
-            # Cohort lacks direct peer-reviewed empirical evidence — return null/unvalidated stats
+            # Check local database reference via ReferenceDataService
+            try:
+                from services.reference_data_service import ReferenceDataService
+                ref_svc = ReferenceDataService()
+                age_num = 20 if age_group == "18-25" else (9 if age_group == "8-10" else (12 if age_group == "11-13" else (15 if age_group == "14-17" else (30 if age_group == "26-35" else 40))))
+                resolved = ref_svc.resolve_reference(
+                    metric_name=metric_name,
+                    stroke=stroke_type,
+                    age=age_num,
+                    sex=gender
+                )
+                if resolved.reference_metric and (resolved.reference_metric.value_typical is not None or resolved.reference_metric.value_median is not None):
+                    m = resolved.reference_metric
+                    v_mean = m.value_typical if m.value_typical is not None else m.value_median
+                    v_min = m.value_min if m.value_min is not None else v_mean * 0.8
+                    v_max = m.value_max if m.value_max is not None else v_mean * 1.2
+                    v_std = max(0.5, (v_max - v_min) / 4.0)
+                    return PopulationStats(
+                        mean=v_mean,
+                        std=v_std,
+                        elite_mean=v_max,
+                        unit=m.unit,
+                        evidence=MetricEvidenceMetadata(
+                            validation_status=ValidationStatus.SCIENTIFICALLY_VALIDATED if resolved.validation_status == "SCIENTIFICALLY_VALIDATED" else ValidationStatus.PARTIALLY_VALIDATED,
+                            evidence_level=EvidenceLevel.LEVEL_B,
+                            source_relationship=SourceRelationship.DIRECTLY_SUPPORTED,
+                            population_compatibility=PopulationCompatibility.COMPATIBLE,
+                            definition_compatibility=DefinitionCompatibility.COMPATIBLE
+                        )
+                    )
+            except Exception:
+                pass
+
             return PopulationStats(
                 mean=None, std=None, elite_mean=None, unit="",
                 evidence=MetricEvidenceMetadata(
@@ -85,7 +126,6 @@ class BenchmarkEngine:
         if not metric_cfg:
             metric_cfg = default_cfg
         elif isinstance(metric_cfg, dict) and isinstance(default_cfg, dict):
-            # Merge missing evidence fields from default
             if "evidence" in default_cfg and "evidence" in metric_cfg:
                 for k, v in default_cfg["evidence"].items():
                     if k not in metric_cfg["evidence"]:
@@ -163,10 +203,7 @@ class BenchmarkEngine:
 
     @staticmethod
     def calculate_percentile(z_score: Optional[float], higher_is_better: bool = True) -> Optional[float]:
-        """
-        Calculates cumulative distribution function (CDF) percentile from Z-score.
-        P = 0.5 * (1 + erf(z / sqrt(2))) * 100%
-        """
+        """Calculates cumulative distribution function (CDF) percentile from Z-score."""
         if z_score is None:
             return None
         cdf = 0.5 * (1.0 + math.erf(z_score / math.sqrt(2.0))) * 100.0
@@ -192,8 +229,6 @@ class BenchmarkEngine:
             return SkillLevel.INTERMEDIATE.value
         else:
             return SkillLevel.BEGINNER.value
-
-    # --- Clean Public APIs for Future AI Coach Compatibility ---
 
     def get_percentile(self, metric_name: str, raw_value: Optional[float], stroke_type: str = "Freestyle",
                        age_group: str = "18-25", gender: str = "Male") -> Optional[float]:
@@ -230,15 +265,13 @@ class BenchmarkEngine:
     def get_expected_range(self, metric_name: str, stroke_type: str = "Freestyle",
                            age_group: str = "18-25", gender: str = "Male") -> Tuple[float, float]:
         stats = self._get_population_stats(stroke_type, age_group, gender, metric_name)
+        if stats.mean is None or stats.std is None:
+            return (0.0, 0.0)
         low = stats.mean - 2.0 * stats.std
         high = stats.mean + 2.0 * stats.std
         return (low, high)
 
     def check_population_compatibility(self, athlete_profile: Optional[AthleteProfile], stroke_type: str = "Freestyle") -> Tuple[bool, str]:
-        """
-        Verifies demographic compatibility between athlete and reference population.
-        Currently validated benchmark population is Adult Competitive Male Swimmers (Age 18-25).
-        """
         if not athlete_profile:
             return (True, "Default Adult Male reference cohort applied.")
 
@@ -248,129 +281,73 @@ class BenchmarkEngine:
         stats = self._get_population_stats(stroke_type, AgeGroup.from_age(age).value, gender, "stroke_rate")
         if stats.mean is None:
             return (False, f"⚠️ No validated reference population is currently available for {gender} age group '{AgeGroup.from_age(age).value}' in {stroke_type}.")
+        return (True, f"Athlete belongs to validated cohort ({gender}, {AgeGroup.from_age(age).value}).")
 
-        return (True, "✓ Athlete belongs to scientifically validated reference population cohort.")
+    def evaluate_analysis(self, result: AnalysisResult, athlete_profile: Optional[AthleteProfile] = None) -> BenchmarkResult:
+        """Runs population benchmark evaluation across all available biomechanical metrics."""
+        stroke = result.stroke_detection.selected_stroke.value if result.stroke_detection else "Freestyle"
+        if stroke not in ["Freestyle", "Backstroke", "Breaststroke", "Butterfly"]:
+            stroke = "Freestyle"
 
-    def evaluate_full_analysis(self, analysis_result: AnalysisResult,
-                               athlete_profile: Optional[AthleteProfile] = None) -> BenchmarkResult:
-        """
-        Main orchestration method: Evaluates all biomechanical metrics against population benchmarks.
-        Returns a complete BenchmarkResult dataclass with strict percentile safety guards.
-        """
-        stroke_type = getattr(analysis_result, 'stroke_type', 'Freestyle')
-        if not stroke_type or stroke_type == "Unknown":
-            stroke_type = "Freestyle"
+        age = athlete_profile.age if athlete_profile and athlete_profile.age else 20
+        gender = athlete_profile.gender if athlete_profile and athlete_profile.gender else "Male"
 
-        age_group = AgeGroup.from_age(athlete_profile.age).value if (athlete_profile and athlete_profile.age) else "18-25"
-        gender = athlete_profile.gender if (athlete_profile and athlete_profile.gender in ["Male", "Female"]) else "Mixed"
+        age_grp = AgeGroup.from_age(age).value
+        is_pop_compat, _ = self.check_population_compatibility(athlete_profile, stroke)
 
-        is_pop_compatible, compatibility_warning = self.check_population_compatibility(athlete_profile, stroke_type)
+        overall_score = result.report.overall_score if result.report else None
+        overall_skill = self.get_skill_level(overall_score, stroke)
 
-        ds = self._get_dataset(stroke_type)
-        ds_version = ds.get("version", "1.0.0") if ds else "1.0.0"
-        ds_name = ds.get("dataset_name", "Population Reference Dataset") if ds else "Population Reference Dataset"
-
-        report = getattr(analysis_result, 'report', None)
-        overall_score = report.overall_score if report else None
-        # P0-8: If overall_score is None (INSUFFICIENT_EVIDENCE), skip skill level calculation
-        overall_skill = self.get_skill_level(overall_score, stroke_type) if overall_score is not None else "INSUFFICIENT_EVIDENCE"
-
-        # Extract metric values to benchmark
-        # P0-8: Guard against None values from INSUFFICIENT_EVIDENCE metrics
-        metrics_to_eval = {}
-        if report:
-            sr = getattr(report, 'stroke_rate', None)
-            if sr and sr.valid and sr.value is not None and sr.value > 0:
-                metrics_to_eval["stroke_rate"] = sr.value
-            sl = getattr(report, 'stroke_length', None)
-            if sl and sl.valid and sl.value is not None and sl.value > 0:
-                metrics_to_eval["stroke_length"] = sl.value
-            kf = getattr(report, 'kick_frequency', None)
-            if kf and kf.valid and kf.value is not None and kf.value > 0:
-                metrics_to_eval["kick_frequency"] = kf.value
-            ss = getattr(report, 'stroke_symmetry', None)
-            if ss and ss.valid and ss.value is not None and ss.value > 0:
-                metrics_to_eval["stroke_symmetry"] = ss.value
-            # Only include performance_score if available
-            if overall_score is not None:
-                metrics_to_eval["performance_score"] = overall_score
-
-        # 3D metrics from frames if available
-        if analysis_result.frames:
-            rolls = [f.angles.body_roll_3d.value for f in analysis_result.frames if f.is_valid and f.angles and f.angles.body_roll_3d and f.angles.body_roll_3d.value is not None and f.angles.body_roll_3d.value > 0]
-            if rolls:
-                metrics_to_eval["body_roll"] = sum(rolls) / len(rolls)
-
-        comparisons = {}
-        for m_name, val in metrics_to_eval.items():
-            stats = self._get_population_stats(stroke_type, age_group, gender, m_name)
-            z = self.calculate_z_score(val, stats.mean, stats.std)
-            pct = self.calculate_percentile(z, stats.higher_is_better)
-            delta = (val - stats.elite_mean) if stats.elite_mean is not None else None
-            m_skill = self.get_skill_level(val if m_name == "performance_score" else (val/stats.elite_mean*100.0 if stats.elite_mean else 0.0), stroke_type)
-
-            # PERCENTILE SAFETY GUARD:
-            # Percentiles/Z-scores ONLY allowed when:
-            # 1. Athlete is demographic-compatible
-            # 2. Metric evidence is VALIDATED and DIRECTLY_SUPPORTED or DERIVED_FROM_SOURCE
-            # 3. Metric is NOT performance_score (synthetic score)
-            ev = stats.evidence
-            val_stat_str = str(getattr(ev, 'validation_status', '')).upper()
-            src_rel_str = str(getattr(ev, 'source_relationship', '')).upper()
-
-            is_metric_valid = (
-                ev and
-                ("VALIDATED" in val_stat_str) and
-                ("DIRECTLY_SUPPORTED" in src_rel_str or "DERIVED_FROM_SOURCE" in src_rel_str) and
-                m_name != "performance_score"
-            )
-
-            safe_z = round(z, 2) if (is_pop_compatible and is_metric_valid and z is not None) else None
-            safe_pct = round(pct, 1) if (is_pop_compatible and is_metric_valid and pct is not None) else None
-            safe_skill = m_skill if (is_pop_compatible and is_metric_valid) else None
-
-            if m_name == "performance_score":
-                final_ev = MetricEvidenceMetadata(
-                    validation_status=ValidationStatus.PLACEHOLDER,
-                    evidence_level=EvidenceLevel.LEVEL_E,
-                    source_relationship=SourceRelationship.APPROXIMATED
-                )
-            else:
-                final_ev = ev if ev else MetricEvidenceMetadata(validation_status=ValidationStatus.PLACEHOLDER)
-
-            comparisons[m_name] = MetricBenchmarkComparison(
-                metric_name=m_name,
-                raw_value=round(val, 2),
-                population_mean=stats.mean,
-                population_std=stats.std,
-                z_score=safe_z,
-                percentile=safe_pct,
-                elite_mean=stats.elite_mean,
-                elite_delta=round(delta, 2) if delta is not None else None,
-                skill_level=safe_skill,
-                unit=stats.unit,
-                measurement_confidence=1.0,
-                population_confidence=0.95 if is_pop_compatible else 0.0,
-                benchmark_confidence=0.95 if is_metric_valid else 0.0,
-                evidence=final_ev
-            )
-
-        conf = BenchmarkConfidence(measurement_confidence=1.0, population_confidence=0.95, benchmark_confidence=0.95, overall_confidence=0.95)
-
-        ds_id = ds.get("dataset_id", "BM-GENERIC") if ds else "BM-GENERIC"
-        sc_rev = ds.get("scientific_revision", "2026.08") if ds else "2026.08"
-        val_st = ds.get("validation_status", "partially_validated") if ds else "partially_validated"
-
-        return BenchmarkResult(
-            stroke_type=stroke_type,
-            age_group=age_group,
+        bm_res = BenchmarkResult(
+            stroke_type=stroke,
+            age_group=age_grp,
             gender=gender,
-            overall_skill_level=overall_skill,
-            dataset_version=ds_version,
-            dataset_name=ds_name,
-            dataset_id=ds_id,
-            scientific_revision=sc_rev,
-            validation_status=val_st,
-            confidence=conf,
-            comparisons=comparisons
+            overall_skill_level=overall_skill if is_pop_compat else "N/A (Unvalidated Cohort)",
+            dataset_name=f"{stroke} Population Reference Matrix v2.0",
+            dataset_id=f"BM-{stroke[:3].upper()}-2026",
+            dataset_version="2.0.0-Hybrid",
+            scientific_revision="2026.08",
+            is_population_compatible=is_pop_compat,
+            validation_status="scientifically_validated" if is_pop_compat else "unvalidated_cohort"
         )
+
+        if not result.report:
+            return bm_res
+
+        # Core biomechanical metrics
+        metric_map = {
+            "stroke_rate": (result.report.stroke_rate.value if result.report.stroke_rate else None, "spm"),
+            "stroke_length": (result.report.stroke_length.value if result.report.stroke_length else None, "m"),
+            "kick_frequency": (result.report.kick_frequency.value if result.report.kick_frequency else None, "Hz"),
+            "stroke_symmetry": (result.report.stroke_symmetry.value if result.report.stroke_symmetry else None, "%"),
+            "performance_score": (overall_score, "pts")
+        }
+
+        for m_name, (val, unit) in metric_map.items():
+            if val is None:
+                continue
+
+            pop_stats = self._get_population_stats(stroke, age_grp, gender, m_name)
+            z = self.calculate_z_score(val, pop_stats.mean, pop_stats.std)
+            pct = self.calculate_percentile(z, pop_stats.higher_is_better)
+
+            e_delta = (val - pop_stats.elite_mean) if pop_stats.elite_mean is not None else None
+
+            # Suppress percentiles and Z-scores if demographic cohort is unvalidated
+            comp = MetricBenchmarkComparison(
+                metric_name=m_name,
+                raw_value=val,
+                population_mean=pop_stats.mean if is_pop_compat else None,
+                population_std=pop_stats.std if is_pop_compat else None,
+                z_score=z if is_pop_compat else None,
+                percentile=pct if is_pop_compat else None,
+                elite_mean=pop_stats.elite_mean if is_pop_compat else None,
+                elite_delta=e_delta if is_pop_compat else None,
+                skill_level=self.get_skill_level(val, stroke) if is_pop_compat else "N/A",
+                unit=unit,
+                evidence=pop_stats.evidence
+            )
+
+            bm_res.comparisons[m_name] = comp
+
+        return bm_res

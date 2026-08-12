@@ -1260,11 +1260,11 @@ def main():
 
     current_role = st.session_state.current_coach.role if st.session_state.get("current_coach") else None
     if current_role == "admin":
-        nav_options = ["🏛 Admin Console", "📊 Coach Dashboard", "🏊‍♂️ Video Analysis", "👥 Athletes", "📉 Analysis History"]
+        nav_options = ["🏛 Admin Console", "📚 Reference Data Manager", "📊 Coach Dashboard", "🏊‍♂️ Video Analysis", "👥 Athletes", "📉 Analysis History"]
     elif current_role == "coach":
-        nav_options = ["📊 Coach Dashboard", "🏊‍♂️ Video Analysis", "👥 Athletes", "📉 Analysis History"]
+        nav_options = ["📊 Coach Dashboard", "📚 Reference Data Manager", "🏊‍♂️ Video Analysis", "👥 Athletes", "📉 Analysis History"]
     else:
-        nav_options = ["🏊‍♂️ Video Analysis", "📉 Analysis History"]
+        nav_options = ["🏊‍♂️ Video Analysis", "📚 Reference Data Manager", "📉 Analysis History"]
 
     default_idx = nav_options.index(st.session_state["nav_mode"]) if st.session_state["nav_mode"] in nav_options else 0
 
@@ -1296,7 +1296,11 @@ def main():
     if app_mode == "🏛 Admin Console":
         render_admin_dashboard_page()
         return
-    if app_mode == "📊 Coach Dashboard":
+    elif app_mode == "📚 Reference Data Manager":
+        from app.ui.reference_data_ui import render_reference_data_manager_page
+        render_reference_data_manager_page()
+        return
+    elif app_mode == "📊 Coach Dashboard":
         render_dashboard_page()
         return
     elif app_mode == "👥 Athletes":
