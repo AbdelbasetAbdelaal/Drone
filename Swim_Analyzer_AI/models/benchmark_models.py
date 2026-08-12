@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional
+from typing import Dict, Optional
 from enum import Enum
 
 class AgeGroup(str, Enum):
@@ -38,7 +38,7 @@ class SkillLevel(str, Enum):
     ELITE = "Elite"
     OLYMPIC = "Olympic"
 
-from models.scientific_evidence_models import MetricEvidenceMetadata, ValidationStatus, EvidenceLevel
+from models.scientific_evidence_models import MetricEvidenceMetadata
 
 @dataclass
 class PopulationStats:

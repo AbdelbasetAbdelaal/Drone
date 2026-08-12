@@ -2,10 +2,9 @@
 Unit tests for the Video Quality Assessor (VQA) component.
 """
 import unittest
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 import numpy as np
 
-from core.config import config
 from analysis.video_quality_assessor import VideoQualityAssessor
 
 class DummyLandmark:

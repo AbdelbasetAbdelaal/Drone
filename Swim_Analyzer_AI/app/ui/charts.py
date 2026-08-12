@@ -42,13 +42,17 @@ def create_performance_trend_chart(df: pd.DataFrame) -> go.Figure:
         
     df = df.sort_values(by="DateTime")
 
-    hover_text = df.apply(
-        lambda row: f"<b>Date:</b> {row.get('Date', '')} {row.get('Time', '')}<br>"
-                    f"<b>Score:</b> {f'{row['Score']:.1f}' if pd.notna(row.get('Score')) else 'N/A'}<br>"
-                    f"<b>Confidence:</b> {row.get('Confidence', 'N/A')}<br>"
-                    f"<b>Stroke:</b> {row.get('Stroke', 'Unknown')}",
-        axis=1
-    )
+    def format_hover_text(row: pd.Series) -> str:
+        score = row.get("Score")
+        score_text = f"{score:.1f}" if pd.notna(score) else "N/A"
+        return (
+            f"<b>Date:</b> {row.get('Date', '')} {row.get('Time', '')}<br>"
+            f"<b>Score:</b> {score_text}<br>"
+            f"<b>Confidence:</b> {row.get('Confidence', 'N/A')}<br>"
+            f"<b>Stroke:</b> {row.get('Stroke', 'Unknown')}"
+        )
+
+    hover_text = df.apply(format_hover_text, axis=1)
 
     fig = go.Figure()
     
@@ -393,4 +397,3 @@ def create_benchmark_radar_chart(benchmark_result) -> go.Figure:
         legend=dict(orientation="h", yanchor="bottom", y=-0.15, xanchor="center", x=0.5)
     )
     return fig
-

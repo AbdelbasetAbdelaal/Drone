@@ -2,7 +2,6 @@
 Configuration settings for SwimAnalyzer AI.
 Using dataclasses to ensure typed and structured configuration.
 """
-import os
 from dataclasses import dataclass, field
 from pathlib import Path
 

@@ -1,5 +1,4 @@
 import os
-import re
 
 PATTERNS = ["0.25", "0.40", "15.0", "0.15", "defaulted candidate to Freestyle", "defaulted to Freestyle", "FALLBACK_DEFAULT"]
 

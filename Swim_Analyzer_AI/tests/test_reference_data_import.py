@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-import pytest
 from services.csv_registry_importer import CSVRegistryImporter
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent

@@ -67,8 +67,8 @@ class BenchmarkEligibilityValidator:
                 return ReviewStatus.REJECTED, AuditDecision.REJECT, f"400m Front Crawl meta-analysis cannot populate generic or {target_distance_m}m freestyle benchmarks"
             
             if stroke and stroke not in ["freestyle", "front_crawl", "front crawl"]:
-                logger.warning(f"Meta-analysis {source_id} restricted to 400m front crawl test context (attempted distance: {dist}m)")
-                return ReviewStatus.REJECTED, AuditDecision.REJECT, f"400m Front Crawl meta-analysis cannot populate generic or {dist}m freestyle benchmarks"
+                logger.warning(f"Meta-analysis {source_id} restricted to 400m front crawl test context")
+                return ReviewStatus.REJECTED, AuditDecision.REJECT, "400m Front Crawl meta-analysis cannot populate a non-freestyle benchmark"
             
             if stroke and stroke not in ["freestyle", "front_crawl", "front crawl"]:
                 logger.warning(f"Meta-analysis {source_id} restricted to freestyle (attempted stroke: {stroke})")
@@ -96,7 +96,7 @@ class BenchmarkEligibilityValidator:
             is_adult = any(k in cand_age for k in ["18-25", "adult", "elite male", "senior"])
             if is_youth and is_adult:
                 logger.warning(f"Age leakage prohibited: adult candidate '{cand_age}' vs target youth age '{target_age_group}'")
-                return ReviewStatus.REJECTED, AuditDecision.REJECT, f"Demographic leakage prohibited: Adult evidence cannot populate adolescent/youth benchmark"
+                return ReviewStatus.REJECTED, AuditDecision.REJECT, "Demographic leakage prohibited: Adult evidence cannot populate adolescent/youth benchmark"
 
         # 7. Stroke Leakage Check
         cand_stroke = (candidate.stroke or (source.stroke if source else "")).lower().replace(" ", "")

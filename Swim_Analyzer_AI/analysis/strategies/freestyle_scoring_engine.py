@@ -3,8 +3,6 @@ Weighted scoring engine for evaluating swimming performance.
 """
 import yaml
 import numpy as np
-from pathlib import Path
-from typing import List, Any
 from core.config import config
 from core.constants import (
     MAX_SCORE, DEFAULT_PENALTY_SCORE, PULL_ELBOW_MIN_ANGLE, PULL_ELBOW_MAX_ANGLE,

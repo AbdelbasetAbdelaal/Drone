@@ -6,10 +6,8 @@ Audit History Viewer, and Benchmark Priority Engine Simulator.
 
 import streamlit as st
 import pandas as pd
-from typing import Optional, List
 from models.reference_data_models import (
     ReferenceDataset, ReferenceMetric, ReferenceSource,
-    ReferenceStrokeType, ReferenceSkillLevel, ReferenceAthleteCategory,
     ReferenceSourceType, ReferenceBenchmarkEligibility,
     ReferenceValidationStatus, ReferenceMeasurementDomain
 )

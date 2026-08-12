@@ -15,6 +15,7 @@ populations:
           source_ids:
           - SRC-BREAST-001
           source_relationship: DIRECT_MEASUREMENT
+    status: VALIDATED
     Female:
       stroke_rate:
         mean: 41.8
@@ -26,5 +27,3 @@ populations:
           source_ids:
           - SRC-BREAST-002
           source_relationship: DIRECT_MEASUREMENT
-  '8-10':
-    status: INSUFFICIENT_EVIDENCE

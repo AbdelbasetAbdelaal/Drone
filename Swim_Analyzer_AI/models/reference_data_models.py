@@ -5,7 +5,7 @@ and associated scientific taxonomy Enums.
 """
 
 from dataclasses import dataclass, field
-from typing import List, Dict, Optional, Any
+from typing import List, Dict, Optional
 from enum import Enum
 
 class ReferenceStrokeType(str, Enum):

@@ -2,7 +2,6 @@
 Tests for preserving scientific provenance in imported CSV datasets.
 """
 
-import pytest
 from services.reference_csv_service import ReferenceCSVService
 
 def test_provenance_retention_on_import():

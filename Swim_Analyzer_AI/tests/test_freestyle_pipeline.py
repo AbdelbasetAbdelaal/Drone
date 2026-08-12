@@ -4,7 +4,6 @@ import numpy as np
 from pathlib import Path
 
 from services.analysis_service import AnalysisService
-from core.config import config
 from models.data_models import StrokeDetectionResult, StrokeType
 
 @pytest.fixture

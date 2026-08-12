@@ -6,7 +6,7 @@ Performs multi-feature 3D time-series vector analysis to classify swimming strok
 
 import math
 import numpy as np
-from typing import List, Dict, Any, Optional, Tuple
+from typing import List, Dict, Any, Optional
 from dataclasses import dataclass
 
 from models.data_models import StrokeType, StrokeDetectionResult

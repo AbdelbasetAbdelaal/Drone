@@ -4,7 +4,6 @@ Tests for ReferenceExportService (CSV, JSON, YAML exporters).
 
 import json
 import yaml
-import pytest
 from models.reference_data_models import ReferenceDataset, ReferenceMetric, ReferenceSource
 from services.reference_export_service import ReferenceExportService
 

@@ -1,10 +1,9 @@
 import streamlit as st
-from typing import Dict, Any, Optional
+from typing import Any, Optional
 
-from models.benchmark_models import BenchmarkResult, MetricBenchmarkComparison
+from models.benchmark_models import BenchmarkResult
 from models.scientific_evidence_models import (
-    ReviewStatus, AuditDecision, SourceAccessLevel, SourceQuality,
-    SourceRelationship, DefinitionMatchingStatus, PopulationMatchingStatus
+    AuditDecision
 )
 from services.scientific_evidence_service import ScientificEvidenceService
 

@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, Optional
+from typing import List, Optional
 from models.scientific_evidence_models import ScientificEvidenceRecord, AggregatedEvidence
 from core.logger import setup_logger
 import math

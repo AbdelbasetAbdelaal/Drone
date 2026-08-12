@@ -3,7 +3,6 @@ Tests for benchmark resolution priority rules.
 Verifies that compatibility ALWAYS overrides priority hierarchy.
 """
 
-import pytest
 from models.reference_data_models import ReferenceDataset, ReferenceMetric
 from services.reference_resolver import ReferenceDataResolver
 

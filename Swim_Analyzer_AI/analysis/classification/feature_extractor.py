@@ -2,8 +2,8 @@
 Kinematic Feature Extractor for Swimming Stroke Classification.
 Extracts temporal biomechanical features over landmark frame sequences.
 """
-from dataclasses import dataclass, field
-from typing import List, Dict, Optional, Any
+from dataclasses import dataclass
+from typing import List, Optional, Any
 import numpy as np
 import math
 

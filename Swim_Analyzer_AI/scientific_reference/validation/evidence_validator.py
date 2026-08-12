@@ -1,9 +1,7 @@
 from typing import Tuple, Optional
 from models.scientific_evidence_models import (
-    CandidateEvidence, ScientificEvidenceRecord, ReviewStatus, AuditDecision,
-    DefinitionMatchingStatus, PopulationMatchingStatus, SourceRelationship
+    CandidateEvidence, ScientificEvidenceRecord, ReviewStatus, AuditDecision
 )
-from scientific_reference.validation.population_validator import PopulationValidator
 from scientific_reference.validation.metric_validator import MetricValidator
 from scientific_reference.validation.statistical_validator import StatisticalValidator
 from scientific_reference.validation.provenance_validator import ProvenanceValidator

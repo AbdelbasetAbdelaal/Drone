@@ -3,7 +3,7 @@ Visibility and Quality Gate for Stroke Classification.
 Evaluates pose landmark visibility and completeness before passing to classification engines.
 """
 from dataclasses import dataclass
-from typing import List, Any, Dict
+from typing import List, Any
 
 @dataclass
 class VisibilityGateResult:

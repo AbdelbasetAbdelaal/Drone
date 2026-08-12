@@ -3,7 +3,6 @@ Tests for canonical identity duplicate detection with record_type support.
 Verifies that SOURCE and METRIC records with distinct identities are NOT false duplicates.
 """
 
-import pytest
 from services.reference_csv_service import ReferenceCSVService
 
 def test_distance_differentiation_prevents_false_duplicates():

@@ -3,7 +3,6 @@ Tests for BenchmarkEngine integration with reference database.
 Asserts that missing benchmarks return value is None and status == INSUFFICIENT_EVIDENCE.
 """
 
-import pytest
 from analysis.benchmarks.benchmark_engine import BenchmarkEngine
 from models.scientific_evidence_models import ValidationStatus
 

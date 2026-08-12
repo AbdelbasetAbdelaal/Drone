@@ -31,6 +31,26 @@ def test_record_create_get_filter(manager):
     assert len(records) >= 1
     assert any(r.name == "Unit Test Dataset" for r in records)
 
+
+def test_get_records_normalizes_metric_names(manager):
+    ds = ReferenceDataset(
+        name="Stroke Rate Normalization Dataset",
+        stroke="FREESTYLE",
+        age_min=18,
+        age_max=25,
+        sex="Female",
+        dataset_version="test_v2",
+        metrics=[ReferenceMetric(metric_name="Stroke Rate", value_typical=48.5, unit="spm")]
+    )
+    manager.create_record(ds, user="Test Runner")
+
+    records_snake = manager.get_records(stroke="FREESTYLE", metric_name="stroke_rate")
+    assert any(r.name == "Stroke Rate Normalization Dataset" for r in records_snake)
+
+    records_display = manager.get_records(stroke="FREESTYLE", metric_name="Stroke Rate")
+    assert any(r.name == "Stroke Rate Normalization Dataset" for r in records_display)
+
+
 def test_delete_requires_confirmation(manager):
     ds = ReferenceDataset(
         name="Delete Test Dataset",

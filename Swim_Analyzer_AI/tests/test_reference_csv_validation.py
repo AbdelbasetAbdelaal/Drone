@@ -3,7 +3,6 @@ Tests for ReferenceCSVService validation, record type detection (METRIC vs SOURC
 """
 
 from pathlib import Path
-import pytest
 from services.reference_csv_service import ReferenceCSVService
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent

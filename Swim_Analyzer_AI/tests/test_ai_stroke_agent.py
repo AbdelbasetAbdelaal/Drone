@@ -2,7 +2,6 @@
 Unit tests for AIStrokeAgent stroke detection engine.
 """
 
-import pytest
 from unittest.mock import MagicMock
 from models.data_models import StrokeType
 from analysis.classification.ai_stroke_agent import AIStrokeAgent

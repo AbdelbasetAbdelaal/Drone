@@ -3,7 +3,6 @@ import yaml
 from pathlib import Path
 
 from scientific_reference.scientific_source_repository import ScientificSourceRepository
-from services.scientific_evidence_service import ScientificEvidenceService
 from services.population_taxonomy_service import PopulationTaxonomyService, AgeCohort, SexCategory
 from analysis.benchmarks.benchmark_engine import BenchmarkEngine
 

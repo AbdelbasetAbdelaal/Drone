@@ -1,8 +1,7 @@
 """
 Analyzes stroke phases for Breaststroke based on motion tracking.
 """
-from typing import Any, List, Dict
-import numpy as np
+from typing import Any, List
 from core.logger import setup_logger
 from models.data_models import PhaseTransition
 from analysis.strategies.base_strategy import BaseStrokeStateMachine

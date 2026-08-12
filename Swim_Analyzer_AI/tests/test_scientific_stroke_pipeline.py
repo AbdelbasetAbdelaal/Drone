@@ -21,10 +21,9 @@ Verifies all 18 scientific rules:
 18. Deterministic hybrid output & decision contract serialization
 """
 
-import pytest
 from unittest.mock import MagicMock
 from models.data_models import StrokeType, StrokeDetectionResult
-from analysis.classification.visibility_gate import VisibilityGate, VisibilityGateResult
+from analysis.classification.visibility_gate import VisibilityGateResult
 from analysis.classification.stroke_heuristic_classifier import StrokeHeuristicClassifier
 from analysis.classification.ai_stroke_agent import AIStrokeAgent
 from analysis.classification.hybrid_stroke_decision_engine import HybridStrokeDecisionEngine

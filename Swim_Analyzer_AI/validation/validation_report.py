@@ -1,5 +1,4 @@
 import json
-from typing import Dict, Any
 from validation.metrics_validator import ValidationSetResult
 
 class ValidationReportGenerator:

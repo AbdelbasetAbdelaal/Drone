@@ -2,10 +2,8 @@
 Tests for Reference Data Manager domain models and dataclass defaults.
 """
 
-import pytest
 from models.reference_data_models import (
-    ReferenceDataset, ReferenceMetric, ReferenceSource, ReferenceValidationEvent,
-    ReferenceStrokeType, ReferenceSkillLevel, ReferenceAthleteCategory,
+    ReferenceDataset, ReferenceMetric, ReferenceStrokeType, ReferenceSkillLevel, ReferenceAthleteCategory,
     ReferenceSourceType, ReferenceBenchmarkEligibility, ReferenceValidationStatus,
     ReferenceMeasurementDomain
 )

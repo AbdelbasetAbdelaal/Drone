@@ -1,4 +1,3 @@
-from typing import Tuple
 from models.scientific_evidence_models import DefinitionMatchingStatus
 from core.logger import setup_logger
 

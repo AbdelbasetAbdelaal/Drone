@@ -3,7 +3,6 @@ Tests for scientific benchmark eligibility policy in CSV pipeline.
 Verifies Strict Mode reset for coach data and adult vs youth boundary preservation.
 """
 
-import pytest
 from services.reference_csv_service import ReferenceCSVService
 
 def test_strict_mode_coach_data_remains_context_only():

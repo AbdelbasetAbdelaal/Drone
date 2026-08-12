@@ -2,11 +2,10 @@
 Unit tests for HybridStrokeDecisionEngine and VisibilityGate.
 """
 
-import pytest
 from unittest.mock import MagicMock
 from models.data_models import StrokeType, StrokeDetectionResult
 from analysis.classification.visibility_gate import VisibilityGate, VisibilityGateResult
-from analysis.classification.hybrid_stroke_decision_engine import HybridStrokeDecisionEngine, HybridStrokeDecision
+from analysis.classification.hybrid_stroke_decision_engine import HybridStrokeDecisionEngine
 
 def test_visibility_gate_evaluation():
     """Verify VisibilityGate evaluates frame sequence visibility ratio cleanly."""

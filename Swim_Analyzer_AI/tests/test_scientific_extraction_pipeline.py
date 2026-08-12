@@ -1,4 +1,3 @@
-import pytest
 import yaml
 from pathlib import Path
 
@@ -7,9 +6,8 @@ from scientific_reference.validation.population_validator import PopulationValid
 from scientific_reference.validation.metric_validator import MetricValidator
 from scientific_reference.validation.statistical_validator import StatisticalValidator
 from models.scientific_evidence_models import (
-    ReviewStatus, DefinitionMatchingStatus, PopulationMatchingStatus, SourceAccessLevel
+    DefinitionMatchingStatus, PopulationMatchingStatus
 )
-from analysis.benchmarks.benchmark_engine import BenchmarkEngine
 
 def test_evidence_registry_records():
     """Verify evidence registry stores valid structured scientific records (EVID-xxx)."""

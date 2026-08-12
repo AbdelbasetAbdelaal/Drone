@@ -1,13 +1,9 @@
 import pytest
-import os
-import json
-import shutil
-from pathlib import Path
 
 from services.scientific_updater_service import ScientificUpdaterService
 from analysis.benchmarks.benchmark_engine import BenchmarkEngine
 from analysis.stroke_classifier import StrokeClassifier
-from models.data_models import StrokeType, StrokeDetectionResult
+from models.data_models import StrokeType
 
 @pytest.fixture
 def updater():

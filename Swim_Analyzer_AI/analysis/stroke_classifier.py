@@ -2,7 +2,6 @@ import cv2
 from models.data_models import StrokeType, StrokeDetectionResult
 from analysis.pose_detector import PoseDetector
 from core.logger import setup_logger
-from core.config import config
 
 logger = setup_logger(__name__)
 

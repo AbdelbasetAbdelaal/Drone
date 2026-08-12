@@ -2,8 +2,7 @@
 Tests for ReferenceDataResolver demographic compatibility and priority scoring.
 """
 
-import pytest
-from models.reference_data_models import ReferenceDataset, ReferenceMetric, ReferenceValidationStatus
+from models.reference_data_models import ReferenceDataset, ReferenceMetric
 from services.reference_resolver import ReferenceDataResolver
 
 def test_demographic_incompatibility_returns_zero_score():

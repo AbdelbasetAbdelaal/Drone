@@ -3,7 +3,7 @@ Video processing utilities wrapping OpenCV functionality.
 """
 import cv2
 import numpy as np
-from typing import Tuple, Generator, Optional
+from typing import Generator, Optional
 from pathlib import Path
 from core.logger import setup_logger
 

@@ -1,12 +1,11 @@
 """
-Regression test for BenchmarkService -> BenchmarkEngine API compatibility.
-Ensures evaluate_session and evaluate_full_analysis execute without AttributeError,
-and verifies zero-fallback handling for missing metrics.
+Regression tests for the BenchmarkService -> BenchmarkEngine API contract.
 """
 
 import pytest
 from services.benchmark_service import BenchmarkService
 from analysis.benchmarks.benchmark_engine import BenchmarkEngine
+from models.benchmark_models import BenchmarkResult
 from models.data_models import AnalysisResult, PerformanceReport, ValidatedMetric, StrokeDetectionResult, StrokeType
 from models.athlete_profile import AthleteProfile
 from models.scientific_evidence_models import ValidationStatus
@@ -49,8 +48,29 @@ def test_benchmark_service_evaluate_session_api_compatibility():
         assert res.comparisons["stroke_length"].raw_value is None
 
 
-def test_benchmark_engine_evaluate_full_analysis_alias():
-    """Verify BenchmarkEngine.evaluate_full_analysis alias delegates correctly."""
+def test_benchmark_service_uses_the_public_evaluate_analysis_api(monkeypatch):
+    """The service must call the engine's real public evaluation method."""
+    engine = BenchmarkEngine()
+    service = BenchmarkService()
+    service.engine = engine
+    called = []
+
+    def evaluate_analysis(result, athlete_profile=None):
+        called.append((result, athlete_profile))
+        return BenchmarkResult(stroke_type="Freestyle")
+
+    monkeypatch.setattr(engine, "evaluate_analysis", evaluate_analysis)
+    analysis_result = AnalysisResult(video_path="dummy.mp4")
+
+    result = service.evaluate_session(analysis_result)
+
+    assert called == [(analysis_result, None)]
+    assert result is analysis_result.benchmark_result
+    assert not hasattr(engine, "evaluate_full_analysis")
+
+
+def test_benchmark_engine_evaluate_analysis_returns_a_valid_result():
+    """A valid analysis reaches the actual engine evaluation API."""
     engine = BenchmarkEngine()
 
     analysis_result = AnalysisResult(video_path="dummy.mp4")
@@ -59,7 +79,7 @@ def test_benchmark_engine_evaluate_full_analysis_alias():
         stroke_rate=ValidatedMetric(name="stroke_rate", value=60.0, valid=True, unit="spm"),
     )
 
-    res = engine.evaluate_full_analysis(analysis_result)
+    res = engine.evaluate_analysis(analysis_result)
     assert res is not None
     assert res.stroke_type == "Freestyle"
     assert "stroke_rate" in res.comparisons
@@ -91,3 +111,31 @@ def test_benchmark_result_none_metric_stays_none():
     # None metrics must NOT generate comparisons with fabricated fallback values
     for name, comp in res.comparisons.items():
         assert comp.raw_value is not None, f"Expected no comparison for {name} with None value, but got one."
+
+
+def test_missing_dataset_returns_insufficient_evidence_without_freestyle_fallback():
+    engine = BenchmarkEngine()
+    ar = AnalysisResult(video_path="dummy.mp4")
+    ar.stroke_detection = StrokeDetectionResult(selected_stroke=StrokeType.UNKNOWN)
+    ar.report = PerformanceReport(stroke_rate=ValidatedMetric(name="stroke_rate", value=55.0))
+
+    result = engine.evaluate_analysis(ar)
+
+    assert result.stroke_type == StrokeType.UNKNOWN.value
+    assert result.validation_status == "insufficient_evidence"
+    assert result.comparisons == {}
+
+
+def test_missing_statistics_remain_unavailable_without_numeric_fallback(tmp_path):
+    (tmp_path / "freestyle.yaml").write_text(
+        "stroke: Freestyle\npopulations:\n  '18-25':\n    Male:\n      stroke_rate:\n        unit: spm\n",
+        encoding="utf-8",
+    )
+    engine = BenchmarkEngine(tmp_path)
+
+    stats = engine._get_population_stats("Freestyle", "18-25", "Male", "stroke_rate")
+
+    assert stats.mean is None
+    assert stats.std is None
+    assert stats.elite_mean is None
+    assert stats.evidence.validation_status == ValidationStatus.INSUFFICIENT_EVIDENCE

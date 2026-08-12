@@ -15,9 +15,8 @@ Outputs the unified 6-part decision structure for the Coach UI:
 - Uncertainty
 """
 
-from dataclasses import dataclass, field
-from typing import Dict, Any, List, Optional
-import numpy as np
+from dataclasses import dataclass
+from typing import Dict, Any, Optional
 
 from models.data_models import StrokeType, StrokeDetectionResult
 from analysis.classification.visibility_gate import VisibilityGateResult

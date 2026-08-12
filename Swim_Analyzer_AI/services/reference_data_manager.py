@@ -4,8 +4,7 @@ Central business logic for importing CSV datasets, managing reference datasets,
 executing versioning, priority resolution, duplicate detection, and exports.
 """
 
-import os
-from typing import List, Dict, Any, Optional, Tuple
+from typing import List, Optional, Tuple
 from database import SessionLocal
 from database.reference_repository import ReferenceDataRepository
 from services.reference_data_validator import ReferenceDataValidator
@@ -13,8 +12,7 @@ from services.reference_resolver import ReferenceDataResolver
 from services.reference_export_service import ReferenceExportService
 from services.csv_registry_importer import CSVRegistryImporter
 from models.reference_data_models import (
-    ReferenceDataset, ReferenceMetric, ReferenceSource, ReferenceValidationEvent,
-    ReferenceDatasetVersion, ReferenceBenchmarkPriority, ReferenceBenchmarkEligibility
+    ReferenceDataset, ReferenceMetric, ReferenceDatasetVersion, ReferenceBenchmarkEligibility
 )
 
 class ReferenceDataManager:
@@ -76,7 +74,12 @@ class ReferenceDataManager:
             if eligibility and ds.benchmark_eligibility != eligibility:
                 continue
             if metric_name:
-                has_m = any(m.metric_name.lower() == metric_name.lower() for m in ds.metrics)
+                _norm = ReferenceDataResolver._normalize_metric_name
+                has_m = any(
+                    _norm(m.metric_name) == _norm(metric_name)
+                    or _norm(m.display_name) == _norm(metric_name)
+                    for m in ds.metrics
+                )
                 if not has_m:
                     continue
 

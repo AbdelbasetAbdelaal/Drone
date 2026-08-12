@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Dict, Tuple
+from typing import List
 from validation.reference_loader import Labels, PhaseEvent
 import math
 

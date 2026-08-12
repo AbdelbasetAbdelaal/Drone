@@ -1,12 +1,10 @@
-import pytest
 import yaml
 from pathlib import Path
 
 from scientific_reference.storage.scientific_evidence_registry import ScientificEvidenceRegistry
 from models.scientific_evidence_models import (
-    ReviewStatus, AuditDecision, DefinitionMatchingStatus, PopulationMatchingStatus, SourceAccessLevel
+    ReviewStatus, AuditDecision, DefinitionMatchingStatus, SourceAccessLevel
 )
-from analysis.benchmarks.benchmark_engine import BenchmarkEngine
 
 def test_final_audit_safety_rule_1_exact_source_location():
     """SAFETY RULE: Accepted benchmarks MUST have non-empty exact table/figure and page references."""

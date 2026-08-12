@@ -3,7 +3,6 @@ Tests for Benchmark Priority and Eligibility Policy.
 Verifies P0 vs P1 vs P2 behavior and explicit eligibility conditions.
 """
 
-import pytest
 from models.reference_data_models import ReferenceDataset, ReferenceMetric
 from services.reference_resolver import ReferenceDataResolver
 

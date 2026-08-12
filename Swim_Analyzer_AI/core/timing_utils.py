@@ -2,7 +2,6 @@
 Centralized timing utility API for Swim_Analyzer_AI.
 Guarantees consistent timestamp calculations, duration derivation, and effective sampling rate calculations across frame strides.
 """
-from typing import Tuple
 
 class TimingUtils:
     """

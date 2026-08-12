@@ -5,10 +5,9 @@ applies explicit source_type mappings, constructs canonical metric identity keys
 and preserves missing scientific values as None/null.
 """
 
-from typing import Dict, Any, Optional, Tuple, List
+from typing import Dict, Optional, List
 from models.reference_data_models import (
-    ReferenceDataset, ReferenceMetric, ReferenceSource,
-    CANONICAL_SOURCE_TYPE_MAPPING, ReferenceSourceType, ReferenceBenchmarkEligibility
+    CANONICAL_SOURCE_TYPE_MAPPING
 )
 
 class NormalizedCSVRow:

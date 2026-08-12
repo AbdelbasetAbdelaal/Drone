@@ -18,17 +18,13 @@ import time
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple, Callable
-import hashlib
 
 from core.logger import setup_logger
 from models.scientific_evidence_models import (
-    EvidenceLevel, ValidationStatus, SourceAccessLevel, SourceQuality,
-    AuditDecision, SourceRelationship, PopulationMatchingStatus, DefinitionMatchingStatus,
-    ScientificEvidenceRecord, ScientificSource, ReviewStatus
+    AuditDecision, ReviewStatus
 )
 from scientific_reference.validation.evidence_validator import EvidenceValidator
 from models.scientific_evidence_models import CandidateEvidence
-from services.population_taxonomy_service import PopulationTaxonomyService, AgeCohort, SexCategory
 from services.scientific_semantic_extractor import ScientificSemanticExtractor
 
 logger = setup_logger(__name__)

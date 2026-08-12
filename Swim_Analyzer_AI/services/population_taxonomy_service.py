@@ -3,7 +3,6 @@ Population Taxonomy & Compatibility Engine Service.
 Defines demographic cohorts and strict compatibility resolution without silent interpolation or cross-group copying.
 """
 from dataclasses import dataclass
-from typing import Optional, Dict, Any
 from enum import Enum
 
 class AgeCohort(str, Enum):

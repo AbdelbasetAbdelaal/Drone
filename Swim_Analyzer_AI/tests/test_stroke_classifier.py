@@ -1,9 +1,7 @@
-import pytest
 import math
-import numpy as np
-from models.data_models import StrokeType, StrokeDetectionResult
-from analysis.classification.feature_extractor import KinematicFeatureExtractor, KinematicFeatureSet
-from analysis.classification.stroke_heuristic_classifier import StrokeHeuristicClassifier, CONFIDENCE_THRESHOLD, CLASSIFIER_VERSION, THRESHOLD_VERSION
+from models.data_models import StrokeType
+from analysis.classification.feature_extractor import KinematicFeatureExtractor
+from analysis.classification.stroke_heuristic_classifier import StrokeHeuristicClassifier
 
 def create_synthetic_landmarks(arm_phase="alternating", body_roll=30.0, wrist_range=0.2, leg_symmetry="alternating", num_frames=30):
     """Helper to generate synthetic landmark frame sequences for testing."""

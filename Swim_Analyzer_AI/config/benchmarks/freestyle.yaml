@@ -15,6 +15,7 @@ populations:
           source_ids:
           - SRC-FREE-001
           source_relationship: DIRECT_MEASUREMENT
+    status: VALIDATED
     Female:
       stroke_rate:
         mean: 48.5
@@ -26,5 +27,3 @@ populations:
           source_ids:
           - SRC-FREE-004
           source_relationship: DIRECT_MEASUREMENT
-  '8-10':
-    status: INSUFFICIENT_EVIDENCE

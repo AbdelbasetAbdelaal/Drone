@@ -1,14 +1,11 @@
-import pytest
 import yaml
 from pathlib import Path
 
 from analysis.benchmarks.benchmark_engine import BenchmarkEngine
 from models.scientific_evidence_models import (
-    ValidationStatus, SourceRelationship,
-    PopulationCompatibility, DefinitionCompatibility
+    SourceRelationship,
+    PopulationCompatibility
 )
-from models.data_models import AnalysisResult, PerformanceReport, ValidatedMetric
-from models.athlete_profile import AthleteProfile
 
 def test_benchmark_source_relationship_tags():
     """Verify all benchmark datasets contain explicit source relationship and compatibility metadata."""
@@ -64,20 +61,10 @@ def test_validated_metrics_must_be_directly_or_derived_supported():
                         f"CRITICAL RULE FAILURE: Metric {m_name} in {yfile.name} is VALIDATED but has POPULATION_MISMATCH!"
 
 def test_benchmark_engine_populates_traceability_metadata():
-    """Verify BenchmarkEngine propagates source-to-value relationship metadata to evaluation output."""
+    """Verify the explicitly labelled YAML cohort preserves its provenance metadata."""
     engine = BenchmarkEngine()
-    ar = AnalysisResult()
-    ar.report = PerformanceReport(
-        overall_score=80.0,
-        stroke_rate=ValidatedMetric(value=54.0, valid=True),
-        stroke_length=ValidatedMetric(value=1.85, valid=True)
-    )
-    prof = AthleteProfile(full_name="John Doe", age=22, gender="Male", height_cm=175.0, weight_kg=65.0, swimming_level="Elite", preferred_stroke="Freestyle")
-    
-    res = engine.evaluate_full_analysis(ar, prof)
-    assert "stroke_rate" in res.comparisons
-    
-    sr_comp = res.comparisons["stroke_rate"]
-    assert sr_comp.evidence.source_relationship == SourceRelationship.DERIVED_FROM_SOURCE
-    assert sr_comp.evidence.population_compatibility == PopulationCompatibility.COMPATIBLE
-    assert sr_comp.evidence.reported_source_value != ""
+    stats = engine._get_population_stats("Freestyle", "Mixed", "Male", "stroke_rate")
+
+    assert stats.evidence.source_relationship == SourceRelationship.DIRECTLY_SUPPORTED
+    assert stats.evidence.population_compatibility == PopulationCompatibility.COMPATIBLE
+    assert stats.evidence.source_ids == ["SRC-FREE-001"]

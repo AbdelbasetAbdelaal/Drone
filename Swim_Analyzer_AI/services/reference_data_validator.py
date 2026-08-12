@@ -3,11 +3,9 @@ Scientific Integrity & Validation Layer for Reference Data Manager.
 Enforces the 8 mandatory scientific integrity rules on reference datasets and metrics.
 """
 
-from typing import List, Tuple, Dict, Any, Optional
+from typing import List, Tuple, Optional
 from models.reference_data_models import (
-    ReferenceDataset, ReferenceMetric, ReferenceSource,
-    ReferenceSourceType, ReferenceBenchmarkEligibility,
-    ReferenceValidationStatus, ReferenceMeasurementDomain
+    ReferenceDataset, ReferenceMetric, ReferenceSourceType, ReferenceBenchmarkEligibility
 )
 
 class ScientificValidationResult:

@@ -2,7 +2,6 @@
 Analyzes stroke phases for Backstroke using a deterministic state machine.
 """
 from typing import Any, List
-import numpy as np
 from core.logger import setup_logger
 from models.data_models import PhaseTransition
 from analysis.strategies.base_strategy import BaseStrokeStateMachine

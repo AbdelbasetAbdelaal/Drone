@@ -1,4 +1,3 @@
-import pytest
 from models.data_models import AnalysisResult, PerformanceReport, ValidatedMetric
 from models.athlete_profile import AthleteProfile
 from analysis.benchmarks.benchmark_engine import BenchmarkEngine
@@ -18,7 +17,7 @@ def test_rule_1_compatible_adult_male_without_verified_reference_is_suppressed()
     )
     prof = AthleteProfile(full_name="John Doe", age=22, gender="Male", height_cm=180.0, weight_kg=75.0, swimming_level="Elite", preferred_stroke="Freestyle")
 
-    res = engine.evaluate_full_analysis(ar, prof)
+    res = engine.evaluate_analysis(ar, prof)
     sr_comp = res.comparisons["stroke_rate"]
 
     assert sr_comp.z_score is None
@@ -35,7 +34,7 @@ def test_rule_2_youth_athlete_percentile_suppressed():
     )
     prof = AthleteProfile(full_name="Junior Swimmer", age=12, gender="Male", height_cm=150.0, weight_kg=42.0, swimming_level="Intermediate", preferred_stroke="Freestyle")
 
-    res = engine.evaluate_full_analysis(ar, prof)
+    res = engine.evaluate_analysis(ar, prof)
     sr_comp = res.comparisons["stroke_rate"]
 
     assert sr_comp.z_score is None, "Youth athlete must NOT receive adult Z-score"
@@ -52,7 +51,7 @@ def test_rule_3_female_athlete_percentile_suppressed():
     )
     prof = AthleteProfile(full_name="Jane Smith", age=30, gender="Female", height_cm=172.0, weight_kg=62.0, swimming_level="Elite", preferred_stroke="Butterfly")
 
-    res = engine.evaluate_full_analysis(ar, prof)
+    res = engine.evaluate_analysis(ar, prof)
     sr_comp = res.comparisons["stroke_rate"]
 
     assert sr_comp.z_score is None or sr_comp.evidence.source_relationship != "UNVERIFIED", "Female athlete without verified benchmark cohort must NOT receive an unverified/fabricated Z-score"
@@ -71,7 +70,7 @@ def test_rule_4_masters_athlete_percentile_suppressed():
     )
     prof = AthleteProfile(full_name="Senior Swimmer", age=45, gender="Male", height_cm=178.0, weight_kg=78.0, swimming_level="Advanced", preferred_stroke="Freestyle")
 
-    res = engine.evaluate_full_analysis(ar, prof)
+    res = engine.evaluate_analysis(ar, prof)
     sr_comp = res.comparisons["stroke_rate"]
 
     assert sr_comp.z_score is None
@@ -88,7 +87,7 @@ def test_rule_5_6_7_reference_only_and_rejected_metric_safety():
     )
     prof = AthleteProfile(full_name="John Doe", age=22, gender="Male", height_cm=180.0, weight_kg=75.0, swimming_level="Elite", preferred_stroke="Freestyle")
 
-    res = engine.evaluate_full_analysis(ar, prof)
+    res = engine.evaluate_analysis(ar, prof)
 
     # Kick frequency is REFERENCE_ONLY -> Z-score / percentile must be None
     if "kick_frequency" in res.comparisons:
@@ -118,7 +117,7 @@ def test_rule_9_pdf_streamlit_rule_alignment():
     ar.report = PerformanceReport(overall_score=80.0, stroke_rate=ValidatedMetric(value=54.0, valid=True))
     prof = AthleteProfile(full_name="Female Swimmer", age=22, gender="Female", height_cm=170.0, weight_kg=60.0, swimming_level="Elite", preferred_stroke="Freestyle")
 
-    res = engine.evaluate_full_analysis(ar, prof)
+    res = engine.evaluate_analysis(ar, prof)
     ar.benchmark_result = res
 
     # Generate PDF

@@ -1,5 +1,5 @@
 import requests
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any
 from core.logger import setup_logger
 
 logger = setup_logger(__name__)

@@ -1,5 +1,5 @@
 import requests
-from typing import Dict, Any, Optional
+from typing import Dict, Any
 from models.scientific_evidence_models import SourceAccessLevel
 from core.logger import setup_logger
 

@@ -6,7 +6,6 @@ Tests:
 - Phase 3/7: Benchmark Radar Chart Generation
 - Phase 5: 3D Kinematics and Validated Metrics Contract
 """
-import pytest
 from unittest.mock import MagicMock
 from models.athlete_profile import AthleteProfile
 from models.analysis_session import AnalysisSession

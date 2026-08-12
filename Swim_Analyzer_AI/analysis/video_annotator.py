@@ -148,7 +148,7 @@ class VideoAnnotator:
         cv2.addWeighted(overlay, 0.6, frame, 0.4, 0, frame)
         
         texts = [
-            f"DEV DEBUG MODE",
+            "DEV DEBUG MODE",
             f"Frame: {frame_idx} | TS: {timestamp}ms",
             f"Effective FPS: {fps:.2f}",
             f"Confidence: {conf:.2f}",

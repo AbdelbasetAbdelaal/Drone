@@ -2,9 +2,9 @@
 Explainable Stroke Heuristic Classifier for SwimAnalyzer AI.
 Evaluates kinematic feature sets against explicit UNVALIDATED_HEURISTIC thresholds.
 """
-from typing import Dict, Any, Tuple, Optional
+from typing import Any, Dict, List
 from models.data_models import StrokeType, StrokeDetectionResult
-from analysis.classification.feature_extractor import KinematicFeatureSet, KinematicFeatureExtractor
+from analysis.classification.feature_extractor import KinematicFeatureSet
 from core.logger import setup_logger
 
 logger = setup_logger(__name__)

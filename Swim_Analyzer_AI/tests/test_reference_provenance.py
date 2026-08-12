@@ -2,7 +2,6 @@
 Tests for Reference Provenance tracking (authors, title, DOI, PMID, evidence grade).
 """
 
-import pytest
 from models.reference_data_models import ReferenceDataset, ReferenceSource, ReferenceMetric
 
 def test_provenance_preservation():

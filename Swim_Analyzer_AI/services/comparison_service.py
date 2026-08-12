@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, Optional
 from models.comparison_models import ComparisonReport, MetricDelta
 
 class ComparisonService:

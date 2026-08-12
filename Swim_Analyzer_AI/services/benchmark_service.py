@@ -1,4 +1,4 @@
-from typing import Optional, Dict, Any
+from typing import Optional, Dict
 from analysis.benchmarks.benchmark_engine import BenchmarkEngine
 from models.benchmark_models import BenchmarkResult
 from models.data_models import AnalysisResult
@@ -26,11 +26,11 @@ class BenchmarkService:
             analysis_result.benchmark_result = benchmark_result
             logger.info(f"Successfully evaluated benchmarks (Skill: {benchmark_result.overall_skill_level}, Dataset: {benchmark_result.dataset_name})")
             return benchmark_result
-        except Exception as e:
-            logger.error(f"Error evaluating benchmarks: {e}")
-            fallback = BenchmarkResult()
-            analysis_result.benchmark_result = fallback
-            return fallback
+        except Exception:
+            # Insufficient evidence is a valid BenchmarkResult from the engine.
+            # Only unexpected runtime failures reach this branch and must remain visible.
+            logger.exception("Error evaluating benchmarks")
+            raise
 
     def get_percentile(self, metric_name: str, raw_value: float, stroke_type: str = "Freestyle",
                        age_group: str = "18-25", gender: str = "Male") -> float:

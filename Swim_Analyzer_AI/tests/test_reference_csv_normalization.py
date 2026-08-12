@@ -3,7 +3,6 @@ Tests for ReferenceCSVNormalizer schema normalization layer.
 Verifies column cleanup, source_type mapping, and dataset context resolution.
 """
 
-import pytest
 from services.reference_csv_normalizer import ReferenceCSVNormalizer
 
 def test_normalization_source_type_mapping():

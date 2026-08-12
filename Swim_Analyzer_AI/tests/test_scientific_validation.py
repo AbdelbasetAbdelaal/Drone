@@ -1,4 +1,3 @@
-import pytest
 import yaml
 from pathlib import Path
 
@@ -70,8 +69,8 @@ def test_benchmark_datasets_have_evidence_metadata():
                     for sid in sids:
                         assert repo.get_source(sid) is not None, f"Metric {metric_name} in {yfile.name} cites non-existent source_id {sid}"
 
-def test_benchmark_engine_evidence_resolution():
-    """Verify BenchmarkEngine populates MetricEvidenceMetadata and validation status on evaluation."""
+def test_benchmark_engine_unmatched_age_cohort_is_insufficient_evidence():
+    """Adult profiles must not consume the YAML dataset's age-unspecified Mixed cohort."""
     engine = BenchmarkEngine()
     ar = AnalysisResult()
     ar.report = PerformanceReport(
@@ -81,24 +80,24 @@ def test_benchmark_engine_evidence_resolution():
     )
     prof = AthleteProfile(full_name="John Doe", age=22, gender="Male", height_cm=180.0, weight_kg=75.0, swimming_level="Advanced", preferred_stroke="Freestyle")
     
-    res = engine.evaluate_full_analysis(ar, prof)
+    res = engine.evaluate_analysis(ar, prof)
     assert res.dataset_id != "", "dataset_id missing from BenchmarkResult"
     assert "stroke_rate" in res.comparisons
     
     sr_comp = res.comparisons["stroke_rate"]
     assert sr_comp.evidence is not None
-    assert sr_comp.evidence.validation_status == ValidationStatus.VALIDATED
-    assert "SRC-FREE-001" in sr_comp.evidence.source_ids
-    assert sr_comp.evidence.sample_size == 184
+    assert sr_comp.evidence.validation_status == ValidationStatus.INSUFFICIENT_EVIDENCE
+    assert sr_comp.population_mean is None
+    assert sr_comp.percentile is None
 
-def test_derived_placeholder_performance_score():
-    """Verify composite Performance Score is explicitly tagged as PLACEHOLDER / Level E."""
+def test_derived_placeholder_performance_score_is_not_invented_without_statistics():
+    """A composite score without an explicit benchmark remains insufficient evidence."""
     engine = BenchmarkEngine()
     ar = AnalysisResult()
     ar.report = PerformanceReport(overall_score=85.0)
-    res = engine.evaluate_full_analysis(ar)
+    res = engine.evaluate_analysis(ar)
     
     score_comp = res.comparisons.get("performance_score")
     assert score_comp is not None
-    assert score_comp.evidence.validation_status == ValidationStatus.PLACEHOLDER
+    assert score_comp.evidence.validation_status == ValidationStatus.INSUFFICIENT_EVIDENCE
     assert score_comp.evidence.evidence_level == EvidenceLevel.LEVEL_E

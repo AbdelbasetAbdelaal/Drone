@@ -1,9 +1,9 @@
 import yaml
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any, Dict, List, Optional
 
 from scientific_reference.storage.scientific_evidence_registry import ScientificEvidenceRegistry
-from models.scientific_evidence_models import ReviewStatus, DefinitionMatchingStatus, PopulationMatchingStatus, AuditDecision
+from models.scientific_evidence_models import ReviewStatus, AuditDecision
 from core.logger import setup_logger
 
 logger = setup_logger(__name__)

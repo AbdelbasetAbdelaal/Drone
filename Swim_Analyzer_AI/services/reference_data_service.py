@@ -3,12 +3,11 @@ High-level service layer for the Reference Data Manager.
 Coordinates database access, validation, audit trail logging, and duplicate detection.
 """
 
-from typing import List, Optional, Tuple, Dict, Any
+from typing import List, Optional, Tuple
 from database import SessionLocal
 from database.reference_repository import ReferenceDataRepository
 from models.reference_data_models import (
-    ReferenceDataset, ReferenceMetric, ReferenceSource,
-    ReferenceValidationStatus, ReferenceBenchmarkEligibility, ReferenceSourceType
+    ReferenceDataset, ReferenceValidationStatus, ReferenceBenchmarkEligibility, ReferenceSourceType
 )
 from services.reference_data_validator import ReferenceDataValidator, ScientificValidationResult
 from services.reference_resolver import ReferenceDataResolver, ResolvedReferenceMatch

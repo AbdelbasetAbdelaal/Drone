@@ -4,7 +4,6 @@ Tests for audit event logging and repository CRUD operations.
 
 import pytest
 from database import SessionLocal, engine, Base
-from database.models import ReferenceDatasetModel
 from database.reference_repository import ReferenceDataRepository
 from models.reference_data_models import ReferenceDataset, ReferenceMetric
 

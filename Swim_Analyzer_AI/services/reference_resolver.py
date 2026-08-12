@@ -5,9 +5,8 @@ coach-validated team datasets, coach-defined references, and scientific YAML ben
 """
 
 from dataclasses import dataclass, field
-from typing import List, Dict, Optional, Any, Tuple
+from typing import List, Optional, Tuple
 from models.reference_data_models import ReferenceDataset, ReferenceMetric, ReferenceBenchmarkEligibility, ReferenceValidationStatus
-from models.athlete_profile import AthleteProfile
 
 @dataclass
 class ResolvedReferenceMatch:

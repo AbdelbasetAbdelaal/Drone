@@ -1,5 +1,5 @@
 version: 3.2.0
-updated_at: '2026-08-09'
+updated_at: '2026-08-12'
 sources:
   SRC-FREE-001:
     source_id: SRC-FREE-001
@@ -1656,3 +1656,20 @@ sources:
     test_context: null
     notes: Systematic review analyzing body dimensions and stroking parameters across
       young/adolescent swimmers.
+  SRC-DISCOVERED-42577324:
+    source_id: SRC-DISCOVERED-42577324
+    title: Nonlinear interaction between stroke length and stroke rate in elite swimming.
+    authors:
+    - Jameel, SM
+    publication_year: 2026
+    journal_or_organization: Frontiers in sports and active living
+    doi: 10.62617/mcb463
+    pmid: '42577324'
+    pmcid: PMC10875684
+    url: https://pubmed.ncbi.nlm.nih.gov/42577324/
+    stroke: Freestyle
+    measured_metrics: []
+    evidence_quality: LEVEL_A
+    notes: 'Discovered via query: Freestyle stroke rate Elite swimming'
+    access_level: FULL_TEXT_VERIFIED
+    verification_status: VERIFIED_CORRECT

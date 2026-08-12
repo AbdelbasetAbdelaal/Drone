@@ -2,7 +2,6 @@
 Validates the internal consistency and scientific trustworthiness of the final analysis.
 Ensures that no contradictory metrics or feedback are presented to the user.
 """
-from typing import List, Dict, Any
 from core.logger import setup_logger
 from core.constants import (
     INVALID_FRAMES_RATIO_THRESHOLD, RELIABILITY_DROP_PENALTY, RELIABILITY_POOR_VQA_CAP,

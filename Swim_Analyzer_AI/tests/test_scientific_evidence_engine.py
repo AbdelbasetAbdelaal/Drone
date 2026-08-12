@@ -1,7 +1,6 @@
-import pytest
 from models.scientific_evidence_models import (
     CandidateEvidence, PopulationMatchingStatus, DefinitionMatchingStatus,
-    ScientificEvidenceRecord, AggregatedEvidence
+    ScientificEvidenceRecord
 )
 from scientific_reference.validation.population_validator import PopulationValidator
 from scientific_reference.validation.metric_validator import MetricValidator

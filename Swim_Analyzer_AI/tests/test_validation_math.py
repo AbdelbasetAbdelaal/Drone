@@ -1,11 +1,9 @@
 import os
-import json
 import unittest
 import math
 import subprocess
 from validation.reference_loader import ReferenceLoader
 from validation.metrics_validator import MetricsValidator
-from validation.validation_report import ValidationReportGenerator
 
 class TestValidationMath(unittest.TestCase):
     
@@ -94,7 +92,6 @@ from models.data_models import (
     VQAResult, StrokeStatistics, ValidatedMetric, FrameData, JointAngles
 )
 from analysis.consistency_validator import AnalysisConsistencyValidator
-from analysis.strategies.freestyle_scoring_engine import FreestyleScoringEngine
 
 class TestScientificConsistencyValidation(unittest.TestCase):
     """

@@ -2,10 +2,9 @@
 Tests for ReferenceDataValidator and the 8 Scientific Integrity Rules.
 """
 
-import pytest
 from models.reference_data_models import (
     ReferenceDataset, ReferenceMetric, ReferenceSource,
-    ReferenceSourceType, ReferenceBenchmarkEligibility, ReferenceValidationStatus
+    ReferenceSourceType, ReferenceBenchmarkEligibility
 )
 from services.reference_data_validator import ReferenceDataValidator
 

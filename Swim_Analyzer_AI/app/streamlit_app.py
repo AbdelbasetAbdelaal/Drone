@@ -23,11 +23,8 @@ from services.athlete_service import AthleteService
 from services.analysis_history_service import AnalysisHistoryService
 from services.comparison_service import ComparisonService
 from services.pdf_report_service import PDFReportService
-from models.athlete_profile import AthleteProfile
 from models.analysis_session import AnalysisSession
-from models.coach_profile import CoachProfile
 from services.auth_service import AuthService
-from models.comparison_models import ComparisonReport
 from core.logger import setup_logger
 
 
@@ -249,7 +246,7 @@ def render_admin_dashboard_page():
         res = st.session_state["last_sci_db_update_res"]
         verdict = res.get('verdict', '')
         if res.get('database_changed') is False and verdict == "SUCCESSFUL_UPDATE":
-            st.success(f"✓ **Scientific Database Already Up To Date** — No new literature found.")
+            st.success("✓ **Scientific Database Already Up To Date** — No new literature found.")
         elif verdict == "INTERNET_UNAVAILABLE":
             st.warning(f"⚠️ **Internet Literature Update Could Not Be Completed** — External scientific sources were unavailable. Previous verified database preserved intact. (Version: `{res.get('previous_version', '2026.08.08')}`)")
         elif verdict == "UPDATE_ABORTED":
@@ -1504,7 +1501,7 @@ def main():
             res = st.session_state["last_sci_db_update_res"]
             verdict = res.get('verdict', '')
             if res.get('database_changed') is False and verdict == "SUCCESSFUL_UPDATE":
-                st.success(f"✓ **Scientific Database Already Up To Date** — No new literature found.")
+                st.success("✓ **Scientific Database Already Up To Date** — No new literature found.")
             elif verdict == "INTERNET_UNAVAILABLE":
                 st.warning(f"⚠️ **Internet Literature Update Could Not Be Completed** — External scientific sources were unavailable. Previous verified database preserved intact. (Version: `{res.get('previous_version', '2026.08.08')}`)")
             elif verdict == "UPDATE_ABORTED":

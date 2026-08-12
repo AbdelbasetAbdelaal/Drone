@@ -4,20 +4,16 @@ Verifies that unavailable or uncalibrated metrics propagate as None and render s
 without raising TypeError, converting None to zero/100, or crashing Streamlit/Plotly functions.
 """
 
-import pytest
 import pandas as pd
-from unittest.mock import MagicMock
 
-from models.data_models import StrokeType, StrokeDetectionResult, ValidatedMetric, AnalysisResult, PerformanceReport
+from models.data_models import StrokeType, StrokeDetectionResult, ValidatedMetric, PerformanceReport
 from models.benchmark_models import BenchmarkResult, MetricBenchmarkComparison
 from app.ui.charts import (
     create_performance_trend_chart,
     create_cycles_trend_chart,
     create_benchmark_percentile_chart,
-    create_bell_curve_chart,
     create_benchmark_radar_chart
 )
-from app.ui.benchmark_ui import render_population_benchmark_cards
 from services.comparison_service import ComparisonService
 
 def test_overall_score_none_does_not_crash_rendering():

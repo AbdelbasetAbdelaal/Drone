@@ -2,7 +2,6 @@
 Tests for ReferenceCSVService import and validation preview.
 """
 
-import pytest
 from services.reference_csv_service import ReferenceCSVService
 
 def test_csv_template_generation():

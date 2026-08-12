@@ -5,18 +5,16 @@ populating SQLite database tables with versioning, active flags, and scientific 
 """
 
 import os
-import io
 import csv
 from datetime import datetime
 from pathlib import Path
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Tuple
 
 from database import SessionLocal
 from database.reference_repository import ReferenceDataRepository
 from models.reference_data_models import (
     ReferenceDataset, ReferenceMetric, ReferenceSource, ReferenceDatasetVersion,
-    ReferenceBenchmarkPriority, ReferenceBenchmarkEligibility, ReferenceValidationStatus,
-    ReferenceMeasurementDomain
+    ReferenceBenchmarkEligibility, ReferenceValidationStatus
 )
 
 class CSVRegistryImporter:

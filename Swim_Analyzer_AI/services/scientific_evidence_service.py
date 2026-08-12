@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, Optional
+from typing import List, Optional
 
 from scientific_reference.scientific_source_repository import ScientificSourceRepository
 from models.scientific_evidence_models import ScientificSource, ValidationStatus, EvidenceLevel

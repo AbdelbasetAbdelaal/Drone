@@ -3,7 +3,6 @@ import os
 from datetime import datetime
 from typing import List, Optional, Tuple
 from database.database import SessionLocal, engine, Base, init_db
-from database.models import CoachModel
 from database.repository import CoachRepository
 from models.coach_profile import CoachProfile
 from core.logger import setup_logger

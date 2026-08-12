@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from typing import List, Tuple, Any, Dict
-from models.data_models import FrameData, ValidatedMetric, PhaseTransition, PerformanceReport
+from typing import List, Tuple, Any
+from models.data_models import FrameData, PerformanceReport
 
 class BaseStrokeStateMachine(ABC):
     @abstractmethod

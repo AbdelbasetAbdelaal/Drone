@@ -1,7 +1,7 @@
 """
 Analyzes stroke phases based on motion tracking over time using a deterministic state machine.
 """
-from typing import Any, List, Dict
+from typing import Any, List
 import numpy as np
 from core.logger import setup_logger
 from models.data_models import PhaseTransition

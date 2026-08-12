@@ -15,5 +15,4 @@ populations:
           source_ids:
           - SRC-BACK-001
           source_relationship: DIRECT_MEASUREMENT
-  '8-10':
-    status: INSUFFICIENT_EVIDENCE
+    status: VALIDATED

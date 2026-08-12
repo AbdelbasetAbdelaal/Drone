@@ -1,7 +1,7 @@
 import pytest
 from models.data_models import (
     AnalysisResult, PerformanceReport, ReliabilityResult, 
-    VQAResult, StrokeStatistics, ValidatedMetric, FrameData, JointAngles
+    VQAResult, StrokeStatistics, ValidatedMetric, FrameData
 )
 from analysis.consistency_validator import AnalysisConsistencyValidator
 

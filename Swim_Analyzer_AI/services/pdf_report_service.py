@@ -1,7 +1,6 @@
 import os
 import uuid
 from datetime import datetime
-from pathlib import Path
 from typing import List, Optional, Any
 from fpdf import FPDF
 

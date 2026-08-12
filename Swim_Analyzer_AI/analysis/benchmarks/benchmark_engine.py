@@ -1,18 +1,17 @@
-import os
 import math
 import yaml
 from pathlib import Path
 from typing import Dict, Any, Optional, Tuple
 
 from models.benchmark_models import (
-    AgeGroup, GenderCategory, SkillLevel, PopulationStats,
-    MetricBenchmarkComparison, BenchmarkResult, BenchmarkConfidence
+    AgeGroup, SkillLevel, PopulationStats,
+    MetricBenchmarkComparison, BenchmarkResult
 )
 from models.data_models import AnalysisResult
 from models.athlete_profile import AthleteProfile
 from models.scientific_evidence_models import (
     MetricEvidenceMetadata, ValidationStatus, EvidenceLevel,
-    SourceRelationship, PopulationCompatibility, DefinitionCompatibility, AuditDecision
+    SourceRelationship, PopulationCompatibility, DefinitionCompatibility
 )
 from core.logger import setup_logger
 
@@ -50,7 +49,7 @@ class BenchmarkEngine:
                 logger.error(f"Failed to load benchmark YAML {yaml_file}: {e}")
 
     def _get_dataset(self, stroke_type: str) -> Optional[dict]:
-        return self._datasets.get(stroke_type.lower()) or self._datasets.get("freestyle")
+        return self._datasets.get(stroke_type.lower())
 
     def _get_population_stats(self, stroke_type: str, age_group: str, gender: str, metric_name: str) -> PopulationStats:
         ds = self._get_dataset(stroke_type)
@@ -69,39 +68,6 @@ class BenchmarkEngine:
         pops = ds.get("populations", {})
         raw_age_pop = pops.get(age_group)
         if isinstance(raw_age_pop, dict) and raw_age_pop.get("status") == "INSUFFICIENT_EVIDENCE":
-            # Check local database reference via ReferenceDataService
-            try:
-                from services.reference_data_service import ReferenceDataService
-                ref_svc = ReferenceDataService()
-                age_num = 20 if age_group == "18-25" else (9 if age_group == "8-10" else (12 if age_group == "11-13" else (15 if age_group == "14-17" else (30 if age_group == "26-35" else 40))))
-                resolved = ref_svc.resolve_reference(
-                    metric_name=metric_name,
-                    stroke=stroke_type,
-                    age=age_num,
-                    sex=gender
-                )
-                if resolved.reference_metric and (resolved.reference_metric.value_typical is not None or resolved.reference_metric.value_median is not None):
-                    m = resolved.reference_metric
-                    v_mean = m.value_typical if m.value_typical is not None else m.value_median
-                    v_min = m.value_min if m.value_min is not None else v_mean * 0.8
-                    v_max = m.value_max if m.value_max is not None else v_mean * 1.2
-                    v_std = max(0.5, (v_max - v_min) / 4.0)
-                    return PopulationStats(
-                        mean=v_mean,
-                        std=v_std,
-                        elite_mean=v_max,
-                        unit=m.unit,
-                        evidence=MetricEvidenceMetadata(
-                            validation_status=ValidationStatus.SCIENTIFICALLY_VALIDATED if resolved.validation_status == "SCIENTIFICALLY_VALIDATED" else ValidationStatus.PARTIALLY_VALIDATED,
-                            evidence_level=EvidenceLevel.LEVEL_B,
-                            source_relationship=SourceRelationship.DIRECTLY_SUPPORTED,
-                            population_compatibility=PopulationCompatibility.COMPATIBLE,
-                            definition_compatibility=DefinitionCompatibility.COMPATIBLE
-                        )
-                    )
-            except Exception:
-                pass
-
             return PopulationStats(
                 mean=None, std=None, elite_mean=None, unit="",
                 evidence=MetricEvidenceMetadata(
@@ -156,7 +122,10 @@ class BenchmarkEngine:
             ev_lvl = EvidenceLevel.LEVEL_C
 
         try:
-            src_rel = SourceRelationship(ev_cfg.get("source_relationship", ev_cfg.get("relationship", "DIRECTLY_SUPPORTED")))
+            raw_source_relationship = ev_cfg.get("source_relationship", ev_cfg.get("relationship", "DIRECTLY_SUPPORTED"))
+            if raw_source_relationship == "DIRECT_MEASUREMENT":
+                raw_source_relationship = SourceRelationship.DIRECTLY_SUPPORTED.value
+            src_rel = SourceRelationship(raw_source_relationship)
         except ValueError:
             src_rel = SourceRelationship.APPROXIMATED
 
@@ -185,10 +154,20 @@ class BenchmarkEngine:
             notes=ev_cfg.get("notes", []) if isinstance(ev_cfg.get("notes"), list) else []
         )
 
+        mean = metric_cfg.get("mean")
+        std = metric_cfg.get("std")
+        elite_mean = metric_cfg.get("elite_mean")
+        if mean is None or std is None:
+            evidence_meta.validation_status = ValidationStatus.INSUFFICIENT_EVIDENCE
+            return PopulationStats(
+                mean=None, std=None, elite_mean=None, unit=str(metric_cfg.get("unit", "")),
+                evidence=evidence_meta
+            )
+
         return PopulationStats(
-            mean=float(metric_cfg.get("mean", 70.0)),
-            std=float(metric_cfg.get("std", 10.0)),
-            elite_mean=float(metric_cfg.get("elite_mean", 95.0)),
+            mean=float(mean),
+            std=float(std),
+            elite_mean=float(elite_mean) if elite_mean is not None else None,
             unit=str(metric_cfg.get("unit", "")),
             higher_is_better=bool(metric_cfg.get("higher_is_better", True)),
             evidence=evidence_meta
@@ -263,10 +242,10 @@ class BenchmarkEngine:
         }
 
     def get_expected_range(self, metric_name: str, stroke_type: str = "Freestyle",
-                           age_group: str = "18-25", gender: str = "Male") -> Tuple[float, float]:
+                           age_group: str = "18-25", gender: str = "Male") -> Tuple[Optional[float], Optional[float]]:
         stats = self._get_population_stats(stroke_type, age_group, gender, metric_name)
         if stats.mean is None or stats.std is None:
-            return (0.0, 0.0)
+            return (None, None)
         low = stats.mean - 2.0 * stats.std
         high = stats.mean + 2.0 * stats.std
         return (low, high)
@@ -288,8 +267,6 @@ class BenchmarkEngine:
         # stroke_detection lives on VideoMetadata, not AnalysisResult — use getattr for safety
         stroke_det = getattr(result, 'stroke_detection', None)
         stroke = stroke_det.selected_stroke.value if stroke_det else "Freestyle"
-        if stroke not in ["Freestyle", "Backstroke", "Breaststroke", "Butterfly"]:
-            stroke = "Freestyle"
 
         age = athlete_profile.age if athlete_profile and athlete_profile.age else 20
         gender = athlete_profile.gender if athlete_profile and athlete_profile.gender else "Male"
@@ -299,6 +276,16 @@ class BenchmarkEngine:
 
         overall_score = result.report.overall_score if result.report else None
         overall_skill = self.get_skill_level(overall_score, stroke)
+
+        if not self._get_dataset(stroke):
+            return BenchmarkResult(
+                stroke_type=stroke,
+                age_group=age_grp,
+                gender=gender,
+                overall_skill_level="INSUFFICIENT_EVIDENCE",
+                is_population_compatible=False,
+                validation_status="insufficient_evidence"
+            )
 
         bm_res = BenchmarkResult(
             stroke_type=stroke,
@@ -353,5 +340,3 @@ class BenchmarkEngine:
             bm_res.comparisons[m_name] = comp
 
         return bm_res
-
-    evaluate_full_analysis = evaluate_analysis
