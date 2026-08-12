@@ -43,10 +43,10 @@ def create_performance_trend_chart(df: pd.DataFrame) -> go.Figure:
     df = df.sort_values(by="DateTime")
 
     hover_text = df.apply(
-        lambda row: f"<b>Date:</b> {row['Date']} {row['Time']}<br>"
-                    f"<b>Score:</b> {row['Score']}<br>"
-                    f"<b>Confidence:</b> {row['Confidence']}<br>"
-                    f"<b>Stroke:</b> {row['Stroke']}",
+        lambda row: f"<b>Date:</b> {row.get('Date', '')} {row.get('Time', '')}<br>"
+                    f"<b>Score:</b> {f'{row['Score']:.1f}' if pd.notna(row.get('Score')) else 'N/A'}<br>"
+                    f"<b>Confidence:</b> {row.get('Confidence', 'N/A')}<br>"
+                    f"<b>Stroke:</b> {row.get('Stroke', 'Unknown')}",
         axis=1
     )
 
@@ -79,7 +79,12 @@ def create_performance_trend_chart(df: pd.DataFrame) -> go.Figure:
         ))
 
     fig = apply_premium_layout(fig, "Performance Score Progression")
-    fig.update_yaxes(title="Overall Score", range=[max(0, df['Score'].min() - 10), min(100, df['Score'].max() + 10)])
+    
+    min_sc = df['Score'].dropna().min()
+    max_sc = df['Score'].dropna().max()
+    y_min = max(0, min_sc - 10) if pd.notna(min_sc) else 0
+    y_max = min(100, max_sc + 10) if pd.notna(max_sc) else 100
+    fig.update_yaxes(title="Overall Score", range=[y_min, y_max])
     fig.update_xaxes(title="Session Date", fixedrange=False)
     return fig
 
@@ -93,9 +98,9 @@ def create_cycles_trend_chart(df: pd.DataFrame) -> go.Figure:
     df = df.sort_values(by="DateTime")
 
     hover_text = df.apply(
-        lambda row: f"<b>Date:</b> {row['Date']} {row['Time']}<br>"
-                    f"<b>Cycles:</b> {row['Cycles']}<br>"
-                    f"<b>Stroke:</b> {row['Stroke']}",
+        lambda row: f"<b>Date:</b> {row.get('Date', '')} {row.get('Time', '')}<br>"
+                    f"<b>Cycles:</b> {row.get('Cycles', '0')}<br>"
+                    f"<b>Stroke:</b> {row.get('Stroke', 'Unknown')}",
         axis=1
     )
 

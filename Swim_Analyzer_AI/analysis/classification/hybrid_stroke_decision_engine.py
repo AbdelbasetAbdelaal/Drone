@@ -29,11 +29,11 @@ logger = setup_logger(__name__)
 class HybridStrokeDecision:
     """Structured decision output produced by the Hybrid Decision Engine."""
     stroke_type: StrokeType
-    confidence: float
+    confidence: Optional[float]
     evidence: Dict[str, Any]
     rule_contributions: Dict[str, float]
     ai_contributions: Dict[str, float]
-    uncertainty: float
+    uncertainty: Optional[float]
     raw_detection_result: StrokeDetectionResult
 
 class HybridStrokeDecisionEngine:
@@ -55,7 +55,11 @@ class HybridStrokeDecisionEngine:
     ) -> HybridStrokeDecision:
         """
         Fuses predictions and feature evidence into a single HybridStrokeDecision object.
-        Enforces strict scientific rules for agreement, disagreement, visibility, and missing evidence.
+        Enforces strict scientific rules:
+        - Both valid + agree -> ACCEPTED / MODERATE_CONFIDENCE
+        - Rule/AI disagreement -> UNKNOWN, REVIEW_REQUIRED, confidence=None
+        - Single engine available -> UNKNOWN, REVIEW_REQUIRED, confidence=None
+        - Insufficient visibility or evidence -> UNKNOWN, INSUFFICIENT_EVIDENCE/VISIBILITY, confidence=None
         """
         missing_evidence = list(set(
             (rule_result.missing_evidence or []) + 
@@ -124,21 +128,23 @@ class HybridStrokeDecisionEngine:
                 rule_contributions={}, ai_contributions={}, uncertainty=1.0, raw_detection_result=res
             )
 
-        # Rule 3: Single Engine Valid (Rule Only or AI Only)
+        # Rule 3: Single Engine Valid (Rule Only or AI Only) -> Flag REVIEW_REQUIRED, confidence=None
         if rule_valid and not ai_valid:
+            conflict_msg = f"Rule Classifier predicted {rule_result.predicted_stroke.value}, but AI Agent had insufficient evidence."
+            conflicts.append(conflict_msg)
             res = StrokeDetectionResult(
-                predicted_stroke=rule_result.predicted_stroke,
-                confidence=rule_result.confidence,
-                predictions=rule_result.predictions,
+                predicted_stroke=StrokeType.UNKNOWN,
+                confidence=None,
+                predictions=rule_result.predictions or {},
                 selected_stroke=selected_stroke_input,
                 manual_override=False,
                 is_inconsistent=False,
-                classification_status=rule_result.classification_status,
-                classification_reason=f"Rule Classifier only ({rule_result.classification_reason}). AI Agent had insufficient evidence.",
-                feature_values=rule_result.feature_values,
-                feature_contributions=rule_result.feature_contributions,
+                classification_status="REVIEW_REQUIRED",
+                classification_reason=conflict_msg,
+                feature_values=rule_result.feature_values or {},
+                feature_contributions=rule_result.feature_contributions or {},
                 confidence_type="UNCALIBRATED_DECISION_SCORE",
-                uncertainty=round(1.0 - (rule_result.confidence or 0.0), 4) if rule_result.confidence is not None else 1.0,
+                uncertainty=1.0,
                 rule_prediction=rule_result.predicted_stroke,
                 ai_prediction=None,
                 agreement=None,
@@ -148,25 +154,27 @@ class HybridStrokeDecisionEngine:
                 method="RULE_ONLY"
             )
             return HybridStrokeDecision(
-                stroke_type=rule_result.predicted_stroke, confidence=rule_result.confidence, evidence=res.evidence,
-                rule_contributions=rule_result.feature_contributions, ai_contributions={},
-                uncertainty=res.uncertainty, raw_detection_result=res
+                stroke_type=StrokeType.UNKNOWN, confidence=None, evidence=res.evidence,
+                rule_contributions=rule_result.feature_contributions or {}, ai_contributions={},
+                uncertainty=1.0, raw_detection_result=res
             )
 
         if ai_valid and not rule_valid:
+            conflict_msg = f"AI Agent predicted {ai_result.predicted_stroke.value}, but Rule Classifier had insufficient evidence."
+            conflicts.append(conflict_msg)
             res = StrokeDetectionResult(
-                predicted_stroke=ai_result.predicted_stroke,
-                confidence=ai_result.confidence,
-                predictions=ai_result.predictions,
+                predicted_stroke=StrokeType.UNKNOWN,
+                confidence=None,
+                predictions=ai_result.predictions or {},
                 selected_stroke=selected_stroke_input,
                 manual_override=False,
                 is_inconsistent=False,
-                classification_status=ai_result.classification_status,
-                classification_reason=f"AI Agent only ({ai_result.classification_reason}). Rule Classifier had insufficient evidence.",
-                feature_values=ai_result.feature_values,
-                feature_contributions=ai_result.feature_contributions,
+                classification_status="REVIEW_REQUIRED",
+                classification_reason=conflict_msg,
+                feature_values=ai_result.feature_values or {},
+                feature_contributions=ai_result.feature_contributions or {},
                 confidence_type="UNCALIBRATED_DECISION_SCORE",
-                uncertainty=round(1.0 - (ai_result.confidence or 0.0), 4) if ai_result.confidence is not None else 1.0,
+                uncertainty=1.0,
                 rule_prediction=None,
                 ai_prediction=ai_result.predicted_stroke,
                 agreement=None,
@@ -176,9 +184,9 @@ class HybridStrokeDecisionEngine:
                 method="AI_ONLY"
             )
             return HybridStrokeDecision(
-                stroke_type=ai_result.predicted_stroke, confidence=ai_result.confidence, evidence=res.evidence,
-                rule_contributions={}, ai_contributions=ai_result.feature_contributions,
-                uncertainty=res.uncertainty, raw_detection_result=res
+                stroke_type=StrokeType.UNKNOWN, confidence=None, evidence=res.evidence,
+                rule_contributions={}, ai_contributions=ai_result.feature_contributions or {},
+                uncertainty=1.0, raw_detection_result=res
             )
 
         # Rule 4: Both Engines Valid -> Check Agreement

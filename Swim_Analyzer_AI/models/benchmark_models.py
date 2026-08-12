@@ -53,15 +53,15 @@ class PopulationStats:
 @dataclass
 class MetricBenchmarkComparison:
     """Detailed scientific population comparison for a single metric."""
-    metric_name: str
-    raw_value: float
-    population_mean: float
-    population_std: float
-    z_score: float
-    percentile: float
-    elite_mean: float
-    elite_delta: float
-    skill_level: str
+    metric_name: str = ""
+    raw_value: Optional[float] = None
+    population_mean: Optional[float] = None
+    population_std: Optional[float] = None
+    z_score: Optional[float] = None
+    percentile: Optional[float] = None
+    elite_mean: Optional[float] = None
+    elite_delta: Optional[float] = None
+    skill_level: Optional[str] = "N/A"
     unit: str = ""
     measurement_confidence: float = 1.0
     population_confidence: float = 0.95
@@ -88,5 +88,6 @@ class BenchmarkResult:
     dataset_id: str = ""
     scientific_revision: str = "2026.08"
     validation_status: str = "partially_validated"
+    is_population_compatible: bool = True
     confidence: BenchmarkConfidence = field(default_factory=BenchmarkConfidence)
     comparisons: Dict[str, MetricBenchmarkComparison] = field(default_factory=dict)

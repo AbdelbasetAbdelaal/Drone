@@ -34,7 +34,18 @@ class VisibilityGate:
             )
 
         total_frames = len(frames)
-        valid_frames = [f for f in frames if getattr(f, 'raw_landmarks', None) and len(f.raw_landmarks) > 28]
+        valid_frames = []
+
+        for f in frames:
+            lms = getattr(f, 'raw_landmarks', None)
+            if lms and len(lms) > 28:
+                # Require key upper-body landmarks (shoulders or wrists) to meet minimum visibility threshold
+                l_sh, r_sh = lms[11], lms[12]
+                s_vis1 = getattr(l_sh, 'visibility', 1.0) if l_sh else 0.0
+                s_vis2 = getattr(r_sh, 'visibility', 1.0) if r_sh else 0.0
+                if (s_vis1 >= self.min_visibility_threshold or s_vis2 >= self.min_visibility_threshold):
+                    valid_frames.append(f)
+
         valid_count = len(valid_frames)
         vis_ratio = valid_count / total_frames if total_frames > 0 else 0.0
 
@@ -51,20 +62,19 @@ class VisibilityGate:
         for f in valid_frames:
             lms = f.raw_landmarks
             if len(lms) > 16 and lms[15] and lms[16]:
-                w1 = getattr(lms[15], 'visibility', None)
-                w2 = getattr(lms[16], 'visibility', None)
-                if w1 is not None and w2 is not None:
-                    wrist_vis.append((w1 + w2) / 2.0)
+                w1 = getattr(lms[15], 'visibility', 0.0)
+                w2 = getattr(lms[16], 'visibility', 0.0)
+                wrist_vis.append((w1 + w2) / 2.0)
+
             if len(lms) > 12 and lms[11] and lms[12]:
-                s1 = getattr(lms[11], 'visibility', None)
-                s2 = getattr(lms[12], 'visibility', None)
-                if s1 is not None and s2 is not None:
-                    shoulder_vis.append((s1 + s2) / 2.0)
+                s1 = getattr(lms[11], 'visibility', 0.0)
+                s2 = getattr(lms[12], 'visibility', 0.0)
+                shoulder_vis.append((s1 + s2) / 2.0)
+
             if len(lms) > 28 and lms[27] and lms[28]:
-                a1 = getattr(lms[27], 'visibility', None)
-                a2 = getattr(lms[28], 'visibility', None)
-                if a1 is not None and a2 is not None:
-                    ankle_vis.append((a1 + a2) / 2.0)
+                a1 = getattr(lms[27], 'visibility', 0.0)
+                a2 = getattr(lms[28], 'visibility', 0.0)
+                ankle_vis.append((a1 + a2) / 2.0)
 
         avg_wrist_vis = sum(wrist_vis) / len(wrist_vis) if wrist_vis else 0.0
         avg_sh_vis = sum(shoulder_vis) / len(shoulder_vis) if shoulder_vis else 0.0

@@ -63,7 +63,7 @@ class StrokeDetectionResult:
 class ValidatedMetric:
     """A generic metric with confidence, reliability, validation status, and measurement domain."""
     name: str = ""
-    value: Optional[float] = 0.0
+    value: Optional[float] = None
     unit: str = ""
     measurement_domain: str = "unavailable" # "calibrated_physical", "relative_body_normalized", "pose_relative_3d", "image_space", "unavailable"
     status: str = "available" # "available", "unavailable", "low_confidence", "insufficient_evidence"

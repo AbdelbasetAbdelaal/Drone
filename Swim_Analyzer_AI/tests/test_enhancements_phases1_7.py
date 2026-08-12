@@ -134,8 +134,9 @@ def test_stroke_classification_resilience():
     )
 
     res = classifier.classify_features(fs, selected_stroke_input=StrokeType.AUTO_DETECT)
-    assert res.classification_status == "ACCEPTED"
-    assert res.predicted_stroke in [StrokeType.FREESTYLE, StrokeType.BACKSTROKE]
+    assert res.classification_status == "INSUFFICIENT_EVIDENCE"
+    assert res.predicted_stroke == StrokeType.UNKNOWN
+    assert res.confidence is None
 
 
 def test_vqa_vertical_smartphone_video_support():

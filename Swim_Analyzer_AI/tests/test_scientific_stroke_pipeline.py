@@ -89,7 +89,7 @@ def test_rule_plus_ai_disagreement():
     assert decision.raw_detection_result.ai_prediction == StrokeType.BUTTERFLY
 
 def test_rule_only_available():
-    """Rule valid and AI unavailable -> Rule prediction evaluated."""
+    """Rule valid and AI unavailable -> Single engine flags REVIEW_REQUIRED with UNKNOWN stroke_type."""
     engine = HybridStrokeDecisionEngine()
     rule_res = StrokeDetectionResult(
         predicted_stroke=StrokeType.BACKSTROKE, confidence=0.80,
@@ -105,12 +105,14 @@ def test_rule_only_available():
     )
 
     decision = engine.evaluate_hybrid_decision(rule_res, ai_res, vis_res)
-    assert decision.stroke_type == StrokeType.BACKSTROKE
-    assert decision.confidence == 0.80
+    assert decision.stroke_type == StrokeType.UNKNOWN
+    assert decision.confidence is None
+    assert decision.raw_detection_result.classification_status == "REVIEW_REQUIRED"
+    assert decision.raw_detection_result.rule_prediction == StrokeType.BACKSTROKE
     assert decision.raw_detection_result.method == "RULE_ONLY"
 
 def test_ai_only_available():
-    """AI valid and Rule unavailable -> AI prediction evaluated."""
+    """AI valid and Rule unavailable -> Single engine flags REVIEW_REQUIRED with UNKNOWN stroke_type."""
     engine = HybridStrokeDecisionEngine()
     rule_res = StrokeDetectionResult(
         predicted_stroke=StrokeType.UNKNOWN, confidence=None,
@@ -126,8 +128,10 @@ def test_ai_only_available():
     )
 
     decision = engine.evaluate_hybrid_decision(rule_res, ai_res, vis_res)
-    assert decision.stroke_type == StrokeType.BREASTSTROKE
-    assert decision.confidence == 0.88
+    assert decision.stroke_type == StrokeType.UNKNOWN
+    assert decision.confidence is None
+    assert decision.raw_detection_result.classification_status == "REVIEW_REQUIRED"
+    assert decision.raw_detection_result.ai_prediction == StrokeType.BREASTSTROKE
     assert decision.raw_detection_result.method == "AI_ONLY"
 
 def test_both_unavailable():

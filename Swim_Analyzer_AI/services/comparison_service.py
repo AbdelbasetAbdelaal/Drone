@@ -15,7 +15,16 @@ class ComparisonService:
         with open(path, "r", encoding="utf-8") as f:
             return json.load(f)
 
-    def _calc_delta(self, name: str, val_a: float, val_b: float, higher_is_better: bool = True, unit: str = "") -> MetricDelta:
+    def _calc_delta(self, name: str, val_a: Optional[float], val_b: Optional[float], higher_is_better: bool = True, unit: str = "") -> MetricDelta:
+        if val_a is None or val_b is None:
+            return MetricDelta(
+                metric_name=name,
+                old_value=val_a,
+                new_value=val_b,
+                delta=None,
+                is_improvement=False,
+                unit=unit
+            )
         delta = val_b - val_a
         is_improvement = (delta > 0) if higher_is_better else (delta < 0)
         

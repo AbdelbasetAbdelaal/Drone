@@ -723,7 +723,7 @@ def render_athlete_profile_page():
                 "Confidence": s.scientific_confidence,
                 "Stroke": s.stroke_type,
                 "Cycles": s.completed_cycles,
-                "Proc. Time (s)": round(s.processing_time_seconds, 1)
+                "Proc. Time (s)": round(s.processing_time_seconds, 1) if (s and getattr(s, 'processing_time_seconds', None) is not None) else None
             })
         
         if len(history) >= 2:
@@ -917,7 +917,7 @@ def render_history_page():
             "Score": round(s.performance_score, 1) if s.performance_score is not None else None,
             "Confidence": s.scientific_confidence,
             "Cycles": s.completed_cycles,
-            "Proc. Time (s)": round(s.processing_time_seconds, 1)
+            "Proc. Time (s)": round(s.processing_time_seconds, 1) if (s and getattr(s, 'processing_time_seconds', None) is not None) else None
         })
 
     st.markdown("### 📋 Recorded Session Logs")
@@ -1053,10 +1053,13 @@ def render_dashboard_page():
     for p in profiles:
         p_scs = athlete_scores.get(p.athlete_id, [])
         if len(p_scs) >= 2:
-            gain = p_scs[0] - p_scs[-1] # latest vs earliest
-            if gain > max_gain and gain > 0:
-                max_gain = gain
-                top_improver_name = p.full_name
+            v_latest = p_scs[0]
+            v_earliest = p_scs[-1]
+            if v_latest is not None and v_earliest is not None:
+                gain = v_latest - v_earliest
+                if gain > max_gain and gain > 0:
+                    max_gain = gain
+                    top_improver_name = p.full_name
 
     kpi1.metric("👥 Total Athletes", total_athletes)
     kpi2.metric("🎥 Total Analyses", total_sessions)
@@ -1077,7 +1080,7 @@ def render_dashboard_page():
                 p_scs = athlete_scores.get(p.athlete_id, [])
                 if p_scs:
                     latest_sc = p_scs[0]
-                    if latest_sc < 72.0:
+                    if latest_sc is not None and latest_sc < 72.0:
                         with st.container(border=True):
                             c_info, c_btn = st.columns([3, 1])
                             with c_info:
@@ -1549,7 +1552,7 @@ def main():
                 
                 if selected_stroke == "Auto Detect":
                     result.selected_stroke = StrokeType.AUTO_DETECT
-                    if result.confidence is None or result.classification_status in ["REVIEW_REQUIRED", "INSUFFICIENT_EVIDENCE", "INSUFFICIENT_VISIBILITY"] or result.confidence < 0.80:
+                    if (result.confidence is None) or (result.classification_status in ["REVIEW_REQUIRED", "INSUFFICIENT_EVIDENCE", "INSUFFICIENT_VISIBILITY"]) or (result.confidence is not None and result.confidence < 0.80):
                         st.session_state.stroke_result = result
                         st.session_state.analysis_state = "needs_override"
                     else:
@@ -1578,7 +1581,7 @@ def main():
             conf_display = f"{conf_val*100:.1f}%" if conf_val is not None else "N/A (Uncalibrated / Low Evidence)"
             
             unc_val = getattr(res, 'uncertainty', None)
-            unc_display = f"{unc_val*100:.1f}%" if unc_val is not None else "100.0%"
+            unc_display = f"{unc_val*100:.1f}%" if unc_val is not None else "N/A"
             status_str = getattr(res, 'classification_status', "INSUFFICIENT_EVIDENCE")
 
             if status_str == "REVIEW_REQUIRED":
@@ -1586,12 +1589,15 @@ def main():
             elif status_str in ["INSUFFICIENT_EVIDENCE", "INSUFFICIENT_VISIBILITY"]:
                 st.error(f"⚠️ **{status_str}:** Pose landmarks or kinematic signals were insufficient for automated classification.")
 
+            conf_type_str = getattr(res, 'confidence_type', 'UNCALIBRATED_DECISION_SCORE')
+
             with st.container(border=True):
-                c1, c2, c3, c4 = st.columns(4)
+                c1, c2, c3, c4, c5 = st.columns(5)
                 c1.metric("Stroke Type", pred_stroke_name)
                 c2.metric("Status", status_str)
-                c3.metric("Decision Confidence", conf_display)
+                c3.metric("Decision Score", conf_display)
                 c4.metric("Uncertainty Margin", unc_display)
+                c5.metric("Confidence Type", conf_type_str)
 
                 m1, m2, m3 = st.columns(3)
                 rule_pred_obj = getattr(res, 'rule_prediction', None)

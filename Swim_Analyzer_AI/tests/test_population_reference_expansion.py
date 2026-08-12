@@ -107,7 +107,7 @@ def test_12_no_benchmark_from_unverified_source(repo, benchmark_engine):
                                     assert repo.get_source(sid) is not None, f"Unverified source_id {sid} in {stroke} benchmark"
 
 def test_13_traceability_metadata_present(benchmark_engine):
-    stats = benchmark_engine._get_population_stats("freestyle", "18-25", "Male", "stroke_rate")
+    stats = benchmark_engine._get_population_stats("freestyle", "Mixed", "Male", "stroke_rate")
     assert stats.evidence is not None
     assert "SRC-FREE-001" in stats.evidence.source_ids
 
