@@ -1460,3 +1460,1212 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 2026-08-12 19:27:54,719 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
 2026-08-12 19:27:54,719 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
 2026-08-12 19:27:54,719 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:32:59,322 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:33:15,340 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:33:15,651 - services.auth_service - INFO - [SYSTEM] Account logged in: coach1 (coach)
+2026-08-12 19:33:15,827 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:33:17,415 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:33:21,114 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:33:27,242 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:33:38,759 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:33:52,329 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:33:52,375 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Better Backstroke Starts Here.mp4
+2026-08-12 19:33:57,438 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:33:57,468 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Better Backstroke Starts Here.mp4
+2026-08-12 19:34:01,747 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:34:01,775 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Better Backstroke Starts Here.mp4
+2026-08-12 19:34:01,972 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:34:02,000 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Better Backstroke Starts Here.mp4
+2026-08-12 19:34:02,107 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 19:34:02,602 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_3a75bdfc4db84f59b2fac5aef89bf375.mp4
+2026-08-12 19:34:09,500 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 19:34:09,672 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Prediction: Butterfly | Decision score: 0.54 | Runner-up margin: 0.08 | [AI_VERIFIER] Invoked - ambiguous Python classification
+2026-08-12 19:34:09,674 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Butterfly | Decision score: 0.6818 | Missing evidence: []
+2026-08-12 19:34:09,814 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:34:09,840 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Better Backstroke Starts Here.mp4
+2026-08-12 19:34:28,502 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:34:28,532 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Better Backstroke Starts Here.mp4
+2026-08-12 19:34:30,674 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:34:30,705 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Better Backstroke Starts Here.mp4
+2026-08-12 19:34:30,936 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:34:30,964 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Better Backstroke Starts Here.mp4
+2026-08-12 19:34:31,042 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-12 19:34:31,043 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_3a75bdfc4db84f59b2fac5aef89bf375.mp4 (Effective FPS: 30.0, Frame Stride: 1)
+2026-08-12 19:34:31,139 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 19:34:31,522 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_3a75bdfc4db84f59b2fac5aef89bf375.mp4 (720x1280 @ 30.0fps)
+2026-08-12 19:34:31,541 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_3a75bdfc4db84f59b2fac5aef89bf375.mp4 (720x1280 @ 30.0fps)
+2026-08-12 19:34:31,545 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_3a75bdfc4db84f59b2fac5aef89bf375.mp4 (Codec: mp4v)
+2026-08-12 19:35:11,741 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 192 frames.
+2026-08-12 19:35:11,753 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-12 19:35:11,903 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 19:35:11,910 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 19:35:11,917 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 19:35:11,924 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 19:35:11,925 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: N/A (Unvalidated Cohort), Dataset: Freestyle Population Reference Matrix v2.0)
+2026-08-12 19:35:12,354 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_3a75bdfc4db84f59b2fac5aef89bf375.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_3a75bdfc4db84f59b2fac5aef89bf375.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_3a75bdfc4db84f59b2fac5aef89bf375.json
+2026-08-12 19:35:26,127 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_3a75bdfc4db84f59b2fac5aef89bf375.mp4
+2026-08-12 19:35:26,266 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 4.38 MB, Frames: 192, Duration: 6.40s
+2026-08-12 19:35:26,493 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 19:35:26,494 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-12 19:35:26,507 - services.analysis_history_service - ERROR - Error saving analysis session 1b0d8068-d2e2-4911-bf34-8de56c379bbd to database.
+2026-08-12 19:35:26,719 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:35:26,757 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Better Backstroke Starts Here.mp4
+2026-08-12 19:35:26,854 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-12 19:35:26,857 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-12 19:35:26,867 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-12 19:35:26,869 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-12 19:35:26,871 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-12 19:35:26,882 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-12 19:35:26,885 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-12 19:35:26,897 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-12 19:35:26,901 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-12 19:35:26,913 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-12 19:35:27,513 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-12 19:35:28,889 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-12 19:35:28,943 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-12 19:35:29,337 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-08-12 19:35:31,561 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-12 19:35:31,566 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-12 19:35:31,838 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-12 19:35:31,843 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-12 19:35:32,078 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-12 19:35:32,081 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-12 19:35:32,093 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-12 19:35:32,096 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-12 19:35:32,100 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-12 19:35:32,373 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-12 19:35:32,378 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_63f6a32b.pdf
+2026-08-12 19:35:32,950 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-12 19:38:14,066 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:38:19,910 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:38:19,975 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: videoplayback.mp4
+2026-08-12 19:38:20,304 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-12 19:38:20,308 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-12 19:38:20,319 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-12 19:38:20,323 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-12 19:38:20,326 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-12 19:38:20,340 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-12 19:38:20,344 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-12 19:38:20,356 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-12 19:38:20,361 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-12 19:38:20,382 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-12 19:38:20,830 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-12 19:38:21,063 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-12 19:38:21,080 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-12 19:38:21,299 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-12 19:38:21,303 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-12 19:38:21,541 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-12 19:38:21,547 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-12 19:38:21,802 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-12 19:38:21,807 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-12 19:38:21,818 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-12 19:38:21,820 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-12 19:38:21,824 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-12 19:38:22,358 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-12 19:38:22,382 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_16da2dac.pdf
+2026-08-12 19:38:22,526 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-12 19:38:23,030 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-08-12 19:38:23,551 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:38:23,589 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: videoplayback.mp4
+2026-08-12 19:38:23,834 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:38:23,874 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: videoplayback.mp4
+2026-08-12 19:38:23,974 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 19:38:24,364 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_6a09b3780ef94bb9a816f8c90e92da8f.mp4
+2026-08-12 19:38:31,202 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 19:38:31,205 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Prediction: Butterfly | Decision score: 0.60 | Runner-up margin: 0.20 | [AI_VERIFIER] Invoked - ambiguous Python classification
+2026-08-12 19:38:31,207 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Butterfly | Decision score: 0.6818 | Missing evidence: []
+2026-08-12 19:38:31,423 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:38:31,461 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: videoplayback.mp4
+2026-08-12 19:38:42,391 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:38:42,436 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: videoplayback.mp4
+2026-08-12 19:38:43,446 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:38:43,489 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: videoplayback.mp4
+2026-08-12 19:38:43,718 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:38:43,751 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: videoplayback.mp4
+2026-08-12 19:38:43,827 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-12 19:38:43,830 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_6a09b3780ef94bb9a816f8c90e92da8f.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-12 19:38:43,832 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 19:38:44,164 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_6a09b3780ef94bb9a816f8c90e92da8f.mp4 (360x640 @ 30.0fps)
+2026-08-12 19:38:44,180 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_6a09b3780ef94bb9a816f8c90e92da8f.mp4 (360x640 @ 30.0fps)
+2026-08-12 19:38:44,182 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_6a09b3780ef94bb9a816f8c90e92da8f.mp4 (Codec: mp4v)
+2026-08-12 19:38:55,524 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:38:55,804 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-12 19:38:55,960 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 19:39:04,428 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:39:04,511 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525181466.mp4
+2026-08-12 19:39:04,690 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-12 19:39:04,692 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_f51311177a2147e7a8f6bcc16e514b34.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-12 19:39:04,695 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 19:39:05,084 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_f51311177a2147e7a8f6bcc16e514b34.mp4 (720x1280 @ 30.0fps)
+2026-08-12 19:39:05,117 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_f51311177a2147e7a8f6bcc16e514b34.mp4 (720x1280 @ 30.0fps)
+2026-08-12 19:39:05,140 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_f51311177a2147e7a8f6bcc16e514b34.mp4 (Codec: mp4v)
+2026-08-12 19:39:06,377 - services.analysis_service - WARNING - [ANALYSIS] Early precheck VQA flagged Poor quality. Continuing with caution.
+2026-08-12 19:39:08,795 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:39:08,837 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525181466.mp4
+2026-08-12 19:39:09,092 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:39:09,153 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525181466.mp4
+2026-08-12 19:39:09,232 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 19:39:09,672 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_f51311177a2147e7a8f6bcc16e514b34.mp4
+2026-08-12 19:39:10,010 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-12 19:39:10,196 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 19:39:17,551 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 19:39:17,556 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Prediction: Butterfly | Decision score: 0.54 | Runner-up margin: 0.08 | [AI_VERIFIER] Invoked - ambiguous Python classification
+2026-08-12 19:39:17,558 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Butterfly | Decision score: 0.6818 | Missing evidence: []
+2026-08-12 19:39:17,724 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:39:17,763 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525181466.mp4
+2026-08-12 19:39:26,592 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:39:26,636 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525181466.mp4
+2026-08-12 19:39:26,894 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:39:26,924 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525181466.mp4
+2026-08-12 19:39:27,038 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-12 19:39:27,040 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_f51311177a2147e7a8f6bcc16e514b34.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-12 19:39:27,043 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 19:39:27,473 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_f51311177a2147e7a8f6bcc16e514b34.mp4 (720x1280 @ 30.0fps)
+2026-08-12 19:39:27,507 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_f51311177a2147e7a8f6bcc16e514b34.mp4 (720x1280 @ 30.0fps)
+2026-08-12 19:39:27,510 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_f51311177a2147e7a8f6bcc16e514b34.mp4 (Codec: mp4v)
+2026-08-12 19:39:28,604 - services.analysis_service - WARNING - [ANALYSIS] Early precheck VQA flagged Poor quality. Continuing with caution.
+2026-08-12 19:39:33,739 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:33,884 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:34,037 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:34,205 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:34,429 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:34,573 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:34,804 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:35,009 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:35,172 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:35,384 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:35,606 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:35,822 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:36,000 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:36,170 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:36,405 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:36,632 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:36,863 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:37,085 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:37,313 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:37,541 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:37,775 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:37,939 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:38,167 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:38,454 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:38,652 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:38,847 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:39,057 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:39,265 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:39,481 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:39,689 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:39,892 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:40,090 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:40,352 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:40,558 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:40,842 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:41,137 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:41,456 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:41,868 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:42,296 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:42,498 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:42,645 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:42,861 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:43,098 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:43,319 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:43,457 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:43,729 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:43,983 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:44,223 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:44,470 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:44,698 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:44,930 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:45,187 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:45,400 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:45,597 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:45,795 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:45,999 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:46,204 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:46,406 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:46,597 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:46,792 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:46,977 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:47,117 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:47,319 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:47,506 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:47,708 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:47,900 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:48,093 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:48,306 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:48,446 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:48,639 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:48,908 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:49,165 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:49,374 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:49,572 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:49,763 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:49,952 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:50,142 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:50,348 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:50,535 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:50,732 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:50,919 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:51,118 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:51,351 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:51,545 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:51,735 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:51,920 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:52,120 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:52,273 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:52,412 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:52,549 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:52,744 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:52,884 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:53,085 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:53,283 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:53,417 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:53,549 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:53,750 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:53,895 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:54,108 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:54,323 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:54,522 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:54,653 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:54,845 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:55,041 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:55,234 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:55,412 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:55,636 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:55,834 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:56,031 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:56,235 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:56,423 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:56,617 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:56,748 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:56,880 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:57,068 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:57,266 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:57,417 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:57,598 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:57,795 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:57,976 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:58,123 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:58,268 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:58,457 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:58,646 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:58,829 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:59,022 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:59,227 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:59,429 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:59,624 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:39:59,818 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:00,026 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:00,264 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:00,464 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:00,723 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:00,966 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:01,153 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:01,362 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:01,557 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:01,749 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:01,929 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:02,122 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:02,312 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:02,555 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:02,764 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:02,948 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:03,143 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:03,338 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:03,514 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:03,699 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:03,895 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:04,096 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:04,292 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:04,491 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:04,697 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:04,943 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:05,155 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:05,369 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:05,594 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:05,829 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:05,952 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:06,146 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:06,403 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:06,541 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:06,741 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:06,921 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:07,114 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:07,270 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:07,458 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:40:07,493 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 208 frames.
+2026-08-12 19:40:07,600 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-12 19:40:07,604 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-12 19:40:07,613 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 19:40:07,622 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 19:40:07,629 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 19:40:07,639 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 19:40:07,640 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: N/A (Unvalidated Cohort), Dataset: Freestyle Population Reference Matrix v2.0)
+2026-08-12 19:40:07,966 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_f51311177a2147e7a8f6bcc16e514b34.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_f51311177a2147e7a8f6bcc16e514b34.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_f51311177a2147e7a8f6bcc16e514b34.json
+2026-08-12 19:40:23,951 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_f51311177a2147e7a8f6bcc16e514b34.mp4
+2026-08-12 19:40:24,022 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 5.91 MB, Frames: 208, Duration: 6.93s
+2026-08-12 19:40:24,240 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 19:40:24,242 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-12 19:40:24,572 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:40:24,604 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525181466.mp4
+2026-08-12 19:40:24,694 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-12 19:40:24,700 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-12 19:40:24,709 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-12 19:40:24,714 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-12 19:40:24,717 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-12 19:40:24,726 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-12 19:40:24,733 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-12 19:40:24,743 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-12 19:40:24,749 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-12 19:40:24,757 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-12 19:40:25,064 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-12 19:40:25,175 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-12 19:40:25,198 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-12 19:40:25,511 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-12 19:40:25,514 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-12 19:40:25,721 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-12 19:40:25,726 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-12 19:40:25,936 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-12 19:40:25,941 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-12 19:40:25,949 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-12 19:40:25,952 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-12 19:40:25,955 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-12 19:40:26,264 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-12 19:40:26,268 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_6e15f153.pdf
+2026-08-12 19:40:26,346 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-12 19:40:26,585 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-08-12 19:40:40,365 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:40:50,210 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:40:50,291 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Michael Phelps butterfly #shorts.mp4
+2026-08-12 19:40:50,499 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-12 19:40:50,505 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-12 19:40:50,519 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-12 19:40:50,523 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-12 19:40:50,525 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-12 19:40:50,539 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-12 19:40:50,541 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-12 19:40:50,557 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-12 19:40:50,561 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-12 19:40:50,583 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-12 19:40:50,953 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-12 19:40:51,098 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-12 19:40:51,121 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-12 19:40:51,315 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-12 19:40:51,319 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-12 19:40:51,502 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-12 19:40:51,506 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-12 19:40:51,779 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-12 19:40:51,781 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-12 19:40:51,792 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-12 19:40:51,794 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-12 19:40:51,797 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-12 19:40:52,131 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-12 19:40:52,183 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_76a12217.pdf
+2026-08-12 19:40:52,250 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-12 19:40:55,519 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:40:55,550 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Michael Phelps butterfly #shorts.mp4
+2026-08-12 19:40:55,610 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-12 19:40:55,616 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-12 19:40:55,627 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-12 19:40:55,630 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-12 19:40:55,633 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-12 19:40:55,639 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-12 19:40:55,644 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-12 19:40:55,655 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-12 19:40:55,658 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-12 19:40:55,668 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-12 19:40:55,994 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-12 19:40:56,107 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-12 19:40:56,120 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-12 19:40:56,360 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-12 19:40:56,365 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-12 19:40:56,581 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-12 19:40:56,586 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-12 19:40:56,815 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-12 19:40:56,820 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-12 19:40:56,829 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-12 19:40:56,831 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-12 19:40:56,834 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-12 19:40:57,174 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-12 19:40:57,178 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_d479198c.pdf
+2026-08-12 19:40:57,214 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-12 19:40:58,165 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:40:58,200 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Michael Phelps butterfly #shorts.mp4
+2026-08-12 19:40:58,404 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:40:58,433 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Michael Phelps butterfly #shorts.mp4
+2026-08-12 19:40:58,483 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 19:40:58,788 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_8194c19c92b5415495f42da2ddab54d8.mp4
+2026-08-12 19:41:05,501 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 19:41:05,503 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Prediction: Butterfly | Decision score: 0.54 | Runner-up margin: 0.08 | [AI_VERIFIER] Invoked - ambiguous Python classification
+2026-08-12 19:41:05,505 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Butterfly | Decision score: 0.6818 | Missing evidence: []
+2026-08-12 19:41:05,670 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:41:05,712 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Michael Phelps butterfly #shorts.mp4
+2026-08-12 19:41:13,875 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:41:13,911 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Michael Phelps butterfly #shorts.mp4
+2026-08-12 19:41:14,672 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:41:14,706 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Michael Phelps butterfly #shorts.mp4
+2026-08-12 19:41:14,956 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:41:14,986 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Michael Phelps butterfly #shorts.mp4
+2026-08-12 19:41:15,067 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-12 19:41:15,069 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_8194c19c92b5415495f42da2ddab54d8.mp4 (Effective FPS: 30.0, Frame Stride: 1)
+2026-08-12 19:41:15,071 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 19:41:15,345 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_8194c19c92b5415495f42da2ddab54d8.mp4 (720x1280 @ 30.0fps)
+2026-08-12 19:41:15,364 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_8194c19c92b5415495f42da2ddab54d8.mp4 (720x1280 @ 30.0fps)
+2026-08-12 19:41:15,381 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_8194c19c92b5415495f42da2ddab54d8.mp4 (Codec: mp4v)
+2026-08-12 19:41:16,355 - services.analysis_service - WARNING - [ANALYSIS] Early precheck VQA flagged Poor quality. Continuing with caution.
+2026-08-12 19:42:07,973 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 286 frames.
+2026-08-12 19:42:07,991 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-12 19:42:08,004 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 19:42:08,013 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 19:42:08,019 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 19:42:08,028 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 19:42:08,029 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: N/A (Unvalidated Cohort), Dataset: Freestyle Population Reference Matrix v2.0)
+2026-08-12 19:42:08,799 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_8194c19c92b5415495f42da2ddab54d8.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_8194c19c92b5415495f42da2ddab54d8.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_8194c19c92b5415495f42da2ddab54d8.json
+2026-08-12 19:42:27,691 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_8194c19c92b5415495f42da2ddab54d8.mp4
+2026-08-12 19:42:27,737 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 3.22 MB, Frames: 286, Duration: 9.53s
+2026-08-12 19:42:27,757 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 19:42:27,758 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-12 19:42:27,764 - services.analysis_history_service - ERROR - Error saving analysis session d2eade29-bc0a-46b7-86a2-4f5f64353a60 to database.
+2026-08-12 19:42:27,970 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:42:28,007 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: Michael Phelps butterfly #shorts.mp4
+2026-08-12 19:42:28,109 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-12 19:42:28,112 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-12 19:42:28,123 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-12 19:42:28,124 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-12 19:42:28,126 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-12 19:42:28,141 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-12 19:42:28,144 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-12 19:42:28,157 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-12 19:42:28,160 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-12 19:42:28,173 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-12 19:42:28,550 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-12 19:42:28,704 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-12 19:42:28,731 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-12 19:42:28,997 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-12 19:42:29,002 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-12 19:42:29,265 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-12 19:42:29,269 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-12 19:42:29,590 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-12 19:42:29,593 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-12 19:42:29,604 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-12 19:42:29,606 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-12 19:42:29,618 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-12 19:42:30,136 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-12 19:42:30,142 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_62476be3.pdf
+2026-08-12 19:42:30,277 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-12 19:42:30,980 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-08-12 19:44:50,366 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:44:52,060 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:44:52,266 - services.auth_service - INFO - [SYSTEM] Account logged in: coach1 (coach)
+2026-08-12 19:44:52,423 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:44:54,298 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:44:57,239 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:45:03,551 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:45:03,638 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: How to Master Breaststroke Turns.mp4
+2026-08-12 19:45:08,554 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:45:08,585 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: How to Master Breaststroke Turns.mp4
+2026-08-12 19:45:11,072 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:45:11,113 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: How to Master Breaststroke Turns.mp4
+2026-08-12 19:45:11,345 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:45:11,381 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: How to Master Breaststroke Turns.mp4
+2026-08-12 19:45:11,440 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 19:45:11,746 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_8a8edf829070410084c2e376cc6cac3e.mp4
+2026-08-12 19:45:18,625 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 19:45:18,635 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Prediction: Butterfly | Decision score: 0.54 | Runner-up margin: 0.08 | [AI_VERIFIER] Invoked - ambiguous Python classification
+2026-08-12 19:45:18,637 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Butterfly | Decision score: 0.6818 | Missing evidence: []
+2026-08-12 19:45:18,831 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:45:18,860 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: How to Master Breaststroke Turns.mp4
+2026-08-12 19:45:37,442 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:45:37,490 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: How to Master Breaststroke Turns.mp4
+2026-08-12 19:45:39,746 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:45:39,788 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: How to Master Breaststroke Turns.mp4
+2026-08-12 19:45:40,706 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:45:40,734 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: How to Master Breaststroke Turns.mp4
+2026-08-12 19:45:41,001 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:45:41,036 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: How to Master Breaststroke Turns.mp4
+2026-08-12 19:45:41,130 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-12 19:45:41,132 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_8a8edf829070410084c2e376cc6cac3e.mp4 (Effective FPS: 30.0, Frame Stride: 1)
+2026-08-12 19:45:41,135 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 19:45:41,460 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_8a8edf829070410084c2e376cc6cac3e.mp4 (720x1280 @ 30.0fps)
+2026-08-12 19:45:41,481 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_8a8edf829070410084c2e376cc6cac3e.mp4 (720x1280 @ 30.0fps)
+2026-08-12 19:45:41,562 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_8a8edf829070410084c2e376cc6cac3e.mp4 (Codec: mp4v)
+2026-08-12 19:45:42,508 - services.analysis_service - WARNING - [ANALYSIS] Early precheck VQA flagged Poor quality. Continuing with caution.
+2026-08-12 19:45:47,124 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:47,256 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:47,425 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:47,616 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:47,804 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:47,994 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:48,113 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:48,305 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:48,433 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:48,617 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:48,805 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:48,934 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:49,075 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:49,195 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:49,328 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:49,463 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:49,590 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:49,713 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:49,847 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:49,975 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:50,108 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:50,235 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:50,364 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:50,492 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:50,623 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:50,820 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:50,957 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:51,081 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:51,206 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:51,334 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:51,462 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:51,596 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:51,722 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:51,880 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:52,048 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:52,197 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:52,353 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:52,578 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:52,867 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:53,026 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:53,320 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:53,522 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:53,729 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:53,978 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:54,492 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:54,672 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:54,949 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:55,227 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:55,504 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:55,805 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:56,206 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:56,455 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:56,650 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:56,845 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:57,129 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:57,442 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:57,655 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:57,840 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:58,048 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:58,249 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:58,441 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:58,639 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:58,832 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:59,051 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:59,274 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:59,575 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:59,778 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:45:59,973 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:00,178 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:00,363 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:00,553 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:00,770 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:01,000 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:01,220 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:01,518 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:01,734 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:01,887 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:02,201 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:02,428 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:02,646 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:02,872 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:03,222 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:03,502 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:03,769 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:04,036 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:04,281 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:04,507 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:04,733 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:04,968 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:05,186 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:05,413 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:05,641 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:05,864 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:06,090 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:06,322 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:06,551 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:06,786 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:07,004 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:07,242 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:07,454 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:07,684 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:07,896 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:08,109 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:08,327 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:08,551 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:08,757 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:08,971 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:09,178 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:09,392 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:09,622 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:09,835 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:10,053 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:10,262 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:10,469 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:10,683 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:10,903 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:11,116 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:11,266 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:11,480 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:11,668 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:11,876 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:12,104 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:12,266 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:12,460 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:12,645 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:12,817 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:13,075 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:13,264 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:13,532 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:13,713 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:13,978 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:14,162 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:14,348 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:14,607 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:14,867 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:15,139 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:15,411 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:15,704 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:15,959 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:16,297 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:16,794 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:17,002 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:17,201 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:17,399 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:17,591 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:17,811 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:18,036 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:18,254 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:18,475 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:18,772 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:19,146 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:19,411 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:19,612 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:19,772 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:20,125 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:20,337 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:20,611 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:20,891 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:21,163 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:21,403 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:21,645 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:21,893 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:22,139 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:22,324 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:22,495 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:22,664 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:22,830 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:22,995 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:23,158 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:23,349 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:23,554 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:23,875 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:24,064 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:24,240 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:24,605 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:24,895 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:25,156 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:25,416 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:25,643 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:25,802 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:25,955 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:26,113 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:26,270 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:26,426 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:26,579 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:26,794 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:27,009 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:27,220 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:27,440 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:27,647 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:27,871 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:28,088 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:28,299 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:28,517 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:28,728 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:28,956 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:29,213 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:29,515 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:29,787 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:30,049 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:30,315 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:30,558 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:30,828 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:31,023 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:31,298 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:31,465 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:31,698 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:31,963 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:32,147 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:32,396 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:32,663 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:32,913 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:33,171 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:33,435 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:33,724 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:34,008 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:34,207 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:34,407 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:34,635 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:34,866 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:35,084 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:35,312 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:35,565 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:35,795 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:36,010 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:36,205 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:36,410 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:36,641 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:36,865 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:37,118 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:37,325 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:37,536 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:37,760 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:37,997 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:38,200 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:38,422 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:38,680 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:38,894 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:39,105 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:39,249 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:39,397 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:39,555 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:39,709 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:39,860 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:40,049 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:40,200 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:40,339 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:40,482 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:40,634 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:40,791 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:40,948 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:41,106 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:41,240 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:41,390 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:41,572 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:41,739 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:41,893 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:42,050 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:42,186 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:42,330 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:42,484 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:42,643 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:42,802 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:43,046 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:43,282 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:43,499 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:43,722 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:43,949 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:44,367 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:44,618 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:44,820 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:45,060 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:45,202 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:45,383 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:45,571 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:45,706 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:45,893 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:46,080 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:46,292 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:46,476 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:46,663 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:46,789 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:46,915 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:47,140 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:47,294 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:47,435 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:47,596 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:47,800 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:48,012 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:48,211 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:48,411 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:48,613 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:48,836 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:49,137 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:49,413 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:49,634 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:49,885 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:50,085 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:50,280 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:50,426 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:50,592 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:50,726 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:50,858 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:51,021 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:51,245 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:51,546 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:51,793 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:51,979 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:52,192 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:52,367 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:52,577 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:52,764 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:52,970 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:53,288 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:53,525 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:53,758 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:53,965 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:54,095 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:54,223 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:54,356 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:54,557 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:54,699 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:54,835 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:55,077 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:55,277 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:55,455 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:55,590 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:55,777 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:56,088 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:56,263 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:56,421 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:56,554 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:56,714 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:56,841 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:57,032 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:57,163 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:57,350 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:57,539 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:57,731 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:57,967 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:58,140 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:58,336 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:58,528 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:58,652 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:58,784 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:58,907 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:59,040 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:59,175 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:59,316 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:59,613 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:59,801 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:46:59,934 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:00,136 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:00,319 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:00,498 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:00,675 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:00,870 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:01,109 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:01,323 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:01,519 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:01,697 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:01,830 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:02,026 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:02,267 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:02,433 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:02,640 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:02,828 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:03,008 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:03,183 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:03,355 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:03,515 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:03,674 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:03,824 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:03,984 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:04,157 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:04,463 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:04,723 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-12 19:47:04,747 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 417 frames.
+2026-08-12 19:47:04,758 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-12 19:47:04,760 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-12 19:47:04,770 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 19:47:04,778 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 19:47:04,783 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 19:47:04,791 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 19:47:04,792 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: N/A (Unvalidated Cohort), Dataset: Freestyle Population Reference Matrix v2.0)
+2026-08-12 19:47:05,241 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_8a8edf829070410084c2e376cc6cac3e.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_8a8edf829070410084c2e376cc6cac3e.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_8a8edf829070410084c2e376cc6cac3e.json
+2026-08-12 19:47:28,890 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_8a8edf829070410084c2e376cc6cac3e.mp4
+2026-08-12 19:47:28,933 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 5.82 MB, Frames: 417, Duration: 13.90s
+2026-08-12 19:47:28,954 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 19:47:28,956 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-12 19:47:29,309 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:47:29,338 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: How to Master Breaststroke Turns.mp4
+2026-08-12 19:47:29,415 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-12 19:47:29,418 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-12 19:47:29,432 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-12 19:47:29,434 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-12 19:47:29,436 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-12 19:47:29,447 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-12 19:47:29,451 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-12 19:47:29,460 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-12 19:47:29,464 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-12 19:47:29,473 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-12 19:47:29,844 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-12 19:47:30,020 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-12 19:47:30,036 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-12 19:47:30,224 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-12 19:47:30,228 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-12 19:47:30,480 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-12 19:47:30,485 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-12 19:47:30,799 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-12 19:47:30,804 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-12 19:47:30,817 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-12 19:47:30,819 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-12 19:47:30,826 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-12 19:47:31,113 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-12 19:47:31,117 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_e88920a8.pdf
+2026-08-12 19:47:31,223 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-12 19:47:32,414 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-08-12 19:47:32,441 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-08-12 19:47:50,972 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:48:01,810 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:48:01,855 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785591011420.mp4
+2026-08-12 19:48:01,983 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-12 19:48:01,989 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-12 19:48:02,001 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-12 19:48:02,004 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-12 19:48:02,006 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-12 19:48:02,014 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-12 19:48:02,018 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-12 19:48:02,036 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-12 19:48:02,040 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-12 19:48:02,051 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-12 19:48:02,388 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-12 19:48:02,515 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-12 19:48:02,532 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-12 19:48:02,879 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-12 19:48:02,882 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-12 19:48:03,166 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-12 19:48:03,170 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-12 19:48:03,427 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-12 19:48:03,431 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-12 19:48:03,443 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-12 19:48:03,445 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-12 19:48:03,449 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-12 19:48:03,904 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-12 19:48:03,909 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_4f6f1424.pdf
+2026-08-12 19:48:04,032 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-12 19:48:38,370 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:48:38,419 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785591011420.mp4
+2026-08-12 19:48:38,490 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-12 19:48:38,494 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-12 19:48:38,507 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-12 19:48:38,511 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-12 19:48:38,513 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-12 19:48:38,522 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-12 19:48:38,526 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-12 19:48:38,538 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-12 19:48:38,541 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-12 19:48:38,553 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-12 19:48:38,867 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-12 19:48:39,029 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-12 19:48:39,079 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-12 19:48:39,298 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-12 19:48:39,302 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-12 19:48:39,541 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-12 19:48:39,545 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-12 19:48:39,750 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-12 19:48:39,754 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-12 19:48:39,762 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-12 19:48:39,764 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-12 19:48:39,768 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-12 19:48:40,106 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-12 19:48:40,110 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_6d7e8491.pdf
+2026-08-12 19:48:40,157 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-12 19:48:41,444 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:48:41,505 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785591011420.mp4
+2026-08-12 19:48:41,774 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:48:41,810 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785591011420.mp4
+2026-08-12 19:48:41,859 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 19:48:42,176 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_c61d98cb54cc4afc91b1cddf29cdefda.mp4
+2026-08-12 19:48:52,539 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 19:48:52,549 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Primary classifier: Python Kinematic Engine | Prediction: Unknown | AI verification: SKIPPED | Reason: insufficient or unknown evidence
+2026-08-12 19:48:52,740 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:48:52,780 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785591011420.mp4
+2026-08-12 19:49:20,556 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:49:20,602 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785591011420.mp4
+2026-08-12 19:49:20,863 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:49:20,888 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785591011420.mp4
+2026-08-12 19:49:20,968 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-12 19:49:20,986 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_c61d98cb54cc4afc91b1cddf29cdefda.mp4 (Effective FPS: 30.0, Frame Stride: 1)
+2026-08-12 19:49:20,994 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 19:49:21,403 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_c61d98cb54cc4afc91b1cddf29cdefda.mp4 (720x1280 @ 30.0fps)
+2026-08-12 19:49:21,427 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_c61d98cb54cc4afc91b1cddf29cdefda.mp4 (720x1280 @ 30.0fps)
+2026-08-12 19:49:21,429 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_c61d98cb54cc4afc91b1cddf29cdefda.mp4 (Codec: mp4v)
+2026-08-12 19:49:28,214 - analysis.pose_detector - WARNING - [POSE] Pose detection failed on frame: cannot schedule new futures after shutdown
+2026-08-12 19:49:28,269 - analysis.pose_detector - WARNING - [POSE] Pose detection failed on frame: cannot schedule new futures after shutdown
+2026-08-12 19:49:28,330 - analysis.pose_detector - WARNING - [POSE] Pose detection failed on frame: cannot schedule new futures after shutdown
+2026-08-12 19:49:28,381 - analysis.pose_detector - WARNING - [POSE] Pose detection failed on frame: cannot schedule new futures after shutdown
+2026-08-12 19:49:28,432 - analysis.pose_detector - WARNING - [POSE] Pose detection failed on frame: cannot schedule new futures after shutdown
+2026-08-12 19:49:28,481 - analysis.pose_detector - WARNING - [POSE] Pose detection failed on frame: cannot schedule new futures after shutdown
+2026-08-12 19:49:28,532 - analysis.pose_detector - WARNING - [POSE] Pose detection failed on frame: cannot schedule new futures after shutdown
+2026-08-12 19:49:28,585 - analysis.pose_detector - WARNING - [POSE] Pose detection failed on frame: cannot schedule new futures after shutdown
+2026-08-12 19:49:28,639 - analysis.pose_detector - WARNING - [POSE] Pose detection failed on frame: cannot schedule new futures after shutdown
+2026-08-12 19:49:28,678 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-12 19:49:44,506 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:49:56,512 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:49:59,076 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:50:00,858 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:50:01,066 - services.auth_service - INFO - [SYSTEM] Account logged in: coach1 (coach)
+2026-08-12 19:50:01,190 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:50:03,768 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:50:08,039 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:50:13,782 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:50:13,826 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 19:50:18,529 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:50:18,558 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 19:50:22,147 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:50:22,180 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 19:50:22,386 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:50:22,415 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 19:50:22,478 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 19:50:22,796 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_d2a79aabc0354dcb80b1451d8ce8f0c4.mp4
+2026-08-12 19:50:29,598 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 19:50:29,666 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Primary classifier: Python Kinematic Engine | Prediction: Unknown | AI verification: SKIPPED | Reason: insufficient or unknown evidence
+2026-08-12 19:50:29,797 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:50:29,839 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 19:50:41,825 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:50:41,854 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 19:50:42,087 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:50:42,116 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 19:50:42,198 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-12 19:50:42,200 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_d2a79aabc0354dcb80b1451d8ce8f0c4.mp4 (Effective FPS: 30.0, Frame Stride: 1)
+2026-08-12 19:50:42,216 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 19:50:42,544 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_d2a79aabc0354dcb80b1451d8ce8f0c4.mp4 (720x1280 @ 30.0fps)
+2026-08-12 19:50:42,567 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_d2a79aabc0354dcb80b1451d8ce8f0c4.mp4 (720x1280 @ 30.0fps)
+2026-08-12 19:50:42,570 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_d2a79aabc0354dcb80b1451d8ce8f0c4.mp4 (Codec: mp4v)
+2026-08-12 19:51:24,389 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 210 frames.
+2026-08-12 19:51:24,401 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-12 19:51:24,408 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-12 19:51:24,448 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 19:51:24,455 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 19:51:24,458 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 19:51:24,465 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 19:51:24,467 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: N/A (Unvalidated Cohort), Dataset: Freestyle Population Reference Matrix v2.0)
+2026-08-12 19:51:24,796 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_d2a79aabc0354dcb80b1451d8ce8f0c4.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_d2a79aabc0354dcb80b1451d8ce8f0c4.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_d2a79aabc0354dcb80b1451d8ce8f0c4.json
+2026-08-12 19:51:38,155 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_d2a79aabc0354dcb80b1451d8ce8f0c4.mp4
+2026-08-12 19:51:38,212 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 4.47 MB, Frames: 210, Duration: 7.00s
+2026-08-12 19:51:38,432 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 19:51:38,433 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-12 19:51:38,751 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 19:51:38,786 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 19:51:38,898 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-12 19:51:38,906 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-12 19:51:38,918 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-12 19:51:38,923 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-12 19:51:38,926 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-12 19:51:38,941 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-12 19:51:38,947 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-12 19:51:38,961 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-12 19:51:38,965 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-12 19:51:38,981 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-12 19:51:39,486 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-12 19:51:39,776 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-12 19:51:39,788 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-12 19:51:40,764 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-12 19:51:40,768 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-12 19:51:40,973 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-12 19:51:40,977 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-12 19:51:41,187 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-12 19:51:41,191 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-12 19:51:41,199 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-12 19:51:41,203 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-12 19:51:41,207 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-12 19:51:41,569 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-12 19:51:41,484 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-08-12 19:51:41,576 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_20568567.pdf
+2026-08-12 19:51:41,697 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-12 19:52:10,592 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Freestyle | Decision score: 0.65 | Missing evidence: ['wrist_vertical_range_ratio', 'leg_kick_symmetry']
+2026-08-12 19:52:13,087 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: test_stability_video.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-12 19:52:13,104 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 19:52:13,610 - utils.video_utils - INFO - [VIDEO] Opened video: test_stability_video.mp4 (854x480 @ 30.0fps)
+2026-08-12 19:52:13,695 - utils.video_utils - INFO - [VIDEO] Opened video: test_stability_video.mp4 (854x480 @ 30.0fps)
+2026-08-12 19:52:13,725 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_test_stability_video.mp4 (Codec: mp4v)
+2026-08-12 19:52:14,515 - services.analysis_service - WARNING - [ANALYSIS] Early precheck VQA critical failure. Aborting before full processing.
+2026-08-12 19:52:14,518 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-12 19:52:14,832 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 19:52:14,949 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 19:52:14,955 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 19:52:14,959 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 19:52:14,967 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 19:52:14,967 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: N/A (Unvalidated Cohort), Dataset: Freestyle Population Reference Matrix v2.0)
+2026-08-12 19:52:14,976 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 19:52:14,982 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 19:52:14,988 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 19:52:14,993 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 19:52:15,000 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 19:52:15,008 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 19:52:15,013 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 19:52:15,019 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 19:52:15,019 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: Intermediate, Dataset: )
+2026-08-12 19:52:15,031 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 19:52:15,039 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 19:52:15,045 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 19:52:15,050 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 19:52:15,061 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 19:52:15,070 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 19:52:15,075 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 19:52:15,084 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 19:52:15,095 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 19:52:15,103 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 19:52:15,107 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 19:52:15,116 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 19:52:15,127 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 19:52:15,134 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 19:52:15,139 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 19:52:15,147 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 19:52:15,184 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v1.0.0)

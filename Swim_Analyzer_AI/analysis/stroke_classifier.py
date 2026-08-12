@@ -25,14 +25,15 @@ class StrokeClassifier:
             
         total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0)
 
-        # Smart start frame offset: if video is longer than 60 frames, skip first ~10% (pre-swim dive/glide)
-        start_frame = int(total_frames * 0.10) if total_frames > 90 else 0
+        # Smart start/end frame offset: skip pre-swim dive/push-off glide (first ~20%) and wall finish (last ~15%)
+        start_frame = int(total_frames * 0.20) if total_frames > 90 else 0
+        end_frame = int(total_frames * 0.85) if total_frames > 90 else total_frames
         if start_frame > 0:
             cap.set(cv2.CAP_PROP_POS_FRAMES, start_frame)
 
         # Frame stride to sample up to max_frames across active duration
         sample_stride = 1
-        usable_duration = max(1, total_frames - start_frame)
+        usable_duration = max(1, end_frame - start_frame)
         if usable_duration > max_frames:
             sample_stride = max(1, usable_duration // max_frames)
 
@@ -40,7 +41,8 @@ class StrokeClassifier:
         raw_counter = start_frame
         sampled_count = 0
 
-        while cap.isOpened() and sampled_count < max_frames:
+        while cap.isOpened() and sampled_count < max_frames and raw_counter <= end_frame:
+
             ret, frame = cap.read()
             if not ret or frame is None:
                 break

@@ -12,6 +12,7 @@ from core.logger import setup_logger
 logger = setup_logger(__name__)
 
 # MediaPipe Pose Landmark Indices
+NOSE = 0
 LEFT_SHOULDER = 11
 RIGHT_SHOULDER = 12
 LEFT_HIP = 23
@@ -44,6 +45,8 @@ class KinematicFeatureSet:
     valid_frames_in_window: int
     window_start_frame: int
     window_end_frame: int
+    head_supine_ratio: Optional[ExtractedFeatureValue] = None
+
 
 class KinematicFeatureExtractor:
     """
@@ -141,6 +144,27 @@ class KinematicFeatureExtractor:
         # Feature 6: Wrist Recovery Height Ratio
         feat_wrist_height_ratio = self._calculate_height_ratio("wrist_recovery_height_ratio", lw_y, rw_y, total_frames, valid_count)
 
+        # Feature 7: Head Supine Ratio (Face-Up Backstroke Indicator)
+        supine_count = 0
+        supine_valid_count = 0
+        for f in valid_frames:
+            lms = f.raw_landmarks
+            if len(lms) > max(NOSE, LEFT_SHOULDER, RIGHT_SHOULDER):
+                nose_lm = lms[NOSE]
+                l_sh = lms[LEFT_SHOULDER]
+                r_sh = lms[RIGHT_SHOULDER]
+                if nose_lm and l_sh and r_sh:
+                    sh_avg_y = (l_sh.y + r_sh.y) / 2.0
+                    supine_valid_count += 1
+                    if nose_lm.y < sh_avg_y:
+                        supine_count += 1
+
+        if supine_valid_count >= self.min_valid_frames:
+            supine_ratio = float(supine_count / supine_valid_count)
+            feat_head_supine = ExtractedFeatureValue("head_supine_ratio", supine_ratio, True, None, total_frames, valid_count)
+        else:
+            feat_head_supine = ExtractedFeatureValue("head_supine_ratio", None, False, "INSUFFICIENT_LANDMARKS", total_frames, valid_count)
+
         return KinematicFeatureSet(
             arm_phase_correlation=feat_arm_phase,
             mean_body_roll=feat_mean_roll,
@@ -151,8 +175,10 @@ class KinematicFeatureExtractor:
             total_frames_in_window=total_frames,
             valid_frames_in_window=valid_count,
             window_start_frame=window_start,
-            window_end_frame=window_end
+            window_end_frame=window_end,
+            head_supine_ratio=feat_head_supine
         )
+
 
     def _calculate_correlation(self, name: str, s1: List[float], s2: List[float], total_cnt: int, valid_cnt: int) -> ExtractedFeatureValue:
         if len(s1) < self.min_valid_frames or len(s2) < self.min_valid_frames:

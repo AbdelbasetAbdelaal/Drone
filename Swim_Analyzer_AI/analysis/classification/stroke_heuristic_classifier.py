@@ -38,11 +38,13 @@ class StrokeHeuristicClassifier:
         body_roll_amp = getattr(feature_set, 'body_roll_amplitude', None)
         wrist_range = getattr(feature_set, 'wrist_vertical_range_ratio', None)
         leg_sym = getattr(feature_set, 'leg_kick_symmetry', None)
+        head_supine = getattr(feature_set, 'head_supine_ratio', None)
 
         phi_arm = arm_phase.raw_value if (arm_phase and arm_phase.valid and arm_phase.raw_value is not None) else None
         roll_amp = body_roll_amp.raw_value if (body_roll_amp and body_roll_amp.valid and body_roll_amp.raw_value is not None) else None
         wrist_range_val = wrist_range.raw_value if (wrist_range and wrist_range.valid and wrist_range.raw_value is not None) else None
         leg_sym_val = leg_sym.raw_value if (leg_sym and leg_sym.valid and leg_sym.raw_value is not None) else None
+        head_supine_val = head_supine.raw_value if (head_supine and head_supine.valid and head_supine.raw_value is not None) else None
 
         if phi_arm is not None:
             feature_vals["arm_phase_correlation"] = phi_arm
@@ -63,6 +65,9 @@ class StrokeHeuristicClassifier:
             feature_vals["leg_kick_symmetry"] = leg_sym_val
         else:
             missing_evidence.append("leg_kick_symmetry")
+
+        if head_supine_val is not None:
+            feature_vals["head_supine_ratio"] = head_supine_val
 
         # Zero-Fallback Guard: Return INSUFFICIENT_EVIDENCE if arm phase is missing or ambiguous
         if phi_arm is None:
@@ -115,10 +120,17 @@ class StrokeHeuristicClassifier:
             is_freestyle_roll = (roll_amp is not None and roll_amp > 15.0)
             is_freestyle_wrist = (wrist_range_val is not None and wrist_range_val > 0.12)
 
-            # Alternating arm motion is shared by Freestyle and Backstroke.
-            # Without explicit supine orientation, high roll/excursion gives slight edge to Freestyle,
-            # but maintains an ambiguous candidate margin so AI Verifier is invoked for validation.
-            if is_freestyle_wrist or is_freestyle_roll:
+            if head_supine_val is not None and head_supine_val > 0.50:
+                # Direct face-up orientation signal -> Backstroke
+                scores[StrokeType.BACKSTROKE] += 0.85
+                scores[StrokeType.FREESTYLE] += 0.15
+                contributions["head_supine_orientation"] = +0.85
+            elif head_supine_val is not None and head_supine_val <= 0.20:
+                # Direct face-down orientation signal -> Freestyle
+                scores[StrokeType.FREESTYLE] += 0.85
+                scores[StrokeType.BACKSTROKE] += 0.15
+                contributions["head_prone_orientation"] = +0.85
+            elif is_freestyle_wrist or is_freestyle_roll:
                 scores[StrokeType.FREESTYLE] += 0.60
                 scores[StrokeType.BACKSTROKE] += 0.40
                 contributions["freestyle_roll_amplitude"] = +0.60
@@ -126,6 +138,7 @@ class StrokeHeuristicClassifier:
                 scores[StrokeType.BACKSTROKE] += 0.60
                 scores[StrokeType.FREESTYLE] += 0.40
                 contributions["backstroke_roll_amplitude"] = +0.60
+
 
         elif phi_arm > +0.3:
             contributions["arm_phase_simultaneous"] = +0.4

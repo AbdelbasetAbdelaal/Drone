@@ -50,6 +50,7 @@ class AIStrokeAgent:
         wrist_range = kinematic.get("wrist_vertical_range_ratio")
         kick_symmetry = kinematic.get("leg_kick_symmetry")
         wrist_recovery_height = kinematic.get("wrist_recovery_height_ratio")
+        head_supine = kinematic.get("head_supine_ratio")
         recovery_pattern = biomechanics.get("recovery_pattern")
         body_roll = biomechanics.get("body_roll")
         camera_view = quality.get("camera_view")
@@ -93,21 +94,30 @@ class AIStrokeAgent:
 
         if arm_phase_corr < -0.15:
             reasoning_parts.append(f"Alternating arm rhythm ({arm_phase_corr:.2f})")
-            if camera_view and "back" in str(camera_view).lower():
+            if head_supine is not None and head_supine > 0.50:
+                scores[StrokeType.BACKSTROKE] += 0.85
+                scores[StrokeType.FREESTYLE] += 0.15
+                evidence.append(f"Supine face-up posture ratio {head_supine:.2f} supports Backstroke.")
+            elif head_supine is not None and head_supine <= 0.20:
+                scores[StrokeType.FREESTYLE] += 0.85
+                scores[StrokeType.BACKSTROKE] += 0.15
+                evidence.append(f"Prone face-down posture ratio {head_supine:.2f} supports Freestyle.")
+            elif camera_view and "back" in str(camera_view).lower():
                 scores[StrokeType.BACKSTROKE] += 0.75
                 scores[StrokeType.FREESTYLE] += 0.25
                 evidence.append("Camera view supports backstroke.")
             elif body_roll_amp is not None and body_roll_amp > 10.0:
-                scores[StrokeType.FREESTYLE] += 0.80
-                scores[StrokeType.BACKSTROKE] += 0.20
+                scores[StrokeType.FREESTYLE] += 0.65
+                scores[StrokeType.BACKSTROKE] += 0.35
                 evidence.append(f"Measured body roll amplitude {body_roll_amp:.2f} degrees")
             else:
-                scores[StrokeType.FREESTYLE] += 0.70
-                scores[StrokeType.BACKSTROKE] += 0.30
+                scores[StrokeType.FREESTYLE] += 0.55
+                scores[StrokeType.BACKSTROKE] += 0.45
                 evidence.append("Alternating arm phase favors Freestyle/Backstroke.")
 
             if body_roll is not None and body_roll > 10.0:
                 evidence.append(f"High body roll {body_roll:.2f}")
+
 
         else:
             reasoning_parts.append(f"Simultaneous arm rhythm ({arm_phase_corr:.2f})")
