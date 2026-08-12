@@ -7547,3 +7547,110 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 2026-08-12 16:51:56,487 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
 2026-08-12 16:51:56,490 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
 2026-08-12 16:51:56,493 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 16:55:54,235 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 17:03:13,040 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 17:03:16,080 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 17:03:16,303 - services.auth_service - INFO - [SYSTEM] Account logged in: coach1 (coach)
+2026-08-12 17:03:16,459 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 17:03:18,661 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 17:03:45,296 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 17:03:56,474 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 17:04:02,045 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 17:04:13,514 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 17:04:14,412 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 17:04:20,516 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 17:04:23,553 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 17:04:29,498 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 17:04:33,448 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 17:04:53,378 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 17:04:53,428 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 17:05:02,286 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 17:05:02,315 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 17:05:13,993 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 17:05:14,019 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 17:05:14,223 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 17:05:14,246 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 17:05:14,308 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 17:05:16,428 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_2bb2364999f645c1bc4a6b3528998ca6.mp4
+2026-08-12 17:05:25,740 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 17:05:26,086 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 17:05:26,112 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 17:06:13,495 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 17:06:13,527 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 17:06:13,749 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 17:06:13,775 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 17:06:13,858 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-12 17:06:13,859 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_2bb2364999f645c1bc4a6b3528998ca6.mp4 (Effective FPS: 30.0, Frame Stride: 1)
+2026-08-12 17:06:14,083 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 17:06:14,406 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_2bb2364999f645c1bc4a6b3528998ca6.mp4 (720x1280 @ 30.0fps)
+2026-08-12 17:06:14,428 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_2bb2364999f645c1bc4a6b3528998ca6.mp4 (720x1280 @ 30.0fps)
+2026-08-12 17:06:15,021 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_2bb2364999f645c1bc4a6b3528998ca6.mp4 (Codec: mp4v)
+2026-08-12 17:06:59,783 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 210 frames.
+2026-08-12 17:06:59,833 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-12 17:06:59,861 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-12 17:06:59,992 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 17:07:00,046 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 17:07:00,050 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 17:07:00,055 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 17:07:00,056 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: N/A (Unvalidated Cohort), Dataset: Freestyle Population Reference Matrix v2.0)
+2026-08-12 17:07:00,352 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_2bb2364999f645c1bc4a6b3528998ca6.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_2bb2364999f645c1bc4a6b3528998ca6.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_2bb2364999f645c1bc4a6b3528998ca6.json
+2026-08-12 17:07:15,083 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_2bb2364999f645c1bc4a6b3528998ca6.mp4
+2026-08-12 17:07:15,139 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 4.47 MB, Frames: 210, Duration: 7.00s
+2026-08-12 17:07:15,201 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 17:07:15,202 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-12 17:07:15,515 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 17:07:15,544 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 17:07:15,616 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-12 17:07:15,619 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-12 17:07:15,629 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-12 17:07:15,631 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-12 17:07:15,633 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-12 17:07:15,640 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-12 17:07:15,644 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-12 17:07:15,652 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-12 17:07:15,654 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-12 17:07:15,665 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-12 17:07:16,037 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-12 17:07:16,759 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-08-12 17:07:16,823 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-08-12 17:07:16,925 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-12 17:07:17,290 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-12 17:07:21,207 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-12 17:07:21,209 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-12 17:07:21,778 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-12 17:07:21,781 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-12 17:07:22,083 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-12 17:07:22,086 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-12 17:07:22,111 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-12 17:07:22,114 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-12 17:07:22,118 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-12 17:07:22,551 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-12 17:07:22,556 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_a8495c1d.pdf
+2026-08-12 17:07:22,952 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-12 17:51:04,487 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Freestyle | Decision score: 0.7273 | Missing evidence: []
+2026-08-12 17:51:04,500 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Butterfly | Decision score: 0.7917 | Missing evidence: []
+2026-08-12 17:51:04,511 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Breaststroke | Decision score: 0.7083 | Missing evidence: []
+2026-08-12 17:51:04,516 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Unknown | Decision score: None | Missing evidence: ['arm_phase_correlation', 'body_roll_amplitude', 'wrist_vertical_range_ratio', 'leg_kick_symmetry']
+2026-08-12 17:51:31,561 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Freestyle | Decision score: 0.7273 | Missing evidence: []
+2026-08-12 17:51:31,580 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Butterfly | Decision score: 0.7917 | Missing evidence: []
+2026-08-12 17:51:31,588 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Breaststroke | Decision score: 0.7083 | Missing evidence: []
+2026-08-12 17:51:31,595 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Unknown | Decision score: None | Missing evidence: ['arm_phase_correlation', 'body_roll_amplitude', 'wrist_vertical_range_ratio', 'leg_kick_symmetry']
+2026-08-12 17:51:31,626 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Unknown | Decision score: None | Missing evidence: ['arm_phase_correlation', 'body_roll_amplitude', 'wrist_vertical_range_ratio', 'leg_kick_symmetry']

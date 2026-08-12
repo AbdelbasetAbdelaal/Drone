@@ -88,9 +88,36 @@ class StrokeClassifier:
         rule_classifier = StrokeHeuristicClassifier()
         rule_res = rule_classifier.classify_features(feature_set, selected_stroke_input=StrokeType.AUTO_DETECT)
 
-        # PIPELINE LAYER 3: AI Stroke Classifier Agent
+        # PIPELINE LAYER 3: AI Stroke Verification Agent using structured analysis output
         ai_agent = AIStrokeAgent()
-        ai_res = ai_agent.analyze_sequence(frames_list, selected_stroke_input=StrokeType.AUTO_DETECT)
+        structured_input = ai_agent.build_structured_input(
+            kinematic_features={
+                "arm_phase_correlation": feature_set.arm_phase_correlation.raw_value if feature_set.arm_phase_correlation and feature_set.arm_phase_correlation.valid else None,
+                "body_roll_amplitude": feature_set.body_roll_amplitude.raw_value if feature_set.body_roll_amplitude and feature_set.body_roll_amplitude.valid else None,
+                "wrist_vertical_range_ratio": feature_set.wrist_vertical_range_ratio.raw_value if feature_set.wrist_vertical_range_ratio and feature_set.wrist_vertical_range_ratio.valid else None,
+                "leg_kick_symmetry": feature_set.leg_kick_symmetry.raw_value if feature_set.leg_kick_symmetry and feature_set.leg_kick_symmetry.valid else None,
+                "wrist_recovery_height_ratio": feature_set.wrist_recovery_height_ratio.raw_value if feature_set.wrist_recovery_height_ratio and feature_set.wrist_recovery_height_ratio.valid else None
+            },
+            biomechanics={
+                "body_roll": feature_set.mean_body_roll.raw_value if feature_set.mean_body_roll and feature_set.mean_body_roll.valid else None,
+                "recovery_pattern": feature_set.wrist_recovery_height_ratio.raw_value if feature_set.wrist_recovery_height_ratio and feature_set.wrist_recovery_height_ratio.valid else None
+            },
+            rule_classifier={
+                "prediction": rule_res.predicted_stroke.value if rule_res.predicted_stroke else None,
+                "decision_score": rule_res.confidence,
+                "evidence": [rule_res.classification_reason] if rule_res.classification_reason else []
+            },
+            video_quality={
+                "status": "PASS" if vis_res.is_sufficient else "FAIL",
+                "camera_view": None,
+                "visibility_ratio": vis_res.visibility_ratio,
+                "wrist_visibility": vis_res.wrist_visibility,
+                "shoulder_visibility": vis_res.shoulder_visibility,
+                "ankle_visibility": vis_res.ankle_visibility,
+                "gate_reason": vis_res.gate_reason
+            }
+        )
+        ai_res = ai_agent.analyze_structured_input(structured_input, selected_stroke_input=StrokeType.AUTO_DETECT)
 
         # PIPELINE LAYER 4: Hybrid Decision Engine
         hybrid_engine = HybridStrokeDecisionEngine(rule_weight=0.50, ai_weight=0.50)

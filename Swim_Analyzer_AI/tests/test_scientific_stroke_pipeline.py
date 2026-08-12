@@ -25,7 +25,7 @@ from unittest.mock import MagicMock
 from models.data_models import StrokeType, StrokeDetectionResult
 from analysis.classification.visibility_gate import VisibilityGateResult
 from analysis.classification.stroke_heuristic_classifier import StrokeHeuristicClassifier
-from analysis.classification.ai_stroke_agent import AIStrokeAgent
+from analysis.classification.ai_stroke_agent import AIStrokeAgent, StrokeVerificationInput
 from analysis.classification.hybrid_stroke_decision_engine import HybridStrokeDecisionEngine
 from analysis.classification.feature_extractor import KinematicFeatureSet, ExtractedFeatureValue
 
@@ -161,15 +161,26 @@ def test_low_visibility_gating():
     assert decision.raw_detection_result.classification_status == "INSUFFICIENT_VISIBILITY"
 
 def test_missing_landmark_series():
-    """Missing landmark series in AI Agent returns INSUFFICIENT_EVIDENCE without fabricated confidence."""
+    """Missing structured kinematic evidence in AI Agent returns INSUFFICIENT_EVIDENCE without fabricated confidence."""
     agent = AIStrokeAgent()
-    frames = [_make_frame_with_vis(wrist_vis=0.0, sh_vis=0.9)]
-    res = agent.analyze_sequence(frames)
+    structured_input = StrokeVerificationInput(
+        kinematic_features={
+            "arm_phase_correlation": None,
+            "body_roll_amplitude": None,
+            "wrist_vertical_range_ratio": None,
+            "leg_kick_symmetry": None,
+            "wrist_recovery_height_ratio": None
+        },
+        biomechanics={},
+        rule_classifier={"prediction": None, "decision_score": None, "evidence": []},
+        video_quality={"status": "FAIL", "camera_view": None, "visibility_ratio": 0.0}
+    )
+    res = agent.analyze_structured_input(structured_input)
 
     assert res.predicted_stroke == StrokeType.UNKNOWN
     assert res.confidence is None
     assert res.classification_status == "INSUFFICIENT_EVIDENCE"
-    assert "valid_landmark_frames" in res.missing_evidence or "arm_phase_correlation" in res.missing_evidence
+    assert "arm_phase_correlation" in res.missing_evidence
 
 def test_no_fabricated_fallback_heuristic():
     """StrokeHeuristicClassifier returns UNKNOWN and confidence=None on missing features."""
