@@ -96,7 +96,7 @@ class ReferenceDataService:
         )
 
     def resolve_reference(
-        self, metric_name: str, stroke: str, age: int, sex: str, skill_level: str = "Unknown"
+        self, metric_name: str, stroke: str, age: int, sex: str, skill_level: str = "Unknown", test_protocol: Optional[str] = None
     ) -> ResolvedReferenceMatch:
         """Resolve top reference dataset for a given metric and athlete profile."""
         all_ds = self.repo.get_all_datasets(include_archived=False)
@@ -106,7 +106,8 @@ class ReferenceDataService:
             stroke=stroke,
             athlete_age=age,
             athlete_sex=sex,
-            athlete_skill=skill_level
+            athlete_skill=skill_level,
+            test_protocol=test_protocol
         )
 
     def get_dataset_versions(self):

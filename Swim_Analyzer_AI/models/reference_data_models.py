@@ -168,3 +168,9 @@ class ReferenceDataset:
     metrics: List[ReferenceMetric] = field(default_factory=list)
     sources: List[ReferenceSource] = field(default_factory=list)
     validation_events: List[ReferenceValidationEvent] = field(default_factory=list)
+
+    def __post_init__(self):
+        if self.validation_status in ["SCIENTIFICALLY_VALIDATED", "VALIDATED_REFERENCE"] and self.source_type in [
+            "PEER_REVIEWED_PRIMARY_STUDY", "PEER_REVIEWED_SYSTEMATIC_REVIEW", "PEER_REVIEWED_META_ANALYSIS"
+        ] and self.benchmark_eligibility == "CONTEXT_ONLY":
+            self.benchmark_eligibility = "BENCHMARK"

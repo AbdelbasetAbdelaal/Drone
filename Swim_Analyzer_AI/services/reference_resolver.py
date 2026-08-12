@@ -43,11 +43,11 @@ class ReferenceDataResolver:
 
     @classmethod
     def calculate_compatibility(
-        cls, dataset: ReferenceDataset, stroke: str, age: int, sex: str, skill_level: str = "Unknown"
+        cls, dataset: ReferenceDataset, stroke: str, age: int, sex: str, skill_level: str = "Unknown", test_protocol: Optional[str] = None
     ) -> Tuple[float, List[str]]:
         """
         Calculates REFERENCE_MATCH_SCORE (0.0 to 100.0).
-        If stroke or age is fundamentally incompatible, returns 0.0.
+        If stroke, age, or sex is fundamentally incompatible, returns 0.0.
         """
         reasons = []
         score = 100.0
@@ -69,18 +69,22 @@ class ReferenceDataResolver:
             score -= 30.0
             reasons.append(f"Age {age} outside dataset range [{dataset.age_min}-{dataset.age_max}].")
 
-        # 3. Sex compatibility
+        # 3. Sex compatibility (Hard boundary for single-sex benchmark datasets)
         ds_sex = dataset.sex.lower()
         target_sex = sex.lower()
         if ds_sex != "mixed" and target_sex != "mixed" and ds_sex != target_sex:
-            score -= 40.0
-            reasons.append(f"Sex mismatch: dataset is for {dataset.sex}, athlete is {sex}.")
+            return 0.0, [f"Sex boundary violation: dataset is for {dataset.sex}, athlete is {sex}."]
 
         # 4. Skill level compatibility
         if dataset.skill_level != "Unknown" and skill_level != "Unknown":
             if dataset.skill_level.lower() != skill_level.lower():
                 score -= 15.0
                 reasons.append(f"Skill level difference: dataset is {dataset.skill_level}, athlete is {skill_level}.")
+
+        # 5. TEST_SPECIFIC protocol compatibility
+        if dataset.benchmark_eligibility == "TEST_SPECIFIC":
+            if not test_protocol or test_protocol.lower() not in (dataset.description or "").lower():
+                return 0.0, ["TEST_SPECIFIC protocol mismatch: Athlete/test protocol does not match dataset requirements."]
 
         # Archived datasets get score = 0
         if dataset.is_archived:
@@ -100,15 +104,24 @@ class ReferenceDataResolver:
         stroke: str,
         athlete_age: int,
         athlete_sex: str,
-        athlete_skill: str = "Unknown"
+        athlete_skill: str = "Unknown",
+        test_protocol: Optional[str] = None
     ) -> ResolvedReferenceMatch:
         """
-        Finds the highest-priority compatible dataset for a given metric.
+        Finds the highest-priority compatible benchmark dataset for a given metric.
+        Excludes CONTEXT_ONLY, SOURCE_REGISTRY_*, and unvalidated COACH_DEFINED datasets from primary benchmark selection.
         """
         candidates = []
 
         for ds in datasets:
-            compat_score, warnings = cls.calculate_compatibility(ds, stroke, athlete_age, athlete_sex, athlete_skill)
+            # Policy Rule Enforcement: CONTEXT_ONLY & SOURCE_REGISTRY records must NEVER be selected as primary numerical benchmarks
+            if ds.benchmark_eligibility == ReferenceBenchmarkEligibility.CONTEXT_ONLY.value or ds.name.startswith("SOURCE_REGISTRY_"):
+                continue
+
+            if ds.source_type == "COACH_DEFINED" and ds.benchmark_eligibility != ReferenceBenchmarkEligibility.BENCHMARK.value:
+                continue
+
+            compat_score, warnings = cls.calculate_compatibility(ds, stroke, athlete_age, athlete_sex, athlete_skill, test_protocol=test_protocol)
             if compat_score <= 0.0:
                 continue
 

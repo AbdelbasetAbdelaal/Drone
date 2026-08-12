@@ -6026,3 +6026,44 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 2026-08-12 13:40:56,903 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
 2026-08-12 13:40:56,914 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
 2026-08-12 13:40:56,923 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:43:48,997 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:43:48,997 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:43:48,998 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:43:48,998 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:44:01,302 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:44:01,302 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:44:01,631 - services.auth_service - INFO - [SYSTEM] Account logged in: coach1 (coach)
+2026-08-12 13:44:01,800 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:44:01,800 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:44:04,917 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:44:04,917 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:44:28,363 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:44:28,363 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:50:16,857 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:50:16,857 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:50:18,824 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:50:18,824 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:50:23,548 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:50:23,548 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:50:24,845 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:50:24,845 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:50:31,022 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:50:31,022 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:50:32,376 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:50:32,376 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:50:42,652 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:50:42,652 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:50:47,225 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:50:47,225 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:51:03,390 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:51:03,390 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:51:04,265 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:51:04,265 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:52:19,557 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:52:19,557 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:52:22,222 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:52:22,222 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 14:00:03,785 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 14:00:03,818 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 14:00:03,835 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 14:00:03,841 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
