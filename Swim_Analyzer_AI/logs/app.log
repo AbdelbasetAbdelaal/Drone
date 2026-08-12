@@ -3776,3 +3776,111 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 2026-08-12 20:49:36,178 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
 2026-08-12 20:49:36,184 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_6f78b46e.pdf
 2026-08-12 20:49:36,296 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-12 21:07:03,939 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 21:07:04,276 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: data/input_videos/upload_63aa955ff4c44829aadf609e1d365cf3.mp4
+2026-08-12 21:07:20,010 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 21:07:20,346 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Mode: PYTHON_TEMPORAL_KINEMATIC
+2026-08-12 21:07:20,346 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] AI agent: DISABLED
+2026-08-12 21:07:20,347 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Classification mode: PYTHON_ONLY
+2026-08-12 21:07:20,347 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Pose quality: 100.0% | Valid frames: 120 | Cycles detected: 3
+2026-08-12 21:07:20,347 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Butterfly signature: 1.00
+2026-08-12 21:07:20,348 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Breaststroke signature: 0.55
+2026-08-12 21:07:20,349 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Freestyle signature: 0.10
+2026-08-12 21:07:20,349 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Backstroke signature: 0.10
+2026-08-12 21:07:20,349 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Prediction: Butterfly
+2026-08-12 21:07:20,350 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Confidence: 0.35
+2026-08-12 21:07:33,934 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 21:07:34,287 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: data/input_videos/upload_6cbf8847c74244db8a1b761bf9244a02.mp4
+2026-08-12 21:07:50,984 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 21:07:51,288 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Mode: PYTHON_TEMPORAL_KINEMATIC
+2026-08-12 21:07:51,288 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] AI agent: DISABLED
+2026-08-12 21:07:51,288 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Classification mode: PYTHON_ONLY
+2026-08-12 21:07:51,288 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Pose quality: 100.0% | Valid frames: 120 | Cycles detected: 2
+2026-08-12 21:07:51,289 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Butterfly signature: 0.10
+2026-08-12 21:07:51,289 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Breaststroke signature: 0.10
+2026-08-12 21:07:51,291 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Freestyle signature: 1.05
+2026-08-12 21:07:51,291 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Backstroke signature: 0.40
+2026-08-12 21:07:51,291 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Prediction: Freestyle
+2026-08-12 21:07:51,292 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Confidence: 0.63
+2026-08-12 21:07:51,293 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: data/input_videos/upload_1da66e7823204b868ec9032dc2e82224.mp4
+2026-08-12 21:07:53,282 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 21:07:53,282 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Mode: PYTHON_TEMPORAL_KINEMATIC
+2026-08-12 21:07:53,283 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] AI agent: DISABLED
+2026-08-12 21:07:53,283 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Classification mode: PYTHON_ONLY
+2026-08-12 21:07:53,283 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Pose quality: 0.0% | Valid frames: 120 | Cycles detected: 0
+2026-08-12 21:07:53,283 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Butterfly signature: 0.00
+2026-08-12 21:07:53,284 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Breaststroke signature: 0.00
+2026-08-12 21:07:53,284 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Freestyle signature: 0.00
+2026-08-12 21:07:53,285 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Backstroke signature: 0.00
+2026-08-12 21:07:53,286 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Prediction: Unknown
+2026-08-12 21:07:53,286 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Confidence: 0.00
+2026-08-12 21:08:13,430 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 21:08:13,767 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: data/input_videos/upload_1da66e7823204b868ec9032dc2e82224.mp4
+2026-08-12 21:08:29,572 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 21:08:29,998 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Mode: PYTHON_TEMPORAL_KINEMATIC
+2026-08-12 21:08:29,999 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] AI agent: DISABLED
+2026-08-12 21:08:29,999 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Classification mode: PYTHON_ONLY
+2026-08-12 21:08:29,999 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Pose quality: 100.0% | Valid frames: 120 | Cycles detected: 5
+2026-08-12 21:08:30,000 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Butterfly signature: 0.30
+2026-08-12 21:08:30,000 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Breaststroke signature: 0.65
+2026-08-12 21:08:30,000 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Freestyle signature: 0.10
+2026-08-12 21:08:30,000 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Backstroke signature: 0.65
+2026-08-12 21:08:30,001 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Prediction: Backstroke
+2026-08-12 21:08:30,002 - analysis.stroke_classifier - INFO - [ANALYSIS] [STROKE_CLASSIFIER] Confidence: 0.18
+2026-08-12 21:08:49,630 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Freestyle | Decision score: 0.65 | Missing evidence: ['wrist_vertical_range_ratio', 'leg_kick_symmetry']
+2026-08-12 21:08:51,580 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: test_stability_video.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-12 21:08:51,597 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 21:08:52,178 - utils.video_utils - INFO - [VIDEO] Opened video: test_stability_video.mp4 (854x480 @ 30.0fps)
+2026-08-12 21:08:52,182 - utils.video_utils - INFO - [VIDEO] Opened video: test_stability_video.mp4 (854x480 @ 30.0fps)
+2026-08-12 21:08:52,183 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_test_stability_video.mp4 (Codec: mp4v)
+2026-08-12 21:08:52,844 - services.analysis_service - WARNING - [ANALYSIS] Early precheck VQA critical failure. Aborting before full processing.
+2026-08-12 21:08:52,847 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-12 21:08:53,177 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 21:08:53,367 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 21:08:53,375 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 21:08:53,381 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 21:08:53,401 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 21:08:53,402 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: N/A (Unvalidated Cohort), Dataset: Freestyle Population Reference Matrix v2.0)
+2026-08-12 21:08:53,417 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 21:08:53,426 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 21:08:53,432 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 21:08:53,463 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 21:08:53,471 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 21:08:53,480 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 21:08:53,496 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 21:08:53,505 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 21:08:53,508 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: Intermediate, Dataset: )
+2026-08-12 21:08:53,525 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 21:08:53,535 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 21:08:53,541 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 21:08:53,551 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 21:08:53,562 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 21:08:53,572 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 21:08:53,575 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 21:08:53,583 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 21:08:53,593 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 21:08:53,602 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 21:08:53,608 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 21:08:53,616 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 21:08:53,627 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 21:08:53,637 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 21:08:53,643 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 21:08:53,651 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 21:08:53,669 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v1.0.0)
+2026-08-12 21:09:46,424 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: data/input_videos/upload_63aa955ff4c44829aadf609e1d365cf3.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-12 21:09:46,437 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 21:09:46,851 - utils.video_utils - INFO - [VIDEO] Opened video: data/input_videos/upload_63aa955ff4c44829aadf609e1d365cf3.mp4 (720x1280 @ 30.0fps)
+2026-08-12 21:09:46,884 - utils.video_utils - INFO - [VIDEO] Opened video: data/input_videos/upload_63aa955ff4c44829aadf609e1d365cf3.mp4 (720x1280 @ 30.0fps)
+2026-08-12 21:09:46,888 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_63aa955ff4c44829aadf609e1d365cf3.mp4 (Codec: mp4v)
+2026-08-12 21:10:23,196 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 208 frames.
+2026-08-12 21:10:23,208 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-12 21:10:23,249 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-12 21:10:25,557 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 21:10:25,564 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 21:10:25,570 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 21:10:25,581 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 21:10:25,581 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: Beginner, Dataset: Freestyle Population Reference Matrix v2.0)
+2026-08-12 21:10:26,073 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_63aa955ff4c44829aadf609e1d365cf3.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_63aa955ff4c44829aadf609e1d365cf3.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_63aa955ff4c44829aadf609e1d365cf3.json
+2026-08-12 21:10:42,674 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_63aa955ff4c44829aadf609e1d365cf3.mp4
+2026-08-12 21:10:42,735 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 5.25 MB, Frames: 208, Duration: 6.93s
+2026-08-12 21:10:43,185 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.

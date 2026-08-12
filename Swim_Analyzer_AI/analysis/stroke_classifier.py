@@ -76,59 +76,69 @@ class StrokeClassifier:
         cap.release()
         self.pose_detector.close()
         
-        # PIPELINE LAYER 1: Quality / Visibility Gate
-        from analysis.classification.visibility_gate import VisibilityGate
-        from analysis.classification.feature_extractor import KinematicFeatureExtractor
-        from analysis.classification.stroke_heuristic_classifier import StrokeHeuristicClassifier
-        from analysis.classification.hybrid_stroke_decision_engine import HybridStrokeDecisionEngine
+        # PIPELINE: Python Temporal Kinematic Classifier Engine (Sole Classification Authority)
+        from analysis.classification.temporal_kinematic_engine import PythonTemporalKinematicEngine
 
-        vis_gate = VisibilityGate()
-        vis_res = vis_gate.evaluate(frames_list)
+        engine = PythonTemporalKinematicEngine()
+        engine_res = engine.classify_video_sequence(frames_list, selected_stroke_input=StrokeType.AUTO_DETECT)
 
-        # PIPELINE LAYER 2: Primary Python Kinematic Classifier (Sole Authority)
-        extractor = KinematicFeatureExtractor(min_valid_frames=2, visibility_threshold=0.1)
-        feature_set = extractor.extract_features(frames_list)
-        rule_classifier = StrokeHeuristicClassifier()
-        rule_res = rule_classifier.classify_features(feature_set, selected_stroke_input=StrokeType.AUTO_DETECT)
+        # Execution & Diagnostic Logging
+        conf_str = f"{engine_res.confidence:.2f}" if engine_res.confidence is not None else "0.00"
+        sig_butterfly = engine_res.signature_scores.get("butterfly", {}).get("score", 0.0)
+        sig_breaststroke = engine_res.signature_scores.get("breaststroke", {}).get("score", 0.0)
+        sig_freestyle = engine_res.signature_scores.get("freestyle", {}).get("score", 0.0)
+        sig_backstroke = engine_res.signature_scores.get("backstroke", {}).get("score", 0.0)
 
-        # Diagnostic Logging for Execution Traceability
-        valid_cnt = getattr(feature_set, 'valid_frames_in_window', 0)
-        usable_pct = (valid_cnt / max(1, len(frames_list))) * 100.0
-        vis_pct = vis_res.visibility_ratio * 100.0
-        conf_str = f"{rule_res.confidence:.2f}" if rule_res.confidence is not None else "0.00"
-
-        logger.info("[STROKE_CLASSIFIER] Classification engine: Python Kinematic Engine")
-        logger.info("[STROKE_CLASSIFIER] AI verification: DISABLED (Python-only classification mode)")
+        logger.info("[STROKE_CLASSIFIER] Mode: PYTHON_TEMPORAL_KINEMATIC")
+        logger.info("[STROKE_CLASSIFIER] AI agent: DISABLED")
+        logger.info("[STROKE_CLASSIFIER] Classification mode: PYTHON_ONLY")
         logger.info(
-            "[STROKE_CLASSIFIER] Diagnostic Frame Metrics | Total video frames: %d | Sampled: %d | "
-            "Valid pose frames: %d (%.1f%%) | Landmark visibility: %.1f%%",
-            total_frames, len(frames_list), valid_cnt, usable_pct, vis_pct
+            "[STROKE_CLASSIFIER] Pose quality: %.1f%% | Valid frames: %d | Cycles detected: %d",
+            engine_res.pose_quality * 100.0, len(frames_list), engine_res.cycles_detected
         )
-        logger.info("[STROKE_CLASSIFIER] Extracted Kinematic Features: %s", rule_res.feature_values)
-        logger.info("[STROKE_CLASSIFIER] Candidate Stroke Scores: %s", rule_res.predictions)
-        logger.info("[STROKE_CLASSIFIER] Status: %s | Reason: %s", rule_res.classification_status, rule_res.classification_reason)
-        logger.info("[STROKE_CLASSIFIER] Prediction: %s", rule_res.predicted_stroke.value)
+        logger.info("[STROKE_CLASSIFIER] Butterfly signature: %.2f", sig_butterfly)
+        logger.info("[STROKE_CLASSIFIER] Breaststroke signature: %.2f", sig_breaststroke)
+        logger.info("[STROKE_CLASSIFIER] Freestyle signature: %.2f", sig_freestyle)
+        logger.info("[STROKE_CLASSIFIER] Backstroke signature: %.2f", sig_backstroke)
+        logger.info("[STROKE_CLASSIFIER] Prediction: %s", engine_res.predicted_stroke.value)
         logger.info("[STROKE_CLASSIFIER] Confidence: %s", conf_str)
 
-        # PIPELINE LAYER 3: Python-Only Decision Output (AI Agent Bypassed)
-        ai_res = None
-        hybrid_engine = HybridStrokeDecisionEngine(rule_weight=1.0, ai_weight=0.0)
-        hybrid_decision = hybrid_engine.evaluate_hybrid_decision(
-            rule_result=rule_res,
-            ai_result=ai_res,
-            visibility_result=vis_res,
-            selected_stroke_input=StrokeType.AUTO_DETECT
+        # Build Unified Backward-Compatible StrokeDetectionResult Output
+        uncertainty_val = round(1.0 - engine_res.confidence, 4) if engine_res.confidence is not None else 1.0
+
+        res = StrokeDetectionResult(
+            predicted_stroke=engine_res.predicted_stroke,
+            confidence=forced_confidence if forced_confidence is not None else engine_res.confidence,
+            predictions=engine_res.stroke_scores,
+            selected_stroke=StrokeType.AUTO_DETECT,
+            manual_override=False,
+            is_inconsistent=False,
+            classification_status=engine_res.classification_status,
+            classification_reason=engine_res.classification_reason,
+            feature_values=engine_res.feature_values,
+            feature_contributions=engine_res.feature_contributions,
+            confidence_type="UNCALIBRATED_DECISION_SCORE",
+            uncertainty=uncertainty_val,
+            rule_prediction=engine_res.predicted_stroke if engine_res.predicted_stroke != StrokeType.UNKNOWN else None,
+            ai_prediction=None,
+            agreement=None,
+            evidence={
+                "reason": engine_res.classification_reason,
+                "cycles_detected": engine_res.cycles_detected,
+                "cycle_predictions": engine_res.cycle_predictions,
+                "signature_scores": engine_res.signature_scores
+            },
+            missing_evidence=engine_res.missing_evidence,
+            conflicts=[],
+            method="PYTHON_TEMPORAL_KINEMATIC",
+            classifier_version="3.0.0-Temporal-Engine",
+            threshold_version="TEMPORAL_KINEMATIC_v3.0"
         )
-
-        # PIPELINE LAYER 4: Output Unified Decision Structure
-        res = hybrid_decision.raw_detection_result
-        res.feature_values["uncertainty"] = hybrid_decision.uncertainty
-        res.feature_values["visibility_ratio"] = vis_res.visibility_ratio
-
-        if forced_confidence is not None:
-            res.confidence = forced_confidence
+        res.feature_values["uncertainty"] = uncertainty_val
+        res.feature_values["visibility_ratio"] = engine_res.pose_quality
 
         return res
+
 
 
         
