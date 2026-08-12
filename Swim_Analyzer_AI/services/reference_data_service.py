@@ -98,13 +98,25 @@ class ReferenceDataService:
     def resolve_reference(
         self, metric_name: str, stroke: str, age: int, sex: str, skill_level: str = "Unknown"
     ) -> ResolvedReferenceMatch:
-        """Resolve highest priority reference dataset for a given metric and athlete profile."""
-        datasets = self.get_all_datasets(include_archived=False)
+        """Resolve top reference dataset for a given metric and athlete profile."""
+        all_ds = self.repo.get_all_datasets(include_archived=False)
         return ReferenceDataResolver.resolve_metric_reference(
-            datasets=datasets,
+            datasets=all_ds,
             metric_name=metric_name,
             stroke=stroke,
             athlete_age=age,
             athlete_sex=sex,
             athlete_skill=skill_level
         )
+
+    def get_dataset_versions(self):
+        """Fetch all registered dataset versions."""
+        return self.repo.get_dataset_versions()
+
+    def activate_dataset_version(self, version_name: str) -> bool:
+        """Activate a dataset version."""
+        return self.repo.set_version_active(version_name, is_active=True)
+
+    def deactivate_dataset_version(self, version_name: str) -> bool:
+        """Deactivate a dataset version."""
+        return self.repo.set_version_active(version_name, is_active=False)

@@ -66,7 +66,7 @@ def render_population_benchmark_cards(bm_res: BenchmarkResult, athlete_profile: 
     if is_demographic_compatible:
         from app.ui.charts import create_benchmark_radar_chart
         radar_fig = create_benchmark_radar_chart(bm_res)
-        st.plotly_chart(radar_fig, use_container_width=True)
+        st.plotly_chart(radar_fig, width="stretch")
 
     st.markdown("---")
 

@@ -170,7 +170,7 @@ def render_reference_data_manager_page():
                                     "Domain": m.measurement_domain,
                                     "Status": m.status
                                 })
-                            st.dataframe(pd.DataFrame(m_rows), use_container_width=True)
+                            st.dataframe(pd.DataFrame(m_rows), width="stretch")
 
                         if ds.sources:
                             st.markdown("#### Scientific Provenance Citations")
@@ -190,7 +190,7 @@ def render_reference_data_manager_page():
                                     "New Status": ev.new_status,
                                     "Notes": ev.notes
                                 })
-                            st.dataframe(pd.DataFrame(ev_rows), use_container_width=True)
+                            st.dataframe(pd.DataFrame(ev_rows), width="stretch")
 
     # ---------------------------------------------------------
     # TAB 2: CREATE / EDIT DATASET FORM
@@ -378,15 +378,20 @@ def render_reference_data_manager_page():
                 file_name="reference_data_template.csv",
                 mime="text/csv",
                 type="primary",
-                use_container_width=True
+                width="stretch"
             )
 
         with col_up:
             uploaded_file = st.file_uploader("Upload Reference CSV File", type=["csv"])
+            strict_mode = st.toggle("🛡️ Strict Scientific Mode", value=True, help="Enforces strict scientific validation: Coach data defaults to CONTEXT_ONLY, invalid rows are not auto-fixed, no fabricated values.")
 
         if uploaded_file:
-            csv_text = uploaded_file.getvalue().decode("utf-8")
-            preview = ReferenceCSVService.parse_and_validate_csv(csv_text)
+            try:
+                csv_text = uploaded_file.getvalue().decode("utf-8-sig")
+            except UnicodeDecodeError:
+                csv_text = uploaded_file.getvalue().decode("latin1", errors="ignore")
+
+            preview = ReferenceCSVService.parse_and_validate_csv(csv_text, strict_scientific_mode=strict_mode)
 
             st.markdown("### 🔍 Validation Preview Summary")
             k1, k2, k3, k4, k5 = st.columns(5)
@@ -396,36 +401,90 @@ def render_reference_data_manager_page():
             k4.metric("Warnings", preview.warnings_count)
             k5.metric("Duplicates", preview.duplicate_rows)
 
+            # Categorized Error & Warning Summary Expander
+            with st.expander("⚠️ View Categorized Validation Summary", expanded=False):
+                if preview.schema_errors:
+                    st.error(f"**Schema Errors ({len(preview.schema_errors)}):**\n" + "\n".join([f"- {e}" for e in preview.schema_errors[:5]]))
+                if preview.metadata_errors:
+                    st.error(f"**Metadata Errors ({len(preview.metadata_errors)}):**\n" + "\n".join([f"- {e}" for e in preview.metadata_errors[:5]]))
+                if preview.metric_errors:
+                    st.error(f"**Metric Range Errors ({len(preview.metric_errors)}):**\n" + "\n".join([f"- {e}" for e in preview.metric_errors[:5]]))
+                if preview.duplicate_errors:
+                    st.warning(f"**Duplicate Metric Errors ({len(preview.duplicate_errors)}):**\n" + "\n".join([f"- {e}" for e in preview.duplicate_errors[:5]]))
+                if preview.provenance_warnings:
+                    st.info(f"**Provenance Warnings ({len(preview.provenance_warnings)}):**\n" + "\n".join([f"- {w}" for w in preview.provenance_warnings[:5]]))
+                if preview.eligibility_warnings:
+                    st.info(f"**Eligibility Policy Warnings ({len(preview.eligibility_warnings)}):**\n" + "\n".join([f"- {w}" for w in preview.eligibility_warnings[:5]]))
+                if not (preview.schema_errors or preview.metadata_errors or preview.metric_errors):
+                    st.success("✅ No critical schema or dataset validation errors detected.")
+
             st.markdown("#### Row Validation Details")
             row_data = []
             for r in preview.row_results:
-                status_icon = "✅ VALID" if r.is_valid else "❌ INVALID"
+                if not r.is_valid:
+                    status_icon = "❌ INVALID"
+                elif r.norm_row.record_type == "SOURCE":
+                    status_icon = "✅ VALID (SOURCE)"
+                else:
+                    status_icon = "✅ VALID (METRIC)"
+
                 row_data.append({
                     "Row": r.row_index,
+                    "Type": r.norm_row.record_type,
                     "Dataset": r.dataset_name,
                     "Stroke": r.stroke,
-                    "Metric": r.metric_name,
+                    "Metric": r.metric_name if r.norm_row.record_type == "METRIC" else "(Source Provenance)",
                     "Status": status_icon,
+                    "Eligibility": r.benchmark_eligibility,
                     "Errors": "; ".join(r.errors) if r.errors else "None",
                     "Warnings": "; ".join(r.warnings) if r.warnings else "None"
                 })
-            st.dataframe(pd.DataFrame(row_data), use_container_width=True)
+            st.dataframe(pd.DataFrame(row_data), width="stretch")
 
-            # Import Button
-            if preview.valid_rows > 0:
-                if st.button(f"📥 Import {preview.valid_rows} Validated Rows", type="primary"):
-                    datasets_to_import = ReferenceCSVService.convert_csv_to_datasets(preview)
-                    count_imported = 0
-                    for ds in datasets_to_import:
-                        success, _ = service.save_dataset(ds)
-                        if success:
-                            count_imported += 1
-                    st.success(f"Successfully imported {count_imported} dataset(s) into database!")
-                    st.rerun()
+            # Preview Import Transformation Section
+            with st.expander("🔄 Preview Import Transformation Stages", expanded=False):
+                st.caption("Inspect stage-by-stage transformation: RAW CSV ROW → RECORD TYPE DETECTION → NORMALIZED RECORD → VALIDATION RESULT → BENCHMARK ELIGIBILITY")
+                for r in preview.row_results[:6]:
+                    st.markdown(f"**Row {r.row_index}: `{r.dataset_name}` (`{r.norm_row.record_type}`)**")
+                    st.json({
+                        "RAW CSV ROW": r.raw_csv_row,
+                        "RECORD TYPE DETECTION": r.norm_row.record_type,
+                        "NORMALIZED RECORD": r.normalized_dataset if r.norm_row.record_type == "SOURCE" else {**r.normalized_dataset, **r.normalized_metric},
+                        "VALIDATION RESULT": r.validation_result,
+                        "BENCHMARK ELIGIBILITY": r.benchmark_eligibility
+                    })
+
+            # Action Buttons: Import & Download Normalized CSV
+            col_act1, col_act2 = st.columns(2)
+            with col_act1:
+                if preview.valid_rows > 0:
+                    if st.button(f"📥 Import {preview.valid_rows} Validated Rows", type="primary", width="stretch"):
+                        datasets_to_import = ReferenceCSVService.convert_csv_to_datasets(preview)
+                        count_imported = 0
+                        for ds in datasets_to_import:
+                            success, _ = service.save_dataset(ds)
+                            if success:
+                                count_imported += 1
+                        st.success(f"Successfully imported {count_imported} dataset(s) into database!")
+                        st.rerun()
+                else:
+                    st.error("No valid rows detected. Fix CSV errors before importing.")
+
+            with col_act2:
+                norm_csv_data = ReferenceCSVService.generate_normalized_csv(preview)
+                st.download_button(
+                    label="📄 Download Normalized CSV",
+                    data=norm_csv_data,
+                    file_name="normalized_reference_dataset.csv",
+                    mime="text/csv",
+                    width="stretch"
+                )
+
             # Version Activation Management Sub-Section
             st.markdown("---")
             st.subheader("⚙️ Dataset Version Management")
-            versions = service.get_dataset_versions()
+            get_ver_fn = getattr(service, "get_dataset_versions", None)
+            versions = get_ver_fn() if callable(get_ver_fn) else ReferenceDataService().get_dataset_versions()
             if versions:
                 v_rows = []
                 for v in versions:
@@ -438,7 +497,7 @@ def render_reference_data_manager_page():
                         "Active State": "ACTIVE ✅" if v.is_active else "INACTIVE ❌",
                         "Importer": v.importer
                     })
-                st.dataframe(pd.DataFrame(v_rows), use_container_width=True)
+                st.dataframe(pd.DataFrame(v_rows), width="stretch")
 
                 col_v1, col_v2 = st.columns(2)
                 with col_v1:
@@ -484,7 +543,7 @@ def render_reference_data_manager_page():
                     file_name="swim_reference_datasets.csv",
                     mime="text/csv",
                     type="primary",
-                    use_container_width=True
+                    width="stretch"
                 )
             with e2:
                 st.download_button(
@@ -492,7 +551,7 @@ def render_reference_data_manager_page():
                     data=exp_json,
                     file_name="swim_reference_datasets.json",
                     mime="application/json",
-                    use_container_width=True
+                    width="stretch"
                 )
             with e3:
                 st.download_button(
@@ -500,7 +559,7 @@ def render_reference_data_manager_page():
                     data=exp_yaml,
                     file_name="swim_reference_datasets.yaml",
                     mime="text/yaml",
-                    use_container_width=True
+                    width="stretch"
                 )
 
     # ---------------------------------------------------------

@@ -5715,3 +5715,314 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 2026-08-12 12:25:40,146 - scientific_reference.validation.evidence_validator - WARNING - [SYSTEM] Provenance rejection for swimming velocity: Quote not found in source text.
 2026-08-12 12:25:40,161 - scientific_reference.evidence_aggregator - WARNING - [SYSTEM] Conflicting evidence detected for Freestyle stroke_rate Male 18-25. Range: 40.0-60.0, Pooled Std: 1.0
 2026-08-12 12:25:40,243 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-12 12:29:20,167 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:29:23,875 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:29:24,081 - services.auth_service - INFO - [SYSTEM] Account logged in: coach1 (coach)
+2026-08-12 12:29:24,202 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:29:27,450 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:38:43,731 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:38:46,163 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:38:46,371 - services.auth_service - INFO - [SYSTEM] Account logged in: coach1 (coach)
+2026-08-12 12:38:46,493 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:38:48,445 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:40:25,247 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:40:32,448 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:40:32,600 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:40:47,349 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:40:47,834 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:42:00,878 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 12:42:00,885 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 12:42:00,893 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 12:42:00,901 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 12:42:31,503 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 12:42:31,509 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 12:42:31,512 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 12:42:31,516 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 12:42:50,339 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 12:42:50,346 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 12:42:50,349 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 12:42:50,357 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 12:43:40,118 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 12:43:40,126 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 12:43:40,131 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 12:43:40,151 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 12:44:05,044 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-08-12 12:44:06,192 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:44:23,977 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:44:24,224 - services.auth_service - INFO - [SYSTEM] Account logged in: coach1 (coach)
+2026-08-12 12:44:24,351 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:44:28,664 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:45:17,172 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:46:27,626 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 12:46:27,635 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 12:46:27,640 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 12:46:27,649 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 12:47:37,016 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:47:40,191 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:47:40,372 - services.auth_service - INFO - [SYSTEM] Account logged in: coach1 (coach)
+2026-08-12 12:47:40,498 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:47:42,077 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:47:51,285 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:48:07,211 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:48:08,207 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:48:18,095 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:48:31,643 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:48:32,284 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:48:44,644 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:48:51,073 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:49:44,410 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:49:48,021 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:49:58,019 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:49:58,122 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 12:50:24,360 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:50:24,388 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 12:50:24,586 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:50:24,616 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 12:50:24,748 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 12:50:26,742 - analysis.stroke_classifier - INFO - [ANALYSIS] Starting Stroke Type Detection on: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_25926bf650094cc7a10b00b25460cdae.mp4
+2026-08-12 12:50:37,008 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 12:50:37,401 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:50:37,438 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 12:50:52,270 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:50:52,302 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 12:50:52,513 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:50:52,538 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 12:50:52,619 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-12 12:50:52,620 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_25926bf650094cc7a10b00b25460cdae.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-12 12:50:52,761 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 12:50:53,099 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_25926bf650094cc7a10b00b25460cdae.mp4 (720x1280 @ 30.0fps)
+2026-08-12 12:50:53,121 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_25926bf650094cc7a10b00b25460cdae.mp4 (720x1280 @ 30.0fps)
+2026-08-12 12:50:53,270 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_25926bf650094cc7a10b00b25460cdae.mp4 (Codec: mp4v)
+2026-08-12 12:51:19,620 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 105 frames.
+2026-08-12 12:51:19,660 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-12 12:51:19,696 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-12 12:51:19,754 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 12:51:19,759 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 12:51:19,766 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 12:51:19,779 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 12:51:19,784 - services.benchmark_service - ERROR - [SYSTEM] Error evaluating benchmarks: 'BenchmarkEngine' object has no attribute 'evaluate_full_analysis'
+2026-08-12 12:51:20,291 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_25926bf650094cc7a10b00b25460cdae.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_25926bf650094cc7a10b00b25460cdae.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_25926bf650094cc7a10b00b25460cdae.json
+2026-08-12 12:51:31,241 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_25926bf650094cc7a10b00b25460cdae.mp4
+2026-08-12 12:51:31,295 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 2.53 MB, Frames: 105, Duration: 3.50s
+2026-08-12 12:51:31,400 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 12:51:31,406 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-12 12:51:31,941 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:51:31,993 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-12 12:51:32,161 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-12 12:51:32,164 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-12 12:51:32,178 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-12 12:51:32,179 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-12 12:51:32,180 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-12 12:51:32,194 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-12 12:51:32,198 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-12 12:51:32,217 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-12 12:51:32,220 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-12 12:51:32,234 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-12 12:51:33,107 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-12 12:51:33,532 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-12 12:51:36,375 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-12 12:51:36,378 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-12 12:51:36,697 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-12 12:51:36,699 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-12 12:51:36,913 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-12 12:51:36,915 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-12 12:51:36,940 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-12 12:51:36,942 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-12 12:51:36,944 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-12 12:51:36,957 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_f0a74583.pdf
+2026-08-12 12:51:37,153 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-12 12:52:29,997 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 12:52:30,010 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 12:52:30,024 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 12:52:30,034 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 12:52:55,939 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:52:58,143 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:52:58,349 - services.auth_service - INFO - [SYSTEM] Account logged in: coach1 (coach)
+2026-08-12 12:52:58,508 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:53:00,799 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:53:22,729 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 12:59:33,914 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 12:59:33,922 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 12:59:33,926 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 12:59:33,930 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:00:22,977 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:05:12,003 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:05:12,249 - services.auth_service - INFO - [SYSTEM] Account logged in: coach1 (coach)
+2026-08-12 13:05:12,393 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:05:16,993 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:06:00,786 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:14:17,326 - scientific_reference.validation.benchmark_eligibility_validator - INFO - [SYSTEM] Systematic review SR_BACKSTROKE_2025 lacks explicit primary study trace. Assigned REVIEW_REQUIRED.
+2026-08-12 13:14:17,448 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Sex leakage prohibited: candidate sex 'Male' vs target sex 'Female'
+2026-08-12 13:14:17,507 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Age leakage prohibited: adult candidate '18-25' vs target youth age '8-10'
+2026-08-12 13:14:17,553 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Stroke leakage prohibited: candidate stroke 'freestyle' vs target stroke 'backstroke'
+2026-08-12 13:14:17,602 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Meta-analysis MA_400M_FRONT_CRAWL restricted to 400m front crawl test context (attempted target distance: 100m)
+2026-08-12 13:14:17,631 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:14:17,662 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:14:17,672 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:14:17,682 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:14:18,044 - scientific_reference.validation.evidence_validator - WARNING - [SYSTEM] Provenance rejection for stroke_rate: Quote not found in source text.
+2026-08-12 13:14:18,052 - scientific_reference.validation.evidence_validator - WARNING - [SYSTEM] Stroke rejection for stroke_rate: Stroke 'Freestyle' not supported by context.
+2026-08-12 13:14:18,066 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:14:18,091 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:14:18,099 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:14:18,109 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:14:18,126 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:14:18,135 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:14:18,143 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:14:18,150 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:14:18,215 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Fabricated metadata detected for candidate SRC-FAKE-001
+2026-08-12 13:14:18,387 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-12 13:14:18,575 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:14:18,610 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:14:18,616 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:14:18,644 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:14:18,651 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-12 13:14:18,660 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-12 13:14:18,686 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-12 13:14:18,696 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-12 13:14:18,709 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-12 13:14:18,718 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-12 13:14:18,729 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-12 13:14:20,388 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-12 13:14:20,496 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-12 13:14:20,588 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-12 13:14:20,716 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-12 13:14:24,979 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: test_stability_video.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-12 13:14:25,057 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 13:14:34,910 - utils.video_utils - INFO - [VIDEO] Opened video: test_stability_video.mp4 (854x480 @ 30.0fps)
+2026-08-12 13:14:34,943 - utils.video_utils - INFO - [VIDEO] Opened video: test_stability_video.mp4 (854x480 @ 30.0fps)
+2026-08-12 13:14:34,952 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_test_stability_video.mp4 (Codec: mp4v)
+2026-08-12 13:14:43,723 - services.analysis_service - WARNING - [ANALYSIS] Insufficient valid frames after processing. Marking analysis as unreliable.
+2026-08-12 13:14:43,728 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-12 13:14:45,008 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-12 13:14:47,916 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-12 13:14:49,048 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:14:49,057 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:14:49,061 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:14:49,067 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:14:49,437 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:14:49,448 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:14:49,456 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:14:49,461 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:14:49,589 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:14:49,598 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:14:49,606 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:14:49,615 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:14:49,645 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:14:49,655 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:14:49,661 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:14:49,672 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:14:49,699 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:14:49,710 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:14:49,716 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:14:49,726 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:14:49,757 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:14:49,766 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:14:49,774 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:14:49,782 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:14:49,889 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-12 13:14:49,900 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:14:49,910 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:14:49,917 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:14:49,926 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:14:49,952 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:14:49,961 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:14:49,967 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:14:49,977 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:14:50,290 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-12 13:14:50,623 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:14:50,628 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:14:50,634 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:14:50,639 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:14:50,824 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:14:50,830 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:14:50,839 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:14:50,845 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:14:50,862 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:14:50,871 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:14:50,875 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:14:50,884 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:14:51,470 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-12 13:14:51,721 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-12 13:14:51,980 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-12 13:14:51,985 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:14:51,989 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:14:51,992 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:14:51,997 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:14:52,009 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:14:52,017 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:14:52,020 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:14:52,029 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:14:52,043 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:14:52,053 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:14:52,059 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:14:52,068 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:14:52,087 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:14:52,097 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:14:52,102 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:14:52,106 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:14:58,781 - scientific_reference.validation.statistical_validator - WARNING - [SYSTEM] Rejected: Sample size 4 is too small for benchmark aggregation.
+2026-08-12 13:14:58,801 - scientific_reference.validation.evidence_validator - WARNING - [SYSTEM] Provenance rejection for swimming velocity: Quote not found in source text.
+2026-08-12 13:14:58,817 - scientific_reference.evidence_aggregator - WARNING - [SYSTEM] Conflicting evidence detected for Freestyle stroke_rate Male 18-25. Range: 40.0-60.0, Pooled Std: 1.0
+2026-08-12 13:14:58,906 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-12 13:15:16,573 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:15:16,581 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:15:16,584 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:15:16,588 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:15:18,502 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:15:18,512 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:15:18,518 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:15:18,530 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:15:21,171 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:15:21,175 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:15:21,178 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:15:21,185 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:15:23,034 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:15:23,044 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:15:23,050 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:15:23,059 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:15:26,828 - services.scientific_updater_service - INFO - [SYSTEM] [5%] Initializing atomic update staging environment...
+2026-08-12 13:15:26,925 - services.scientific_updater_service - INFO - [SYSTEM] [20%] Searching external peer-reviewed literature & retrieving PMC full text...
+2026-08-12 13:17:02,042 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:17:02,050 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:17:02,054 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:17:02,060 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-12 13:17:32,076 - services.scientific_updater_service - INFO - [SYSTEM] [70%] Building strictly supported benchmarks...
+2026-08-12 13:17:32,308 - services.scientific_updater_service - INFO - [SYSTEM] [85%] Rebuilding population coverage matrix...
+2026-08-12 13:17:32,358 - services.scientific_updater_service - INFO - [SYSTEM] [90%] Running strict scientific safety tests...
+2026-08-12 13:17:32,706 - services.scientific_updater_service - INFO - [SYSTEM] [100%] Scientific Database Update complete.
+2026-08-12 13:17:32,706 - services.scientific_updater_service - INFO - [SYSTEM] [5%] Initializing atomic update staging environment...
+2026-08-12 13:17:32,734 - services.scientific_updater_service - INFO - [SYSTEM] [20%] Searching external peer-reviewed literature & retrieving PMC full text...
+2026-08-12 13:19:34,361 - services.scientific_updater_service - INFO - [SYSTEM] [70%] Building strictly supported benchmarks...
+2026-08-12 13:19:34,463 - services.scientific_updater_service - INFO - [SYSTEM] [85%] Rebuilding population coverage matrix...
+2026-08-12 13:19:34,511 - services.scientific_updater_service - INFO - [SYSTEM] [90%] Running strict scientific safety tests...
+2026-08-12 13:19:34,816 - services.scientific_updater_service - INFO - [SYSTEM] [100%] Scientific Database Update complete.
+2026-08-12 13:19:36,543 - services.scientific_updater_service - INFO - [SYSTEM] [5%] Initializing atomic update staging environment...
+2026-08-12 13:19:36,658 - services.scientific_updater_service - INFO - [SYSTEM] [20%] Searching external peer-reviewed literature & retrieving PMC full text...
+2026-08-12 13:21:50,477 - services.scientific_updater_service - INFO - [SYSTEM] [70%] Building strictly supported benchmarks...
+2026-08-12 13:21:50,651 - services.scientific_updater_service - INFO - [SYSTEM] [85%] Rebuilding population coverage matrix...
+2026-08-12 13:21:50,745 - services.scientific_updater_service - INFO - [SYSTEM] [90%] Running strict scientific safety tests...
+2026-08-12 13:21:51,960 - services.scientific_updater_service - INFO - [SYSTEM] [100%] Scientific Database Update complete.
+2026-08-12 13:21:59,493 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 13:22:00,038 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-12 13:22:00,966 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-12 13:22:01,271 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 62 scientific literature sources from registry.
+2026-08-12 13:38:36,505 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:38:39,346 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:38:39,701 - services.auth_service - INFO - [SYSTEM] Account logged in: coach1 (coach)
+2026-08-12 13:38:39,886 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:38:41,292 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:38:53,657 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-12 13:40:56,872 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-12 13:40:56,903 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-12 13:40:56,914 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-12 13:40:56,923 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)

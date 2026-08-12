@@ -1,7 +1,7 @@
 """
 CSV Import & Validation Preview Service for Reference Data Manager.
 Parses CSV files, validates rows against scientific integrity rules,
-previews errors/warnings, generates sample CSV template, and imports validated rows.
+previews errors/warnings, generates sample & normalized CSV templates, and imports validated rows.
 """
 
 import io
@@ -11,18 +11,53 @@ from models.reference_data_models import (
     ReferenceDataset, ReferenceMetric, ReferenceSource,
     ReferenceBenchmarkEligibility, ReferenceValidationStatus, ReferenceSourceType
 )
+from services.reference_csv_normalizer import ReferenceCSVNormalizer, NormalizedCSVRow
 from services.reference_data_validator import ReferenceDataValidator
 
 class CSVRowValidationResult:
-    def __init__(self, row_index: int, raw_data: Dict[str, str]):
+    def __init__(self, row_index: int, norm_row: NormalizedCSVRow):
         self.row_index = row_index
-        self.raw_data = raw_data
-        self.is_valid: bool = True
-        self.errors: List[str] = []
-        self.warnings: List[str] = []
-        self.dataset_name: str = raw_data.get("dataset_name", "")
-        self.stroke: str = raw_data.get("stroke", "FREESTYLE").upper()
-        self.metric_name: str = raw_data.get("metric_name", "")
+        self.raw_data = norm_row.raw_data
+        self.is_valid: bool = norm_row.is_valid
+        self.errors: List[str] = list(norm_row.errors)
+        self.warnings: List[str] = list(norm_row.warnings)
+        
+        # Dataset & Metric Metadata
+        self.dataset_name: str = norm_row.dataset_name
+        self.stroke: str = norm_row.stroke
+        self.metric_name: str = norm_row.metric_name
+        self.canonical_identity: str = norm_row.canonical_identity
+        
+        # Transformation Stages
+        self.raw_csv_row: Dict[str, str] = norm_row.raw_data
+        self.normalized_dataset: Dict[str, Any] = {
+            "name": norm_row.dataset_name,
+            "stroke": norm_row.stroke,
+            "event_distance": norm_row.event_distance,
+            "course": norm_row.course,
+            "sex": norm_row.sex,
+            "age_range": f"[{norm_row.age_min}–{norm_row.age_max}]",
+            "cohort": norm_row.cohort,
+            "skill_level": norm_row.skill_level,
+            "source_type": norm_row.source_type,
+            "doi": norm_row.doi,
+            "pmid": norm_row.pmid
+        }
+        self.normalized_metric: Dict[str, Any] = {
+            "metric_name": norm_row.metric_name,
+            "display_name": norm_row.display_name,
+            "value_typical": norm_row.value_typical,
+            "uncertainty_sd": norm_row.uncertainty_sd,
+            "value_min": norm_row.value_min,
+            "value_median": norm_row.value_median,
+            "value_max": norm_row.value_max,
+            "unit": norm_row.unit,
+            "measurement_domain": norm_row.measurement_domain,
+            "status": norm_row.status
+        }
+        self.validation_result: str = "PASSED" if norm_row.is_valid else "FAILED"
+        self.benchmark_eligibility: str = norm_row.benchmark_eligibility
+        self.norm_row: NormalizedCSVRow = norm_row
 
 class CSVValidationPreview:
     def __init__(self):
@@ -31,113 +66,145 @@ class CSVValidationPreview:
         self.invalid_rows: int = 0
         self.warnings_count: int = 0
         self.duplicate_rows: int = 0
+        self.schema_errors: List[str] = []
+        self.metadata_errors: List[str] = []
+        self.metric_errors: List[str] = []
+        self.duplicate_errors: List[str] = []
+        self.provenance_warnings: List[str] = []
+        self.eligibility_warnings: List[str] = []
         self.row_results: List[CSVRowValidationResult] = []
 
 class ReferenceCSVService:
     EXPECTED_COLUMNS = [
-        "dataset_name", "stroke", "age_min", "age_max", "sex", "skill_level", "athlete_category",
-        "metric_name", "value_min", "value_typical", "value_median", "value_max", "unit",
-        "measurement_domain", "status", "method",
-        "source_type", "source_title", "authors", "publication_year", "doi", "pmid", "url", "sample_size"
+        "record_type", "dataset_name", "stroke", "event_distance", "sex", "age_min", "age_max", "skill_level",
+        "athlete_category", "metric_name", "unit", "value_min", "value_typical", "uncertainty_sd",
+        "value_median", "value_max", "measurement_domain", "status", "benchmark_priority", "method",
+        "source_type", "source_title", "authors", "publication_year", "doi", "pmid", "url", "sample_size",
+        "population_description", "age_group", "course", "evidence_grade", "benchmark_eligibility",
+        "population_match_required", "context_only_reason", "notes"
     ]
 
     @classmethod
     def generate_sample_csv_template(cls) -> str:
-        """Returns CSV template string with headers and sample valid rows."""
+        """Returns CSV template string matching canonical columns with both METRIC and SOURCE examples."""
         output = io.StringIO()
         writer = csv.writer(output)
         writer.writerow(cls.EXPECTED_COLUMNS)
-        # Sample row 1: Primary study freestyle stroke rate
+        # Sample 1: METRIC row
         writer.writerow([
-            "Olympic 100m Freestyle Reference", "FREESTYLE", "18", "25", "Male", "Elite", "Sprinter",
-            "stroke_rate", "52.0", "58.5", "58.0", "64.0", "spm",
-            "CALIBRATED_PHYSICAL", "available", "video_2d",
-            "PEER_REVIEWED_PRIMARY_STUDY", "Kinematic analysis of 100m elite swimmers", "Smith et al.", "2024", "10.1016/j.jbiomech.2024.100123", "38123456", "https://doi.org/10.1016/j.jbiomech.2024.100123", "24"
+            "METRIC", "EUROPEAN_FINALISTS_2021_MALE", "BUTTERFLY", "100m", "Male", "18", "35", "Elite",
+            "Adult", "Start Time", "s", "", "5.53", "0.19", "", "", "CALIBRATED_PHYSICAL",
+            "VALIDATED_REFERENCE", "P0", "Race video kinematic analysis", "PEER_REVIEWED_PRIMARY_STUDY",
+            "Performance Development of European Swimmers", "Born DP et al.", "2022", "10.3389/fspor.2022.894066",
+            "35755613", "", "24", "2021 European Championships finalists", "ADULT", "LCM", "A",
+            "BENCHMARK", "sex + adult + elite", "", "Long-course pool mean ± SD"
         ])
-        # Sample row 2: Coach defined team reference
+        # Sample 2: SOURCE / PROVENANCE row (no metric_name required)
         writer.writerow([
-            "Varsity Team Freestyle Baseline", "FREESTYLE", "18", "22", "Mixed", "Intermediate", "Adult",
-            "stroke_length", "1.80", "2.10", "2.05", "2.40", "m",
-            "CALIBRATED_PHYSICAL", "available", "manual_timing",
-            "COACH_DEFINED", "Club Baseline Testing", "Coach Alex", "2026", "", "", "", "16"
+            "SOURCE", "SOURCE_REGISTRY_BACKSTROKE_2025", "BACKSTROKE", "", "Mixed", "", "", "Elite",
+            "Adult", "", "", "", "", "", "", "", "UNAVAILABLE",
+            "CONTEXT_ONLY", "P2", "Systematic Literature Review", "PEER_REVIEWED_SYSTEMATIC_REVIEW",
+            "Biomechanical and Anthropometric Characteristics of Backstroke Swimmers", "Smith et al.", "2025", "10.1016/j.jbiomech.2025.100999",
+            "39123456", "https://doi.org/10.1016/j.jbiomech.2025.100999", "120", "Comprehensive meta-review of backstroke kinematics", "ADULT", "LCM", "B",
+            "CONTEXT_ONLY", "", "Systematic review evidence for backstroke reference context", "Provenance registry record"
         ])
         return output.getvalue()
 
     @classmethod
-    def parse_and_validate_csv(cls, csv_content: str) -> CSVValidationPreview:
-        """Parses CSV text and produces detailed validation preview."""
+    def parse_and_validate_csv(
+        cls,
+        csv_content: str,
+        strict_scientific_mode: bool = True
+    ) -> CSVValidationPreview:
+        """Parses CSV content and applies deterministic normalization and validation pipeline."""
         preview = CSVValidationPreview()
+        if csv_content.startswith("\ufeff"):
+            csv_content = csv_content[1:]
+
+        lines = csv_content.splitlines()
+        if not lines:
+            return preview
+
+        first_line = lines[0].lower()
+        is_policy_csv = "eligibility_class" in first_line or "eligibility_rule" in first_line
+
         reader = csv.DictReader(io.StringIO(csv_content))
-        
-        seen_keys = set()
+        seen_identities = set()
 
-        for idx, row in enumerate(reader, start=1):
+        for idx, raw_row in enumerate(reader, start=1):
             preview.total_rows += 1
-            row_res = CSVRowValidationResult(idx, row)
 
-            # Mandatory dataset & metric names
-            ds_name = row.get("dataset_name", "").strip()
-            metric_name = row.get("metric_name", "").strip()
-            stroke = row.get("stroke", "FREESTYLE").strip().upper()
+            if is_policy_csv:
+                # Handle swimming_benchmark_eligibility_policy.csv
+                elig_class = str(raw_row.get("eligibility_class", "")).strip().upper()
+                rule = str(raw_row.get("eligibility_rule", "")).strip()
+                allowed_use = str(raw_row.get("allowed_use", "")).strip()
+                example = str(raw_row.get("example", "")).strip()
 
-            if not ds_name:
-                row_res.is_valid = False
-                row_res.errors.append("Missing required field 'dataset_name'.")
+                norm_r = NormalizedCSVRow(idx, raw_row)
+                norm_r.dataset_name = f"Policy Rule: {elig_class}"
+                norm_r.stroke = "ALL"
+                norm_r.metric_name = f"Rule: {elig_class}"
+                norm_r.display_name = f"Rule: {elig_class}"
+                norm_r.benchmark_eligibility = elig_class if elig_class in ReferenceBenchmarkEligibility.__members__ else "CONTEXT_ONLY"
 
-            if not metric_name:
-                row_res.is_valid = False
-                row_res.errors.append("Missing required field 'metric_name'.")
-
-            # Numeric range checks
-            def parse_float(val_str):
-                if not val_str or val_str.strip() == "" or val_str.strip().lower() in ["none", "null", "n/a"]:
-                    return None
-                try:
-                    return float(val_str.strip())
-                except ValueError:
-                    return "INVALID"
-
-            v_min = parse_float(row.get("value_min", ""))
-            v_typ = parse_float(row.get("value_typical", ""))
-            v_med = parse_float(row.get("value_median", ""))
-            v_max = parse_float(row.get("value_max", ""))
-
-            for name, val in [("value_min", v_min), ("value_typical", v_typ), ("value_median", v_med), ("value_max", v_max)]:
-                if val == "INVALID":
+                row_res = CSVRowValidationResult(idx, norm_r)
+                valid_classes = ["PRIMARY_BENCHMARK", "CONTEXT_ONLY", "TEST_SPECIFIC", "AGE_LAYER_ONLY", "INSUFFICIENT_EVIDENCE"]
+                if elig_class not in valid_classes:
                     row_res.is_valid = False
-                    row_res.errors.append(f"Field '{name}' must be a valid number or empty.")
+                    row_res.errors.append(f"Invalid eligibility_class '{elig_class}'.")
+                    preview.metadata_errors.append(f"Row {idx}: Invalid eligibility_class '{elig_class}'.")
+                else:
+                    row_res.is_valid = True
 
-            # Validate range order if numbers are valid
-            if isinstance(v_min, float) and isinstance(v_max, float) and v_min > v_max:
-                row_res.is_valid = False
-                row_res.errors.append(f"value_min ({v_min}) cannot be greater than value_max ({v_max}).")
+                row_res.warnings.append(f"Eligibility Policy Rule parsed: {allowed_use}")
+                preview.eligibility_warnings.append(f"Row {idx}: Policy Rule {elig_class} -> {allowed_use}")
 
-            if isinstance(v_min, float) and isinstance(v_typ, float) and v_min > v_typ:
-                row_res.is_valid = False
-                row_res.errors.append(f"value_min ({v_min}) cannot be greater than value_typical ({v_typ}).")
+                if row_res.is_valid:
+                    preview.valid_rows += 1
+                else:
+                    preview.invalid_rows += 1
 
-            if isinstance(v_typ, float) and isinstance(v_max, float) and v_typ > v_max:
-                row_res.is_valid = False
-                row_res.errors.append(f"value_typical ({v_typ}) cannot be greater than value_max ({v_max}).")
+                preview.warnings_count += len(row_res.warnings)
+                preview.row_results.append(row_res)
+                continue
 
-            # Domain check
-            domain = row.get("measurement_domain", "UNAVAILABLE").strip().upper()
-            if domain and domain not in ReferenceDataValidator.VALID_DOMAINS:
-                row_res.is_valid = False
-                row_res.errors.append(f"Invalid measurement_domain '{domain}'. Must be one of {sorted(list(ReferenceDataValidator.VALID_DOMAINS))}.")
+            # 1. Normalize Row via ReferenceCSVNormalizer
+            norm_r = ReferenceCSVNormalizer.normalize_row(idx, raw_row)
+            row_res = CSVRowValidationResult(idx, norm_r)
 
-            # Duplicate check within file
-            dedup_key = f"{ds_name.lower()}_{stroke}_{metric_name.lower()}"
-            if dedup_key in seen_keys:
-                row_res.warnings.append(f"Duplicate entry for dataset '{ds_name}' and metric '{metric_name}' in CSV.")
+            # Categorize normalization errors
+            if norm_r.errors:
+                for err in norm_r.errors:
+                    if "dataset_name" in err or "metric_name" in err:
+                        preview.schema_errors.append(f"Row {idx}: {err}")
+                    elif "Range Error" in err or "non-numeric" in err:
+                        preview.metric_errors.append(f"Row {idx}: {err}")
+                    else:
+                        preview.metadata_errors.append(f"Row {idx}: {err}")
+
+            # 2. Canonical Identity Duplicate Validation
+            # Distinguishes 50m vs 100m vs 200m Butterfly cleanly!
+            ident = norm_r.canonical_identity
+            if ident in seen_identities:
+                row_res.warnings.append(f"Duplicate metric identity: dataset '{norm_r.dataset_name}', stroke '{norm_r.stroke}', distance '{norm_r.event_distance}', metric '{norm_r.metric_name}'.")
+                preview.duplicate_errors.append(f"Row {idx}: Duplicate identity '{ident}'")
                 preview.duplicate_rows += 1
             else:
-                seen_keys.add(dedup_key)
+                seen_identities.add(ident)
 
-            # Rule 5 check: Imported CSV data defaults to DRAFT / CONTEXT_ONLY
-            source_type = row.get("source_type", "IMPORTED_REFERENCE").strip().upper()
-            if source_type not in ReferenceSourceType.__members__:
-                row_res.warnings.append(f"Unrecognized source_type '{source_type}'. Defaulting to IMPORTED_REFERENCE.")
+            # 3. Scientific Provenance Warnings
+            if norm_r.source_type == "PEER_REVIEWED_PRIMARY_STUDY" and not norm_r.doi and not norm_r.pmid and not norm_r.source_title:
+                row_res.warnings.append("Peer-reviewed study record lacks explicit DOI, PMID, or citation title.")
+                preview.provenance_warnings.append(f"Row {idx}: Incomplete citation for peer-reviewed record.")
+
+            # 4. Strict Scientific Mode Policy Checks
+            if strict_scientific_mode:
+                if norm_r.source_type == "COACH_DEFINED" and norm_r.benchmark_eligibility == "BENCHMARK":
+                    norm_r.benchmark_eligibility = "CONTEXT_ONLY"
+                    row_res.benchmark_eligibility = "CONTEXT_ONLY"
+                    row_res.warnings.append("Strict Scientific Mode: Coach-defined record reset to CONTEXT_ONLY eligibility.")
+                    preview.eligibility_warnings.append(f"Row {idx}: Coach data restricted to CONTEXT_ONLY eligibility.")
 
             if row_res.is_valid:
                 preview.valid_rows += 1
@@ -152,81 +219,100 @@ class ReferenceCSVService:
         return preview
 
     @classmethod
+    def generate_normalized_csv(cls, preview: CSVValidationPreview) -> str:
+        """Generates canonical normalized CSV text matching EXPECTED_COLUMNS."""
+        output = io.StringIO()
+        writer = csv.writer(output)
+        writer.writerow(cls.EXPECTED_COLUMNS)
+
+        for r in preview.row_results:
+            n = r.norm_row
+            writer.writerow([
+                n.record_type, n.dataset_name, n.stroke, n.event_distance, n.sex,
+                n.age_min if n.age_min is not None else "",
+                n.age_max if n.age_max is not None else "",
+                n.skill_level, n.cohort, n.metric_name if n.record_type == "METRIC" else "", n.unit,
+                n.value_min if n.value_min is not None else "",
+                n.value_typical if n.value_typical is not None else "",
+                n.uncertainty_sd if n.uncertainty_sd is not None else "",
+                n.value_median if n.value_median is not None else "",
+                n.value_max if n.value_max is not None else "",
+                n.measurement_domain, n.status, n.benchmark_priority, n.method,
+                n.source_type, n.source_title, n.authors,
+                n.publication_year if n.publication_year is not None else "",
+                n.doi, n.pmid, "", "", n.population_description,
+                n.age_group, n.course, n.evidence_grade, n.benchmark_eligibility,
+                n.population_match_required, n.context_only_reason, n.notes
+            ])
+
+        return output.getvalue()
+
+    @classmethod
     def convert_csv_to_datasets(cls, preview: CSVValidationPreview) -> List[ReferenceDataset]:
-        """
-        Converts validated CSV rows into domain ReferenceDataset instances.
-        Groups metrics by dataset_name.
-        """
+        """Converts validated CSV rows into domain ReferenceDataset instances."""
         dataset_map: Dict[str, ReferenceDataset] = {}
 
-        for row_res in preview.row_results:
-            if not row_res.is_valid:
+        for r in preview.row_results:
+            if not r.is_valid:
                 continue
 
-            row = row_res.raw_data
-            ds_name = row.get("dataset_name", "").strip()
-            if not ds_name:
-                continue
+            n = r.norm_row
+            ds_key = f"{n.dataset_name.lower()}_{n.stroke}"
 
-            if ds_name not in dataset_map:
-                source_type = row.get("source_type", "IMPORTED_REFERENCE").strip().upper()
-                if source_type not in ReferenceSourceType.__members__:
-                    source_type = "IMPORTED_REFERENCE"
-
-                # Rule 5: Imported CSV datasets default to DRAFT and CONTEXT_ONLY
+            if ds_key not in dataset_map:
                 ds = ReferenceDataset(
-                    name=ds_name,
-                    stroke=row.get("stroke", "FREESTYLE").strip().upper(),
-                    age_min=int(row.get("age_min", 0) or 0),
-                    age_max=int(row.get("age_max", 100) or 100),
-                    sex=row.get("sex", "Mixed").strip(),
-                    skill_level=row.get("skill_level", "Unknown").strip(),
-                    athlete_category=row.get("athlete_category", "Adult").strip(),
-                    source_type=source_type,
-                    evidence_status="INSUFFICIENT_EVIDENCE",
-                    benchmark_eligibility=ReferenceBenchmarkEligibility.CONTEXT_ONLY.value,
-                    validation_status=ReferenceValidationStatus.DRAFT.value
+                    dataset_id=f"ds_{n.dataset_name.lower().replace(' ', '_')[:24]}",
+                    name=n.dataset_name,
+                    description=n.notes or n.population_description,
+                    stroke=n.stroke,
+                    age_min=n.age_min if n.age_min is not None else 0,
+                    age_max=n.age_max if n.age_max is not None else 100,
+                    sex=n.sex,
+                    skill_level=n.skill_level,
+                    athlete_category=n.cohort,
+                    source_type=n.source_type,
+                    evidence_status="AVAILABLE" if n.benchmark_eligibility == "BENCHMARK" else "INSUFFICIENT_EVIDENCE",
+                    benchmark_eligibility=n.benchmark_eligibility,
+                    benchmark_priority=n.benchmark_priority,
+                    validation_status="VALIDATED_REFERENCE" if n.benchmark_eligibility == "BENCHMARK" else "DRAFT",
+                    is_archived=False,
+                    is_active=True
                 )
 
-                # Attach source metadata if available
-                if row.get("source_title") or row.get("authors") or row.get("doi"):
-                    pub_yr = row.get("publication_year")
-                    sample_sz = row.get("sample_size")
+                if n.source_title or n.authors or n.doi:
                     src = ReferenceSource(
-                        source_type=source_type,
-                        source_title=row.get("source_title", ""),
-                        authors=row.get("authors", ""),
-                        publication_year=int(pub_yr) if pub_yr and pub_yr.isdigit() else None,
-                        doi=row.get("doi", ""),
-                        pmid=row.get("pmid", ""),
-                        url=row.get("url", ""),
-                        sample_size=int(sample_sz) if sample_sz and sample_sz.isdigit() else None
+                        source_type=n.source_type,
+                        source_title=n.source_title,
+                        authors=n.authors,
+                        publication_year=n.publication_year,
+                        doi=n.doi,
+                        pmid=n.pmid,
+                        population_description=n.population_description
                     )
                     ds.sources.append(src)
 
-                dataset_map[ds_name] = ds
+                dataset_map[ds_key] = ds
 
-            # Parse metric
-            def parse_float(val_str):
-                if not val_str or val_str.strip() == "" or val_str.strip().lower() in ["none", "null", "n/a"]:
-                    return None
-                try:
-                    return float(val_str.strip())
-                except ValueError:
-                    return None
-
-            m = ReferenceMetric(
-                metric_name=row.get("metric_name", "").strip(),
-                display_name=row.get("metric_name", "").replace("_", " ").title(),
-                value_min=parse_float(row.get("value_min")),
-                value_typical=parse_float(row.get("value_typical")),
-                value_median=parse_float(row.get("value_median")),
-                value_max=parse_float(row.get("value_max")),
-                unit=row.get("unit", "").strip(),
-                measurement_domain=row.get("measurement_domain", "UNAVAILABLE").strip().upper(),
-                status=row.get("status", "available").strip(),
-                method=row.get("method", "").strip()
-            )
-            dataset_map[ds_name].metrics.append(m)
+            if n.record_type == "METRIC":
+                m = ReferenceMetric(
+                    metric_name=n.metric_name,
+                    display_name=n.display_name,
+                    value_min=n.value_min,
+                    value_typical=n.value_typical,
+                    value_median=n.value_median,
+                    value_max=n.value_max,
+                    uncertainty_sd=n.uncertainty_sd,
+                    unit=n.unit,
+                    measurement_domain=n.measurement_domain,
+                    status=n.status,
+                    method=n.method,
+                    notes=n.notes,
+                    event_distance=n.event_distance,
+                    course=n.course,
+                    evidence_grade=n.evidence_grade,
+                    context_only_reason=n.context_only_reason,
+                    population_match_required=n.population_match_required
+                )
+                dataset_map[ds_key].metrics.append(m)
 
         return list(dataset_map.values())
