@@ -237,6 +237,7 @@ class ConsistencyReport:
 class AnalysisResult:
     """Contains the accumulated analysis across the entire video."""
     video_path: str = ""
+    stroke_type: str = ""
     frames: List[FrameData] = field(default_factory=list)
     average_stroke_rate: float = 0.0
     report: Optional[PerformanceReport] = None

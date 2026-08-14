@@ -214,6 +214,7 @@ class AnalysisService:
             analysis_result.frames, metadata.effective_fps, 
             calibration_engine, processor.width, processor.height
         )
+        setattr(analysis_result, 'global_metrics', global_metrics)
         
         from analysis.reliability_engine import ReliabilityEngine
         analysis_result.reliability = ReliabilityEngine.evaluate(analysis_result)
@@ -260,6 +261,7 @@ class AnalysisService:
         analysis_result = AnalysisResult(video_path=input_video_path)
         
         stroke_type = stroke_detection.selected_stroke if stroke_detection else StrokeType.FREESTYLE
+        analysis_result.stroke_type = stroke_type.value
         strategy = StrokeStrategyFactory.get_strategy(stroke_type)
         
         # Adjust effective fps for calculations based on stride

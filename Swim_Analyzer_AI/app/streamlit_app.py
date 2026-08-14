@@ -14,7 +14,6 @@ load_dotenv()
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 from app.ui.charts import create_performance_trend_chart, create_cycles_trend_chart
-from app.ui.dashboard import render_dashboard_page
 import streamlit as st
 from core.config import config
 from core.constants import APP_TITLE
@@ -37,6 +36,15 @@ def safe_log(msg: str):
     except Exception:
         pass
 
+
+# Global stroke icons mapping
+STROKE_ICONS = {
+    "Freestyle": "🏊",
+    "Backstroke": "🔄",
+    "Breaststroke": "🐸",
+    "Butterfly": "🦋",
+    "Auto Detect": "🔍",
+}
 
 # --- MODULAR RENDERING FUNCTIONS WITH TRACE LOGGING ---
 
@@ -139,26 +147,25 @@ def render_summary(analysis_result):
     safe_log("[TRACE] ENTER render_summary")
     st.markdown("### Analysis Summary")
     
-    # --- Detected Stroke Badge ---
-    stroke_icons = {
-        "Freestyle": "🏊",
-        "Backstroke": "🔄",
-        "Breaststroke": "🐸",
-        "Butterfly": "🦋",
-        "Auto Detect": "🔍",
-    }
-    stroke_result = getattr(st.session_state, 'stroke_result', None)
-    if stroke_result and hasattr(stroke_result, 'selected_stroke'):
-        stroke_name = stroke_result.selected_stroke.value.title()
-        icon = stroke_icons.get(stroke_name, "🏊")
-        st.markdown(
-            f"""<div style="display:inline-block; background:linear-gradient(135deg,#0055FF,#00F0FF);
-            color:white; padding:6px 18px; border-radius:20px; font-size:1rem;
-            font-weight:700; letter-spacing:1px; margin-bottom:12px;">
-            {icon} Detected Stroke: {stroke_name}
-            </div>""",
-            unsafe_allow_html=True
-        )
+    # --- Selected Stroke Badge ---
+    stroke_name = getattr(analysis_result, 'stroke_type', None)
+    if not stroke_name:
+        res_stroke = getattr(st.session_state, 'stroke_result', None)
+        if res_stroke and hasattr(res_stroke, 'selected_stroke') and res_stroke.selected_stroke:
+            stroke_name = res_stroke.selected_stroke.value
+    if not stroke_name:
+        stroke_name = "Freestyle"
+        
+    stroke_title = str(stroke_name).title()
+    icon = STROKE_ICONS.get(stroke_title, "🏊")
+    st.markdown(
+        f"""<div style="display:inline-block; background:linear-gradient(135deg,#0055FF,#00F0FF);
+        color:white; padding:8px 22px; border-radius:25px; font-size:1.1rem;
+        font-weight:700; letter-spacing:0.5px; margin-bottom:14px; box-shadow: 0 4px 12px rgba(0,85,255,0.35);">
+        {icon} Swimming Stroke: <strong>{stroke_title}</strong>
+        </div>""",
+        unsafe_allow_html=True
+    )
     
     summary_col1, summary_col2, summary_col3, summary_col4 = st.columns(4)
     
@@ -1404,16 +1411,11 @@ def main():
         st.sidebar.markdown("---")
         st.sidebar.markdown("### Video Settings")
         
-        stroke_options = ["Auto Detect", "Freestyle", "Backstroke", "Breaststroke", "Butterfly"]
-        selected_stroke = st.sidebar.selectbox("Stroke Type", stroke_options, key="stroke_type_select")
+        stroke_placeholder = "-- Select Swimming Stroke --"
+        stroke_options = [stroke_placeholder, "Freestyle", "Backstroke", "Breaststroke", "Butterfly"]
+        selected_stroke = st.sidebar.selectbox("Select Swimming Stroke *", stroke_options, index=0, key="stroke_type_select")
         
-        speed_mode = st.sidebar.selectbox(
-            "Processing Speed Mode",
-            ["Fast (15 FPS - Recommended)", "High Detail (30 FPS)"],
-            index=0,
-            help="Fast mode processes 1 out of 2 frames for ~2x speedup without sacrificing stroke cycle metrics."
-        )
-        selected_stride = 2 if "Fast" in speed_mode else 1
+        selected_stride = 1
         st.session_state["_selected_frame_stride"] = selected_stride
 
         # Read app config
@@ -1436,7 +1438,7 @@ def main():
         default_effective_fps = float(fps_override) if fps_override is not None else float(detected_fps)
         effective_fps = st.sidebar.number_input("Effective FPS", min_value=10.0, max_value=240.0, value=default_effective_fps, step=1.0)
         
-        st.sidebar.info(f"Detected FPS: {detected_fps:.2f} | Mode: {speed_mode.split(' ')[0]}")
+        st.sidebar.info(f"Detected FPS: {detected_fps:.2f} | Full Natural FPS (Stride 1)")
 
         st.sidebar.markdown("### Visualization")
         viz_mode = st.sidebar.selectbox("Mode", ["User Mode", "Coach Mode", "Developer Mode"])
@@ -1459,14 +1461,8 @@ def main():
                 trajectory_duration_sec = 4.0
             forced_conf_input = st.sidebar.number_input("Force Stroke Conf (Dev)", min_value=0.0, max_value=1.0, value=1.0, step=0.1)
 
-        # Developer setting for Video Renderer
-        st.sidebar.markdown("---")
-        st.sidebar.markdown("### Developer Settings")
-        video_render_mode = st.sidebar.selectbox(
-            "Video Renderer", 
-            ["Native Streamlit (st.video)", "HTML5 Streaming Player", "Disabled (text only)"],
-            index=0
-        )
+        # Use native, high-performance Streamlit video renderer
+        video_render_mode = "Native Streamlit (st.video)"
 
         current_role = st.session_state.current_coach.role if st.session_state.get("current_coach") else None
 
@@ -1534,143 +1530,42 @@ def main():
             st.markdown("---")
 
         if st.sidebar.button("Analyze Swimming Technique", type="primary"):
-            st.session_state.analysis_state = "checking_stroke"
-            st.session_state["vqa_critical_override"] = False
-            import time
-            st.session_state["_processing_start_time"] = time.time()
-            st.session_state.stroke_result = None
-            st.session_state.completed_analysis = None
-            st.rerun()
-
-        if st.session_state.analysis_state == "checking_stroke":
-            with st.spinner("Analyzing stroke type via Hybrid Decision Engine..."):
-                from analysis.stroke_classifier import StrokeClassifier
+            if selected_stroke == stroke_placeholder:
+                st.sidebar.error("⚠️ **Action Required:** Please select a swimming stroke type before starting analysis!")
+            else:
                 from models.data_models import StrokeType
-                
-                classifier = StrokeClassifier()
-                forced_conf = forced_conf_input if viz_mode == "Developer Mode" and forced_conf_input < 1.0 else None
-                result = classifier.predict(str(temp_input_path), max_frames=60, forced_confidence=forced_conf)
-                
-                if selected_stroke == "Auto Detect":
-                    result.selected_stroke = StrokeType.AUTO_DETECT
-                    if (result.confidence is None) or (result.classification_status in ["REVIEW_REQUIRED", "INSUFFICIENT_EVIDENCE", "INSUFFICIENT_VISIBILITY"]) or (result.confidence is not None and result.confidence < 0.80):
-                        st.session_state.stroke_result = result
-                        st.session_state.analysis_state = "needs_override"
-                    else:
-                        result.selected_stroke = result.predicted_stroke
-                        result.manual_override = False
-                        st.session_state.stroke_result = result
-                        st.session_state.analysis_state = "processing"
-                else:
-                    result.selected_stroke = StrokeType(selected_stroke)
-                    result.manual_override = True
-                    if result.predicted_stroke != StrokeType.UNKNOWN and result.predicted_stroke != result.selected_stroke:
-                        result.is_inconsistent = True
-                        st.session_state.stroke_result = result
-                        st.session_state.analysis_state = "inconsistent_warning"
-                    else:
-                        st.session_state.stroke_result = result
-                        st.session_state.analysis_state = "processing"
-            st.rerun()
-
-        if st.session_state.analysis_state == "needs_override":
-            res = st.session_state.stroke_result
-            st.info("🔬 **Python Kinematic Stroke Decision Engine Summary**")
-            
-            pred_stroke_name = res.predicted_stroke.value if (res and getattr(res, 'predicted_stroke', None)) else "Unknown"
-            conf_val = getattr(res, 'confidence', None)
-            conf_display = f"{conf_val*100:.1f}%" if conf_val is not None else "N/A (Uncalibrated / Low Evidence)"
-            
-            unc_val = getattr(res, 'uncertainty', None)
-            unc_display = f"{unc_val*100:.1f}%" if unc_val is not None else "N/A"
-            status_str = getattr(res, 'classification_status', "INSUFFICIENT_EVIDENCE")
-
-            if status_str == "REVIEW_REQUIRED":
-                st.warning("⚠️ **Review Required:** Low decision confidence or ambiguous kinematic signals. Please confirm stroke type below.")
-            elif status_str in ["INSUFFICIENT_EVIDENCE", "INSUFFICIENT_VISIBILITY"]:
-                st.error(f"⚠️ **{status_str}:** Pose landmarks or kinematic signals were insufficient for automated classification.")
-
-            conf_type_str = getattr(res, 'confidence_type', 'UNCALIBRATED_DECISION_SCORE')
-
-            with st.container(border=True):
-                c1, c2, c3, c4, c5 = st.columns(5)
-                c1.metric("Stroke Type", pred_stroke_name)
-                c2.metric("Status", status_str)
-                c3.metric("Decision Score", conf_display)
-                c4.metric("Uncertainty Margin", unc_display)
-                c5.metric("Confidence Type", conf_type_str)
-
-                m1, m2, m3 = st.columns(3)
-                rule_pred_obj = getattr(res, 'rule_prediction', None)
-                rule_pred_str = rule_pred_obj.value if rule_pred_obj else pred_stroke_name
-                
-                m1.metric("Python Prediction", rule_pred_str)
-                m2.metric("AI Verification Status", "DISABLED (Python-Only Mode)")
-                m3.metric("Classification Engine", "Python Kinematic Engine")
-                
-                with st.expander("🔬 Complete Scientific Decision Contract", expanded=True):
-                    e_col1, e_col2 = st.columns(2)
-                    with e_col1:
-                        st.markdown("**Rule Evidence & Contributions:**")
-                        contribs = getattr(res, 'feature_contributions', {})
-                        if contribs:
-                            for k, v in contribs.items():
-                                st.markdown(f"- `{k}`: {v}")
-                        else:
-                            st.caption("No valid rule contributions computed.")
-                    with e_col2:
-                        st.markdown("**Python Kinematic Evidence & Observed Signals:**")
-                        reason_text = getattr(res, 'classification_reason', "No reasoning available.")
-                        st.write(reason_text)
-                        fvals = getattr(res, 'feature_values', {})
-                        if fvals:
-                            for fk, fv in fvals.items():
-                                if fk not in ["uncertainty", "visibility_ratio"] and fv is not None:
-                                    st.markdown(f"- `{fk}`: {fv}")
-
-                    missing_ev = getattr(res, 'missing_evidence', [])
-                    if missing_ev:
-                        st.markdown("⚠️ **Missing Evidence (Not Fabricated):**")
-                        for me in missing_ev:
-                            st.markdown(f"- `{me}`: Unavailable / Low Visibility")
-
-                    confls = getattr(res, 'conflicts', [])
-                    if confls:
-                        st.markdown("🚨 **Conflict Warnings:**")
-                        for c in confls:
-                            st.markdown(f"- {c}")
-
-            from models.data_models import StrokeType
-            opts = ["Freestyle", "Backstroke", "Breaststroke", "Butterfly"]
-            default_idx = opts.index(pred_stroke_name) if pred_stroke_name in opts else 0
-            override_choice = st.selectbox("Confirm or select stroke type for analysis:", opts, index=default_idx)
-            if st.button("Confirm Stroke & Analyze", type="primary"):
-                st.session_state.stroke_result.selected_stroke = StrokeType(override_choice)
-                st.session_state.stroke_result.manual_override = True
                 st.session_state.analysis_state = "processing"
+                st.session_state["_is_analyzing_now"] = True
+                st.session_state["vqa_critical_override"] = False
+                import time
+                st.session_state["_processing_start_time"] = time.time()
+                st.session_state.stroke_result = type('SimpleResult', (), {
+                    'selected_stroke': StrokeType(selected_stroke),
+                    'predicted_stroke': StrokeType(selected_stroke),
+                    'confidence': 1.0,
+                    'classification_status': 'USER_SELECTED'
+                })()
+                st.session_state.completed_analysis = None
                 st.rerun()
-                
-        if st.session_state.analysis_state == "inconsistent_warning":
-            st.warning("The selected stroke type appears inconsistent with the detected motion.")
-            st.write(f"You selected: {st.session_state.stroke_result.selected_stroke.value}. The Python classifier detected: {st.session_state.stroke_result.predicted_stroke.value}.")
-
-            col_a, col_b = st.columns(2)
-            with col_a:
-                if st.button("Continue Anyway"):
-                    st.session_state.analysis_state = "processing"
-                    st.rerun()
-            with col_b:
-                if st.button("Cancel"):
-                    st.session_state.analysis_state = "ready"
-                    st.rerun()
 
         # Run Video Processing if required
         if st.session_state.analysis_state == "processing" and st.session_state.completed_analysis is None:
+            if not st.session_state.get("_is_analyzing_now", False):
+                st.session_state.analysis_state = "ready"
+                st.warning("⚠️ Video analysis was interrupted by a browser refresh. Please click 'Analyze Swimming Technique' to start.")
+                st.rerun()
+
             st.markdown("---")
             st.subheader("Analysis Processing")
             
+            res_stroke = getattr(st.session_state, 'stroke_result', None)
+            if res_stroke and hasattr(res_stroke, 'selected_stroke') and res_stroke.selected_stroke:
+                p_name = res_stroke.selected_stroke.value.title()
+                p_icon = STROKE_ICONS.get(p_name, "🏊")
+                st.success(f"🎯 **Analyzing Swimming Stroke:** {p_icon} **{p_name}**")
+            
             debug_placeholder = st.empty()
-            progress_bar = st.progress(0, text="Starting analysis...")
+            progress_bar = st.progress(0, text="Starting video analysis...")
             progress_status = st.empty()
             
             # Get total frame count upfront for the progress bar
@@ -1680,14 +1575,14 @@ def main():
             
             def debug_callback(frame_data, confidence, mode):
                 idx = frame_data.frame_index
-                # Update progress bar every 10 frames to reduce overhead
-                if idx % 10 == 0:
+                # Update progress bar every 30 frames (~1 sec of video) to reduce UI thread overhead
+                if idx % 30 == 0 or idx == 1:
                     if _total_frames > 0:
                         pct = min(int((idx / _total_frames) * 100), 99)
                         progress_bar.progress(pct, text=f"Processing frame {idx}/{_total_frames} ({pct}%)...")
                     else:
                         progress_status.markdown(f"⏳ Processing frame **{idx}**...")
-                if mode == "Developer Mode":
+                if mode == "Developer Mode" and idx % 30 == 0:
                     with debug_placeholder.container():
                         cols = st.columns(6)
                         cols[0].metric("Frame", idx)
@@ -1702,6 +1597,7 @@ def main():
             
             vqa_placeholder = st.empty()
             def vqa_callback(vqa_result):
+                vqa_placeholder.empty()
                 with vqa_placeholder.container():
                     if vqa_result.quality_class == "Critical":
                         st.error(vqa_result.warning_message)
@@ -1790,6 +1686,7 @@ def main():
                     except Exception as e:
                         safe_log(f"ERROR: Failed to save analysis history: {e}")
 
+                    st.session_state["_is_analyzing_now"] = False
                     st.session_state.completed_analysis = {
                         "output_video_path": output_video_path,
                         "json_report_path": json_report_path,

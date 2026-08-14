@@ -37,14 +37,18 @@ Open `http://localhost:8501` in your browser.
 1. **Select Navigation**: Click **🏊‍♂️ Video Analysis** from the sidebar menu.
 2. **Assign Athlete**: Select an athlete from your roster dropdown or choose **Guest Swimmer**.
 3. **Upload Video**: Click **Browse Files** and upload a video file (`.mp4`, `.mov`, `.avi`).
-   - *Recommendation*: Use 60 FPS or higher camera footage with clear side or underwater view.
-4. **Select Stroke**:
-   - Choose **Auto Detect** to let the AI classify the stroke style (Freestyle, Backstroke, Breaststroke, Butterfly).
-   - Or manually select the stroke type.
+   - *Recommendation*: Use clear side or underwater view footage.
+4. **Mandatory Stroke Selection**:
+   - In the sidebar dropdown **`Select Swimming Stroke *`**, choose the exact stroke style being performed:
+     - 🏊 **`Freestyle`**
+     - 🏊 **`Backstroke`**
+     - 🏊 **`Breaststroke`**
+     - 🏊 **`Butterfly`**
+   - *Note*: You must explicitly select a valid stroke. Leaving the option on `-- Select Swimming Stroke --` will display a warning and block processing.
 5. **Adjust Settings** (Sidebar):
    - **Effective FPS**: Verified or overridden frame rate.
    - **Visualization Mode**: `User Mode` (clean overlay), `Coach Mode` (detailed metrics overlay), or `Developer Mode` (raw landmark debug metrics).
-6. **Analyze**: Click **Analyze Swimming Technique**.
+6. **Analyze**: Click **Analyze Swimming Technique**. The video is processed at 100% full natural FPS without frame dropping.
 
 ---
 
@@ -53,11 +57,12 @@ Open `http://localhost:8501` in your browser.
 Analysis results are presented across 6 full-width tabs:
 
 ### 📋 Overview Tab
-- **Annotated Video**: High-definition video with skeleton pose tracking and stroke cycle phase indicators.
+- **Annotated Video**: High-definition video served via high-performance native Streamlit video renderer (`st.video`).
+- **Hero Card Badge**: Clearly displays the selected swimming stroke name and icon.
 - **Overall Technique Score**: Composite 0–100 technique score.
 - **Video Quality Score**: Evaluates resolution, frame rate, camera stability, and lighting.
 - **Analysis Confidence & Reliability**: Pose landmark visibility and noise stability ratings.
-- **Consistency Rules**: Evaluates 7 mathematical rules to detect potential analysis contradictions.
+- **Diagnostic Report Breakdown**: Single-instance expandable breakdown of video quality criteria.
 
 ### 🧬 Biomechanics Tab
 - **Key Metrics**:
@@ -67,6 +72,11 @@ Analysis results are presented across 6 full-width tabs:
   - **Stroke Symmetry (%)**: Bilateral force and velocity symmetry index.
 - **Detected Technical Errors**: Lists movement flaws (e.g., *Low Elbow Catch*, *Asymmetrical Pull*, *Excessive Body Roll*) with frame numbers, timestamps, and severity levels.
 - **Coaching Feedback & Recommended Drills**: Specific drills tailored to address detected errors.
+
+### 🧊 3D Analysis Tab
+- **3D Spatial Metrics**:
+  - **3D Body Roll Rotation**: Peak roll angle around the spine axis.
+  - **Core Torsion Angle**: Relative twist between shoulders and hips.
 
 ---
 
@@ -78,81 +88,34 @@ Navigate to the **📊 Population Benchmarks** tab to view population reference 
 - **Valid Population**: Adult Competitive Male Swimmers (Age 18–25).
 - **Non-Compatible Athletes** (Female, Youth U10/U13/U17, Masters >35):
   - Displays a warning banner: `"⚠️ No validated reference population is currently available for this athlete's demographic group."`
-  - Raw measurements and reference means are displayed for context, but **misleading Z-scores and Percentiles are strictly suppressed**.
-
-### Population Cards & Badges
-Each metric card displays:
-- **Athlete Value** vs **Scientific Reference Mean & Unit**
-- **Evidence Status Badge**:
-  - `✓ SCIENTIFICALLY ACCEPTED` (Green)
-  - `⚠ REFERENCE ONLY` (Yellow)
-  - `⚠ INSUFFICIENT EVIDENCE` (Orange)
-  - `✕ REJECTED` (Red)
-- **Citation & Relationship**: Shows author/year and whether the metric is `Directly supported` or `Derived from source`.
-
-### 🔬 Scientific Evidence Drawer
-Click **🔬 Scientific Evidence & Provenance Details** to expand:
-- Publication title, authors, year, journal, DOI.
-- Sample size ($N$), original measurement, original unit.
-- Converted derived value and conversion formula (e.g. `0.90 Hz * 60 = 54.0 spm`).
-- Exact table and page number references in the published paper.
 
 ---
 
 ## 5. Managing Athlete Rosters
 
-Navigate to **👥 Athletes**:
-- **Directory Tab**: View all athletes in your roster, swimming level, preferred stroke, age, height, and weight.
-- **Create New Athlete Tab**: Add new athlete profiles with training goals and notes.
-- **Athlete Profile View**:
-  - Longitudinal performance progression graphs (Plotly).
-  - Recorded session logs table.
-  - One-click **📄 Download PDF Report** for the athlete's complete history.
+Click **👥 Athlete Profiles** in the sidebar:
+- Add, edit, or search athlete profiles.
+- View training history, preferred stroke, age group, and notes.
 
 ---
 
 ## 6. Session-to-Session Comparison
 
-Navigate to **📜 History** or an Athlete Profile page:
-1. Select **Session A (Baseline)** and **Session B (Recent)**.
-2. Click **Generate Comparison Report**.
-3. View:
-   - Overall score delta and confidence progression.
-   - Specific metric deltas (e.g. `+0.12 m` stroke length, `-2.5 spm` stroke rate).
-   - **Resolved Errors** (green), **New Errors** (red), and **Persistent Errors** (yellow).
+Click **📊 Session Comparison** in the sidebar:
+- Select two sessions for an athlete (e.g., Baseline vs Recent).
+- Side-by-side metric comparison chart and flaw resolution report.
 
 ---
 
 ## 7. Downloading PDF Reports & Data
 
-In the **📥 Downloads** tab or Athlete Profile header:
-- **📄 Download Detailed PDF Report**: Professional PDF report containing executive summary, key metrics, consistency rules, population benchmarks, and scientific literature citations (`PDFReportService`).
-- **Download Processed Video**: MP4 annotated video file.
-- **Download JSON Report**: Raw structured analysis data for programmatic export.
+In the **📥 Downloads** tab:
+- Download full session PDF report via `PDFReportService`.
+- Export JSON analysis report and metadata.
 
 ---
 
 ## 8. Scientific Trustworthiness & Safety Rules
 
-SwimAnalyzer AI operates under strict scientific invariants:
-1. **Zero Guessed Benchmarks**: Every accepted benchmark comes from a verified paper table/page.
-2. **Demographic Guard**: Adult male data is never silently applied to female, youth, or masters swimmers.
-3. **Derived Conversion Traceability**: Unit conversions (Hz to spm) preserve original values and explicit conversion formulas.
-4. **Definition Matching Guard**: Measurements with definition mismatches (e.g. Body Roll 3D vector vs shoulder roll) are downgraded to `REFERENCE_ONLY`.
-5. **Proprietary Score Isolation**: The 0–100 composite score is explicitly tagged as a proprietary index and excluded from scientific benchmark totals.
-
----
-
-## 9. One-Click Scientific Database Update
-
-Administrators and Coaches can trigger an atomic literature update cycle directly from the web interface:
-
-1. **Locate Button**: In the sidebar under **Developer Settings / Scientific Database Management**, click **`"🔄 Update Scientific Database"`**.
-2. **Execution**: The system initiates exactly ONE update transaction:
-   - Queries PubMed, PMC, Europe PMC, and Crossref across all 4 strokes, 3 sexes, and 12 age groups.
-   - Verifies full-text access levels (`FULL_TEXT_VERIFIED`, `PEER_REVIEWED_ABSTRACT_ONLY`, `METADATA_ONLY`).
-   - Extracts evidence into `data/scientific_update_staging/`.
-   - Rebuilds the multi-stroke coverage matrix (`data/scientific_coverage_matrix.json`).
-   - Executes automated safety tests inside staging.
-   - Performs atomic commit to production files upon 100% test pass (or rolls back safely if any test fails).
-3. **Summary Report**: View update metrics, newly verified cohorts, updated database version, and transaction logs.
+- **Deterministic Pipeline**: 100% local Python execution. No LLM hallucinations or uncalibrated scores.
+- **No Fabricated Fallbacks**: Values remain `INSUFFICIENT_EVIDENCE` when data is missing or low quality.

@@ -192,9 +192,10 @@ class LandmarkFilterAndNormalizer:
             dy_sh = r_sh.y - l_sh.y
             body_roll = abs(math.degrees(math.atan2(dy_sh, dx_sh)))
 
-            # Head supine posture check (nose higher in image Y than shoulder avg)
+            # Head supine posture check (face-up posture where nose 3D z is shallower than shoulders)
             nose_lm = lms[NOSE] if len(lms) > NOSE else None
-            is_supine = bool(nose_lm and nose_lm.y < sh_mid_y)
+            sh_mid_z = (l_sh.z + r_sh.z) / 2.0 if (l_sh and r_sh) else 0.0
+            is_supine = bool(nose_lm and (getattr(nose_lm, 'z', 0.0) < sh_mid_z - 0.05))
 
             # Compute frame landmark quality
             keypoints = [lw_y, rw_y, le_y, re_y, lsh_y, rsh_y, lknee_y, rknee_y, lank_y, rank_y]
@@ -430,8 +431,8 @@ class StrokeSignatureEvaluator:
         # -------------------------------------------------------------
         # A) BUTTERFLY SIGNATURE EVALUATION
         # -------------------------------------------------------------
-        if feats.arm_phase_correlation > +0.15:
-            # Synchronous bilateral arm movement
+        if feats.arm_phase_correlation > +0.20 and feats.head_supine_ratio <= 0.50:
+            # Synchronous bilateral arm movement in prone position
             scores[StrokeType.BUTTERFLY] += 0.35
             details["butterfly"]["arm_synchrony"] = +0.35
 
@@ -450,62 +451,80 @@ class StrokeSignatureEvaluator:
                 scores[StrokeType.BUTTERFLY] += 0.20
                 details["butterfly"]["torso_undulation_wave"] = +0.20
 
+            # Butterfly requires flat horizontal torso; body roll rotation indicates Freestyle
+            if feats.body_roll_amplitude > 10.0:
+                scores[StrokeType.BUTTERFLY] = max(0.0, scores[StrokeType.BUTTERFLY] - 0.60)
+
         # -------------------------------------------------------------
         # B) BREASTSTROKE SIGNATURE EVALUATION
         # -------------------------------------------------------------
-        if feats.arm_phase_correlation > +0.15:
-            if feats.frog_kick_knee_abduction >= 0.12:
+        # Breaststroke is identified by Frog Kick (lateral knee abduction beyond hips) and compact underwater recovery
+        if feats.head_supine_ratio <= 0.50:
+            if feats.frog_kick_knee_abduction >= 0.08:
                 # Distinctive Frog Kick (wide lateral knee spread beyond hips)
-                scores[StrokeType.BREASTSTROKE] += 0.45
-                details["breaststroke"]["frog_kick_knee_spread"] = +0.45
+                scores[StrokeType.BREASTSTROKE] += 0.65
+                details["breaststroke"]["frog_kick_knee_spread"] = +0.65
+                # Frog Kick strongly suppresses Freestyle & Butterfly
+                scores[StrokeType.FREESTYLE] = max(0.0, scores[StrokeType.FREESTYLE] - 0.75)
+                scores[StrokeType.BUTTERFLY] = max(0.0, scores[StrokeType.BUTTERFLY] - 0.75)
 
             if feats.wrist_vertical_range <= 0.35 and feats.inward_wrist_sweep < 0.40:
                 # Compact submerged inward hand sweep
                 scores[StrokeType.BREASTSTROKE] += 0.25
                 details["breaststroke"]["inward_hand_sweep"] = +0.25
 
-            if feats.wrist_vertical_range <= 0.35 and feats.glide_duration_ratio > 0.15:
+            if feats.wrist_vertical_range <= 0.35 and feats.glide_duration_ratio > 0.10:
                 # Characteristic Breaststroke submerged glide phase
                 scores[StrokeType.BREASTSTROKE] += 0.20
                 details["breaststroke"]["glide_phase_deceleration"] = +0.20
 
-            if feats.wrist_vertical_range <= 0.12:
-                # Submerged compact arm recovery
-                scores[StrokeType.BREASTSTROKE] += 0.15
-                details["breaststroke"]["compact_underwater_recovery"] = +0.15
+            if feats.arm_phase_correlation > +0.10:
+                # Synchronous bilateral arm stroke
+                scores[StrokeType.BREASTSTROKE] += 0.20
+                details["breaststroke"]["arm_synchrony"] = +0.20
 
         # -------------------------------------------------------------
         # C) FREESTYLE SIGNATURE EVALUATION
         # -------------------------------------------------------------
-        if feats.arm_phase_correlation < -0.15:
-            # Alternating arm cycles
-            scores[StrokeType.FREESTYLE] += 0.40
-            details["freestyle"]["alternating_arm_phase"] = +0.40
+        if feats.head_supine_ratio <= 0.50:
+            if feats.arm_phase_correlation < -0.05:
+                # Alternating arm movement
+                scores[StrokeType.FREESTYLE] += 0.45
+                details["freestyle"]["alternating_arm_phase"] = +0.45
 
-            if feats.body_roll_amplitude > 15.0:
-                # High torso rotation
-                scores[StrokeType.FREESTYLE] += 0.30
-                details["freestyle"]["body_roll_rotation"] = +0.30
+            if feats.body_roll_amplitude > 8.0:
+                # Body roll rotation around spine axis (characteristic of Freestyle)
+                scores[StrokeType.FREESTYLE] += 0.35
+                details["freestyle"]["body_roll_rotation"] = +0.35
+                # Suppress Butterfly when strong body roll rotation is present
+                scores[StrokeType.BUTTERFLY] = max(0.0, scores[StrokeType.BUTTERFLY] - 0.50)
 
             if feats.head_supine_ratio <= 0.30:
-                # Prone posture
-                scores[StrokeType.FREESTYLE] += 0.25
-                details["freestyle"]["prone_posture"] = +0.25
+                # Prone posture (face-down swimming)
+                scores[StrokeType.FREESTYLE] += 0.20
+                details["freestyle"]["prone_posture"] = +0.20
 
         # -------------------------------------------------------------
         # D) BACKSTROKE SIGNATURE EVALUATION
         # -------------------------------------------------------------
+        # Any swimmer in face-up supine posture (> 0.50) is in Backstroke position.
         if feats.head_supine_ratio > 0.50:
-            # Supine posture (swimmer face-up on back)
-            scores[StrokeType.BACKSTROKE] += 0.55
-            details["backstroke"]["supine_posture"] = +0.55
-            # Suppress prone strokes (Breaststroke & Butterfly)
-            scores[StrokeType.BREASTSTROKE] = max(0.0, scores[StrokeType.BREASTSTROKE] - 0.35)
-            scores[StrokeType.BUTTERFLY] = max(0.0, scores[StrokeType.BUTTERFLY] - 0.35)
+            scores[StrokeType.BACKSTROKE] += 0.65
+            details["backstroke"]["supine_posture"] = +0.65
 
-        if feats.arm_phase_correlation < -0.15:
-            scores[StrokeType.BACKSTROKE] += 0.30
-            details["backstroke"]["alternating_arm_phase"] = +0.30
+            if feats.arm_phase_correlation < -0.15:
+                # Alternating arm recovery
+                scores[StrokeType.BACKSTROKE] += 0.30
+                details["backstroke"]["alternating_arms"] = +0.30
+            else:
+                # Synchronous / Double arm backstroke drill
+                scores[StrokeType.BACKSTROKE] += 0.20
+                details["backstroke"]["double_arm_backstroke"] = +0.20
+
+            # Suppress prone-only strokes (Butterfly, Breaststroke, Freestyle) when swimmer is face-up
+            scores[StrokeType.FREESTYLE] = max(0.0, scores[StrokeType.FREESTYLE] - 0.80)
+            scores[StrokeType.BUTTERFLY] = max(0.0, scores[StrokeType.BUTTERFLY] - 0.80)
+            scores[StrokeType.BREASTSTROKE] = max(0.0, scores[StrokeType.BREASTSTROKE] - 0.80)
 
         return StrokeSignatureScores(
             butterfly=scores[StrokeType.BUTTERFLY],

@@ -9,8 +9,8 @@
 
 | Metric | Count |
 |--------|-------|
-| **Sources Discovered** | 82 |
-| **Sources Retrieved** | 80 |
+| **Sources Discovered** | 81 |
+| **Sources Retrieved** | 79 |
 | **Full-Text Verified Sources** | 0 |
 | **Candidate Evidence** | 0 |
 | **Accepted Evidence** | 0 |

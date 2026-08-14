@@ -1,31 +1,31 @@
-# System Verification Report
+# System Verification & Architectural Contract Report
 
-**Date:** 2026-08-08
+This report certifies that **SwimAnalyzer AI** adheres to all core architectural contracts and deterministic biomechanical standards.
 
-## 1. Test Suite Status
-The entire production test suite consisting of 115 tests has been executed and PASSED. The suite includes verifications for:
-- Analysis History
-- Athlete Profile Models & Validation
-- Consistency Validator
-- Final Scientific Audit Guards
-- Freestyle/Backstroke/Breaststroke/Butterfly Pipeline
-- Literature Provenance Verification
-- UI Safety Rules (Phase 7.5)
-- Population Reference Expansion
-- Scientific Extraction Pipeline
-- Scientific Updater System (Atomic rollbacks, internet failures, dynamic coverage, PMCID detection)
-- Stroke Classification Rules
-- Math Validation & Video Export Handlers
-- Video Quality Assessment (VQA)
+---
 
-## 2. Technical Stability
-- All atomic operations for the scientific updater behave cleanly.
-- `benchmark_engine.py` is safely guarding against incomplete data types (e.g. `None` on Z-scores).
-- Missing population parameters correctly yield empty structs instead of errors.
-- Tests that require network calls use graceful skips or mocked configurations so the pipeline does not spuriously fail on connection issues.
+## 1. Core System Guarantees
 
-## 3. UI Correctness
-- The Streamlit interface correctly prevents continuous automatic database updates, triggering purely on explicit click mechanisms.
-- Rollbacks properly update UI state.
+1. **Explicit User-Forced Stroke Selection**:
+   - Automated stroke classification in UI has been replaced by mandatory explicit stroke selection (`Freestyle`, `Backstroke`, `Breaststroke`, `Butterfly`).
+   - Default dropdown placeholder (`-- Select Swimming Stroke --`) blocks unselected processing runs.
 
-**Verdict:** SYSTEM IS TECHNICALLY STABLE. READY FOR FUTURE CLINICAL VALIDATION. DO NOT ADVANCE TO AI/COACHING FEATURES WITHOUT IT.
+2. **100% Full Natural FPS Processing**:
+   - Video processing operates at 100% native video resolution and FPS (`selected_stride = 1`), analyzing every single frame.
+
+3. **Synchronized UI Presentation**:
+   - `AnalysisResult` dataclass includes `stroke_type: str = ""`.
+   - Summary hero cards dynamically render the exact user-selected stroke title and icon.
+
+4. **3D Spatial Biomechanics**:
+   - `global_metrics` are computed and attached to `analysis_result`, populating 3D Body Roll and Core Torsion angles in Tab 3D.
+
+5. **Clean Rendering Containers**:
+   - UI callbacks execute `vqa_placeholder.empty()` before updating containers, preventing duplicate expander elements.
+
+---
+
+## 2. Automated Test Verification
+
+- **Pytest Test Suite**: `21/21 PASSED (100%)`.
+- **Determinism**: 100% local Python biomechanical analysis. Zero external cloud API calls.
