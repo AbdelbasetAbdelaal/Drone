@@ -113,6 +113,10 @@ class TemporalEngineResult:
     signature_scores: Dict[str, Dict[str, float]]
     feature_values: Dict[str, float]
     feature_contributions: Dict[str, float]
+    temporal_windows_count: int = 0
+    window_predictions: Dict[str, str] = field(default_factory=dict)
+    temporal_consistency: float = 0.0
+    signature_margin: float = 0.0
     missing_evidence: List[str] = field(default_factory=list)
 
 
@@ -365,9 +369,13 @@ class StrokeSignatureEvaluator:
         ankle_range = float((np.ptp(lank_y) + np.ptp(rank_y)) / 2.0)
         dolphin_undulation = float(max(0.0, leg_corr) * ankle_range * 2.0)
 
-        # 7. Frog Kick Knee Abduction (Maximum lateral distance between knees during leg flexion)
-        knee_dist_x = np.abs(lknee_x - rknee_x)
-        frog_abduction = float(np.max(knee_dist_x)) if len(knee_dist_x) > 0 else 0.0
+        # 7. Frog Kick Knee Abduction over Hip Width (Outward knee spread beyond hips during leg flexion)
+        lhip_x = processor._smooth_series([f.lhip_x for f in sub_frames])
+        rhip_x = processor._smooth_series([f.rhip_x for f in sub_frames])
+        knee_dist_x = np.abs(np.array(lknee_x) - np.array(rknee_x))
+        hip_dist_x = np.abs(np.array(lhip_x) - np.array(rhip_x))
+        abduction_over_hips = np.maximum(0.0, knee_dist_x - hip_dist_x)
+        frog_abduction = float(np.max(abduction_over_hips)) if len(abduction_over_hips) > 0 else 0.0
 
         # 8. Torso-Hip Wave Correlation (Phase relationship between shoulder Y and hip Y)
         sh_avg_y = (lsh_y + rsh_y) / 2.0
@@ -427,37 +435,37 @@ class StrokeSignatureEvaluator:
             scores[StrokeType.BUTTERFLY] += 0.35
             details["butterfly"]["arm_synchrony"] = +0.35
 
-            if feats.dolphin_kick_undulation > 0.10 and feats.frog_kick_knee_abduction < 0.35:
-                # Dolphin kick undulation without frog kick lateral knee spread
+            if feats.wrist_vertical_range > 0.35:
+                # High vertical wrist recovery elevation above water
                 scores[StrokeType.BUTTERFLY] += 0.35
-                details["butterfly"]["dolphin_kick"] = +0.35
+                details["butterfly"]["arm_elevation_recovery"] = +0.35
 
-            if feats.wrist_vertical_range > 0.10:
-                # Simultaneous arm recovery & excursion
-                scores[StrokeType.BUTTERFLY] += 0.20
-                details["butterfly"]["arm_excursion"] = +0.20
+            if feats.dolphin_kick_undulation > 0.05:
+                # Dolphin kick undulation
+                scores[StrokeType.BUTTERFLY] += 0.30
+                details["butterfly"]["dolphin_kick"] = +0.30
 
-            if feats.torso_hip_wave_correlation > 0.20:
+            if feats.torso_hip_wave_correlation > 0.15:
                 # Torso-to-hip undulation wave
-                scores[StrokeType.BUTTERFLY] += 0.15
-                details["butterfly"]["torso_undulation_wave"] = +0.15
+                scores[StrokeType.BUTTERFLY] += 0.20
+                details["butterfly"]["torso_undulation_wave"] = +0.20
 
         # -------------------------------------------------------------
         # B) BREASTSTROKE SIGNATURE EVALUATION
         # -------------------------------------------------------------
         if feats.arm_phase_correlation > +0.15:
-            if feats.frog_kick_knee_abduction >= 0.35:
-                # Distinctive Frog Kick (wide lateral knee spread during flexion)
+            if feats.frog_kick_knee_abduction >= 0.12:
+                # Distinctive Frog Kick (wide lateral knee spread beyond hips)
                 scores[StrokeType.BREASTSTROKE] += 0.45
                 details["breaststroke"]["frog_kick_knee_spread"] = +0.45
 
-            if feats.inward_wrist_sweep < 0.40:
-                # Inward hand sweep during pull phase
+            if feats.wrist_vertical_range <= 0.35 and feats.inward_wrist_sweep < 0.40:
+                # Compact submerged inward hand sweep
                 scores[StrokeType.BREASTSTROKE] += 0.25
                 details["breaststroke"]["inward_hand_sweep"] = +0.25
 
-            if feats.glide_duration_ratio > 0.15:
-                # Characteristic Breaststroke glide phase
+            if feats.wrist_vertical_range <= 0.35 and feats.glide_duration_ratio > 0.15:
+                # Characteristic Breaststroke submerged glide phase
                 scores[StrokeType.BREASTSTROKE] += 0.20
                 details["breaststroke"]["glide_phase_deceleration"] = +0.20
 
@@ -508,6 +516,75 @@ class StrokeSignatureEvaluator:
         )
 
 
+class TemporalWindowClassifier:
+    """
+    Splits valid frame sequences into overlapping temporal windows (e.g. 2-4 seconds)
+    and evaluates independent predictions to compute temporal consistency.
+    """
+
+    def __init__(self, window_duration_sec: float = 3.0, stride_sec: float = 1.5, fps: float = 30.0):
+        self.window_size = int(window_duration_sec * fps)
+        self.stride = int(stride_sec * fps)
+
+    def evaluate_windows(
+        self,
+        norm_frames: List[NormalizedFrame],
+        evaluator: StrokeSignatureEvaluator,
+        processor: TemporalSignalProcessor
+    ) -> Tuple[int, Dict[str, str], float, Dict[str, float]]:
+        total_frames = len(norm_frames)
+        if total_frames < self.window_size:
+            # Single window fallback
+            w_feats = evaluator.extract_temporal_features(norm_frames, processor)
+            w_sigs = evaluator.evaluate_stroke_signatures(w_feats)
+            w_scores = {
+                "Butterfly": w_sigs.butterfly,
+                "Breaststroke": w_sigs.breaststroke,
+                "Freestyle": w_sigs.freestyle,
+                "Backstroke": w_sigs.backstroke
+            }
+            top_st = max(w_scores, key=w_scores.get)
+            return 1, {st: "1/1" if st == top_st else "0/1" for st in w_scores}, 1.0, w_scores
+
+        windows_preds: List[str] = []
+        accum_scores = {"Butterfly": 0.0, "Breaststroke": 0.0, "Freestyle": 0.0, "Backstroke": 0.0}
+
+        start_idx = 0
+        while start_idx + 15 <= total_frames:
+            end_idx = min(total_frames, start_idx + self.window_size)
+            win_frames = norm_frames[start_idx:end_idx]
+            valid_in_win = sum(1 for f in win_frames if f.is_valid)
+
+            if valid_in_win >= 5:
+                w_feats = evaluator.extract_temporal_features(win_frames, processor)
+                w_sigs = evaluator.evaluate_stroke_signatures(w_feats)
+                w_dict = {
+                    "Butterfly": w_sigs.butterfly,
+                    "Breaststroke": w_sigs.breaststroke,
+                    "Freestyle": w_sigs.freestyle,
+                    "Backstroke": w_sigs.backstroke
+                }
+                top_w = max(w_dict, key=w_dict.get)
+                windows_preds.append(top_w)
+                for st, sc in w_dict.items():
+                    accum_scores[st] += sc
+
+            start_idx += self.stride
+
+        total_valid_windows = len(windows_preds)
+        if total_valid_windows == 0:
+            return 0, {st: "0/0" for st in accum_scores}, 0.0, accum_scores
+
+        counts = {st: windows_preds.count(st) for st in accum_scores}
+        top_stroke = max(counts, key=counts.get)
+        consistency = float(counts[top_stroke] / total_valid_windows)
+        pred_strings = {st: f"{counts[st]}/{total_valid_windows}" for st in accum_scores}
+
+        avg_scores = {st: accum_scores[st] / total_valid_windows for st in accum_scores}
+
+        return total_valid_windows, pred_strings, consistency, avg_scores
+
+
 class PythonTemporalKinematicEngine:
     """
     100% Python-based Deterministic Temporal Kinematic Classifier Engine.
@@ -520,6 +597,7 @@ class PythonTemporalKinematicEngine:
         self.processor = TemporalSignalProcessor()
         self.cycle_detector = StrokeCycleDetector()
         self.evaluator = StrokeSignatureEvaluator()
+        self.window_classifier = TemporalWindowClassifier()
 
     def classify_video_sequence(self, frames: List[Any], selected_stroke_input: StrokeType = StrokeType.AUTO_DETECT) -> TemporalEngineResult:
         # 1. Normalize landmarks & evaluate pose quality
@@ -532,7 +610,7 @@ class PythonTemporalKinematicEngine:
             return TemporalEngineResult(
                 predicted_stroke=StrokeType.UNKNOWN,
                 confidence=0.0,
-                classification_status="INSUFFICIENT_POSE_QUALITY",
+                classification_status="INSUFFICIENT_DATA",
                 classification_reason=f"Insufficient pose quality ({overall_pose_quality*100:.1f}%) or valid frames ({valid_count}/{total_count}).",
                 pose_quality=overall_pose_quality,
                 cycles_detected=0,
@@ -541,13 +619,23 @@ class PythonTemporalKinematicEngine:
                 signature_scores={},
                 feature_values={},
                 feature_contributions={},
+                temporal_windows_count=0,
+                window_predictions={},
+                temporal_consistency=0.0,
+                signature_margin=0.0,
                 missing_evidence=["insufficient_valid_pose_landmarks"]
             )
 
-        # 2. Extract full-sequence features
+        # 2. Extract full-sequence features & global signatures
         full_feats = self.evaluator.extract_temporal_features(norm_frames, self.processor)
+        global_sigs = self.evaluator.evaluate_stroke_signatures(full_feats)
 
-        # 3. Detect stroke cycles & perform cycle-level voting
+        # 3. Perform Temporal Window Classification
+        num_windows, win_pred_strs, temporal_consistency, avg_win_sigs = self.window_classifier.evaluate_windows(
+            norm_frames, self.evaluator, self.processor
+        )
+
+        # 4. Detect stroke cycles & cycle predictions
         lw_y = self.processor._smooth_series([f.lw_y for f in norm_frames])
         rw_y = self.processor._smooth_series([f.rw_y for f in norm_frames])
         qualities = np.array([f.quality for f in norm_frames])
@@ -555,11 +643,11 @@ class PythonTemporalKinematicEngine:
         detected_cycles = self.cycle_detector.detect_cycles(lw_y, rw_y, qualities)
         cycle_preds: List[Dict[str, Any]] = []
 
-        cycle_scores_accum = {
-            StrokeType.FREESTYLE: 0.0,
-            StrokeType.BACKSTROKE: 0.0,
-            StrokeType.BREASTSTROKE: 0.0,
-            StrokeType.BUTTERFLY: 0.0
+        cycle_accum = {
+            "Butterfly": 0.0,
+            "Breaststroke": 0.0,
+            "Freestyle": 0.0,
+            "Backstroke": 0.0
         }
 
         for c in detected_cycles:
@@ -567,10 +655,10 @@ class PythonTemporalKinematicEngine:
             c_sigs = self.evaluator.evaluate_stroke_signatures(c_feats)
 
             c_dict = {
-                StrokeType.BUTTERFLY: c_sigs.butterfly,
-                StrokeType.BREASTSTROKE: c_sigs.breaststroke,
-                StrokeType.FREESTYLE: c_sigs.freestyle,
-                StrokeType.BACKSTROKE: c_sigs.backstroke
+                "Butterfly": c_sigs.butterfly,
+                "Breaststroke": c_sigs.breaststroke,
+                "Freestyle": c_sigs.freestyle,
+                "Backstroke": c_sigs.backstroke
             }
             top_st = max(c_dict, key=c_dict.get)
 
@@ -578,47 +666,75 @@ class PythonTemporalKinematicEngine:
                 "cycle_index": c.cycle_index,
                 "start_frame": c.start_frame,
                 "end_frame": c.end_frame,
-                "predicted_stroke": top_st.value,
+                "predicted_stroke": top_st,
                 "quality": round(c.quality_score, 2),
-                "scores": {st.value: round(sc, 4) for st, sc in c_dict.items()}
+                "scores": {st: round(sc, 4) for st, sc in c_dict.items()}
             })
 
-            # Quality-weighted accumulation
             weight = max(0.2, c.quality_score)
             for st, sc in c_dict.items():
-                cycle_scores_accum[st] += sc * weight
+                cycle_accum[st] += sc * weight
 
-        # 4. Global sequence signatures
-        global_sigs = self.evaluator.evaluate_stroke_signatures(full_feats)
-        for st in cycle_scores_accum:
-            stroke_val = getattr(global_sigs, st.value.lower(), 0.0)
-            cycle_scores_accum[st] += stroke_val * 1.5
+        # 5. Composite Signature Scoring (Global 50% + Windows 30% + Cycles 20%)
+        raw_signatures = {
+            "Butterfly": global_sigs.butterfly,
+            "Breaststroke": global_sigs.breaststroke,
+            "Freestyle": global_sigs.freestyle,
+            "Backstroke": global_sigs.backstroke
+        }
 
-        total_accum = sum(cycle_scores_accum.values()) or 1.0
-        predictions: Dict[str, float] = {st.value: round(cycle_scores_accum[st] / total_accum, 4) for st in cycle_scores_accum}
+        composite_signatures: Dict[str, float] = {}
+        for st in raw_signatures:
+            glob_val = raw_signatures[st]
+            win_val = avg_win_sigs.get(st, glob_val)
+            cyc_val = (cycle_accum[st] / max(1, len(detected_cycles))) if detected_cycles else glob_val
+            composite_signatures[st] = round(0.50 * glob_val + 0.30 * win_val + 0.20 * cyc_val, 4)
 
-        top_stroke_str = max(predictions, key=predictions.get)
-        top_ratio = predictions[top_stroke_str]
+        # Normalize signature candidate ratios (sum to 1.0)
+        tot_sig = sum(composite_signatures.values()) or 1.0
+        normalized_scores = {st: round(composite_signatures[st] / tot_sig, 4) for st in composite_signatures}
+
+        # Top and second stroke determination
+        sorted_strokes = sorted(composite_signatures.items(), key=lambda x: x[1], reverse=True)
+        top_stroke_str, best_sig = sorted_strokes[0]
+        second_stroke_str, second_sig = sorted_strokes[1]
+
+        signature_margin = max(0.0, best_sig - second_sig)
         predicted_stroke = StrokeType(top_stroke_str)
 
-        # Cycle agreement ratio calculation
-        agree_cnt = sum(1 for cp in cycle_preds if cp["predicted_stroke"] == top_stroke_str)
-        cycle_agreement_ratio = float(agree_cnt / max(1, len(cycle_preds)))
+        # 6. Multi-Factor Deterministic Confidence Calculation
+        # Factors: Best Sig (0.35), Margin (0.30), Window Consistency (0.15), Pose Quality (0.10), Cycle Quality (0.10)
+        norm_best_sig = min(1.0, best_sig / 1.0)
+        norm_margin = min(1.0, signature_margin / max(1e-4, best_sig))
+        cycle_quality = min(1.0, len(detected_cycles) / 2.0)
 
-        # Calibrated confidence calculation [0.0, 1.0]
-        confidence = round(float(top_ratio * cycle_agreement_ratio * min(1.0, 0.40 + 0.60 * overall_pose_quality)), 2)
+        confidence_raw = (
+            0.35 * norm_best_sig +
+            0.30 * norm_margin +
+            0.15 * temporal_consistency +
+            0.10 * overall_pose_quality +
+            0.10 * cycle_quality
+        )
+        confidence = round(float(confidence_raw), 2)
 
-        # Status evaluation
-        if top_ratio < 0.30:
+        # 7. Status Classification
+        if best_sig < 0.20 or normalized_scores[top_stroke_str] < 0.28:
             classification_status = "ambiguous"
-            reason = f"Ambiguous kinematic movement (flat score distribution across strokes: {top_ratio*100:.0f}% max)."
+            reason = f"Ambiguous kinematic movement (flat score distribution across strokes)."
             predicted_stroke = StrokeType.UNKNOWN
-        elif confidence >= self.confidence_threshold:
-            classification_status = "HIGH_CONFIDENCE" if confidence >= 0.60 else "classified"
-            reason = f"Deterministic Python Temporal Kinematic match ({confidence*100:.0f}% confidence) for {predicted_stroke.value}."
-        else:
+            confidence = min(confidence, 0.25)
+        elif confidence >= 0.70:
+            classification_status = "HIGH_CONFIDENCE"
+            reason = f"High deterministic kinematic confidence ({confidence*100:.0f}%) for {predicted_stroke.value}."
+        elif confidence >= 0.45:
             classification_status = "MODERATE_CONFIDENCE"
-            reason = f"Moderate kinematic decision score ({confidence*100:.0f}% confidence) for {predicted_stroke.value}."
+            reason = f"Moderate deterministic kinematic confidence ({confidence*100:.0f}%) for {predicted_stroke.value}."
+        elif confidence >= 0.20:
+            classification_status = "LOW_CONFIDENCE"
+            reason = f"Low deterministic kinematic confidence ({confidence*100:.0f}%) for {predicted_stroke.value}."
+        else:
+            classification_status = "INSUFFICIENT_DATA"
+            reason = f"Insufficient evidence for confident stroke classification."
 
         feature_values_dict = {
             "arm_phase_correlation": round(full_feats.arm_phase_correlation, 4),
@@ -634,15 +750,14 @@ class PythonTemporalKinematicEngine:
             "pose_quality": round(overall_pose_quality, 4)
         }
 
-        # Contributions for UI rendering
         top_details = global_sigs.details.get(top_stroke_str.lower(), {})
         contributions_dict = {k: float(v) for k, v in top_details.items()}
 
         signature_scores_dict = {
-            "butterfly": {"score": global_sigs.butterfly, "details": global_sigs.details["butterfly"]},
-            "breaststroke": {"score": global_sigs.breaststroke, "details": global_sigs.details["breaststroke"]},
-            "freestyle": {"score": global_sigs.freestyle, "details": global_sigs.details["freestyle"]},
-            "backstroke": {"score": global_sigs.backstroke, "details": global_sigs.details["backstroke"]}
+            "butterfly": {"score": composite_signatures["Butterfly"], "details": global_sigs.details["butterfly"]},
+            "breaststroke": {"score": composite_signatures["Breaststroke"], "details": global_sigs.details["breaststroke"]},
+            "freestyle": {"score": composite_signatures["Freestyle"], "details": global_sigs.details["freestyle"]},
+            "backstroke": {"score": composite_signatures["Backstroke"], "details": global_sigs.details["backstroke"]}
         }
 
         return TemporalEngineResult(
@@ -653,8 +768,12 @@ class PythonTemporalKinematicEngine:
             pose_quality=overall_pose_quality,
             cycles_detected=len(detected_cycles),
             cycle_predictions=cycle_preds,
-            stroke_scores=predictions,
+            stroke_scores=normalized_scores,
             signature_scores=signature_scores_dict,
             feature_values=feature_values_dict,
-            feature_contributions=contributions_dict
+            feature_contributions=contributions_dict,
+            temporal_windows_count=num_windows,
+            window_predictions=win_pred_strs,
+            temporal_consistency=temporal_consistency,
+            signature_margin=round(signature_margin, 4)
         )

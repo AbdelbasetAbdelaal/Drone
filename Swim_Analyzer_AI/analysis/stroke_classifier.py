@@ -92,16 +92,23 @@ class StrokeClassifier:
         logger.info("[STROKE_CLASSIFIER] Mode: PYTHON_TEMPORAL_KINEMATIC")
         logger.info("[STROKE_CLASSIFIER] AI agent: DISABLED")
         logger.info("[STROKE_CLASSIFIER] Classification mode: PYTHON_ONLY")
-        logger.info(
-            "[STROKE_CLASSIFIER] Pose quality: %.1f%% | Valid frames: %d | Cycles detected: %d",
-            engine_res.pose_quality * 100.0, len(frames_list), engine_res.cycles_detected
-        )
-        logger.info("[STROKE_CLASSIFIER] Butterfly signature: %.2f", sig_butterfly)
-        logger.info("[STROKE_CLASSIFIER] Breaststroke signature: %.2f", sig_breaststroke)
-        logger.info("[STROKE_CLASSIFIER] Freestyle signature: %.2f", sig_freestyle)
-        logger.info("[STROKE_CLASSIFIER] Backstroke signature: %.2f", sig_backstroke)
+        logger.info("[STROKE_CLASSIFIER] Pose quality: %.1f%%", engine_res.pose_quality * 100.0)
+        logger.info("[STROKE_CLASSIFIER] Valid frames: %d", len(frames_list))
+        logger.info("[STROKE_CLASSIFIER] Temporal windows: %d", engine_res.temporal_windows_count)
+        logger.info("[STROKE_CLASSIFIER] Cycles detected: %d", engine_res.cycles_detected)
+        logger.info("[STROKE_CLASSIFIER] Stroke signatures:")
+        logger.info("[STROKE_CLASSIFIER]   Butterfly: %.2f", sig_butterfly)
+        logger.info("[STROKE_CLASSIFIER]   Breaststroke: %.2f", sig_breaststroke)
+        logger.info("[STROKE_CLASSIFIER]   Freestyle: %.2f", sig_freestyle)
+        logger.info("[STROKE_CLASSIFIER]   Backstroke: %.2f", sig_backstroke)
+        logger.info("[STROKE_CLASSIFIER] Temporal window predictions:")
+        for st_name, pred_str in engine_res.window_predictions.items():
+            logger.info("[STROKE_CLASSIFIER]   %s: %s", st_name, pred_str)
+        logger.info("[STROKE_CLASSIFIER] Temporal consistency: %.1f%%", engine_res.temporal_consistency * 100.0)
+        logger.info("[STROKE_CLASSIFIER] Signature margin: %.2f", engine_res.signature_margin)
         logger.info("[STROKE_CLASSIFIER] Prediction: %s", engine_res.predicted_stroke.value)
-        logger.info("[STROKE_CLASSIFIER] Confidence: %s", conf_str)
+        logger.info("[STROKE_CLASSIFIER] Kinematic confidence: %s", conf_str)
+        logger.info("[STROKE_CLASSIFIER] Status: %s", engine_res.classification_status)
 
         # Build Unified Backward-Compatible StrokeDetectionResult Output
         uncertainty_val = round(1.0 - engine_res.confidence, 4) if engine_res.confidence is not None else 1.0

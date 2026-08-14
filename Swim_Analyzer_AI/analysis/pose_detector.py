@@ -42,18 +42,23 @@ class PoseDetector:
         base_options = python.BaseOptions(model_asset_path=str(config.pose_model_path))
         options = vision.PoseLandmarkerOptions(
             base_options=base_options,
-            running_mode=vision.RunningMode.IMAGE,
+            running_mode=vision.RunningMode.VIDEO,
             min_pose_detection_confidence=config.pose_min_detection_confidence,
             min_pose_presence_confidence=config.pose_min_tracking_confidence,
             output_segmentation_masks=False
         )
         self.detector = vision.PoseLandmarker.create_from_options(options)
         self.smoother = LandmarkSmoother(alpha=0.4)
+        self._frame_timestamp_ms = 0
         
-    def detect_pose(self, frame: np.ndarray) -> Tuple[Any, bool]:
+    def detect_pose(self, frame: np.ndarray, timestamp_ms: Optional[int] = None) -> Tuple[Any, bool]:
         """
-        Detects poses in a single BGR frame.
+        Detects poses in a single BGR frame using VIDEO running mode.
         
+        Args:
+            frame: A numpy array representing a BGR image.
+            timestamp_ms: Optional timestamp in milliseconds for sequential video tracking.
+            
         Returns:
             Tuple[Any, bool]: The smoothed landmarks, and a boolean indicating if confidence is high enough.
         """
@@ -61,8 +66,14 @@ class PoseDetector:
         rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_frame)
         
+        if timestamp_ms is not None:
+            ts = timestamp_ms
+        else:
+            ts = self._frame_timestamp_ms
+            self._frame_timestamp_ms += 33  # ~30 FPS default step
+            
         try:
-            result = self.detector.detect(mp_image)
+            result = self.detector.detect_for_video(mp_image, ts)
         except Exception as exc:
             logger.warning(f"Pose detection failed on frame: {exc}")
             return None, False
