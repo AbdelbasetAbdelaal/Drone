@@ -744,3 +744,679 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 2026-08-15 12:32:57,300 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
 2026-08-15 12:32:57,320 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
 2026-08-15 12:32:57,331 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:43:41,059 - services.auth_service - WARNING - [SYSTEM] argon2-cffi not found. Password hashing will degrade or fail.
+2026-08-15 12:43:41,061 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:43:41,061 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:43:41,061 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:43:41,061 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:44:08,113 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:44:08,113 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:44:08,353 - services.auth_service - INFO - [SYSTEM] Account logged in: coach1 (coach)
+2026-08-15 12:44:08,475 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:44:08,475 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:44:12,407 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:44:12,407 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:44:27,571 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:44:27,571 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:44:29,349 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:44:29,349 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:49:20,411 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:49:20,411 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:49:26,641 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:49:26,641 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:49:26,681 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525746471.mp4
+2026-08-15 12:49:26,681 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525746471.mp4
+2026-08-15 12:49:31,869 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:49:31,869 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:49:31,897 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525746471.mp4
+2026-08-15 12:49:31,897 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525746471.mp4
+2026-08-15 12:49:34,920 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:49:34,920 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:49:34,954 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525746471.mp4
+2026-08-15 12:49:34,954 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525746471.mp4
+2026-08-15 12:49:35,238 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:49:35,238 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:49:35,273 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525746471.mp4
+2026-08-15 12:49:35,273 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525746471.mp4
+2026-08-15 12:49:35,353 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-15 12:49:35,353 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-15 12:49:35,354 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\dafb16b06a864c9e9dde789a245cd78d.mp4 (Effective FPS: 30.0, Frame Stride: 1)
+2026-08-15 12:49:35,354 - services.analysis_service - INFO - [ANALYSIS] [STROKE] User selected stroke: Freestyle
+2026-08-15 12:49:35,355 - services.analysis_service - INFO - [ANALYSIS] [STROKE] Selection source: USER
+2026-08-15 12:49:35,355 - services.analysis_service - INFO - [ANALYSIS] [STROKE] Automatic stroke classification: DISABLED
+2026-08-15 12:49:35,356 - services.analysis_service - INFO - [ANALYSIS] [ANALYSIS] Processing stroke-specific analysis: Freestyle
+2026-08-15 12:49:35,456 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-15 12:49:37,603 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\dafb16b06a864c9e9dde789a245cd78d.mp4 (720x1280 @ 30.0fps)
+2026-08-15 12:49:37,629 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\dafb16b06a864c9e9dde789a245cd78d.mp4 (720x1280 @ 30.0fps)
+2026-08-15 12:49:37,869 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_dafb16b06a864c9e9dde789a245cd78d.mp4 (Codec: mp4v)
+2026-08-15 12:49:39,814 - services.analysis_service - WARNING - [ANALYSIS] Early precheck VQA flagged Poor quality. Continuing with caution.
+2026-08-15 12:49:44,709 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:44,850 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:44,994 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:45,138 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:45,276 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:45,415 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:45,554 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:45,692 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:45,828 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:45,968 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:46,108 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:46,247 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:46,384 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:46,524 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:46,673 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:46,818 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:46,963 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:47,089 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:47,228 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:47,361 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:47,491 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:47,625 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:47,757 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:47,892 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:48,022 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:48,162 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:48,297 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:48,433 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:48,575 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:48,710 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:48,843 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:48,981 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:49,119 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:49,255 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:49,385 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:49,521 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:49,656 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:49,808 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:49,939 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:50,082 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:50,220 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:50,355 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:50,489 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:50,621 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:50,759 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:50,902 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:51,036 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:51,164 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:51,306 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:51,441 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:51,576 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:51,716 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:51,848 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:51,982 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:52,135 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:52,312 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:52,438 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:52,568 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:52,706 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:52,832 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:52,964 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:53,094 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:53,237 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:53,359 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:53,525 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:53,653 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:53,796 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:53,937 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:54,061 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:54,195 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:54,339 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:54,470 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:54,600 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:54,731 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:54,854 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:54,988 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:55,118 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:55,254 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:55,387 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:55,520 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:55,661 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:55,787 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:55,918 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:56,058 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:56,207 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:56,390 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:56,626 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:56,862 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:57,124 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:57,293 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:57,440 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:57,583 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:57,811 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:58,026 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:58,187 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:58,432 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:58,609 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:58,753 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:58,901 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:59,040 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:59,166 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:59,299 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:59,457 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:59,625 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:59,758 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:49:59,904 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:00,108 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:00,261 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:00,486 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:00,777 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:01,008 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:01,198 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:01,342 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:01,520 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:01,744 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:01,946 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:02,112 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:02,280 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:02,469 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:02,640 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:02,794 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:03,096 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:03,246 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:03,365 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:03,492 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:03,630 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:03,752 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:03,875 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:04,017 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:04,178 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:04,301 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:04,417 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:04,561 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:04,711 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:04,856 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:05,207 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:05,458 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:05,598 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:05,752 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:05,916 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:06,082 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:06,255 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:06,394 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:06,572 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:06,741 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:07,007 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:07,294 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:07,561 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:07,749 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:07,983 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:08,279 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:08,543 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:08,777 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:09,003 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:09,172 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:09,343 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:09,527 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:09,671 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:09,819 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:09,985 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:10,127 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:10,271 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:10,412 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:10,554 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:10,691 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:10,837 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:11,033 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:11,187 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:11,331 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:11,466 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:11,605 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:11,745 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:11,887 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:12,039 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:12,215 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:12,365 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:12,501 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:12,638 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:12,789 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:12,922 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:13,061 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:13,206 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:13,368 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:13,508 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:13,653 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:13,794 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:14,045 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:14,223 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:14,409 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:14,653 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:14,909 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:15,148 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:15,362 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:15,573 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:15,765 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:15,920 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:16,073 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:16,214 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:16,362 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:16,496 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:16,634 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:16,784 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:16,943 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:17,102 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:17,240 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:17,383 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:17,527 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:17,674 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:17,818 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:17,957 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:18,128 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:18,279 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:18,415 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:18,556 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:18,709 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:18,866 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:19,005 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:19,162 - services.analysis_service - WARNING - [ANALYSIS] VQA returned Poor quality at early halt check. Continuing analysis with caution.
+2026-08-15 12:50:50,388 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 445 frames.
+2026-08-15 12:50:50,503 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-15 12:50:50,554 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-15 12:50:50,647 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:50:50,652 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:50:50,655 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:50:50,660 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:50:50,661 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: N/A (Unvalidated Cohort), Dataset: Freestyle Population Reference Matrix v2.0)
+2026-08-15 12:50:51,455 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\e7bc4ab369474f1f9eeea1f38e28a118.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\05f672b9a120426a95dcd4b8055c3457.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\caadac5bb04245b586af9cb365b7bf52.json
+2026-08-15 12:51:15,043 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_dafb16b06a864c9e9dde789a245cd78d.mp4
+2026-08-15 12:51:15,106 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 4.89 MB, Frames: 445, Duration: 14.83s
+2026-08-15 12:51:15,254 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-15 12:51:15,255 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-15 12:51:15,255 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-15 12:51:15,779 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:51:15,779 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 12:51:15,827 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525746471.mp4
+2026-08-15 12:51:15,827 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525746471.mp4
+2026-08-15 12:51:15,936 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-15 12:51:15,936 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-15 12:51:15,939 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-15 12:51:15,939 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-15 12:51:15,949 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-15 12:51:15,949 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-15 12:51:15,950 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-15 12:51:15,950 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-15 12:51:15,951 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-15 12:51:15,951 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-15 12:51:15,971 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-15 12:51:15,971 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-15 12:51:15,973 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-15 12:51:15,973 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-15 12:51:15,983 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-15 12:51:15,983 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-15 12:51:15,985 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-15 12:51:15,985 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-15 12:51:15,999 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-15 12:51:15,999 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-15 12:51:16,547 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-15 12:51:17,189 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-15 12:51:17,189 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-15 12:51:17,543 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-15 12:51:17,543 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-15 12:51:22,159 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-15 12:51:22,159 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-15 12:51:22,161 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-15 12:51:22,161 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-15 12:51:22,437 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-15 12:51:22,437 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-15 12:51:22,439 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-15 12:51:22,439 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-15 12:51:22,627 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-15 12:51:22,627 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-15 12:51:22,629 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-15 12:51:22,629 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-15 12:51:22,653 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-15 12:51:22,653 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-15 12:51:22,654 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-15 12:51:22,654 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-15 12:51:22,657 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-15 12:51:22,657 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-15 12:51:22,984 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-15 12:51:23,028 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\13d0202def99432a86fe0618a1e0962c.pdf
+2026-08-15 12:51:23,212 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-15 12:51:23,212 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-15 12:53:35,472 - services.auth_service - ERROR - [SYSTEM] System misconfigured: argon2-cffi is required for production.
+2026-08-15 12:53:51,597 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Freestyle | Decision score: 0.5909 | Missing evidence: []
+2026-08-15 12:53:51,603 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Butterfly | Decision score: 0.7917 | Missing evidence: []
+2026-08-15 12:53:51,608 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Breaststroke | Decision score: 0.7083 | Missing evidence: []
+2026-08-15 12:53:51,614 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Unknown | Decision score: None | Missing evidence: ['arm_phase_correlation', 'body_roll_amplitude', 'wrist_vertical_range_ratio', 'leg_kick_symmetry']
+2026-08-15 12:53:53,345 - services.auth_service - ERROR - [SYSTEM] Cannot process login: argon2-cffi missing.
+2026-08-15 12:53:53,416 - scientific_reference.validation.benchmark_eligibility_validator - INFO - [SYSTEM] Systematic review SR_BACKSTROKE_2025 lacks explicit primary study trace. Assigned REVIEW_REQUIRED.
+2026-08-15 12:53:53,501 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Sex leakage prohibited: candidate sex 'Male' vs target sex 'Female'
+2026-08-15 12:53:53,539 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Age leakage prohibited: adult candidate '18-25' vs target youth age '8-10'
+2026-08-15 12:53:53,582 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Stroke leakage prohibited: candidate stroke 'freestyle' vs target stroke 'backstroke'
+2026-08-15 12:53:53,620 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Meta-analysis MA_400M_FRONT_CRAWL restricted to 400m front crawl test context (attempted target distance: 100m)
+2026-08-15 12:53:53,633 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:53:53,640 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:53:53,647 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:53:53,654 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:53:53,670 - scientific_reference.validation.evidence_validator - WARNING - [SYSTEM] Provenance rejection for stroke_rate: Quote not found in source text.
+2026-08-15 12:53:53,677 - scientific_reference.validation.evidence_validator - WARNING - [SYSTEM] Stroke rejection for stroke_rate: Stroke 'Freestyle' not supported by context.
+2026-08-15 12:53:53,687 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:53:53,696 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:53:53,717 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:53:53,727 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:53:53,738 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:53:53,756 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:53:53,777 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:53:53,784 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:53:53,826 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Fabricated metadata detected for candidate SRC-FAKE-001
+2026-08-15 12:53:53,942 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-15 12:53:53,988 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:53:53,997 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:53:54,002 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:53:54,018 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:53:54,031 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:53:54,039 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:53:54,046 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:53:54,054 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:53:54,055 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: N/A (Unvalidated Cohort), Dataset: Freestyle Population Reference Matrix v2.0)
+2026-08-15 12:53:54,068 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:53:54,078 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:53:54,084 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:53:54,095 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:53:54,101 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:53:54,112 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:53:54,117 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:53:54,127 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:53:54,128 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: Intermediate, Dataset: )
+2026-08-15 12:53:54,138 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:53:54,147 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:53:54,153 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:53:54,166 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:53:54,179 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:53:54,186 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:53:54,193 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:53:54,202 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:53:54,217 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:53:54,225 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:53:54,230 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:53:54,238 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:53:54,251 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:53:54,261 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:53:54,267 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:53:54,278 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:53:54,323 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v1.0.0)
+2026-08-15 12:53:54,330 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-15 12:53:54,336 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-15 12:53:54,350 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-15 12:53:54,359 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-15 12:53:54,365 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-15 12:53:54,374 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-15 12:53:54,380 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-15 12:53:56,441 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-15 12:53:56,527 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-15 12:53:56,610 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-15 12:53:56,732 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-15 12:53:58,210 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: test_stability_video.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-15 12:53:58,211 - services.analysis_service - INFO - [ANALYSIS] [STROKE] User selected stroke: Freestyle
+2026-08-15 12:53:58,211 - services.analysis_service - INFO - [ANALYSIS] [STROKE] Selection source: USER
+2026-08-15 12:53:58,211 - services.analysis_service - INFO - [ANALYSIS] [STROKE] Automatic stroke classification: DISABLED
+2026-08-15 12:53:58,211 - services.analysis_service - INFO - [ANALYSIS] [ANALYSIS] Processing stroke-specific analysis: Freestyle
+2026-08-15 12:53:58,221 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-15 12:53:58,643 - utils.video_utils - INFO - [VIDEO] Opened video: test_stability_video.mp4 (854x480 @ 30.0fps)
+2026-08-15 12:53:58,647 - utils.video_utils - INFO - [VIDEO] Opened video: test_stability_video.mp4 (854x480 @ 30.0fps)
+2026-08-15 12:53:58,662 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_test_stability_video.mp4 (Codec: mp4v)
+2026-08-15 12:53:59,270 - services.analysis_service - WARNING - [ANALYSIS] Early precheck VQA critical failure. Aborting before full processing.
+2026-08-15 12:53:59,274 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-15 12:53:59,854 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-15 12:54:00,963 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-15 12:54:01,646 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:54:01,654 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:54:01,662 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:54:01,680 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:54:02,068 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:54:02,077 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:54:02,081 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:54:02,086 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:54:02,099 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:54:02,108 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:54:02,113 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:54:02,121 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:54:02,135 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:54:02,144 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:54:02,150 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:54:02,160 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:54:02,173 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:54:02,181 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:54:02,187 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:54:02,194 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:54:02,205 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:54:02,214 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:54:02,219 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:54:02,230 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:54:02,310 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-15 12:54:02,318 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:54:02,326 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:54:02,329 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:54:02,335 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:54:02,628 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-15 12:54:02,636 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\30a4089c147c446aae1072564b708a53.pdf
+2026-08-15 12:54:02,650 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:54:02,660 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:54:02,666 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:54:02,674 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:54:03,079 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-15 12:54:03,385 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:54:03,398 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:54:03,407 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:54:03,413 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:54:03,425 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:54:03,434 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:54:03,441 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:54:03,449 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:54:03,462 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:54:03,472 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:54:03,477 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:54:03,483 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:54:03,953 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-15 12:54:04,232 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-15 12:54:04,494 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-15 12:54:04,498 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:54:04,503 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:54:04,506 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:54:04,510 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:54:04,520 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:54:04,528 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:54:04,534 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:54:04,539 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:54:04,551 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:54:04,559 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:54:04,565 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:54:04,572 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:54:04,590 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:54:04,598 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:54:04,603 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:54:04,610 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:54:18,953 - scientific_reference.validation.statistical_validator - WARNING - [SYSTEM] Rejected: Sample size 4 is too small for benchmark aggregation.
+2026-08-15 12:54:18,965 - scientific_reference.validation.evidence_validator - WARNING - [SYSTEM] Provenance rejection for swimming velocity: Quote not found in source text.
+2026-08-15 12:54:18,980 - scientific_reference.evidence_aggregator - WARNING - [SYSTEM] Conflicting evidence detected for Freestyle stroke_rate Male 18-25. Range: 40.0-60.0, Pooled Std: 1.0
+2026-08-15 12:54:19,073 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-15 12:54:20,692 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Unknown | Decision score: None | Missing evidence: ['arm_phase_correlation', 'body_roll_amplitude', 'wrist_vertical_range_ratio', 'leg_kick_symmetry']
+2026-08-15 12:54:58,473 - services.auth_service - ERROR - [SYSTEM] System misconfigured: argon2-cffi is required for production.
+2026-08-15 12:54:58,740 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Unknown | Decision score: None | Missing evidence: ['arm_phase_correlation', 'body_roll_amplitude', 'wrist_vertical_range_ratio', 'leg_kick_symmetry']
+2026-08-15 12:54:59,263 - services.auth_service - ERROR - [SYSTEM] Cannot process login: argon2-cffi missing.
+2026-08-15 12:55:53,177 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Unknown | Decision score: None | Missing evidence: ['arm_phase_correlation', 'body_roll_amplitude', 'wrist_vertical_range_ratio', 'leg_kick_symmetry']
+2026-08-15 12:55:54,378 - services.auth_service - INFO - [SYSTEM] Upgraded password hash for migration_test to Argon2id
+2026-08-15 12:55:54,378 - services.auth_service - INFO - [SYSTEM] Account logged in: migration_test (coach)
+2026-08-15 12:55:54,508 - services.auth_service - INFO - [SYSTEM] Account logged in: migration_test (coach)
+2026-08-15 12:56:30,286 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Unknown | Decision score: None | Missing evidence: ['arm_phase_correlation', 'body_roll_amplitude', 'wrist_vertical_range_ratio', 'leg_kick_symmetry']
+2026-08-15 12:56:31,603 - services.auth_service - INFO - [SYSTEM] Upgraded password hash for migration_test to Argon2id
+2026-08-15 12:56:31,603 - services.auth_service - INFO - [SYSTEM] Account logged in: migration_test (coach)
+2026-08-15 12:56:31,736 - services.auth_service - INFO - [SYSTEM] Account logged in: migration_test (coach)
+2026-08-15 12:56:53,050 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Freestyle | Decision score: 0.5909 | Missing evidence: []
+2026-08-15 12:56:53,055 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Butterfly | Decision score: 0.7917 | Missing evidence: []
+2026-08-15 12:56:53,059 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Breaststroke | Decision score: 0.7083 | Missing evidence: []
+2026-08-15 12:56:53,062 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Unknown | Decision score: None | Missing evidence: ['arm_phase_correlation', 'body_roll_amplitude', 'wrist_vertical_range_ratio', 'leg_kick_symmetry']
+2026-08-15 12:56:55,982 - services.auth_service - INFO - [SYSTEM] Upgraded password hash for migration_test to Argon2id
+2026-08-15 12:56:55,982 - services.auth_service - INFO - [SYSTEM] Account logged in: migration_test (coach)
+2026-08-15 12:56:56,136 - services.auth_service - INFO - [SYSTEM] Account logged in: migration_test (coach)
+2026-08-15 12:56:56,323 - scientific_reference.validation.benchmark_eligibility_validator - INFO - [SYSTEM] Systematic review SR_BACKSTROKE_2025 lacks explicit primary study trace. Assigned REVIEW_REQUIRED.
+2026-08-15 12:56:56,390 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Sex leakage prohibited: candidate sex 'Male' vs target sex 'Female'
+2026-08-15 12:56:56,432 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Age leakage prohibited: adult candidate '18-25' vs target youth age '8-10'
+2026-08-15 12:56:56,461 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Stroke leakage prohibited: candidate stroke 'freestyle' vs target stroke 'backstroke'
+2026-08-15 12:56:56,498 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Meta-analysis MA_400M_FRONT_CRAWL restricted to 400m front crawl test context (attempted target distance: 100m)
+2026-08-15 12:56:56,510 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:56:56,518 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:56:56,524 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:56:56,530 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:56:56,537 - scientific_reference.validation.evidence_validator - WARNING - [SYSTEM] Provenance rejection for stroke_rate: Quote not found in source text.
+2026-08-15 12:56:56,546 - scientific_reference.validation.evidence_validator - WARNING - [SYSTEM] Stroke rejection for stroke_rate: Stroke 'Freestyle' not supported by context.
+2026-08-15 12:56:56,555 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:56:56,562 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:56:56,566 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:56:56,570 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:56:56,583 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:56:56,592 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:56:56,596 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:56:56,602 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:56:56,639 - scientific_reference.validation.benchmark_eligibility_validator - WARNING - [SYSTEM] Fabricated metadata detected for candidate SRC-FAKE-001
+2026-08-15 12:56:56,718 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-15 12:56:56,761 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:56:56,768 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:56:56,772 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:56:56,781 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:56:56,798 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:56:56,807 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:56:56,812 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:56:56,817 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:56:56,817 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: N/A (Unvalidated Cohort), Dataset: Freestyle Population Reference Matrix v2.0)
+2026-08-15 12:56:56,828 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:56:56,833 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:56:56,836 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:56:56,844 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:56:56,850 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:56:56,860 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:56:56,865 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:56:56,874 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:56:56,875 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: Intermediate, Dataset: )
+2026-08-15 12:56:56,884 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:56:56,894 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:56:56,901 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:56:56,912 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:56:56,932 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:56:56,938 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:56:56,945 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:56:56,952 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:56:56,965 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:56:56,976 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:56:56,982 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:56:56,990 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:56:57,004 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:56:57,012 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:56:57,015 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:56:57,019 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:56:57,046 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v1.0.0)
+2026-08-15 12:56:57,051 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-15 12:56:57,059 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-15 12:56:57,070 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-15 12:56:57,079 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-15 12:56:57,085 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-15 12:56:57,095 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Low
+2026-08-15 12:56:57,100 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-15 12:56:58,232 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-15 12:56:58,314 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-15 12:56:58,412 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-15 12:56:58,512 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-15 12:56:59,887 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: test_stability_video.mp4 (Effective FPS: 30.0, Frame Stride: 2)
+2026-08-15 12:56:59,887 - services.analysis_service - INFO - [ANALYSIS] [STROKE] User selected stroke: Freestyle
+2026-08-15 12:56:59,888 - services.analysis_service - INFO - [ANALYSIS] [STROKE] Selection source: USER
+2026-08-15 12:56:59,888 - services.analysis_service - INFO - [ANALYSIS] [STROKE] Automatic stroke classification: DISABLED
+2026-08-15 12:56:59,888 - services.analysis_service - INFO - [ANALYSIS] [ANALYSIS] Processing stroke-specific analysis: Freestyle
+2026-08-15 12:56:59,895 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-15 12:57:00,289 - utils.video_utils - INFO - [VIDEO] Opened video: test_stability_video.mp4 (854x480 @ 30.0fps)
+2026-08-15 12:57:00,293 - utils.video_utils - INFO - [VIDEO] Opened video: test_stability_video.mp4 (854x480 @ 30.0fps)
+2026-08-15 12:57:00,295 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_test_stability_video.mp4 (Codec: mp4v)
+2026-08-15 12:57:00,867 - services.analysis_service - WARNING - [ANALYSIS] Early precheck VQA critical failure. Aborting before full processing.
+2026-08-15 12:57:00,871 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-15 12:57:01,411 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-15 12:57:02,691 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-15 12:57:03,551 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:57:03,563 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:57:03,570 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:57:03,583 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:57:03,853 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:57:03,861 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:57:03,866 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:57:03,876 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:57:03,887 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:57:03,897 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:57:03,903 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:57:03,912 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:57:03,927 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:57:03,932 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:57:03,938 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:57:03,947 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:57:03,958 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:57:03,964 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:57:03,967 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:57:03,973 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:57:03,985 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:57:03,995 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:57:04,000 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:57:04,009 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:57:04,109 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-15 12:57:04,121 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:57:04,130 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:57:04,136 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:57:04,145 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:57:04,492 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-15 12:57:04,498 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\20ee68acd5f642428a809d3b4e5ab696.pdf
+2026-08-15 12:57:04,513 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:57:04,522 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:57:04,529 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:57:04,537 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:57:04,825 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-15 12:57:05,117 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:57:05,127 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:57:05,130 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:57:05,142 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:57:05,150 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:57:05,159 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:57:05,163 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:57:05,167 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:57:05,179 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:57:05,187 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:57:05,192 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:57:05,196 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:57:05,645 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-15 12:57:05,997 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-15 12:57:06,509 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-15 12:57:06,513 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:57:06,521 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:57:06,525 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:57:06,529 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:57:06,543 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:57:06,553 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:57:06,558 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:57:06,564 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:57:06,573 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:57:06,578 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:57:06,581 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:57:06,590 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:57:06,610 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:57:06,619 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:57:06,624 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:57:06,632 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:57:17,984 - scientific_reference.validation.statistical_validator - WARNING - [SYSTEM] Rejected: Sample size 4 is too small for benchmark aggregation.
+2026-08-15 12:57:17,999 - scientific_reference.validation.evidence_validator - WARNING - [SYSTEM] Provenance rejection for swimming velocity: Quote not found in source text.
+2026-08-15 12:57:18,014 - scientific_reference.evidence_aggregator - WARNING - [SYSTEM] Conflicting evidence detected for Freestyle stroke_rate Male 18-25. Range: 40.0-60.0, Pooled Std: 1.0
+2026-08-15 12:57:18,144 - scientific_reference.storage.scientific_evidence_registry - INFO - [SYSTEM] Loaded 8 scientific evidence records from registry.
+2026-08-15 12:57:19,753 - analysis.classification.ai_stroke_agent - INFO - [SYSTEM] [AI_STROKE_AGENT] Input source: STRUCTURED_ANALYSIS | Video access: NONE | Pose extraction: NONE | Frames analyzed: 0 | Decision: Unknown | Decision score: None | Missing evidence: ['arm_phase_correlation', 'body_roll_amplitude', 'wrist_vertical_range_ratio', 'leg_kick_symmetry']
+2026-08-15 12:57:33,178 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:57:33,182 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:57:33,184 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:57:33,189 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:57:34,785 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:57:34,852 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:57:34,857 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:57:34,861 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:57:37,142 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:57:37,152 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:57:37,162 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:57:37,170 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:57:39,422 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 12:57:39,426 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 12:57:39,431 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 12:57:39,435 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 12:57:43,647 - services.scientific_updater_service - INFO - [SYSTEM] [5%] Initializing atomic update staging environment...
+2026-08-15 12:57:43,749 - services.scientific_updater_service - INFO - [SYSTEM] [20%] Searching external peer-reviewed literature & retrieving PMC full text...
+2026-08-15 12:58:07,572 - services.scientific_updater_service - WARNING - [SYSTEM] Europe PMC search failed for 'Freestyle stroke kinematics rate': <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>

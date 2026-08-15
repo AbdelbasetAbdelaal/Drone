@@ -129,9 +129,8 @@ def test_ai_only_available():
     decision = engine.evaluate_hybrid_decision(rule_res, ai_res, vis_res)
     assert decision.stroke_type == StrokeType.UNKNOWN
     assert decision.confidence is None
-    assert decision.raw_detection_result.classification_status == "REVIEW_REQUIRED"
-    assert decision.raw_detection_result.ai_prediction == StrokeType.BREASTSTROKE
-    assert decision.raw_detection_result.method == "AI_ONLY"
+    # With AI inference removed from production per P0 decision, this now correctly yields INSUFFICIENT_EVIDENCE
+    assert decision.raw_detection_result.classification_status == "INSUFFICIENT_EVIDENCE"
 
 def test_both_unavailable():
     """Both Rule and AI unavailable -> UNKNOWN, INSUFFICIENT_EVIDENCE, confidence=None."""

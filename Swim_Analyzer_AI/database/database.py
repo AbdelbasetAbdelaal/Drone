@@ -37,12 +37,11 @@ def init_db():
                 conn.commit()
                 conn.execute(text("UPDATE coaches SET role = 'coach' WHERE role IS NULL"))
                 conn.commit()
-            res_coach = conn.execute(text("SELECT coach_id FROM coaches WHERE username = 'coach1'")).fetchone()
-            if res_coach:
-                c1_id = res_coach[0]
-                conn.execute(text("UPDATE athletes SET coach_id = :cid WHERE coach_id IS NULL"), {"cid": c1_id})
-                conn.commit()
-
+            # Safely identify orphaned athletes but do not automatically assign ownership
+            orphaned_athletes = conn.execute(text("SELECT COUNT(*) FROM athletes WHERE coach_id IS NULL")).fetchone()[0]
+            if orphaned_athletes > 0:
+                import logging
+                logging.getLogger(__name__).warning(f"Found {orphaned_athletes} orphaned athletes with NULL coach_id. Manual admin migration required.")
             # Migration for account_id column in analysis_sessions table
             res_sess = conn.execute(text("PRAGMA table_info(analysis_sessions)"))
             sess_cols = [row[1] for row in res_sess.fetchall()]

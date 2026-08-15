@@ -15,7 +15,7 @@ It transforms raw video of swimming technique into auditable, 3D kinematic measu
 - **3D Pose & Kinematics**: Calculates 3D body roll rotation, core torsion, joint angles (elbow, knee, shoulder), stroke cycle phase segmentation, and time-in-phase breakdown.
 - **Key Metrics**:
   - **Stroke Rate (tempo)**: Cycles per minute (spm) and Hz.
-  - **Stroke Length (distance per stroke)**: Distance traveled per arm cycle in meters (m).
+  - **Stroke Length (distance per stroke)**: Distance traveled per arm cycle. Represented in physical meters (m) if calibration is available, otherwise defaults to `relative_body_normalized` (uncalibrated) to prevent medical misinterpretations.
   - **Kick Frequency**: Kick cycles per second / minute.
   - **Stroke Symmetry**: Bilateral force and velocity symmetry index (%).
   - **3D Body Roll & Core Torsion**: Rotation angles relative to water plane.
@@ -96,8 +96,15 @@ pip install -r requirements.txt
 ```bash
 venv\Scripts\streamlit run app/streamlit_app.py
 ```
-Open `http://localhost:8501`. Default login: `coach1` / `password123`.
+Open `http://localhost:8501`. 
 
+**Initial Setup & Login:**
+The application does not use hardcoded default passwords. To access the platform, you must configure the initial bootstrap credentials in your `.env` file (see `.env.example`):
+```env
+SWIM_ANALYZER_BOOTSTRAP_COACH_USERNAME=your_secure_username
+SWIM_ANALYZER_BOOTSTRAP_COACH_PASSWORD=your_secure_password
+```
+Use these credentials to log in for the first time.
 ---
 
 ## 🧪 Automated Testing

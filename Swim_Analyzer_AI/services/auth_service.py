@@ -19,7 +19,7 @@ try:
 except ImportError:
     ph = None
     HAS_ARGON2 = False
-    logger.warning("argon2-cffi not found. Password hashing will degrade or fail.")
+    logger.error("System misconfigured: argon2-cffi is required for production.")
 
 
 class AuthService:
@@ -31,26 +31,13 @@ class AuthService:
     @staticmethod
     def hash_password(password: str, salt_hex: Optional[str] = None) -> Tuple[str, str]:
         """
-        Hashes password using Argon2id (or PBKDF2 fallback if explicitly called during tests without argon2).
+        Hashes password using Argon2id.
         Returns: (password_hash, salt_hex)
         """
-        if HAS_ARGON2:
-            return ph.hash(password), "" # Salt is handled natively by Argon2
-        else:
-            # PBKDF2 fallback for environment strictly missing argon2-cffi
-            if salt_hex is None:
-                salt_bytes = os.urandom(16)
-                salt_hex = salt_bytes.hex()
-            else:
-                salt_bytes = bytes.fromhex(salt_hex)
-                
-            hash_bytes = hashlib.pbkdf2_hmac(
-                'sha256',
-                password.encode('utf-8'),
-                salt_bytes,
-                100000
-            )
-            return hash_bytes.hex(), salt_hex
+        if not HAS_ARGON2:
+            raise RuntimeError("System misconfigured: argon2-cffi is required for production.")
+            
+        return ph.hash(password), "" # Salt is handled natively by Argon2
 
     @staticmethod
     def _verify_pbkdf2(password: str, stored_hash: str, salt_hex: str) -> bool:
@@ -119,6 +106,10 @@ class AuthService:
         Authenticates an account and transparently upgrades PBKDF2 hashes to Argon2id.
         Returns: (success: bool, message: str, coach_profile: Optional[CoachProfile])
         """
+        if not HAS_ARGON2:
+            logger.error("Cannot process login: argon2-cffi missing.")
+            return False, "System misconfigured (missing argon2).", None
+            
         username = username.strip().lower()
         init_db()
         db = SessionLocal()

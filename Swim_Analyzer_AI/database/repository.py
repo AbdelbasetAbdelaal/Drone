@@ -86,8 +86,15 @@ class AthleteRepository:
             self.db.rollback()
             return False
 
-    def get(self, athlete_id: str) -> Optional[AthleteProfile]:
-        db_athlete = self.db.query(AthleteModel).filter(AthleteModel.athlete_id == athlete_id).first()
+    def get(self, athlete_id: str, coach_id: str) -> Optional[AthleteProfile]:
+        if not coach_id:
+            raise ValueError("Security: coach_id is required for tenant authorization")
+            
+        db_athlete = self.db.query(AthleteModel).filter(
+            AthleteModel.athlete_id == athlete_id,
+            AthleteModel.coach_id == coach_id
+        ).first()
+        
         if db_athlete:
             data = {c.name: getattr(db_athlete, c.name) for c in db_athlete.__table__.columns}
             return AthleteProfile.from_dict(data)
@@ -106,8 +113,15 @@ class AthleteRepository:
             profiles.append(AthleteProfile.from_dict(data))
         return profiles
 
-    def delete(self, athlete_id: str) -> bool:
-        db_athlete = self.db.query(AthleteModel).filter(AthleteModel.athlete_id == athlete_id).first()
+    def delete(self, athlete_id: str, coach_id: str) -> bool:
+        if not coach_id:
+            raise ValueError("Security: coach_id is required for tenant authorization")
+            
+        db_athlete = self.db.query(AthleteModel).filter(
+            AthleteModel.athlete_id == athlete_id,
+            AthleteModel.coach_id == coach_id
+        ).first()
+        
         if db_athlete:
             try:
                 self.db.delete(db_athlete)
@@ -168,15 +182,29 @@ class AnalysisHistoryRepository:
             sessions.append(AnalysisSession.from_dict(data))
         return sessions
 
-    def get(self, session_id: str) -> Optional[AnalysisSession]:
-        db_session = self.db.query(AnalysisSessionModel).filter(AnalysisSessionModel.session_id == session_id).first()
+    def get(self, session_id: str, account_id: str) -> Optional[AnalysisSession]:
+        if not account_id:
+            raise ValueError("Security: account_id is required for tenant authorization")
+            
+        db_session = self.db.query(AnalysisSessionModel).filter(
+            AnalysisSessionModel.session_id == session_id,
+            AnalysisSessionModel.account_id == account_id
+        ).first()
+        
         if db_session:
             data = {c.name: getattr(db_session, c.name) for c in db_session.__table__.columns}
             return AnalysisSession.from_dict(data)
         return None
 
-    def delete(self, session_id: str) -> bool:
-        db_session = self.db.query(AnalysisSessionModel).filter(AnalysisSessionModel.session_id == session_id).first()
+    def delete(self, session_id: str, account_id: str) -> bool:
+        if not account_id:
+            raise ValueError("Security: account_id is required for tenant authorization")
+            
+        db_session = self.db.query(AnalysisSessionModel).filter(
+            AnalysisSessionModel.session_id == session_id,
+            AnalysisSessionModel.account_id == account_id
+        ).first()
+        
         if db_session:
             try:
                 self.db.delete(db_session)

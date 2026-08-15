@@ -62,36 +62,36 @@ class AthleteService:
         self.save_profile(profile)
         return profile
 
-    def load_profile(self, athlete_id: str, coach_id: Optional[str] = None) -> Optional[AthleteProfile]:
-        """Load an athlete profile from the database, enforcing coach ownership if provided."""
-        profile = self.repository.get(athlete_id)
-        if not profile:
-            logger.warning(f"Athlete profile not found: {athlete_id}")
-            return None
+    def load_profile(self, athlete_id: str, coach_id: str) -> Optional[AthleteProfile]:
+        """Load an athlete profile from the database, enforcing coach ownership strictly."""
+        if not coach_id:
+            logger.warning(f"Security: Missing coach_id for athlete profile access {athlete_id}")
+            raise ValueError("coach_id is required")
             
-        if coach_id is not None and profile.coach_id:
-            if str(profile.coach_id) != str(coach_id):
-                logger.warning(f"Security: Unauthorized access attempt to profile {athlete_id} by coach {coach_id}")
-                return None
+        profile = self.repository.get(athlete_id, coach_id)
+        if not profile:
+            logger.warning(f"Athlete profile not found or access denied: {athlete_id}")
+            return None
                 
         return profile
 
-    def get_all_profiles(self, coach_id: Optional[str] = None) -> List[AthleteProfile]:
-        """Load all athlete profiles for the given coach from the database."""
+    def get_all_profiles(self, coach_id: str) -> List[AthleteProfile]:
+        """Load all athlete profiles strictly for a specific coach."""
+        if not coach_id:
+            raise ValueError("coach_id is required to fetch profiles")
         return self.repository.get_all(coach_id=coach_id)
 
     def update_profile(self, profile: AthleteProfile) -> bool:
         """Update an existing athlete profile. Alias for save_profile."""
         return self.save_profile(profile)
 
-    def delete_profile(self, athlete_id: str, coach_id: Optional[str] = None) -> bool:
-        """Delete an athlete profile by ID, enforcing coach ownership if provided."""
-        profile = self.load_profile(athlete_id, coach_id=coach_id)
-        if not profile:
-            logger.warning(f"Security/Not Found: Cannot delete profile {athlete_id}")
-            return False
+    def delete_profile(self, athlete_id: str, coach_id: str) -> bool:
+        """Delete an athlete profile by ID, enforcing strict coach ownership."""
+        if not coach_id:
+            logger.warning(f"Security: Missing coach_id for delete operation on {athlete_id}")
+            raise ValueError("coach_id is required")
             
-        success = self.repository.delete(athlete_id)
+        success = self.repository.delete(athlete_id, coach_id)
         if success:
             logger.info(f"Deleted athlete profile: {athlete_id}")
         else:
