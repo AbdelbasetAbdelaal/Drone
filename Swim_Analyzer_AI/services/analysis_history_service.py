@@ -31,11 +31,18 @@ class AnalysisHistoryService:
             logger.error(f"Error saving analysis session {session.session_id} to database.")
         return success
 
-    def load_session(self, session_id: str) -> Optional[AnalysisSession]:
-        """Load an analysis session from the database."""
+    def load_session(self, session_id: str, account_id: Optional[str] = None) -> Optional[AnalysisSession]:
+        """Load an analysis session from the database, enforcing account ownership if provided."""
         session = self.repository.get(session_id)
         if not session:
             logger.warning(f"Analysis session not found: {session_id}")
+            return None
+            
+        if account_id is not None and session.account_id:
+            if str(session.account_id) != str(account_id):
+                logger.warning(f"Security: Unauthorized access attempt to session {session_id} by account {account_id}")
+                return None
+                
         return session
 
     def get_sessions_by_athlete(self, athlete_id: Optional[str]) -> List[AnalysisSession]:
@@ -71,12 +78,18 @@ class AnalysisHistoryService:
             })
         return pd.DataFrame(rows)
 
-    def delete_session(self, session_id: str) -> bool:
-        """Delete an analysis session by ID."""
+    def delete_session(self, session_id: str, account_id: Optional[str] = None) -> bool:
+        """Delete an analysis session by ID, enforcing account ownership if provided."""
+        session = self.load_session(session_id, account_id=account_id)
+        if not session:
+            logger.warning(f"Security/Not Found: Cannot delete session {session_id}")
+            return False
+            
         success = self.repository.delete(session_id)
         if success:
             logger.info(f"Deleted analysis session: {session_id}")
         else:
             logger.error(f"Error deleting analysis session {session_id}")
         return success
+
 

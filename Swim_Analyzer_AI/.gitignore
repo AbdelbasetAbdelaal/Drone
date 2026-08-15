@@ -1,13 +1,36 @@
+# Environment Variables
 .env
+.env.local
 
-# Python tooling
+# Python Tooling & Environments
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.ruff_cache/
+venv/
+env/
+.venv/
 
-# Local runtime artifacts
+# IDE & Editor
+.vscode/
+.idea/
+
+# Local Database (CRITICAL SECURITY)
+data/*.db
+data/*.sqlite3
+swim_analyzer.db
+
+# User Data & Uploads
+data/input_videos/*
+!data/input_videos/.gitkeep
+data/output_videos/*
+!data/output_videos/.gitkeep
+data/reports/*
+!data/reports/.gitkeep
+data/pdf_reports/*
+!data/pdf_reports/.gitkeep
+
+# Temporary and Scratch files
+scratch/
+scratch_audit*
 logs/*.log
-data/input_videos/upload_*.mp4
-data/output_videos/processed_upload_*.mp4
-data/reports/*_upload_*.json
-data/pdf_reports/

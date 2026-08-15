@@ -52,14 +52,15 @@ class ExportService:
                 }
                 export_data["frames"].append(frame_dict)
                 
+            from utils.file_security import sanitize_and_resolve_path
             report_name = f"report_{Path(input_filename).stem}.json"
-            report_path = config.reports_dir / report_name
+            report_path = sanitize_and_resolve_path(report_name, str(config.reports_dir), generate_unique=True)
             
             with open(report_path, 'w') as f:
                 json.dump(export_data, f, indent=4)
                 
             metadata_name = f"metadata_{Path(input_filename).stem}.json"
-            metadata_path = config.reports_dir / metadata_name
+            metadata_path = sanitize_and_resolve_path(metadata_name, str(config.reports_dir), generate_unique=True)
             
             metadata_dict = dataclasses.asdict(metadata)
             
@@ -115,7 +116,7 @@ class ExportService:
                 timeline_data.append(frame_timeline)
                 
             timeline_name = f"timeline_{Path(input_filename).stem}.json"
-            timeline_path = config.reports_dir / timeline_name
+            timeline_path = sanitize_and_resolve_path(timeline_name, str(config.reports_dir), generate_unique=True)
             with open(timeline_path, 'w') as f:
                 json.dump(timeline_data, f, indent=4)
                 

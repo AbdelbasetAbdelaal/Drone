@@ -4,6 +4,12 @@ Using dataclasses to ensure typed and structured configuration.
 """
 from dataclasses import dataclass, field
 from pathlib import Path
+import os
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 
 @dataclass
@@ -108,8 +114,9 @@ class AppConfig:
                 calib_cfg = data.get("calibration", {})
                 self.calibration_shoulder_width_m = float(calib_cfg.get("shoulder_width_m", self.calibration_shoulder_width_m))
                 
-            except Exception:
-                pass
+            except Exception as e:
+                import logging
+                logging.getLogger(__name__).warning(f"Failed to load config.yaml: {e}")
 
 
 # Global configuration instance

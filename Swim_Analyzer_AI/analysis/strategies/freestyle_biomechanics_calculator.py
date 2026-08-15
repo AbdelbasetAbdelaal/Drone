@@ -224,19 +224,11 @@ class FreestyleBiomechanicsCalculator(BaseBiomechanicsCalculator):
     def _calculate_stroke_length(cls, frames: List[FrameData], calibration_engine: Any, frame_width: int, frame_height: int) -> ValidatedMetric:
         if not calibration_engine or frame_width <= 0 or frame_height <= 0:
             return ValidatedMetric(
-                name="stroke_length", value=None, unit="meters", measurement_domain="unavailable",
+                name="stroke_length", value=None, unit="unavailable", measurement_domain="unavailable",
                 status="unavailable", valid=False, calibration_required=True, calibration_status="missing",
                 reason_if_invalid="Physical pool calibration missing"
             )
-            
-        # P0-1 & P0-2 Policy Check: If physical calibration is missing, return unavailable
-        is_physical = getattr(calibration_engine, 'is_physical_calibration', False)
-        if not is_physical:
-            return ValidatedMetric(
-                name="stroke_length", value=None, unit="meters", measurement_domain="unavailable",
-                status="unavailable", valid=False, calibration_required=True, calibration_status="missing",
-                reason_if_invalid="Physical calibration unavailable. Relative Body Length measurements cannot be labeled as meters."
-            )
+
 
         stroke_lengths = []
         current_cycle_min_x = 999.0
@@ -276,10 +268,14 @@ class FreestyleBiomechanicsCalculator(BaseBiomechanicsCalculator):
             is_est = True
         
         valid = sl > 0 
+        is_physical = getattr(calibration_engine, 'is_physical_calibration', False)
         return ValidatedMetric(
-            name="stroke_length", value=sl if valid else None, unit="meters",
-            measurement_domain="calibrated_physical", status="available" if valid else "unavailable",
-            valid=valid, is_estimated=is_est, calibration_required=True, calibration_status="calibrated",
+            name="stroke_length", value=sl if valid else None, 
+            unit=calibration_engine.unit_name,
+            measurement_domain=calibration_engine.measurement_domain, 
+            status="available" if valid else "unavailable",
+            valid=valid, is_estimated=is_est, calibration_required=True, 
+            calibration_status="calibrated" if is_physical else "uncalibrated",
             reason_if_invalid="" if valid else "Insufficient tracking to calculate length."
         )
 

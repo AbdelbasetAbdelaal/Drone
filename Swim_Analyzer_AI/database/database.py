@@ -52,8 +52,10 @@ def init_db():
             if "benchmark_summary_json" not in sess_cols:
                 conn.execute(text("ALTER TABLE analysis_sessions ADD COLUMN benchmark_summary_json TEXT"))
                 conn.commit()
-    except Exception:
-        pass
+    except Exception as e:
+        import logging
+        logging.getLogger(__name__).error(f"Database migration failed: {e}")
+        raise e
 
 def get_db():
     db = SessionLocal()

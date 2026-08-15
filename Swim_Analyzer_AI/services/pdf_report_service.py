@@ -148,9 +148,10 @@ class PDFReportService:
                 pdf.cell(col_widths[4], 8, str(conf), border=1, align="C")
                 pdf.ln()
 
-        filename = f"Athlete_{profile.full_name.replace(' ', '_')}_{uuid.uuid4().hex[:6]}.pdf"
-        filepath = self.output_dir / filename
-        pdf.output(str(filepath))
+        from utils.file_security import sanitize_and_resolve_path
+        filename = f"Athlete_{profile.full_name.replace(' ', '_')}.pdf"
+        filepath = sanitize_and_resolve_path(filename, str(self.output_dir), generate_unique=True)
+        pdf.output(filepath)
         logger.info(f"Generated athlete summary PDF: {filepath}")
         return str(filepath)
 
@@ -349,8 +350,9 @@ class PDFReportService:
         pdf.cell(0, 6, f"Completed Stroke Cycles: {completed_cycles}", ln=True)
         pdf.cell(0, 6, f"Total Analyzed Frames: {total_frames}", ln=True)
 
-        filename = f"Session_Report_{uuid.uuid4().hex[:8]}.pdf"
-        filepath = self.output_dir / filename
-        pdf.output(str(filepath))
+        from utils.file_security import sanitize_and_resolve_path
+        filename = "Session_Report.pdf"
+        filepath = sanitize_and_resolve_path(filename, str(self.output_dir), generate_unique=True)
+        pdf.output(filepath)
         logger.info(f"Generated session analysis PDF: {filepath}")
         return str(filepath)

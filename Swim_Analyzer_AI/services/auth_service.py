@@ -1,5 +1,6 @@
 import hashlib
 import os
+import hmac
 from datetime import datetime
 from typing import List, Optional, Tuple
 from database.database import SessionLocal, engine, Base, init_db
@@ -9,31 +10,58 @@ from core.logger import setup_logger
 
 logger = setup_logger(__name__)
 
+# Try to import argon2, but fail gracefully if not installed
+try:
+    from argon2 import PasswordHasher
+    from argon2.exceptions import VerifyMismatchError, InvalidHashError
+    ph = PasswordHasher()
+    HAS_ARGON2 = True
+except ImportError:
+    ph = None
+    HAS_ARGON2 = False
+    logger.warning("argon2-cffi not found. Password hashing will degrade or fail.")
+
+
 class AuthService:
     """
-    Handles secure authentication, password hashing using PBKDF2-HMAC-SHA256,
+    Handles secure authentication, password hashing using Argon2id (with PBKDF2 upgrade),
     and coach registration/multi-tenancy session management.
     """
     
     @staticmethod
     def hash_password(password: str, salt_hex: Optional[str] = None) -> Tuple[str, str]:
         """
-        Hashes password using PBKDF2-HMAC-SHA256 with 100,000 iterations.
-        Returns: (password_hash_hex, salt_hex)
+        Hashes password using Argon2id (or PBKDF2 fallback if explicitly called during tests without argon2).
+        Returns: (password_hash, salt_hex)
         """
-        if salt_hex is None:
-            salt_bytes = os.urandom(16)
-            salt_hex = salt_bytes.hex()
+        if HAS_ARGON2:
+            return ph.hash(password), "" # Salt is handled natively by Argon2
         else:
-            salt_bytes = bytes.fromhex(salt_hex)
-            
+            # PBKDF2 fallback for environment strictly missing argon2-cffi
+            if salt_hex is None:
+                salt_bytes = os.urandom(16)
+                salt_hex = salt_bytes.hex()
+            else:
+                salt_bytes = bytes.fromhex(salt_hex)
+                
+            hash_bytes = hashlib.pbkdf2_hmac(
+                'sha256',
+                password.encode('utf-8'),
+                salt_bytes,
+                100000
+            )
+            return hash_bytes.hex(), salt_hex
+
+    @staticmethod
+    def _verify_pbkdf2(password: str, stored_hash: str, salt_hex: str) -> bool:
+        salt_bytes = bytes.fromhex(salt_hex)
         hash_bytes = hashlib.pbkdf2_hmac(
             'sha256',
             password.encode('utf-8'),
             salt_bytes,
             100000
         )
-        return hash_bytes.hex(), salt_hex
+        return hmac.compare_digest(hash_bytes.hex(), stored_hash)
 
     @classmethod
     def register_coach(cls, username: str, password: str, full_name: str, email: str = "", role: str = "coach") -> Tuple[bool, str, Optional[CoachProfile]]:
@@ -41,6 +69,10 @@ class AuthService:
         Registers a new account.
         Returns: (success: bool, message: str, coach_profile: Optional[CoachProfile])
         """
+        if not HAS_ARGON2:
+            logger.error("Cannot register account: argon2-cffi missing.")
+            return False, "System misconfigured (missing argon2).", None
+
         username = username.strip().lower()
         role = role.strip().lower() if role else "coach"
         if role not in {"coach", "user", "admin"}:
@@ -84,7 +116,7 @@ class AuthService:
     @classmethod
     def login(cls, username: str, password: str) -> Tuple[bool, str, Optional[CoachProfile]]:
         """
-        Authenticates an account.
+        Authenticates an account and transparently upgrades PBKDF2 hashes to Argon2id.
         Returns: (success: bool, message: str, coach_profile: Optional[CoachProfile])
         """
         username = username.strip().lower()
@@ -95,9 +127,35 @@ class AuthService:
             coach = repo.get_by_username(username)
             if not coach:
                 return False, "Invalid username or password.", None
+            
+            is_valid = False
+            needs_upgrade = False
+            
+            # Detect Hash format
+            if coach.password_hash.startswith("$argon2"):
+                if not HAS_ARGON2:
+                    return False, "System misconfigured (missing argon2).", None
+                try:
+                    is_valid = ph.verify(coach.password_hash, password)
+                    if ph.check_needs_rehash(coach.password_hash):
+                        needs_upgrade = True
+                except (VerifyMismatchError, InvalidHashError):
+                    is_valid = False
+            else:
+                # PBKDF2 Hash Verification
+                is_valid = cls._verify_pbkdf2(password, coach.password_hash, coach.salt)
+                if is_valid:
+                    needs_upgrade = True
+            
+            if is_valid:
+                # Transparent upgrade to Argon2id
+                if needs_upgrade and HAS_ARGON2:
+                    new_hash, _ = cls.hash_password(password)
+                    coach.password_hash = new_hash
+                    coach.salt = "" # Clear old salt
+                    repo.add(coach) # Add performs an upsert in repo
+                    logger.info(f"Upgraded password hash for {username} to Argon2id")
                 
-            computed_hash, _ = cls.hash_password(password, coach.salt)
-            if computed_hash == coach.password_hash:
                 logger.info(f"Account logged in: {username} ({coach.role})")
                 return True, "Login successful!", coach
             else:
@@ -128,23 +186,31 @@ class AuthService:
     @classmethod
     def seed_default_coach(cls) -> Optional[CoachProfile]:
         """
-        Seeds default demo admin and coach accounts if database is empty.
+        Seeds default demo admin and coach accounts if database is empty,
+        only reading from explicitly defined environment variables.
         """
         Base.metadata.create_all(bind=engine)
         db = SessionLocal()
         try:
             repo = CoachRepository(db)
-            existing_admin = repo.get_by_username("admin")
-            if not existing_admin:
-                cls.register_coach("admin", "admin2026", "System Administrator", "admin@swim.ai", role="admin")
+            
+            # Read bootstrap configuration explicitly from environment
+            admin_user = os.getenv("SWIM_ANALYZER_BOOTSTRAP_ADMIN_USERNAME")
+            admin_pass = os.getenv("SWIM_ANALYZER_BOOTSTRAP_ADMIN_PASSWORD")
+            coach_user = os.getenv("SWIM_ANALYZER_BOOTSTRAP_COACH_USERNAME")
+            coach_pass = os.getenv("SWIM_ANALYZER_BOOTSTRAP_COACH_PASSWORD")
 
-            existing = repo.get_by_username("coach1")
-            if not existing:
-                success, msg, coach = cls.register_coach("coach1", "swim2026", "Coach Alex", "alex@swim.ai", role="coach")
-                return coach
-            return existing
-        except Exception as e:
-            logger.warning(f"Error seeding default coach: {e}")
+            if admin_user and admin_pass:
+                if not repo.get_by_username(admin_user):
+                    cls.register_coach(admin_user, admin_pass, "System Administrator", role="admin")
+
+            if coach_user and coach_pass:
+                existing_coach = repo.get_by_username(coach_user)
+                if not existing_coach:
+                    success, msg, coach = cls.register_coach(coach_user, coach_pass, f"Coach {coach_user.capitalize()}", role="coach")
+                    return coach
+                return existing_coach
+                
             return None
         finally:
             db.close()

@@ -62,11 +62,18 @@ class AthleteService:
         self.save_profile(profile)
         return profile
 
-    def load_profile(self, athlete_id: str) -> Optional[AthleteProfile]:
-        """Load an athlete profile from the database."""
+    def load_profile(self, athlete_id: str, coach_id: Optional[str] = None) -> Optional[AthleteProfile]:
+        """Load an athlete profile from the database, enforcing coach ownership if provided."""
         profile = self.repository.get(athlete_id)
         if not profile:
             logger.warning(f"Athlete profile not found: {athlete_id}")
+            return None
+            
+        if coach_id is not None and profile.coach_id:
+            if str(profile.coach_id) != str(coach_id):
+                logger.warning(f"Security: Unauthorized access attempt to profile {athlete_id} by coach {coach_id}")
+                return None
+                
         return profile
 
     def get_all_profiles(self, coach_id: Optional[str] = None) -> List[AthleteProfile]:
@@ -77,11 +84,17 @@ class AthleteService:
         """Update an existing athlete profile. Alias for save_profile."""
         return self.save_profile(profile)
 
-    def delete_profile(self, athlete_id: str) -> bool:
-        """Delete an athlete profile by ID."""
+    def delete_profile(self, athlete_id: str, coach_id: Optional[str] = None) -> bool:
+        """Delete an athlete profile by ID, enforcing coach ownership if provided."""
+        profile = self.load_profile(athlete_id, coach_id=coach_id)
+        if not profile:
+            logger.warning(f"Security/Not Found: Cannot delete profile {athlete_id}")
+            return False
+            
         success = self.repository.delete(athlete_id)
         if success:
             logger.info(f"Deleted athlete profile: {athlete_id}")
         else:
             logger.error(f"Error deleting athlete profile {athlete_id}")
         return success
+

@@ -1155,15 +1155,8 @@ def render_login_portal():
             }
             st.caption(role_help_text[sign_in_role])
 
-            demo_credentials = {
-                "User": "Register a new user account or sign in with an existing user.",
-                "Coach": "Demo coach credentials: Username coach1 | Password swim2026",
-                "Admin": "Demo admin credentials: Username admin | Password admin2026"
-            }
-            st.info(demo_credentials[sign_in_role])
-
-            username = st.text_input("Username", value="coach1" if sign_in_role == "Coach" else "admin" if sign_in_role == "Admin" else "", key="main_user")
-            password = st.text_input("Password", type="password", value="swim2026" if sign_in_role == "Coach" else "admin2026" if sign_in_role == "Admin" else "", key="main_pass")
+            username = st.text_input("Username", key="main_user")
+            password = st.text_input("Password", type="password", key="main_pass")
             submitted = st.form_submit_button("Sign In", type="primary", width="stretch")
             if submitted:
                 ok, msg, logged_account = AuthService.login(username, password)
@@ -1199,8 +1192,13 @@ def render_coach_auth_sidebar():
     st.sidebar.markdown("### 🔐 Account")
     
     # Ensure default demo accounts exist in DB
-    AuthService.seed_default_coach()
-    
+    try:
+        AuthService.seed_default_coach()
+    except Exception as e:
+        logger.error(f"Database initialization failed: {e}")
+        st.sidebar.error("Service temporarily unavailable. Please try again later.")
+        st.stop()
+
     if "current_coach" not in st.session_state:
         st.session_state.current_coach = None
 
@@ -1387,26 +1385,27 @@ def main():
         safe_log(f"VIDEO UPLOADED: {uploaded_file.name}")
         st.subheader("Original Video")
         
-        # Use a UUID-based filename to guarantee Windows path safety.
-        # The original filename (e.g. "WhatsApp Video 2026-07-31 at 11.55.18 AM.mp4")
-        # can contain dots and time separators that trigger OSError [Errno 22] on Windows
-        # even after regex sanitization.
-        import uuid
-        from pathlib import Path as _Path
-        _original_suffix = _Path(uploaded_file.name).suffix.lower() or ".mp4"
+        # Use secure file handling to prevent path traversal and enforce directory bounds
+        from utils.file_security import sanitize_and_resolve_path
         
         # Use a fingerprint (name + size) to avoid re-writing on every Streamlit rerun
         _upload_fingerprint = f"{uploaded_file.name}_{uploaded_file.size}"
         if st.session_state.get("_upload_fingerprint") != _upload_fingerprint:
-            safe_name = f"upload_{uuid.uuid4().hex}{_original_suffix}"
-            temp_input_path = config.input_dir / safe_name
-            with open(temp_input_path, "wb") as f:
-                f.write(uploaded_file.getbuffer())
-            st.session_state["_upload_fingerprint"] = _upload_fingerprint
-            st.session_state["_temp_input_path"] = str(temp_input_path)
+            try:
+                temp_input_path = sanitize_and_resolve_path(
+                    user_filename=uploaded_file.name,
+                    target_dir=str(config.input_dir),
+                    generate_unique=True
+                )
+                with open(temp_input_path, "wb") as f:
+                    f.write(uploaded_file.getbuffer())
+                st.session_state["_upload_fingerprint"] = _upload_fingerprint
+                st.session_state["_temp_input_path"] = temp_input_path
+            except ValueError as e:
+                st.error(f"Security error: {e}")
+                st.stop()
         else:
-            temp_input_path = _Path(st.session_state["_temp_input_path"])
-
+            temp_input_path = st.session_state["_temp_input_path"]
             
         # Read detected FPS & Duration
         from utils.video_utils import get_video_info
