@@ -474,3 +474,113 @@ ConnectionResetError: [WinError 10054] An existing connection was forcibly close
 2026-08-14 17:59:38,041 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
 2026-08-14 17:59:38,045 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_aa2420c2.pdf
 2026-08-14 17:59:38,306 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons
+2026-08-15 11:10:38,901 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 11:12:33,264 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 11:12:33,270 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 11:12:33,276 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 11:12:33,302 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 11:12:33,302 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: N/A (Unvalidated Cohort), Dataset: Freestyle Population Reference Matrix v2.0)
+2026-08-15 11:12:33,313 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 11:12:33,320 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 11:12:33,326 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 11:12:33,331 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 11:12:33,332 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: N/A (Unvalidated Cohort), Dataset: Freestyle Population Reference Matrix v2.0)
+2026-08-15 11:12:33,498 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_test.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_test.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_test.json
+2026-08-15 11:12:33,511 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_test.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_test.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_test.json
+2026-08-15 11:12:33,606 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_c6998eef.pdf
+2026-08-15 11:15:35,210 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 11:15:35,452 - services.auth_service - INFO - [SYSTEM] Account logged in: coach1 (coach)
+2026-08-15 11:15:35,596 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 11:15:37,676 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 11:15:40,454 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 11:15:49,966 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 11:15:49,998 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-15 11:15:57,116 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 11:15:57,158 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-15 11:16:00,310 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 11:16:00,339 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-15 11:16:00,538 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 11:16:00,571 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-15 11:16:00,697 - __main__ - INFO - [SYSTEM] ENTER: process_video
+2026-08-15 11:16:00,698 - services.analysis_service - INFO - [ANALYSIS] Starting video processing for: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_5dfc22bc34014ed7abce2a53165223d4.mp4 (Effective FPS: 30.0, Frame Stride: 1)
+2026-08-15 11:16:00,699 - services.analysis_service - INFO - [ANALYSIS] [STROKE] User selected stroke: Freestyle
+2026-08-15 11:16:00,700 - services.analysis_service - INFO - [ANALYSIS] [STROKE] Selection source: USER
+2026-08-15 11:16:00,701 - services.analysis_service - INFO - [ANALYSIS] [STROKE] Automatic stroke classification: DISABLED
+2026-08-15 11:16:00,702 - services.analysis_service - INFO - [ANALYSIS] [ANALYSIS] Processing stroke-specific analysis: Freestyle
+2026-08-15 11:16:00,770 - analysis.pose_detector - INFO - [POSE] Initializing PoseDetector with model: D:\AI_Projects\Swim_Analyzer_AI\models\pose_landmarker_full.task
+2026-08-15 11:16:05,944 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_5dfc22bc34014ed7abce2a53165223d4.mp4 (720x1280 @ 30.0fps)
+2026-08-15 11:16:05,971 - utils.video_utils - INFO - [VIDEO] Opened video: D:\AI_Projects\Swim_Analyzer_AI\data\input_videos\upload_5dfc22bc34014ed7abce2a53165223d4.mp4 (720x1280 @ 30.0fps)
+2026-08-15 11:16:06,451 - utils.video_utils - INFO - [VIDEO] Writer setup complete for: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_5dfc22bc34014ed7abce2a53165223d4.mp4 (Codec: mp4v)
+2026-08-15 11:16:52,434 - services.analysis_service - INFO - [ANALYSIS] Successfully processed 210 frames.
+2026-08-15 11:16:52,495 - utils.video_utils - INFO - [VIDEO] Video resources released.
+2026-08-15 11:16:52,523 - analysis.consistency_validator - INFO - [ANALYSIS] Consistency Validation complete. Status: Warning. Scientific Confidence: Medium
+2026-08-15 11:16:52,562 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 11:16:52,569 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 11:16:52,575 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 11:16:52,580 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 11:16:52,581 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: N/A (Unvalidated Cohort), Dataset: Freestyle Population Reference Matrix v2.0)
+2026-08-15 11:16:52,930 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_upload_5dfc22bc34014ed7abce2a53165223d4.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_upload_5dfc22bc34014ed7abce2a53165223d4.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_upload_5dfc22bc34014ed7abce2a53165223d4.json
+2026-08-15 11:17:10,692 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 11:17:10,700 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 11:17:10,707 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 11:17:10,714 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 11:17:10,715 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: N/A (Unvalidated Cohort), Dataset: Freestyle Population Reference Matrix v2.0)
+2026-08-15 11:17:10,726 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Backstroke (v2.0.0)
+2026-08-15 11:17:10,734 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Breaststroke (v2.0.0)
+2026-08-15 11:17:10,740 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Butterfly (v2.0.0)
+2026-08-15 11:17:10,749 - analysis.benchmarks.benchmark_engine - INFO - [SYSTEM] Loaded benchmark dataset for Freestyle (v2.0.0)
+2026-08-15 11:17:10,750 - services.benchmark_service - INFO - [SYSTEM] Successfully evaluated benchmarks (Skill: N/A (Unvalidated Cohort), Dataset: Freestyle Population Reference Matrix v2.0)
+2026-08-15 11:17:10,795 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_test.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_test.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_test.json
+2026-08-15 11:17:10,809 - services.export_service - INFO - [EXPORT] Exported JSON report to D:\AI_Projects\Swim_Analyzer_AI\data\reports\report_test.json, metadata to D:\AI_Projects\Swim_Analyzer_AI\data\reports\metadata_test.json, timeline to D:\AI_Projects\Swim_Analyzer_AI\data\reports\timeline_test.json
+2026-08-15 11:17:10,838 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_be4f05ae.pdf
+2026-08-15 11:17:16,439 - utils.video_utils - INFO - [VIDEO] [VIDEO] Video transcoded to web-optimized H.264 format: D:\AI_Projects\Swim_Analyzer_AI\data\output_videos\processed_upload_5dfc22bc34014ed7abce2a53165223d4.mp4
+2026-08-15 11:17:16,619 - utils.video_utils - INFO - [VIDEO] Export validation passed. Size: 4.50 MB, Frames: 210, Duration: 7.00s
+2026-08-15 11:17:17,079 - analysis.pose_detector - INFO - [POSE] PoseDetector resources released.
+2026-08-15 11:17:17,080 - __main__ - INFO - [SYSTEM] EXIT: process_video
+2026-08-15 11:17:17,718 - __main__ - INFO - [SYSTEM] STREAMLIT APP RERUN
+2026-08-15 11:17:17,747 - __main__ - INFO - [SYSTEM] VIDEO UPLOADED: 1785525418589.mp4
+2026-08-15 11:17:17,820 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_section
+2026-08-15 11:17:17,822 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_video_native_mode
+2026-08-15 11:17:17,830 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_native_mode
+2026-08-15 11:17:17,831 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_video_section
+2026-08-15 11:17:17,832 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_summary
+2026-08-15 11:17:17,845 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_summary
+2026-08-15 11:17:17,846 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_consistency
+2026-08-15 11:17:17,853 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_consistency
+2026-08-15 11:17:17,854 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_report_tab
+2026-08-15 11:17:17,864 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_report_tab
+2026-08-15 11:17:18,450 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-15 11:17:19,470 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_raw_data_tab
+2026-08-15 11:17:20,022 - __main__ - INFO - [SYSTEM] [TRACE] ENTER body_roll_chart
+2026-08-15 11:17:21,593 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-08-15 11:17:23,258 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost()
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost()>
+Traceback (most recent call last):
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python314\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-08-15 11:17:24,485 - __main__ - INFO - [SYSTEM] [TRACE] EXIT body_roll_chart
+2026-08-15 11:17:24,488 - __main__ - INFO - [SYSTEM] [TRACE] ENTER elbow_chart
+2026-08-15 11:17:24,774 - __main__ - INFO - [SYSTEM] [TRACE] EXIT elbow_chart
+2026-08-15 11:17:24,776 - __main__ - INFO - [SYSTEM] [TRACE] ENTER shoulder_chart
+2026-08-15 11:17:24,974 - __main__ - INFO - [SYSTEM] [TRACE] EXIT shoulder_chart
+2026-08-15 11:17:24,976 - __main__ - INFO - [SYSTEM] [TRACE] ENTER dataframe_render
+2026-08-15 11:17:24,993 - __main__ - INFO - [SYSTEM] [TRACE] EXIT dataframe_render
+2026-08-15 11:17:24,994 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_raw_data_tab
+2026-08-15 11:17:24,996 - __main__ - INFO - [SYSTEM] [TRACE] ENTER render_download_buttons
+2026-08-15 11:17:25,322 - scientific_reference.scientific_source_repository - INFO - [SYSTEM] Loaded 63 scientific literature sources from registry.
+2026-08-15 11:17:25,328 - services.pdf_report_service - INFO - [SYSTEM] Generated session analysis PDF: D:\AI_Projects\Swim_Analyzer_AI\data\pdf_reports\Session_Report_2ec15d65.pdf
+2026-08-15 11:17:25,578 - __main__ - INFO - [SYSTEM] [TRACE] EXIT render_download_buttons

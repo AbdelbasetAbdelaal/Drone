@@ -1,21 +1,12 @@
-# Stroke Classification Status
+# Swimming Stroke Selection Architectural Status
 
-**Date:** 2026-08-08
+## Current Status: Mandatory User Stroke Selection
 
-## 1. Algorithmic State
-The stroke classifier (`HeuristicStrokeClassifier`) processes normalized kinematic time-series data extracted from Mediapipe pose landmarks. 
-It analyzes:
-* Leg Symmetry (Flutter vs Dolphin/Whip)
-* Arm Periodicity
-* Body Roll & Body Orientation
-* Stroke Rate & Cycle timing
+Automated swimming stroke classification has been permanently removed from the active product analysis path.
 
-## 2. Safety Rules Enforced
-1. **No Silent Freestyle Fallbacks:** If the confidence threshold is not met (or features are highly ambiguous), the classifier returns `UNKNOWN`. The old implementation that defaulted to Freestyle has been securely patched.
-2. **Confidence Penalties:** Missing keypoints, poor orientation, or low-quality video inherently degrade the probability scores.
-3. **Multi-Stroke Support:** The pipeline is wired to support all four strokes (Freestyle, Breaststroke, Butterfly, Backstroke).
-
-## 3. Scientific Validation Status
-**Status:** UNVALIDATED (`1.0.0-unvalidated`)
-While technically complete and mathematically deterministic, the stroke classifier lacks rigorous real-world validation against an annotated multi-stroke ground-truth dataset. 
-*Do NOT claim clinical correctness until formal verification occurs.*
+### Key Architectural Contracts:
+1. **User Mandatory Selection**: The user MUST explicitly choose the stroke type (**Freestyle**, **Backstroke**, **Breaststroke**, **Butterfly**) before launching analysis.
+2. **Single Source of Truth**: The value `selected_stroke` is the sole source of truth across all application layers.
+3. **No Automatic Overrides**: The system does not attempt to infer, classify, or override the user's selection.
+4. **Analysis Reliability**: The metric "Confidence" measures video tracking quality and landmark completeness, NOT stroke classification probability.
+5. **Direct Strategy Dispatch**: `AnalysisService` dispatches directly to the matching strategy (`FreestyleStrategy`, `BackstrokeStrategy`, `BreaststrokeStrategy`, `ButterflyStrategy`) based on `selected_stroke`.
