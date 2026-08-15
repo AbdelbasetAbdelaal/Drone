@@ -193,7 +193,8 @@ class AnalysisService:
     def _finalize_metrics_and_export(self, analysis_result: AnalysisResult, metadata: VideoMetadata, 
                                      stroke_analyzer: Any, BiomechanicsCalculator: Any, scoring_engine: Any, 
                                      calibration_engine: Any, processor: VideoProcessor, input_filename: str, 
-                                     output_video_path: str, athlete_id: Optional[str] = None) -> Tuple[str, str, str]:
+                                     output_video_path: str, athlete_id: Optional[str] = None,
+                                     coach_id: Optional[str] = None) -> Tuple[str, str, str]:
         """Finalize metrics, generate reports, run consistency validator, and export JSONs."""
         from models.data_models import StrokeStatistics
         stats = StrokeStatistics(
@@ -227,7 +228,9 @@ class AnalysisService:
         # Phase 7: Benchmark Engine Evaluation
         from services.benchmark_service import BenchmarkService
         from services.athlete_service import AthleteService
-        athlete_profile = AthleteService().load_profile(athlete_id) if athlete_id else None
+        if athlete_id is not None and not coach_id:
+            raise ValueError("[SECURITY] coach_id is required to load athlete profile.")
+        athlete_profile = AthleteService().load_profile(athlete_id=athlete_id, coach_id=coach_id) if (athlete_id and coach_id) else None
         BenchmarkService().evaluate_session(analysis_result, athlete_profile)
 
         json_report_path, metadata_path, _ = ExportService.export_to_json(analysis_result, metadata, input_filename)
@@ -243,10 +246,13 @@ class AnalysisService:
                       visualization_mode: str = "User Mode", progress_callback=None, vqa_callback=None,
                       trajectory_duration_sec: float = 2.0,
                       stroke_detection: StrokeDetectionResult = None, athlete_id: str = None,
-                      frame_stride: int = None, allow_vqa_critical_override: bool = False) -> Tuple[str, str, str, AnalysisResult]:
+                      frame_stride: int = None, allow_vqa_critical_override: bool = False,
+                      coach_id: Optional[str] = None) -> Tuple[str, str, str, AnalysisResult]:
         """
         Process a video file to detect poses, calculate angles, and generate an output video.
         """
+        if athlete_id is not None and not coach_id:
+            raise ValueError("[SECURITY] coach_id is required to load athlete profile.")
         stride = frame_stride if frame_stride is not None else config.frame_stride
         stride = max(1, int(stride))
         
@@ -364,7 +370,8 @@ class AnalysisService:
                 
             json_report_path, metadata_path, output_video_path = self._finalize_metrics_and_export(
                 analysis_result, metadata, stroke_analyzer, BiomechanicsCalculator, scoring_engine,
-                calibration_engine, processor, input_filename, output_video_path, athlete_id=athlete_id
+                calibration_engine, processor, input_filename, output_video_path, athlete_id=athlete_id,
+                coach_id=coach_id
             )
             
         except Exception as e:

@@ -17,7 +17,10 @@ def render_dashboard_page():
         return
         
     profiles = athlete_service.get_all_profiles(coach_id=current_coach.coach_id)
-    all_sessions = history_service.get_all_sessions(principal=current_coach)
+    if getattr(current_coach, "role", "coach") == "admin":
+        all_sessions = history_service.get_all_sessions(principal=current_coach)
+    else:
+        all_sessions = history_service.get_sessions_by_account(account_id=current_coach.coach_id)
     
     if not profiles:
         st.info("No athletes registered yet. Go to the 'Athletes' page to add some.")
@@ -33,7 +36,7 @@ def render_dashboard_page():
     athletes_with_sessions = 0
     
     for p in profiles:
-        sessions = history_service.get_sessions_by_athlete(p.athlete_id)
+        sessions = history_service.get_sessions_by_athlete(p.athlete_id, current_coach.coach_id)
         latest_score = None
         last_analysis_date = "N/A"
         

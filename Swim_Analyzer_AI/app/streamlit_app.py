@@ -1651,7 +1651,8 @@ def main():
                         stroke_detection=st.session_state.stroke_result,
                         athlete_id=selected_athlete_id if selected_athlete_id != "None" else None,
                         frame_stride=selected_stride,
-                        allow_vqa_critical_override=allow_vqa_critical_override
+                        allow_vqa_critical_override=allow_vqa_critical_override,
+                        coach_id=getattr(st.session_state.get("current_coach"), "coach_id", None)
                     )
                     safe_log("EXIT: process_video")
                     progress_bar.progress(100, text="✅ Analysis complete!")

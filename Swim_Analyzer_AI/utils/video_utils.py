@@ -151,20 +151,44 @@ class VideoProcessor:
 
         temp_h264 = path_obj.with_name(f"{path_obj.stem}_h264.mp4")
         cmd = [
-            ffmpeg_bin, "-y", "-i", str(path_obj),
+            ffmpeg_bin, "-y", "-nostdin", "-i", str(path_obj),
             "-c:v", "libx264", "-pix_fmt", "yuv420p",
             "-movflags", "+faststart",
             str(temp_h264)
         ]
         try:
-            res = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, check=False)
-            if temp_h264.exists() and temp_h264.stat().st_size > 10 * 1024:
+            res = subprocess.run(
+                cmd,
+                stdin=subprocess.DEVNULL,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                timeout=30,
+                check=False
+            )
+            if res.returncode == 0 and temp_h264.exists() and temp_h264.stat().st_size > 10 * 1024:
                 temp_h264.replace(path_obj)
                 logger.info(f"[VIDEO] Video transcoded to web-optimized H.264 format: {output_path}")
             else:
-                logger.warning(f"[VIDEO] H.264 transcoding produced empty file: {res.stderr.decode('utf-8', errors='ignore')}")
+                if temp_h264.exists():
+                    try:
+                        temp_h264.unlink(missing_ok=True)
+                    except Exception:
+                        pass
+                logger.warning(f"[VIDEO] H.264 transcoding produced empty or invalid file for: {output_path}")
+        except subprocess.TimeoutExpired:
+            logger.warning(f"[VIDEO] H.264 transcoding timed out after 30s for: {output_path}")
+            if temp_h264.exists():
+                try:
+                    temp_h264.unlink(missing_ok=True)
+                except Exception:
+                    pass
         except Exception as e:
             logger.warning(f"[VIDEO] H.264 transcoding encountered an error: {str(e)}")
+            if temp_h264.exists():
+                try:
+                    temp_h264.unlink(missing_ok=True)
+                except Exception:
+                    pass
 
     @staticmethod
     def validate_export(output_path: str) -> bool:
@@ -180,9 +204,6 @@ class VideoProcessor:
         """
         import os
         path_obj = Path(output_path)
-        
-        # Ensure H.264 browser compatibility
-        VideoProcessor.ensure_browser_compatible_mp4(output_path)
         
         # 1. Check file exists
         if not path_obj.exists():
@@ -221,6 +242,9 @@ class VideoProcessor:
             logger.error("Export validation failed: Cannot read the first frame.")
             return False
             
+        # Ensure H.264 browser compatibility for validated video
+        VideoProcessor.ensure_browser_compatible_mp4(output_path)
+
         logger.info(f"Export validation passed. Size: {size_bytes / (1024*1024):.2f} MB, Frames: {frame_count}, Duration: {duration:.2f}s")
         return True
 
