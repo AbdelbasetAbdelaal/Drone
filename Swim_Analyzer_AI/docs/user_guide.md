@@ -28,7 +28,8 @@ Open `http://localhost:8501` in your browser.
 
 ### Coach Authentication
 - Log in using your registered coach credentials.
-- **Login Instructions**: The system requires a secure bootstrap configuration via the `.env` file. Copy `.env.example` to `.env` and set `SWIM_ANALYZER_BOOTSTRAP_COACH_USERNAME` and `SWIM_ANALYZER_BOOTSTRAP_COACH_PASSWORD` with secure values to use for your initial login.- Logging in isolates your athlete roster and session logs from other coaching staff.
+- **Login Instructions**: The system requires a secure bootstrap configuration via the `.env` file. Copy `.env.example` to `.env` and set `SWIM_ANALYZER_BOOTSTRAP_COACH_USERNAME` and `SWIM_ANALYZER_BOOTSTRAP_COACH_PASSWORD` with secure values to use for your initial login.
+- Logging in isolates your athlete roster and session logs from other coaching staff.
 
 ---
 

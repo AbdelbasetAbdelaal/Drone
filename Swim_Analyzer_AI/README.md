@@ -30,16 +30,21 @@ It transforms raw video of swimming technique into auditable, 3D kinematic measu
 - **VQA Pre-check**: Evaluates resolution, frame rate, lighting, occlusion, and camera stability.
 - **Scientific Consistency Validator**: Enforces 7 mathematical rules to ensure scientific trustworthiness.
 
-### 4. 👥 Coach Command Center & Roster Management
-- **Coach Authentication**: Isolated coach accounts and athlete rosters.
-- **Longitudinal Progression Tracking**: Tracks scores, metrics, and technical flaw resolution over time.
+### 4. 👥 Multi-Tenant Isolation & Roster Management
+- **Strict Tenant Isolation**: Enforces strict domain invariants (`AthleteProfile.coach_id` required, `AnalysisSession.account_id` required).
+- **Authenticated Access Control**: All session and roster queries require authenticated principal context with deny-by-default cross-tenant protection.
+- **Longitudinal Progression Tracking**: Tracks scores, metrics, and technical flaw resolution over time per athlete.
 - **Session-to-Session Comparison**: Side-by-side comparison of baseline vs recent sessions.
 
-### 5. 🔬 Literature Provenance & Scientific Benchmarks
+### 5. 🔒 Path Traversal & File Export Security
+- **Sanitized Paths**: All uploads and export endpoints (JSON, PDF, Video) use `sanitize_and_resolve_path` with UUID-based filenames and containment checks.
+- **Zero Hardcoded Secrets**: Production secrets and bootstrap admin credentials are parameterized via `.env`.
+
+### 6. 🔬 Literature Provenance & Scientific Benchmarks
 - **100% Traceable Literature**: Population benchmark values link directly to peer-reviewed studies (Craig & Pendergast 1979, Psycharakis & Sanders 2008/2010, Gonjo et al. 2020, Leblanc et al. 2005).
 - **Demographic Compatibility Guard**: Suppresses percentile math for non-compatible cohorts (Youth, Female, Masters) with clear warning banners.
 
-### 6. 📄 Export & Reporting System
+### 7. 📄 Export & Reporting System
 - **PDF Report Exporter**: Generates detailed single-session and athlete summary PDF reports displaying `Swimming Stroke: <User Selected>` and `Analysis Reliability`.
 - **JSON Data Exports**: Exports structured JSON report, metadata, and frame-by-frame timelines with guaranteed serialization.
 

@@ -25,14 +25,25 @@ This report certifies that **SwimAnalyzer AI** adheres to all core architectural
 5. **MediaPipe Contiguous Memory Layout**:
    - Image data passed into `mp.Image` is stored in contiguous C-order layout (`np.ascontiguousarray()`), eliminating MediaPipe `landmark_projection_calculator.cc:81` ROI warnings.
 
-6. **JSON & PDF Export Serialization**:
-   - `ExportService` handles dictionary and dataclass serialization cleanly, resolving `AttributeError: 'SimpleResult' object has no attribute 'get'`.
+6. **JSON & PDF Export Serialization & Path Security**:
+   - `ExportService` handles dictionary and dataclass serialization cleanly.
+   - All export paths (JSON, metadata, PDF, timeline) use `sanitize_and_resolve_path` with UUID-based naming, preventing path traversal and cross-directory access.
    - PDF reports explicitly display `Swimming Stroke: <User Selected>` and `Analysis Reliability: <High/Medium/Low>`.
+
+7. **Multi-Tenant Data Isolation & Ownership Invariants**:
+   - Domain invariants strictly enforced: `AthleteProfile.coach_id` is REQUIRED, `AnalysisSession.account_id` is REQUIRED.
+   - Ownership is verified against authenticated session context (`st.session_state.current_coach`).
+   - Cross-tenant queries are blocked by default; queries require explicit principal verification.
+
+8. **Zero Hardcoded Credentials & Secure Bootstrap**:
+   - All default/hardcoded passwords and credentials removed from production code and UI.
+   - Bootstrap accounts configured securely via environment variables (`.env`).
 
 ---
 
 ## 2. Automated Test Verification
 
 - **Dedicated User Stroke Selection Test Suite**: `15/15 PASSED (100%)` (`tests/test_user_stroke_selection_and_reliability.py`).
-- **Complete Pytest Suite**: `100% PASSED`.
+- **Tenant Isolation & Security Suite**: `100% PASSED` (`tests/test_tenant_isolation.py`, `tests/test_models_regression.py`, `tests/test_dashboard_regression.py`).
 - **Determinism**: 100% local Python biomechanical analysis. Zero external cloud AI API calls.
+
