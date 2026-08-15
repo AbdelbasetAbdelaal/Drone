@@ -119,3 +119,34 @@ def test_tenant_isolation_sessions_and_history(tmp_path):
     # 2. Admin can invoke get_all_sessions
     all_sessions = history_svc.get_all_sessions(principal=admin)
     assert isinstance(all_sessions, list)
+
+def test_dashboard_coach_loads_own_athlete_sessions_successfully():
+    with patch('app.ui.dashboard.st') as mock_st, \
+         patch('app.ui.dashboard.AthleteService') as MockAthleteService, \
+         patch('app.ui.dashboard.AnalysisHistoryService') as MockHistoryService:
+
+        mock_coach = MagicMock(coach_id="coach_alpha", role="coach")
+        mock_st.session_state.get.return_value = mock_coach
+
+        ath1 = MagicMock(athlete_id="ath_1", full_name="Swimmer 1", swimming_level="Elite", preferred_stroke="Freestyle")
+        ath2 = MagicMock(athlete_id="ath_2", full_name="Swimmer 2", swimming_level="Club", preferred_stroke="Backstroke")
+
+        mock_athlete_instance = MockAthleteService.return_value
+        mock_athlete_instance.get_all_profiles.return_value = [ath1, ath2]
+
+        sess1 = MagicMock(performance_score=92.0, analysis_timestamp="2026-08-15T10:00:00")
+        sess2 = MagicMock(performance_score=85.0, analysis_timestamp="2026-08-15T11:00:00")
+
+        mock_history_instance = MockHistoryService.return_value
+        mock_history_instance.get_sessions_by_account.return_value = [sess1, sess2]
+        mock_history_instance.get_sessions_by_athlete.side_effect = lambda ath_id, acc_id: (
+            [sess1] if ath_id == "ath_1" and acc_id == "coach_alpha" else ([sess2] if ath_id == "ath_2" and acc_id == "coach_alpha" else [])
+        )
+        mock_st.columns.return_value = [MagicMock(), MagicMock(), MagicMock()]
+
+        render_dashboard_page()
+
+        assert mock_history_instance.get_sessions_by_athlete.call_count == 2
+        mock_history_instance.get_sessions_by_athlete.assert_any_call("ath_1", "coach_alpha")
+        mock_history_instance.get_sessions_by_athlete.assert_any_call("ath_2", "coach_alpha")
+        mock_history_instance.get_all_sessions.assert_not_called()
