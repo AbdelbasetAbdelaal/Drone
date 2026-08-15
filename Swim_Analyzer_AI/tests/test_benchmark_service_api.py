@@ -24,8 +24,7 @@ def test_benchmark_service_evaluate_session_api_compatibility():
         stroke_length=ValidatedMetric(name="stroke_length", value=None, valid=False, unit="m"),
     )
 
-    athlete = AthleteProfile(
-        full_name="Test Athlete",
+    athlete = AthleteProfile(coach_id="test_coach", full_name="Test Athlete",
         age=22,
         gender="Male",
         height_cm=180.0,

@@ -1,0 +1,56 @@
+====================================================
+GROUND TRUTH VALIDATION REPORT
+====================================================
+
+Stroke Rate
+-----------
+Ground Truth: 40.0
+Prediction:   42.0
+Abs Error:    2.00
+Status:       PASS
+
+Stroke Length
+-------------
+Ground Truth: 1.5
+Prediction:   1.4
+Abs Error:    0.10
+Status:       PASS
+
+Kick Frequency
+--------------
+Ground Truth: 2.0
+Prediction:   1.8
+Abs Error:    0.20
+Status:       PASS
+
+Body Roll
+---------
+Ground Truth: 35.0
+Prediction:   34.0
+Abs Error:    1.00
+Status:       PASS
+
+Stroke Cycles
+-------------
+Ground Truth: 10.0
+Prediction:   10.0
+Abs Error:    0.00
+Status:       PASS
+
+====================================================
+STROKE PHASE DETECTION
+====================================================
+True Positives:  5
+False Positives: 2
+False Negatives: 3
+
+Accuracy:  62.5%
+Precision: 71.4%
+Recall:    62.5%
+F1 Score:  66.7%
+
+====================================================
+OVERALL AGGREGATES
+====================================================
+Global MAE:  0.660
+Global RMSE: 1.005

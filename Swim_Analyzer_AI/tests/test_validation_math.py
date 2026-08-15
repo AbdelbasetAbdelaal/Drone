@@ -169,7 +169,7 @@ class TestScientificConsistencyValidation(unittest.TestCase):
         """Zero completed stroke cycles -> Score is 0.0, insufficient data flags set."""
         analysis = self._create_mock_analysis(tech_score=85.0, cycles=0)
         report = AnalysisConsistencyValidator.validate(analysis)
-        self.assertEqual(report.overall_score, 0.0)
+        self.assertIsNone(report.overall_score)
         self.assertTrue(analysis.report.stroke_rate.is_insufficient_data)
         self.assertIn("Rule_4_Insufficient_Cycles", report.failed_rules)
 

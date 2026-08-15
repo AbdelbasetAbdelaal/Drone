@@ -15,7 +15,7 @@ def test_orphaned_athlete_deny_by_default(setup_db):
     repo = AthleteRepository(db)
     
     ath_id = str(uuid.uuid4())
-    athlete = AthleteProfile(athlete_id=ath_id, full_name="Orphaned Athlete", age=25, gender="Male", height_cm=180, weight_kg=75, swimming_level="Pro", preferred_stroke="Freestyle")
+    athlete = AthleteProfile(coach_id="test_coach", athlete_id=ath_id, full_name="Orphaned Athlete", age=25, gender="Male", height_cm=180, weight_kg=75, swimming_level="Pro", preferred_stroke="Freestyle")
     
     with pytest.raises(ValueError):
         repo.create(athlete, None) # Coach ID required
@@ -34,8 +34,7 @@ def test_orphaned_session_deny_by_default(setup_db):
     repo = AnalysisHistoryRepository(db)
     
     sess_id = str(uuid.uuid4())
-    session = AnalysisSession(
-        session_id=sess_id, athlete_id="ath_x", stroke_type="Freestyle", 
+    session = AnalysisSession(account_id="test_account", session_id=sess_id, athlete_id="ath_x", stroke_type="Freestyle", 
         analysis_timestamp="2026-01-01T00:00:00Z",
         original_video_filename="dummy.mp4",
         processed_video_filename="dummy.mp4",
@@ -67,12 +66,11 @@ def test_cross_tenant_attacks(setup_db):
     coach_b = "coach_B"
     
     ath_b_id = str(uuid.uuid4())
-    athlete_b = AthleteProfile(athlete_id=ath_b_id, full_name="Athlete B", age=20, gender="Male", height_cm=180, weight_kg=75, swimming_level="Pro", preferred_stroke="Freestyle")
+    athlete_b = AthleteProfile(coach_id="test_coach", athlete_id=ath_b_id, full_name="Athlete B", age=20, gender="Male", height_cm=180, weight_kg=75, swimming_level="Pro", preferred_stroke="Freestyle")
     ath_repo.create(athlete_b, coach_b)
     
     sess_b_id = str(uuid.uuid4())
-    session_b = AnalysisSession(
-        session_id=sess_b_id, athlete_id=ath_b_id, stroke_type="Freestyle", 
+    session_b = AnalysisSession(account_id="test_account", session_id=sess_b_id, athlete_id=ath_b_id, stroke_type="Freestyle", 
         analysis_timestamp="2026-01-01T00:00:00Z",
         original_video_filename="dummy.mp4",
         processed_video_filename="dummy.mp4",

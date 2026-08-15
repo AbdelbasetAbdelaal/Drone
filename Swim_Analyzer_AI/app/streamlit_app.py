@@ -1228,8 +1228,8 @@ def render_coach_auth_sidebar():
         auth_mode = st.sidebar.radio("Account Action", ["Sign In", "Register New Account"], label_visibility="collapsed")
         if auth_mode == "Sign In":
             with st.sidebar.form("coach_login_form"):
-                username = st.text_input("Username", value="coach1")
-                password = st.text_input("Password", type="password", value="swim2026")
+                username = st.text_input("Username")
+                password = st.text_input("Password", type="password")
                 submitted = st.form_submit_button("Sign In", type="primary", width="stretch")
                 if submitted:
                     ok, msg, logged_coach = AuthService.login(username, password)

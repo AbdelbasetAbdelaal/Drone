@@ -38,7 +38,7 @@ def test_3_user_selects_breaststroke_does_not_run_butterfly():
 def test_4_user_selects_freestyle_benchmark_is_freestyle():
     selection = StrokeSelection(selected_stroke=StrokeType.FREESTYLE, selection_source="USER")
     res = AnalysisResult(video_path="dummy.mp4", stroke_type="Freestyle", stroke_selection=selection)
-    profile = AthleteProfile(athlete_id="ath_1", full_name="John Swimmer", age=22, gender="Male", height_cm=180.0, weight_kg=75.0, swimming_level="Elite", preferred_stroke="Freestyle")
+    profile = AthleteProfile(coach_id="test_coach", athlete_id="ath_1", full_name="John Swimmer", age=22, gender="Male", height_cm=180.0, weight_kg=75.0, swimming_level="Elite", preferred_stroke="Freestyle")
     benchmark_res = BenchmarkService().evaluate_session(res, profile)
     assert benchmark_res is not None
     assert res.stroke_type == "Freestyle"
@@ -47,7 +47,7 @@ def test_4_user_selects_freestyle_benchmark_is_freestyle():
 def test_5_user_selects_backstroke_benchmark_is_backstroke():
     selection = StrokeSelection(selected_stroke=StrokeType.BACKSTROKE, selection_source="USER")
     res = AnalysisResult(video_path="dummy.mp4", stroke_type="Backstroke", stroke_selection=selection)
-    profile = AthleteProfile(athlete_id="ath_1", full_name="John Swimmer", age=22, gender="Male", height_cm=180.0, weight_kg=75.0, swimming_level="Elite", preferred_stroke="Backstroke")
+    profile = AthleteProfile(coach_id="test_coach", athlete_id="ath_1", full_name="John Swimmer", age=22, gender="Male", height_cm=180.0, weight_kg=75.0, swimming_level="Elite", preferred_stroke="Backstroke")
     benchmark_res = BenchmarkService().evaluate_session(res, profile)
     assert benchmark_res is not None
     assert res.stroke_type == "Backstroke"

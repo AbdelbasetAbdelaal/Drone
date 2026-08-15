@@ -78,7 +78,7 @@ def test_benchmark_engine_unmatched_age_cohort_is_insufficient_evidence():
         stroke_rate=ValidatedMetric(value=54.0, valid=True),
         stroke_length=ValidatedMetric(value=1.90, valid=True)
     )
-    prof = AthleteProfile(full_name="John Doe", age=22, gender="Male", height_cm=180.0, weight_kg=75.0, swimming_level="Advanced", preferred_stroke="Freestyle")
+    prof = AthleteProfile(coach_id="test_coach", full_name="John Doe", age=22, gender="Male", height_cm=180.0, weight_kg=75.0, swimming_level="Advanced", preferred_stroke="Freestyle")
     
     res = engine.evaluate_analysis(ar, prof)
     assert res.dataset_id != "", "dataset_id missing from BenchmarkResult"

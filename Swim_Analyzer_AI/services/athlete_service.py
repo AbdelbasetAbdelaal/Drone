@@ -46,7 +46,7 @@ class AthleteService:
         if not coach_id:
             raise ValueError("coach_id is required to create a profile")
             
-        profile = AthleteProfile(**kwargs)
+        profile = AthleteProfile(coach_id=coach_id, **kwargs)
         profile.coach_id = coach_id
         
         errors = self.validate_profile(profile)

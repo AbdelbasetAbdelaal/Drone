@@ -11,8 +11,13 @@ def render_dashboard_page():
     athlete_service = AthleteService()
     history_service = AnalysisHistoryService()
     
-    profiles = athlete_service.get_all_profiles()
-    all_sessions = history_service.get_all_sessions()
+    current_coach = st.session_state.get("current_coach")
+    if not current_coach:
+        st.error("Authentication required")
+        return
+        
+    profiles = athlete_service.get_all_profiles(coach_id=current_coach.coach_id)
+    all_sessions = history_service.get_all_sessions(principal=current_coach)
     
     if not profiles:
         st.info("No athletes registered yet. Go to the 'Athletes' page to add some.")

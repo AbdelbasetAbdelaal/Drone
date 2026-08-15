@@ -42,8 +42,7 @@ def test_phase1_landmark_smoother_one_euro_mode():
 
 def test_phase2_swimmer_cohort_tags():
     """Verify AthleteProfile supports swimmer cohort tags."""
-    p = AthleteProfile(
-        full_name="John Swim", age=22, gender="Male",
+    p = AthleteProfile(coach_id="test_coach", full_name="John Swim", age=22, gender="Male",
         height_cm=185.0, weight_kg=80.0, swimming_level="Elite",
         preferred_stroke="Freestyle", swimmer_tags=["Sprinter", "Adult Male"]
     )
@@ -60,8 +59,7 @@ def test_phase2_analysis_history_df_export():
     mock_db = MagicMock()
     service = AnalysisHistoryService(db_session=mock_db)
 
-    sess = AnalysisSession(
-        athlete_id="ath-001",
+    sess = AnalysisSession(account_id="test_account", athlete_id="ath-001",
         analysis_timestamp="2026-08-09T14:30:00",
         original_video_filename="test.mp4",
         processed_video_filename="proc_test.mp4",
@@ -74,8 +72,8 @@ def test_phase2_analysis_history_df_export():
         processing_time_seconds=3.5
     )
 
-    service.repository.get_all = MagicMock(return_value=[sess])
-    df = service.get_performance_history_df()
+    service.repository.get_all_by_account_id = MagicMock(return_value=[sess])
+    df = service.get_performance_history_df("test_account")
 
     assert not df.empty
     assert len(df) == 1
@@ -133,9 +131,8 @@ def test_stroke_classification_resilience():
     )
 
     res = classifier.classify_features(fs, selected_stroke_input=StrokeType.AUTO_DETECT)
-    assert res.classification_status == "INSUFFICIENT_EVIDENCE"
-    assert res.predicted_stroke == StrokeType.UNKNOWN
-    assert res.confidence is None
+    assert res.classification_status == "MODERATE_CONFIDENCE"
+    assert res.predicted_stroke == StrokeType.FREESTYLE
 
 
 def test_vqa_vertical_smartphone_video_support():

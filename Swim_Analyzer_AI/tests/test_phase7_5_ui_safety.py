@@ -15,7 +15,7 @@ def test_rule_1_compatible_adult_male_without_verified_reference_is_suppressed()
         stroke_rate=ValidatedMetric(value=54.0, valid=True),
         stroke_length=ValidatedMetric(value=1.85, valid=True)
     )
-    prof = AthleteProfile(full_name="John Doe", age=22, gender="Male", height_cm=180.0, weight_kg=75.0, swimming_level="Elite", preferred_stroke="Freestyle")
+    prof = AthleteProfile(coach_id="test_coach", full_name="John Doe", age=22, gender="Male", height_cm=180.0, weight_kg=75.0, swimming_level="Elite", preferred_stroke="Freestyle")
 
     res = engine.evaluate_analysis(ar, prof)
     sr_comp = res.comparisons["stroke_rate"]
@@ -32,7 +32,7 @@ def test_rule_2_youth_athlete_percentile_suppressed():
         overall_score=75.0,
         stroke_rate=ValidatedMetric(value=54.0, valid=True)
     )
-    prof = AthleteProfile(full_name="Junior Swimmer", age=12, gender="Male", height_cm=150.0, weight_kg=42.0, swimming_level="Intermediate", preferred_stroke="Freestyle")
+    prof = AthleteProfile(coach_id="test_coach", full_name="Junior Swimmer", age=12, gender="Male", height_cm=150.0, weight_kg=42.0, swimming_level="Intermediate", preferred_stroke="Freestyle")
 
     res = engine.evaluate_analysis(ar, prof)
     sr_comp = res.comparisons["stroke_rate"]
@@ -49,7 +49,7 @@ def test_rule_3_female_athlete_percentile_suppressed():
         overall_score=82.0,
         stroke_rate=ValidatedMetric(value=54.0, valid=True)
     )
-    prof = AthleteProfile(full_name="Jane Smith", age=30, gender="Female", height_cm=172.0, weight_kg=62.0, swimming_level="Elite", preferred_stroke="Butterfly")
+    prof = AthleteProfile(coach_id="test_coach", full_name="Jane Smith", age=30, gender="Female", height_cm=172.0, weight_kg=62.0, swimming_level="Elite", preferred_stroke="Butterfly")
 
     res = engine.evaluate_analysis(ar, prof)
     sr_comp = res.comparisons["stroke_rate"]
@@ -68,7 +68,7 @@ def test_rule_4_masters_athlete_percentile_suppressed():
         overall_score=78.0,
         stroke_rate=ValidatedMetric(value=50.0, valid=True)
     )
-    prof = AthleteProfile(full_name="Senior Swimmer", age=45, gender="Male", height_cm=178.0, weight_kg=78.0, swimming_level="Advanced", preferred_stroke="Freestyle")
+    prof = AthleteProfile(coach_id="test_coach", full_name="Senior Swimmer", age=45, gender="Male", height_cm=178.0, weight_kg=78.0, swimming_level="Advanced", preferred_stroke="Freestyle")
 
     res = engine.evaluate_analysis(ar, prof)
     sr_comp = res.comparisons["stroke_rate"]
@@ -85,7 +85,7 @@ def test_rule_5_6_7_reference_only_and_rejected_metric_safety():
         overall_score=80.0,
         kick_frequency=ValidatedMetric(value=3.2, valid=True)
     )
-    prof = AthleteProfile(full_name="John Doe", age=22, gender="Male", height_cm=180.0, weight_kg=75.0, swimming_level="Elite", preferred_stroke="Freestyle")
+    prof = AthleteProfile(coach_id="test_coach", full_name="John Doe", age=22, gender="Male", height_cm=180.0, weight_kg=75.0, swimming_level="Elite", preferred_stroke="Freestyle")
 
     res = engine.evaluate_analysis(ar, prof)
 
@@ -115,7 +115,7 @@ def test_rule_9_pdf_streamlit_rule_alignment():
     ar = AnalysisResult()
     ar.stroke_type = "Freestyle"
     ar.report = PerformanceReport(overall_score=80.0, stroke_rate=ValidatedMetric(value=54.0, valid=True))
-    prof = AthleteProfile(full_name="Female Swimmer", age=22, gender="Female", height_cm=170.0, weight_kg=60.0, swimming_level="Elite", preferred_stroke="Freestyle")
+    prof = AthleteProfile(coach_id="test_coach", full_name="Female Swimmer", age=22, gender="Female", height_cm=170.0, weight_kg=60.0, swimming_level="Elite", preferred_stroke="Freestyle")
 
     res = engine.evaluate_analysis(ar, prof)
     ar.benchmark_result = res

@@ -16,7 +16,7 @@ def db_session():
     session.close()
 
 def test_analysis_session_serialization():
-    session = AnalysisSession(
+    session = AnalysisSession(account_id="test_account",
         athlete_id="user_123",
         analysis_timestamp="2026-08-01T12:00:00.000000",
         original_video_filename="swim_vid.mp4",
@@ -43,7 +43,7 @@ def test_analysis_session_serialization():
 def test_analysis_history_service_crud(db_session):
     service = AnalysisHistoryService(db_session=db_session)
 
-    session = AnalysisSession(
+    session = AnalysisSession(account_id="test_account",
         athlete_id="athlete_1",
         analysis_timestamp="2026-08-01T12:00:00.000000",
         original_video_filename="vid1.mp4",
@@ -69,7 +69,7 @@ def test_analysis_history_service_crud(db_session):
     # Note: Athlete needs to exist in the database for the join to work in get_sessions_by_athlete_and_account_id
     from database.repository import AthleteRepository
     from models.athlete_profile import AthleteProfile
-    AthleteRepository(db_session).create(AthleteProfile(athlete_id="athlete_1", full_name="A1", age=20, gender="Male", height_cm=180, weight_kg=75, swimming_level="Pro", preferred_stroke="Free"), "test_account")
+    AthleteRepository(db_session).create(AthleteProfile(coach_id="test_account", athlete_id="athlete_1", full_name="A1", age=20, gender="Male", height_cm=180, weight_kg=75, swimming_level="Pro", preferred_stroke="Free"), "test_account")
 
     sessions = service.get_sessions_by_athlete("athlete_1", "test_account")
     assert len(sessions) == 1
@@ -82,7 +82,7 @@ def test_analysis_history_service_crud(db_session):
 def test_get_sessions_by_athlete_ordering(db_session):
     service = AnalysisHistoryService(db_session=db_session)
 
-    s1 = AnalysisSession(
+    s1 = AnalysisSession(account_id="test_account",
         athlete_id="athlete_2",
         analysis_timestamp="2026-08-01T10:00:00.000000", # Older
         original_video_filename="old.mp4",
@@ -91,7 +91,7 @@ def test_get_sessions_by_athlete_ordering(db_session):
         performance_score=80.0, scientific_confidence="High",
         completed_cycles=5, stroke_type="Freestyle", processing_time_seconds=10.0
     )
-    s2 = AnalysisSession(
+    s2 = AnalysisSession(account_id="test_account",
         athlete_id="athlete_2",
         analysis_timestamp="2026-08-01T12:00:00.000000", # Newer
         original_video_filename="new.mp4",
@@ -103,7 +103,7 @@ def test_get_sessions_by_athlete_ordering(db_session):
 
     from database.repository import AthleteRepository
     from models.athlete_profile import AthleteProfile
-    AthleteRepository(db_session).create(AthleteProfile(athlete_id="athlete_2", full_name="A2", age=20, gender="Male", height_cm=180, weight_kg=75, swimming_level="Pro", preferred_stroke="Free"), "coach_1")
+    AthleteRepository(db_session).create(AthleteProfile(coach_id="coach_1", athlete_id="athlete_2", full_name="A2", age=20, gender="Male", height_cm=180, weight_kg=75, swimming_level="Pro", preferred_stroke="Free"), "coach_1")
 
     service.create_session(s1, "coach_1")
     service.create_session(s2, "coach_1")
@@ -118,8 +118,7 @@ def test_get_sessions_by_athlete_ordering(db_session):
 def test_get_sessions_by_account_filtering(db_session):
     service = AnalysisHistoryService(db_session=db_session)
 
-    user_session = AnalysisSession(
-        athlete_id=None,
+    user_session = AnalysisSession(athlete_id=None,
         account_id="user_abc",
         analysis_timestamp="2026-08-01T09:00:00.000000",
         original_video_filename="user.mp4",
@@ -132,8 +131,7 @@ def test_get_sessions_by_account_filtering(db_session):
         stroke_type="Backstroke",
         processing_time_seconds=22.0
     )
-    coach_session = AnalysisSession(
-        athlete_id="athlete_3",
+    coach_session = AnalysisSession(athlete_id="athlete_3",
         account_id="coach_xyz",
         analysis_timestamp="2026-08-01T11:00:00.000000",
         original_video_filename="coach.mp4",
