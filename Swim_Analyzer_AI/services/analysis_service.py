@@ -88,15 +88,18 @@ class AnalysisService:
                              preprocessor: Optional[VideoPreprocessor] = None) -> Tuple[bool, int, float, float]:
         """Process video frames in a loop, extract poses, calculate biomechanics, and annotate."""
         import time
-        import psutil
         import os
+        try:
+            import psutil
+            process = psutil.Process(os.getpid())
+        except (ImportError, Exception):
+            process = None
         
         last_transition_count = 0
         frames_processed = 0
         valid_frames_count = 0
         raw_frame_counter = 0
         
-        process = psutil.Process(os.getpid())
         peak_ram = 0.0
         peak_cpu = 0.0
         
@@ -106,10 +109,14 @@ class AnalysisService:
             if frame_stride > 1 and (raw_frame_counter % frame_stride != 0):
                 continue
 
-            current_ram = process.memory_info().rss / (1024 * 1024)
-            current_cpu = process.cpu_percent(interval=None)
-            if current_ram > peak_ram: peak_ram = current_ram
-            if current_cpu > peak_cpu: peak_cpu = current_cpu
+            if raw_frame_counter % 30 == 0 and process is not None:
+                try:
+                    current_ram = process.memory_info().rss / (1024 * 1024)
+                    current_cpu = process.cpu_percent(interval=None)
+                    if current_ram > peak_ram: peak_ram = current_ram
+                    if current_cpu > peak_cpu: peak_cpu = current_cpu
+                except Exception:
+                    pass
             
             if preprocessor is not None:
                 frame = preprocessor.preprocess(

@@ -54,14 +54,20 @@ def render_video_section(output_video_path, video_render_mode):
     safe_log("[TRACE] EXIT render_video_section")
 
 def render_download_buttons(output_video_path, json_report_path, metadata_path, analysis_result=None, profile=None):
-    safe_log("[TRACE] ENTER render_download_buttons")
+    logger.debug("Rendering download buttons tab")
     
-    # Detailed Session PDF Report Download
+    # Detailed Session PDF Report Download (Cached per analysis result to prevent duplicate runs)
     if analysis_result:
         try:
-            pdf_service = PDFReportService()
-            current_coach = st.session_state.get("current_coach")
-            pdf_path = pdf_service.generate_session_analysis_pdf(analysis_result, profile=profile, coach=current_coach)
+            pdf_cache_key = f"_pdf_report_{id(analysis_result)}"
+            if pdf_cache_key not in st.session_state or not Path(st.session_state[pdf_cache_key]).exists():
+                pdf_service = PDFReportService()
+                current_coach = st.session_state.get("current_coach")
+                pdf_path = pdf_service.generate_session_analysis_pdf(analysis_result, profile=profile, coach=current_coach)
+                st.session_state[pdf_cache_key] = pdf_path
+            else:
+                pdf_path = st.session_state[pdf_cache_key]
+
             with open(pdf_path, 'rb') as f:
                 pdf_bytes = f.read()
             st.download_button(
@@ -103,4 +109,3 @@ def render_download_buttons(output_video_path, json_report_path, metadata_path, 
             file_name=Path(metadata_path).name,
             mime="application/json"
         )
-    safe_log("[TRACE] EXIT render_download_buttons")

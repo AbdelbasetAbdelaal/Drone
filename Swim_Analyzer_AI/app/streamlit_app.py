@@ -30,11 +30,7 @@ from core.logger import setup_logger
 logger = setup_logger(__name__)
 
 def safe_log(msg: str):
-    try:
-        print(f"[TRACE] {msg}", flush=True)
-        logger.info(msg)
-    except Exception:
-        pass
+    logger.info(msg)
 
 
 # Global stroke icons mapping

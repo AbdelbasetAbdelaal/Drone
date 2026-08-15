@@ -16,11 +16,7 @@ STROKE_ICONS = {
 }
 
 def safe_log(msg: str):
-    try:
-        print(f"[TRACE] {msg}", flush=True)
-        logger.info(msg)
-    except Exception:
-        pass
+    logger.debug(msg)
 
 def render_executive_summary_card(analysis_result):
     """

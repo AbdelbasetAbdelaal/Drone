@@ -9,11 +9,7 @@ from core.logger import setup_logger
 logger = setup_logger(__name__)
 
 def safe_log(msg: str):
-    try:
-        print(f"[TRACE] {msg}", flush=True)
-        logger.info(msg)
-    except Exception:
-        pass
+    logger.debug(msg)
 
 def render_raw_data_tab(analysis_result):
     safe_log("[TRACE] ENTER render_raw_data_tab")
