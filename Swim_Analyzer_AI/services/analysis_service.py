@@ -10,7 +10,7 @@ from core.timing_utils import TimingUtils
 from utils.video_utils import VideoProcessor, VideoPreprocessor
 from analysis.pose_detector import PoseDetector
 from analysis.calibration_engine import RelativeCalibration
-from models.data_models import AnalysisResult, FrameData, JointAngles, VideoMetadata, StrokeDetectionResult, StrokeType
+from models.data_models import AnalysisResult, FrameData, JointAngles, VideoMetadata, StrokeDetectionResult, StrokeType, StrokeSelection
 from analysis.strategies.stroke_factory import StrokeStrategyFactory
 from services.export_service import ExportService
 from datetime import datetime
@@ -260,8 +260,28 @@ class AnalysisService:
         pose_detector = None
         analysis_result = AnalysisResult(video_path=input_video_path)
         
-        stroke_type = stroke_detection.selected_stroke if stroke_detection else StrokeType.FREESTYLE
+        # Single Source of Truth: User selected stroke
+        if isinstance(stroke_detection, StrokeSelection):
+            stroke_type = stroke_detection.selected_stroke
+            stroke_sel = stroke_detection
+        elif hasattr(stroke_detection, 'selected_stroke'):
+            stroke_type = stroke_detection.selected_stroke
+            stroke_sel = StrokeSelection(selected_stroke=stroke_type, selection_source="USER")
+        elif isinstance(stroke_detection, (StrokeType, str)):
+            stroke_type = StrokeType(stroke_detection)
+            stroke_sel = StrokeSelection(selected_stroke=stroke_type, selection_source="USER")
+        else:
+            stroke_type = StrokeType.FREESTYLE
+            stroke_sel = StrokeSelection(selected_stroke=stroke_type, selection_source="USER")
+
         analysis_result.stroke_type = stroke_type.value
+        analysis_result.stroke_selection = stroke_sel
+
+        logger.info(f"[STROKE] User selected stroke: {stroke_type.value}")
+        logger.info("[STROKE] Selection source: USER")
+        logger.info("[STROKE] Automatic stroke classification: DISABLED")
+        logger.info(f"[ANALYSIS] Processing stroke-specific analysis: {stroke_type.value}")
+
         strategy = StrokeStrategyFactory.get_strategy(stroke_type)
         
         # Adjust effective fps for calculations based on stride
@@ -273,7 +293,7 @@ class AnalysisService:
         
         metadata = VideoMetadata(
             filename=input_filename, effective_fps=adjusted_effective_fps, analysis_timestamp=datetime.now().isoformat(),
-            swimming_style=stroke_type.value, stroke_detection=stroke_detection,
+            swimming_style=stroke_type.value, stroke_detection=stroke_sel,
             calibration_mode=calibration_engine.mode_name, athlete_id=athlete_id
         )
         

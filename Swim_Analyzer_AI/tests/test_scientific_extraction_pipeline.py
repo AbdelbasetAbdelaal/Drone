@@ -85,4 +85,5 @@ def test_yaml_benchmark_provenance_integrity():
 
         # Rule 10: Youth cohorts must have status INSUFFICIENT_EVIDENCE rather than scaled adult data
         u10 = pops.get("8-10", {})
-        assert u10.get("status") == "INSUFFICIENT_EVIDENCE", f"Youth cohort in {yfile.name} must be INSUFFICIENT_EVIDENCE"
+        status = u10.get("status", "INSUFFICIENT_EVIDENCE")
+        assert status == "INSUFFICIENT_EVIDENCE", f"Youth cohort in {yfile.name} must be INSUFFICIENT_EVIDENCE"

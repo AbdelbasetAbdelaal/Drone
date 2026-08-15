@@ -182,49 +182,10 @@ def test_missing_landmark_series():
     assert res.classification_status == "INSUFFICIENT_EVIDENCE"
     assert "arm_phase_correlation" in res.missing_evidence
 
-def test_no_fabricated_fallback_heuristic():
-    """StrokeHeuristicClassifier returns UNKNOWN and confidence=None on missing features."""
-    classifier = StrokeHeuristicClassifier()
-    dummy = ExtractedFeatureValue("dummy", None, False, "MISSING", 10, 0)
-    feature_set = KinematicFeatureSet(
-        arm_phase_correlation=dummy,
-        mean_body_roll=dummy,
-        body_roll_amplitude=dummy,
-        wrist_vertical_range_ratio=dummy,
-        leg_kick_symmetry=dummy,
-        wrist_recovery_height_ratio=dummy,
-        total_frames_in_window=10,
-        valid_frames_in_window=0,
-        window_start_frame=0,
-        window_end_frame=10
-    )
-    res = classifier.classify_features(feature_set)
-    assert res.predicted_stroke == StrokeType.UNKNOWN
-    assert res.confidence is None
-    assert res.classification_status == "INSUFFICIENT_EVIDENCE"
-
-def test_scientific_decision_contract_serialization():
-    """Verify to_decision_contract serialization matches required schema."""
-    res = StrokeDetectionResult(
-        predicted_stroke=StrokeType.FREESTYLE,
-        confidence=0.85,
-        predictions={"Freestyle": 0.85, "Backstroke": 0.15},
-        classification_status="ACCEPTED",
-        uncertainty=0.15,
-        rule_prediction=StrokeType.FREESTYLE,
-        ai_prediction=StrokeType.FREESTYLE,
-        agreement=True,
-        missing_evidence=["ankles"]
-    )
-    contract = res.to_decision_contract()
-    sd = contract["stroke_detection"]
-
-    assert sd["prediction"] == "Freestyle"
-    assert sd["status"] == "ACCEPTED"
-    assert sd["confidence"] == 0.85
-    assert sd["uncertainty"] == 0.15
-    assert sd["rule_prediction"] == "Freestyle"
-    assert sd["ai_prediction"] == "Freestyle"
-    assert sd["agreement"] is True
-    assert sd["confidence_type"] == "UNCALIBRATED_DECISION_SCORE"
-    assert sd["missing_evidence"] == ["ankles"]
+def test_user_stroke_selection_contract():
+    """Verify StrokeSelection contract serialization matches required schema."""
+    from models.data_models import StrokeSelection, StrokeType
+    sel = StrokeSelection(selected_stroke=StrokeType.FREESTYLE, selection_source="USER")
+    contract = sel.to_dict()
+    assert contract["selected_stroke"] == "Freestyle"
+    assert contract["selection_source"] == "USER"

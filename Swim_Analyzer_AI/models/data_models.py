@@ -210,13 +210,37 @@ class PerformanceReport:
     feedback_summary: str = ""
 
 @dataclass
+class StrokeSelection:
+    """Authoritative single source of truth for user stroke selection."""
+    selected_stroke: StrokeType
+    selection_source: str = "USER"
+
+    def to_dict(self) -> dict:
+        stroke_val = self.selected_stroke.value if hasattr(self.selected_stroke, 'value') else str(self.selected_stroke)
+        return {
+            "selected_stroke": stroke_val,
+            "selection_source": self.selection_source
+        }
+
+@dataclass
 class ReliabilityResult:
-    """Contains decoupled scores for Confidence and Reliability."""
-    analysis_confidence_score: float = 100.0  # 0-100%
-    analysis_confidence_level: str = "High"  # Low, Medium, High
-    
+    """Contains transparent, documented metrics for Video Analysis Reliability."""
     analysis_reliability_score: float = 100.0  # 0-100%
     analysis_reliability_level: str = "High"  # Low, Medium, High
+    scientific_confidence: str = "High"  # High, Medium, Low
+    confidence_status: str = "High Reliability"  # High Reliability, Moderate Reliability, Low Reliability
+    
+    # Detailed transparent breakdown components
+    frame_coverage_pct: float = 100.0
+    pose_validity_pct: float = 100.0
+    landmark_visibility_pct: float = 100.0
+    temporal_stability_pct: float = 100.0
+    cycle_quality_pct: float = 100.0
+    measurement_stability_pct: float = 100.0
+    
+    # Legacy compatibility fields
+    analysis_confidence_score: float = 100.0
+    analysis_confidence_level: str = "High"
     
     reasons: List[str] = field(default_factory=list)
 
@@ -238,6 +262,7 @@ class AnalysisResult:
     """Contains the accumulated analysis across the entire video."""
     video_path: str = ""
     stroke_type: str = ""
+    stroke_selection: Optional[StrokeSelection] = None
     frames: List[FrameData] = field(default_factory=list)
     average_stroke_rate: float = 0.0
     report: Optional[PerformanceReport] = None

@@ -177,7 +177,7 @@ def render_summary(analysis_result):
     if analysis_result.reliability:
         conf_score = analysis_result.reliability.analysis_confidence_score
         rel_score = analysis_result.reliability.analysis_reliability_score
-    
+    rel = getattr(analysis_result, 'reliability', None)
     tech_score = analysis_result.report.overall_score if analysis_result.report else None
     # P0-7/P0-8: None = INSUFFICIENT_EVIDENCE — never show a fabricated number
     if tech_score is not None:
@@ -190,10 +190,24 @@ def render_summary(analysis_result):
     with summary_col2:
         st.metric("Video Quality", f"{vqa_score}/100" if vqa_score is not None else "UNAVAILABLE", delta=vqa_class, delta_color="off")
     with summary_col3:
-        st.metric("Analysis Confidence", f"{conf_score:.1f}/100" if conf_score is not None else "UNAVAILABLE", delta="Pose AI", delta_color="off")
+        st.metric("Analysis Reliability", f"{rel.analysis_reliability_score:.1f}%" if rel is not None and getattr(rel, 'analysis_reliability_score', None) is not None else "UNAVAILABLE", delta=getattr(rel, 'analysis_reliability_level', 'Medium'), delta_color="normal")
     with summary_col4:
-        color = "normal" if (rel_score is not None and rel_score >= 50) else "inverse"
-        st.metric("Analysis Reliability", f"{rel_score:.1f}/100" if rel_score is not None else "UNAVAILABLE", delta="Biomechanics Engine", delta_color=color)
+        st.metric("Scientific Confidence", getattr(rel, 'scientific_confidence', 'Medium') if rel else "Medium", delta="User Selected", delta_color="off")
+
+    if rel:
+        with st.expander("🔬 Analysis Data Reliability & Pose Tracking Quality Breakdown", expanded=False):
+            st.caption("ℹ️ These metrics measure video tracking stability, landmark visibility, and frame completeness for the requested stroke analysis — NOT stroke style classification.")
+            rcol1, rcol2, rcol3, rcol4, rcol5 = st.columns(5)
+            rcol1.metric("Frame Coverage", f"{rel.frame_coverage_pct:.1f}%")
+            rcol2.metric("Pose Validity", f"{rel.pose_validity_pct:.1f}%")
+            rcol3.metric("Landmark Visibility", f"{rel.landmark_visibility_pct:.1f}%")
+            rcol4.metric("Temporal Stability", f"{rel.temporal_stability_pct:.1f}%")
+            rcol5.metric("Cycle Quality", f"{rel.cycle_quality_pct:.1f}%")
+            if rel.reasons:
+                st.markdown("**Data Quality Notes / Limitations:**")
+                for r in rel.reasons:
+                    st.markdown(f"- ⚠️ {r}")
+
     safe_log("[TRACE] EXIT render_summary")
 
 
@@ -1533,18 +1547,16 @@ def main():
             if selected_stroke == stroke_placeholder:
                 st.sidebar.error("⚠️ **Action Required:** Please select a swimming stroke type before starting analysis!")
             else:
-                from models.data_models import StrokeType
+                from models.data_models import StrokeType, StrokeSelection
                 st.session_state.analysis_state = "processing"
                 st.session_state["_is_analyzing_now"] = True
                 st.session_state["vqa_critical_override"] = False
                 import time
                 st.session_state["_processing_start_time"] = time.time()
-                st.session_state.stroke_result = type('SimpleResult', (), {
-                    'selected_stroke': StrokeType(selected_stroke),
-                    'predicted_stroke': StrokeType(selected_stroke),
-                    'confidence': 1.0,
-                    'classification_status': 'USER_SELECTED'
-                })()
+                st.session_state.stroke_result = StrokeSelection(
+                    selected_stroke=StrokeType(selected_stroke),
+                    selection_source="USER"
+                )
                 st.session_state.completed_analysis = None
                 st.rerun()
 

@@ -62,8 +62,8 @@ class PoseDetector:
         Returns:
             Tuple[Any, bool]: The smoothed landmarks, and a boolean indicating if confidence is high enough.
         """
-        # Convert BGR (OpenCV) to RGB (MediaPipe)
-        rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        # Convert BGR (OpenCV) to RGB (MediaPipe) with contiguous memory layout
+        rgb_frame = np.ascontiguousarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_frame)
         
         if timestamp_ms is not None:

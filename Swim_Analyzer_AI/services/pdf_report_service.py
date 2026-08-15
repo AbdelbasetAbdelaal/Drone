@@ -173,28 +173,40 @@ class PDFReportService:
         pdf.cell(0, 6, f"Athlete: {athlete_name}{coach_name} | Date: {datetime.now().strftime('%Y-%m-%d %H:%M')}", ln=True, align="C")
         pdf.ln(6)
 
-        # Performance Score Banner
+        # Performance Score & Stroke Selection Banner
         report = getattr(analysis_result, 'report', None)
         overall_score = report.overall_score if report else None
         consistency = getattr(analysis_result, 'consistency', None)
         scientific_conf = consistency.scientific_confidence if consistency else "Medium"
-        stroke_type = analysis_result.vqa_result.quality_class if hasattr(analysis_result, 'vqa_result') and analysis_result.vqa_result else "Freestyle"
+        stroke_title = str(getattr(analysis_result, 'stroke_type', 'Freestyle')).title()
+        reliability = getattr(analysis_result, 'reliability', None)
+        rel_score_str = f"{reliability.analysis_reliability_score:.1f}%" if reliability else "N/A"
+        rel_level_str = reliability.analysis_reliability_level if reliability else "Medium"
 
         pdf.set_fill_color(240, 248, 255)
         pdf.set_draw_color(0, 120, 245)
-        pdf.rect(10, pdf.get_y(), 190, 24, style="FD")
+        pdf.rect(10, pdf.get_y(), 190, 30, style="FD")
         
-        pdf.set_xy(15, pdf.get_y() + 4)
-        pdf.set_font("Helvetica", style="B", size=15)
+        pdf.set_xy(15, pdf.get_y() + 3)
+        pdf.set_font("Helvetica", style="B", size=14)
         pdf.set_text_color(0, 50, 150)
         overall_text = f"Overall Technique Score: {overall_score:.1f} / 100" if overall_score is not None else "Overall Technique Score: INSUFFICIENT_EVIDENCE"
-        pdf.cell(90, 8, overall_text)
+        pdf.cell(100, 7, overall_text)
         
-        pdf.set_font("Helvetica", size=11)
+        pdf.set_font("Helvetica", size=10)
         pdf.set_text_color(80, 80, 80)
-        pdf.cell(80, 8, f"Scientific Confidence: {scientific_conf}", align="R")
+        pdf.cell(70, 7, f"Scientific Confidence: {scientific_conf}", align="R")
+        pdf.ln(7)
+
+        pdf.set_x(15)
+        pdf.set_font("Helvetica", style="B", size=10)
+        pdf.set_text_color(0, 85, 255)
+        pdf.cell(90, 6, f"Swimming Stroke: {stroke_title} (Selection: User Selected)")
+        pdf.set_font("Helvetica", size=10)
+        pdf.set_text_color(80, 80, 80)
+        pdf.cell(80, 6, f"Analysis Reliability: {rel_level_str} ({rel_score_str})", align="R")
         pdf.set_x(10)
-        pdf.ln(14)
+        pdf.ln(12)
 
         # Key Biomechanical Metrics Table
         pdf.set_font("Helvetica", style="B", size=13)

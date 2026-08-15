@@ -71,13 +71,23 @@ class ExportService:
             if getattr(analysis_result, 'stroke_statistics', None):
                 metadata_dict["phase_confidence"] = analysis_result.stroke_statistics.average_phase_confidence
             
-            # Fix Enum serialization in stroke_detection
-            if metadata_dict.get('stroke_detection'):
-                sd = metadata_dict['stroke_detection']
-                if hasattr(sd.get('predicted_stroke'), 'value'):
-                    sd['predicted_stroke'] = sd['predicted_stroke'].value
-                if hasattr(sd.get('selected_stroke'), 'value'):
-                    sd['selected_stroke'] = sd['selected_stroke'].value
+            # Fix Enum/Object serialization in stroke_detection / stroke_selection
+            sd = metadata_dict.get('stroke_detection')
+            if sd:
+                if isinstance(sd, dict):
+                    sel = sd.get('selected_stroke')
+                    if hasattr(sel, 'value'):
+                        sd['selected_stroke'] = sel.value
+                    elif hasattr(sel, '__dict__'):
+                        sd['selected_stroke'] = str(sel)
+                elif hasattr(sd, 'to_dict'):
+                    metadata_dict['stroke_detection'] = sd.to_dict()
+                elif hasattr(sd, '__dict__'):
+                    sel_val = getattr(sd, 'selected_stroke', 'Freestyle')
+                    metadata_dict['stroke_detection'] = {
+                        "selected_stroke": sel_val.value if hasattr(sel_val, 'value') else str(sel_val),
+                        "selection_source": getattr(sd, 'selection_source', 'USER')
+                    }
             
             with open(metadata_path, 'w') as f:
                 json.dump(metadata_dict, f, indent=4)
