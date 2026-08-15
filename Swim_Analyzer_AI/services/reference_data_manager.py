@@ -30,11 +30,15 @@ class ReferenceDataManager:
 
     def import_csv(
         self,
+        principal,
         filepath: str,
         version_name: str = "manual_reference_v1",
         importer: str = "System/Coach"
     ) -> Tuple[int, int, List[str]]:
         """Imports a reference CSV file into database with specified version name."""
+        if not principal or getattr(principal, "role", "coach") != "admin":
+            raise PermissionError("Global write access denied. Administrator privileges required to import reference data.")
+            
         valid, rejected, errs = CSVRegistryImporter.import_scientific_registry_csv(
             csv_path=filepath,
             version_name=version_name,
@@ -130,16 +134,22 @@ class ReferenceDataManager:
         """Runs 8 Scientific Integrity Rules validation on dataset."""
         return ReferenceDataValidator.validate_dataset(dataset)
 
-    def create_record(self, dataset: ReferenceDataset, user: str = "Coach/Admin") -> bool:
+    def create_record(self, principal, dataset: ReferenceDataset, user: str = "Coach/Admin") -> bool:
         """Validates and saves a new dataset record."""
+        if not principal or getattr(principal, "role", "coach") != "admin":
+            raise PermissionError("Global write access denied. Administrator privileges required.")
         return self._repo.save_dataset(dataset, user=user)
 
-    def update_record(self, dataset: ReferenceDataset, user: str = "Coach/Admin") -> bool:
+    def update_record(self, principal, dataset: ReferenceDataset, user: str = "Coach/Admin") -> bool:
         """Updates an existing dataset record."""
+        if not principal or getattr(principal, "role", "coach") != "admin":
+            raise PermissionError("Global write access denied. Administrator privileges required.")
         return self._repo.save_dataset(dataset, user=user)
 
-    def delete_record(self, dataset_id: str, confirm: bool = False, user: str = "Coach/Admin") -> bool:
+    def delete_record(self, principal, dataset_id: str, confirm: bool = False, user: str = "Coach/Admin") -> bool:
         """Deletes a dataset record ONLY when confirm=True."""
+        if not principal or getattr(principal, "role", "coach") != "admin":
+            raise PermissionError("Global write access denied. Administrator privileges required.")
         if not confirm:
             raise ValueError("Deletion requires explicit confirmation (confirm=True).")
         return self._repo.delete_dataset(dataset_id, user=user)
@@ -148,12 +158,16 @@ class ReferenceDataManager:
         """Fetch list of all imported dataset versions."""
         return self._repo.get_dataset_versions()
 
-    def activate_dataset_version(self, version_name: str) -> bool:
+    def activate_dataset_version(self, principal, version_name: str) -> bool:
         """Activates a dataset version."""
+        if not principal or getattr(principal, "role", "coach") != "admin":
+            raise PermissionError("Global write access denied. Administrator privileges required.")
         return self._repo.set_version_active(version_name, is_active=True)
 
-    def deactivate_dataset_version(self, version_name: str) -> bool:
+    def deactivate_dataset_version(self, principal, version_name: str) -> bool:
         """Deactivates a dataset version."""
+        if not principal or getattr(principal, "role", "coach") != "admin":
+            raise PermissionError("Global write access denied. Administrator privileges required.")
         return self._repo.set_version_active(version_name, is_active=False)
 
     def export_csv(self, stroke: Optional[str] = None, eligible_only: bool = False) -> str:

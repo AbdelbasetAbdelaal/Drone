@@ -245,10 +245,13 @@ def render_admin_dashboard_page():
     admin_count = sum(1 for a in account_list if a.role == "admin")
 
     athlete_service = AthleteService()
-    all_athletes = athlete_service.get_all_profiles(coach_id=None)
+    all_athletes = [] # Admin dashboard does not display full athlete list
 
     history_service = AnalysisHistoryService()
-    all_sessions = history_service.get_all_sessions()
+    try:
+        all_sessions = history_service.get_all_sessions(st.session_state.current_coach)
+    except Exception:
+        all_sessions = []
 
     st.markdown("### 🔐 Account Summary")
     c1, c2, c3, c4 = st.columns(4)
@@ -307,7 +310,7 @@ def render_admin_dashboard_page():
                     st.caption(f"Owner Coach ID: {owner}")
                 with col2:
                     if st.button("Delete", key=f"delete_athlete_{athlete.athlete_id}", type="secondary"):
-                        if athlete_service.delete_profile(athlete.athlete_id):
+                        if athlete_service.delete_profile(athlete.athlete_id, athlete.coach_id):
                             st.success(f"Deleted athlete {athlete.full_name}.")
                             st.rerun()
                         else:
@@ -626,7 +629,7 @@ def render_athletes_page():
                 if not full_name.strip():
                     st.error("Full Name is required.")
                 else:
-                    existing_profiles = athlete_service.get_all_profiles()
+                    existing_profiles = athlete_service.get_all_profiles(coach_id=current_coach_id)
                     name_exists = any(p.full_name.lower() == full_name.strip().lower() for p in existing_profiles)
                     if name_exists:
                         st.error(f"An athlete with the name '{full_name.strip()}' already exists. Please use a unique name.")
@@ -648,7 +651,7 @@ def render_athletes_page():
 def render_athlete_profile_page():
     athlete_id = st.session_state.viewing_athlete_id
     athlete_service = AthleteService()
-    profile = athlete_service.load_profile(athlete_id)
+    profile = athlete_service.load_profile(athlete_id, current_coach_id)
     
     if not profile:
         st.error("Athlete profile not found.")
@@ -666,7 +669,7 @@ def render_athlete_profile_page():
     with col3:
         st.write("") # Spacing
         history_service = AnalysisHistoryService()
-        history = history_service.get_sessions_by_athlete(athlete_id)
+        history = history_service.get_sessions_by_athlete(athlete_id, current_coach_id)
         
         # Generate PDF on the fly
         try:
@@ -705,7 +708,7 @@ def render_athlete_profile_page():
             if st.form_submit_button("Save Notes", type="primary"):
                 profile.notes = new_notes
                 profile.training_goals = new_goals
-                if athlete_service.save_profile(profile):
+                if athlete_service.update_profile(profile, current_coach_id):
                     st.success("Notes and goals updated successfully!")
                     st.rerun()
                 else:
@@ -727,7 +730,7 @@ def render_athlete_profile_page():
     st.subheader("📊 Analysis History")
     
     history_service = AnalysisHistoryService()
-    history = history_service.get_sessions_by_athlete(athlete_id)
+    history = history_service.get_sessions_by_athlete(athlete_id, current_coach_id)
     
     if not history:
         st.info("No analyses recorded for this athlete yet.")
@@ -898,7 +901,7 @@ def render_history_page():
     athlete_map = {p.athlete_id: p.full_name for p in profiles}
 
     if current_role == "admin":
-        history = history_service.get_all_sessions()
+        history = history_service.get_all_sessions(st.session_state.current_coach)
     elif current_coach_id:
         history = history_service.get_sessions_by_account(current_coach_id)
     else:
@@ -1023,8 +1026,12 @@ def render_dashboard_page():
     athlete_service = AthleteService()
     history_service = AnalysisHistoryService()
 
-    profiles = athlete_service.get_all_profiles(coach_id=current_coach_id)
-    all_sessions = history_service.get_all_sessions()
+    try:
+        profiles = athlete_service.get_all_profiles(coach_id=current_coach_id)
+        all_sessions = history_service.get_sessions_by_account(current_coach_id)
+    except Exception:
+        profiles = []
+        all_sessions = []
     
     # Filter sessions belonging to this coach's roster
     coach_athlete_ids = {p.athlete_id for p in profiles}
@@ -1693,7 +1700,7 @@ def main():
                             stroke_type=st.session_state.stroke_result.selected_stroke.value,
                             processing_time_seconds=st.session_state.get("_processing_end_time", time.time()) - st.session_state.get("_processing_start_time", time.time())
                         )
-                        history_service.save_session(session)
+                        history_service.create_session(session, current_coach_id)
                     except Exception as e:
                         safe_log(f"ERROR: Failed to save analysis history: {e}")
 
@@ -1758,7 +1765,7 @@ def main():
                     st.markdown("### 📊 Population Reference Values & Evidence Cards")
                     bm_res = getattr(analysis_result, 'benchmark_result', None)
                     profile = st.session_state.get("current_profile") or (
-                        AthleteService().load_profile(selected_athlete_id) if selected_athlete_id != "None" else None
+                        AthleteService().load_profile(selected_athlete_id, current_coach_id) if selected_athlete_id != "None" else None
                     )
                     
                     from app.ui.benchmark_ui import render_population_benchmark_cards

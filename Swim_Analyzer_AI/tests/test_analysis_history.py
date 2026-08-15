@@ -58,21 +58,26 @@ def test_analysis_history_service_crud(db_session):
     )
 
     # Test Save
-    assert service.save_session(session) is True
+    assert service.create_session(session, "test_account") is True
 
     # Test Load
-    loaded = service.load_session(session.session_id)
+    loaded = service.load_session(session.session_id, "test_account")
     assert loaded is not None
     assert loaded.session_id == session.session_id
 
     # Test Get by Athlete
-    sessions = service.get_sessions_by_athlete("athlete_1")
+    # Note: Athlete needs to exist in the database for the join to work in get_sessions_by_athlete_and_account_id
+    from database.repository import AthleteRepository
+    from models.athlete_profile import AthleteProfile
+    AthleteRepository(db_session).create(AthleteProfile(athlete_id="athlete_1", full_name="A1", age=20, gender="Male", height_cm=180, weight_kg=75, swimming_level="Pro", preferred_stroke="Free"), "test_account")
+
+    sessions = service.get_sessions_by_athlete("athlete_1", "test_account")
     assert len(sessions) == 1
     assert sessions[0].athlete_id == "athlete_1"
 
     # Test Delete
-    assert service.delete_session(session.session_id) is True
-    assert service.load_session(session.session_id) is None
+    assert service.delete_session(session.session_id, "test_account") is True
+    assert service.load_session(session.session_id, "test_account") is None
 
 def test_get_sessions_by_athlete_ordering(db_session):
     service = AnalysisHistoryService(db_session=db_session)
@@ -96,10 +101,14 @@ def test_get_sessions_by_athlete_ordering(db_session):
         completed_cycles=6, stroke_type="Freestyle", processing_time_seconds=12.0
     )
 
-    service.save_session(s1)
-    service.save_session(s2)
+    from database.repository import AthleteRepository
+    from models.athlete_profile import AthleteProfile
+    AthleteRepository(db_session).create(AthleteProfile(athlete_id="athlete_2", full_name="A2", age=20, gender="Male", height_cm=180, weight_kg=75, swimming_level="Pro", preferred_stroke="Free"), "coach_1")
 
-    sessions = service.get_sessions_by_athlete("athlete_2")
+    service.create_session(s1, "coach_1")
+    service.create_session(s2, "coach_1")
+
+    sessions = service.get_sessions_by_athlete("athlete_2", "coach_1")
     assert len(sessions) == 2
     # Should be sorted newest first
     assert sessions[0].session_id == s2.session_id
@@ -138,8 +147,8 @@ def test_get_sessions_by_account_filtering(db_session):
         processing_time_seconds=35.0
     )
 
-    service.save_session(user_session)
-    service.save_session(coach_session)
+    service.create_session(user_session, "user_abc")
+    service.create_session(coach_session, "coach_xyz")
 
     user_sessions = service.get_sessions_by_account("user_abc")
     coach_sessions = service.get_sessions_by_account("coach_xyz")

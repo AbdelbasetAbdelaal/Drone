@@ -41,25 +41,26 @@ class AthleteService:
             errors.append("Preferred stroke is required.")
         return errors
 
-    def save_profile(self, profile: AthleteProfile) -> bool:
-        """Save an athlete profile to the database."""
+    def create_profile(self, coach_id: str, **kwargs) -> AthleteProfile:
+        """Create and save a new athlete profile."""
+        if not coach_id:
+            raise ValueError("coach_id is required to create a profile")
+            
+        profile = AthleteProfile(**kwargs)
+        profile.coach_id = coach_id
+        
         errors = self.validate_profile(profile)
         if errors:
             error_msg = "; ".join(errors)
             logger.error(f"Failed to save athlete profile {profile.athlete_id}: {error_msg}")
             raise ValueError(f"Invalid athlete profile: {error_msg}")
-        
-        success = self.repository.add(profile)
+            
+        success = self.repository.create(profile, coach_id)
         if success:
-            logger.info(f"Saved athlete profile: {profile.athlete_id}")
+            logger.info(f"Created athlete profile: {profile.athlete_id} for coach {coach_id}")
         else:
             logger.error(f"Error saving athlete profile {profile.athlete_id} to database.")
-        return success
-
-    def create_profile(self, **kwargs) -> AthleteProfile:
-        """Create and save a new athlete profile."""
-        profile = AthleteProfile(**kwargs)
-        self.save_profile(profile)
+            
         return profile
 
     def load_profile(self, athlete_id: str, coach_id: str) -> Optional[AthleteProfile]:
@@ -68,7 +69,7 @@ class AthleteService:
             logger.warning(f"Security: Missing coach_id for athlete profile access {athlete_id}")
             raise ValueError("coach_id is required")
             
-        profile = self.repository.get(athlete_id, coach_id)
+        profile = self.repository.get_by_id_and_coach_id(athlete_id, coach_id)
         if not profile:
             logger.warning(f"Athlete profile not found or access denied: {athlete_id}")
             return None
@@ -79,11 +80,22 @@ class AthleteService:
         """Load all athlete profiles strictly for a specific coach."""
         if not coach_id:
             raise ValueError("coach_id is required to fetch profiles")
-        return self.repository.get_all(coach_id=coach_id)
+        return self.repository.get_all_by_coach_id(coach_id=coach_id)
 
-    def update_profile(self, profile: AthleteProfile) -> bool:
-        """Update an existing athlete profile. Alias for save_profile."""
-        return self.save_profile(profile)
+    def update_profile(self, profile: AthleteProfile, coach_id: str) -> bool:
+        """Update an existing athlete profile with ownership validation."""
+        errors = self.validate_profile(profile)
+        if errors:
+            error_msg = "; ".join(errors)
+            logger.error(f"Failed to update athlete profile {profile.athlete_id}: {error_msg}")
+            raise ValueError(f"Invalid athlete profile: {error_msg}")
+            
+        success = self.repository.update_by_id_and_coach_id(profile, coach_id)
+        if success:
+            logger.info(f"Updated athlete profile: {profile.athlete_id} by coach {coach_id}")
+        else:
+            logger.error(f"Error updating athlete profile {profile.athlete_id} by coach {coach_id}")
+        return success
 
     def delete_profile(self, athlete_id: str, coach_id: str) -> bool:
         """Delete an athlete profile by ID, enforcing strict coach ownership."""
@@ -91,7 +103,7 @@ class AthleteService:
             logger.warning(f"Security: Missing coach_id for delete operation on {athlete_id}")
             raise ValueError("coach_id is required")
             
-        success = self.repository.delete(athlete_id, coach_id)
+        success = self.repository.delete_by_id_and_coach_id(athlete_id, coach_id)
         if success:
             logger.info(f"Deleted athlete profile: {athlete_id}")
         else:

@@ -24,7 +24,10 @@ def test_record_create_get_filter(manager):
         metrics=[ReferenceMetric(metric_name="stroke_rate", value_typical=55.0, unit="spm")]
     )
 
-    success = manager.create_record(ds, user="Test Runner")
+    class MockPrincipal:
+        role = "admin"
+    admin = MockPrincipal()
+    success = manager.create_record(admin, ds, user="Test Runner")
     assert success is True
 
     records = manager.get_records(stroke="FREESTYLE", metric_name="stroke_rate")
@@ -42,7 +45,10 @@ def test_get_records_normalizes_metric_names(manager):
         dataset_version="test_v2",
         metrics=[ReferenceMetric(metric_name="Stroke Rate", value_typical=48.5, unit="spm")]
     )
-    manager.create_record(ds, user="Test Runner")
+    class MockPrincipal:
+        role = "admin"
+    admin = MockPrincipal()
+    manager.create_record(admin, ds, user="Test Runner")
 
     records_snake = manager.get_records(stroke="FREESTYLE", metric_name="stroke_rate")
     assert any(r.name == "Stroke Rate Normalization Dataset" for r in records_snake)
@@ -59,11 +65,14 @@ def test_delete_requires_confirmation(manager):
         age_max=25,
         sex="Male"
     )
-    manager.create_record(ds, user="Test Runner")
+    class MockPrincipal:
+        role = "admin"
+    admin = MockPrincipal()
+    manager.create_record(admin, ds, user="Test Runner")
 
     with pytest.raises(ValueError, match="Deletion requires explicit confirmation"):
-        manager.delete_record(ds.dataset_id, confirm=False)
+        manager.delete_record(admin, ds.dataset_id, confirm=False)
 
     # With confirmation, deletion succeeds
-    deleted = manager.delete_record(ds.dataset_id, confirm=True)
+    deleted = manager.delete_record(admin, ds.dataset_id, confirm=True)
     assert deleted is True

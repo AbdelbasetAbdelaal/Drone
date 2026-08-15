@@ -20,7 +20,10 @@ def test_version_activation_deactivation(manager):
         dataset_version=version_name,
         is_active=True
     )
-    manager.create_record(ds)
+    class MockPrincipal:
+        role = "admin"
+    admin = MockPrincipal()
+    manager.create_record(admin, ds)
 
     v_info = ReferenceDatasetVersion(
         version_name=version_name,
@@ -32,11 +35,11 @@ def test_version_activation_deactivation(manager):
     manager._repo.save_dataset_version(v_info)
 
     # Deactivate version
-    manager.deactivate_dataset_version(version_name)
+    manager.deactivate_dataset_version(admin, version_name)
     active_records = manager.get_records(stroke="BUTTERFLY", include_inactive=False)
     assert not any(d.name == "Versioned Dataset" for d in active_records)
 
     # Re-activate version
-    manager.activate_dataset_version(version_name)
+    manager.activate_dataset_version(admin, version_name)
     active_records_after = manager.get_records(stroke="BUTTERFLY", include_inactive=False)
     assert any(d.name == "Versioned Dataset" for d in active_records_after)
