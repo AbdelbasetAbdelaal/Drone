@@ -29,8 +29,8 @@ class ButterflyBiomechanicsCalculator(FreestyleBiomechanicsCalculator):
                 try:
                     diff = abs(lm[15].y - lm[16].y)
                     diffs.append(diff)
-                except Exception:
-                    pass
+                except Exception as e:
+                    logger.debug("Failed to calculate wrist symmetry for frame: %s", e)
         if diffs:
             import numpy as np
             avg_diff = float(np.mean(diffs))
@@ -76,8 +76,8 @@ class ButterflyBiomechanicsCalculator(FreestyleBiomechanicsCalculator):
 
                         wrist_diff = abs(lm[15].y - lm[16].y)
                         wrist_asymmetries.append(wrist_diff)
-                    except Exception:
-                        pass
+                    except Exception as e:
+                        logger.debug("Failed to calculate undulation/asymmetry for frame: %s", e)
 
             undulation = float(max(hip_y_values) - min(hip_y_values)) if len(hip_y_values) > 10 else 0.0
             metrics["hip_undulation_amplitude"] = ValidatedMetric(

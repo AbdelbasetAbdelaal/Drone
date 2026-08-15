@@ -51,7 +51,7 @@ def test_dashboard_admin_role_invokes_get_all_sessions():
         mock_history_instance.get_all_sessions.assert_called_once_with(principal=mock_admin)
         mock_history_instance.get_sessions_by_account.assert_not_called()
 
-def test_dashboard_calls_get_sessions_by_athlete_with_account_id():
+def test_dashboard_in_memory_session_grouping_avoids_n_plus_one():
     with patch('app.ui.dashboard.st') as mock_st, \
          patch('app.ui.dashboard.AthleteService') as MockAthleteService, \
          patch('app.ui.dashboard.AnalysisHistoryService') as MockHistoryService:
@@ -71,17 +71,19 @@ def test_dashboard_calls_get_sessions_by_athlete_with_account_id():
         mock_athlete_instance.get_all_profiles.return_value = [mock_athlete]
 
         mock_session = MagicMock()
+        mock_session.athlete_id = "ath_001"
+        mock_session.account_id = "test_coach_id"
         mock_session.performance_score = 88.5
         mock_session.analysis_timestamp = "2026-08-15T12:00:00"
 
         mock_history_instance = MockHistoryService.return_value
         mock_history_instance.get_sessions_by_account.return_value = [mock_session]
-        mock_history_instance.get_sessions_by_athlete.return_value = [mock_session]
         mock_st.columns.return_value = [MagicMock(), MagicMock(), MagicMock()]
 
         render_dashboard_page()
 
-        mock_history_instance.get_sessions_by_athlete.assert_called_once_with("ath_001", "test_coach_id")
+        mock_history_instance.get_sessions_by_account.assert_called_once_with(account_id="test_coach_id")
+        mock_history_instance.get_all_sessions.assert_not_called()
 
 def test_tenant_isolation_sessions_and_history(tmp_path):
     # Integration verification across Service/DB layers
@@ -134,19 +136,14 @@ def test_dashboard_coach_loads_own_athlete_sessions_successfully():
         mock_athlete_instance = MockAthleteService.return_value
         mock_athlete_instance.get_all_profiles.return_value = [ath1, ath2]
 
-        sess1 = MagicMock(performance_score=92.0, analysis_timestamp="2026-08-15T10:00:00")
-        sess2 = MagicMock(performance_score=85.0, analysis_timestamp="2026-08-15T11:00:00")
+        sess1 = MagicMock(athlete_id="ath_1", performance_score=92.0, analysis_timestamp="2026-08-15T10:00:00")
+        sess2 = MagicMock(athlete_id="ath_2", performance_score=85.0, analysis_timestamp="2026-08-15T11:00:00")
 
         mock_history_instance = MockHistoryService.return_value
         mock_history_instance.get_sessions_by_account.return_value = [sess1, sess2]
-        mock_history_instance.get_sessions_by_athlete.side_effect = lambda ath_id, acc_id: (
-            [sess1] if ath_id == "ath_1" and acc_id == "coach_alpha" else ([sess2] if ath_id == "ath_2" and acc_id == "coach_alpha" else [])
-        )
         mock_st.columns.return_value = [MagicMock(), MagicMock(), MagicMock()]
 
         render_dashboard_page()
 
-        assert mock_history_instance.get_sessions_by_athlete.call_count == 2
-        mock_history_instance.get_sessions_by_athlete.assert_any_call("ath_1", "coach_alpha")
-        mock_history_instance.get_sessions_by_athlete.assert_any_call("ath_2", "coach_alpha")
+        mock_history_instance.get_sessions_by_account.assert_called_once_with(account_id="coach_alpha")
         mock_history_instance.get_all_sessions.assert_not_called()

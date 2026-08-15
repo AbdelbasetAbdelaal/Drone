@@ -15,12 +15,22 @@ class AthleteService:
             self.db = db_session
         self.repository = AthleteRepository(self.db)
 
-    def __del__(self):
-        if hasattr(self, '_owns_session') and self._owns_session and self.db:
+    def close(self):
+        """Explicitly closes the database session if owned by this service."""
+        if getattr(self, '_owns_session', False) and getattr(self, 'db', None):
             try:
                 self.db.close()
             except Exception:
                 pass
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
+
+    def __del__(self):
+        self.close()
 
     def validate_profile(self, profile: AthleteProfile) -> List[str]:
         """Validate athlete profile fields. Returns a list of error messages."""

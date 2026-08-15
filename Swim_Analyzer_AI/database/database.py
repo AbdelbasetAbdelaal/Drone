@@ -1,5 +1,5 @@
 import os
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, event
 from sqlalchemy.orm import declarative_base, sessionmaker
 
 # Ensure the data directory exists
@@ -12,6 +12,17 @@ SQLALCHEMY_DATABASE_URL = "sqlite:///data/swim_analyzer.db"
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
 )
+
+@event.listens_for(engine, "connect")
+def set_sqlite_pragma(dbapi_connection, connection_record):
+    """Enable SQLite WAL mode and synchronous=NORMAL for robust concurrency."""
+    try:
+        cursor = dbapi_connection.cursor()
+        cursor.execute("PRAGMA journal_mode=WAL;")
+        cursor.execute("PRAGMA synchronous=NORMAL;")
+        cursor.close()
+    except Exception:
+        pass
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

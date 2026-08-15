@@ -30,13 +30,19 @@ def render_dashboard_page():
     total_athletes = len(profiles)
     total_sessions = len(all_sessions)
     
+    # Group all_sessions by athlete_id in memory (preserving timestamp order)
+    sessions_by_athlete = {}
+    for s in all_sessions:
+        if s.athlete_id:
+            sessions_by_athlete.setdefault(s.athlete_id, []).append(s)
+
     # Calculate latest score for each athlete
     athlete_stats = []
     total_score_sum = 0
     athletes_with_sessions = 0
     
     for p in profiles:
-        sessions = history_service.get_sessions_by_athlete(p.athlete_id, current_coach.coach_id)
+        sessions = sessions_by_athlete.get(p.athlete_id, [])
         latest_score = None
         last_analysis_date = "N/A"
         

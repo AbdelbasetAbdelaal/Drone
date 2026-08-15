@@ -186,7 +186,6 @@ class AnalysisService:
                 progress_callback(frame_data, frame_conf, visualization_mode)
             
             frames_processed += 1
-            time.sleep(0.001) # Yield GIL
             
         return False, valid_frames_count, peak_ram, peak_cpu
 
