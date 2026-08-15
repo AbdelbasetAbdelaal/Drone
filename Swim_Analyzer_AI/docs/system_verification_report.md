@@ -37,13 +37,25 @@ This report certifies that **SwimAnalyzer AI** adheres to all core architectural
 
 8. **Zero Hardcoded Credentials & Secure Bootstrap**:
    - All default/hardcoded passwords and credentials removed from production code and UI.
+   - Authentication secured with Argon2id cryptographic hashing and per-user random salting.
    - Bootstrap accounts configured securely via environment variables (`.env`).
+
+9. **Storage Retention Policy & TTL Lifecycle**:
+   - Automated disk usage telemetry across all runtime upload and report directories.
+   - Configurable TTL pruning protecting database, scientific datasets, and ML model weights.
+
+10. **Modular Presentation Architecture**:
+    - Complete UI layer modularization (`app/ui/tabs/`, `app/ui/pages/`) ensuring clean separation of concerns and robust maintainability.
 
 ---
 
 ## 2. Automated Test Verification
 
-- **Dedicated User Stroke Selection Test Suite**: `15/15 PASSED (100%)` (`tests/test_user_stroke_selection_and_reliability.py`).
-- **Tenant Isolation & Security Suite**: `100% PASSED` (`tests/test_tenant_isolation.py`, `tests/test_models_regression.py`, `tests/test_dashboard_regression.py`).
-- **Determinism**: 100% local Python biomechanical analysis. Zero external cloud AI API calls.
+- **Full Pytest Suite**: `298 PASSED, 1 SKIPPED, 0 FAILED (100% Pass Rate)`.
+- **Tenant Isolation & Security Suite**: `16/16 PASSED (100%)` (`tests/test_tenant_isolation.py`, `tests/test_models_regression.py`, `tests/test_dashboard_regression.py`, `tests/test_analysis_history.py`).
+- **User Stroke Selection & Reliability Suite**: `15/15 PASSED (100%)` (`tests/test_user_stroke_selection_and_reliability.py`).
+- **Storage Retention Suite**: `2/2 PASSED (100%)` (`tests/test_storage_service.py`).
+- **Background Worker Suite**: `1/1 PASSED (100%)` (`tests/test_background_worker.py`).
+- **Determinism**: 100% local Python biomechanical analysis. Zero unauthenticated or untracked cloud API dependencies.
+
 

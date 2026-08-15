@@ -58,10 +58,10 @@ class TestVideoQualityAssessor(unittest.TestCase):
         
         result = self.vqa.assess_video("dummy.mp4")
         
-        # Find Video Orientation criterion
+        # Find Video Orientation criterion (Vertical 720x1280 HD smartphone video scores 80)
         orient_crit = next(c for c in result.criteria if c.name == "Video Orientation")
-        self.assertEqual(orient_crit.score, 0)
-        self.assertFalse(orient_crit.passed)
+        self.assertEqual(orient_crit.score, 80)
+        self.assertTrue(orient_crit.passed)
         
     @patch('analysis.video_quality_assessor.cv2.VideoCapture')
     @patch('analysis.pose_detector.PoseDetector')

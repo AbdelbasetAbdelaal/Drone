@@ -23,9 +23,14 @@ This document defines the security architecture and multi-tenant isolation guara
   - Directory boundary containment is validated using `Path.relative_to(target_dir)`, raising `ValueError` on any traversal attempt.
   - Exported files (JSON reports, metadata, timeline data, PDF reports) receive server-generated UUID names.
 
-### 2.4 Credential Security
+### 2.4 Credential Security & Password Hashing
 - Hardcoded default passwords have been completely removed from production code and UI components.
+- Passwords are encrypted using **Argon2id** (memory-hard, resistant to GPU/ASIC cracking) with per-user unique cryptographic salt.
 - Initial administrative and coach bootstrap accounts are configured via environment variables (`SWIM_ANALYZER_BOOTSTRAP_*`) defined in `.env`.
+
+### 2.5 Deterministic Database Session Lifecycle & WAL Mode
+- SQLAlchemy database connections utilize deterministic context managers (`__enter__`, `__exit__`) and explicit `.close()` disposals to eliminate connection pooling leaks.
+- SQLite is tuned with Write-Ahead Logging (`PRAGMA journal_mode=WAL;`) and `PRAGMA synchronous=NORMAL;` for high concurrency without database lockups.
 
 ---
 
@@ -35,5 +40,7 @@ This document defines the security architecture and multi-tenant isolation guara
 | :--- | :--- | :--- |
 | `tests/test_tenant_isolation.py` | Orphaned athlete deny-by-default, cross-tenant query attack protection | ✅ **PASSED** |
 | `tests/test_models_regression.py` | Required domain model ownership fields (`coach_id`, `account_id`) | ✅ **PASSED** |
-| `tests/test_dashboard_regression.py` | Principal propagation in UI / Dashboard session queries | ✅ **PASSED** |
+| `tests/test_dashboard_regression.py` | Principal propagation in UI / Dashboard session queries & N+1 fix | ✅ **PASSED** |
+| `tests/test_auth_migration.py` | Argon2id verification and fallback prevention | ✅ **PASSED** |
 | `utils/file_security.py` | Path traversal rejection and directory containment | ✅ **PASSED** |
+

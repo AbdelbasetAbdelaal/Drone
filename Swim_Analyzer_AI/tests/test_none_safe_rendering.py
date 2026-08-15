@@ -35,7 +35,9 @@ class _StreamlitRecorder(_Container):
 
 def _load_executive_card():
     """Load only the rendering function, avoiding Streamlit's module-level app run."""
-    source_path = Path(__file__).parents[1] / "app" / "streamlit_app.py"
+    source_path = Path(__file__).parents[1] / "app" / "ui" / "tabs" / "summary_tab.py"
+    if not source_path.exists():
+        source_path = Path(__file__).parents[1] / "app" / "streamlit_app.py"
     module = ast.parse(source_path.read_text(encoding="utf-8"))
     function = next(node for node in module.body if isinstance(node, ast.FunctionDef) and node.name == "render_executive_summary_card")
     recorder = _StreamlitRecorder([])
