@@ -264,9 +264,19 @@ class BenchmarkEngine:
 
     def evaluate_analysis(self, result: AnalysisResult, athlete_profile: Optional[AthleteProfile] = None) -> BenchmarkResult:
         """Runs population benchmark evaluation across all available biomechanical metrics."""
-        # stroke_detection lives on VideoMetadata, not AnalysisResult — use getattr for safety
-        stroke_det = getattr(result, 'stroke_detection', None)
-        stroke = stroke_det.selected_stroke.value if stroke_det else "Freestyle"
+        # Single Source of Truth: Resolve stroke from AnalysisResult
+        stroke = "Freestyle"
+        if getattr(result, 'stroke_type', None):
+            stroke = str(result.stroke_type)
+        elif getattr(result, 'stroke_selection', None) and getattr(result.stroke_selection, 'selected_stroke', None):
+            val = result.stroke_selection.selected_stroke
+            stroke = val.value if hasattr(val, 'value') else str(val)
+        elif getattr(result, 'stroke_detection', None) and getattr(result.stroke_detection, 'selected_stroke', None):
+            val = result.stroke_detection.selected_stroke
+            stroke = val.value if hasattr(val, 'value') else str(val)
+
+        # Standardize stroke capitalization (e.g., 'butterfly' -> 'Butterfly')
+        stroke = stroke.capitalize()
 
         age = athlete_profile.age if athlete_profile and athlete_profile.age else 20
         gender = athlete_profile.gender if athlete_profile and athlete_profile.gender else "Male"

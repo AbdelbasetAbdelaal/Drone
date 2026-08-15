@@ -864,9 +864,10 @@ def main():
         # Use secure file handling to prevent path traversal and enforce directory bounds
         from utils.file_security import sanitize_and_resolve_path
         
-        # Use a fingerprint (name + size) to avoid re-writing on every Streamlit rerun
         _upload_fingerprint = f"{uploaded_file.name}_{uploaded_file.size}"
         if st.session_state.get("_upload_fingerprint") != _upload_fingerprint:
+            st.session_state.completed_analysis = None
+            st.session_state.analysis_state = "ready"
             try:
                 temp_input_path = sanitize_and_resolve_path(
                     user_filename=uploaded_file.name,

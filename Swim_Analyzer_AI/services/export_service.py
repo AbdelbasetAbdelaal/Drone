@@ -35,6 +35,8 @@ class ExportService:
             bm_res = getattr(analysis_result, 'benchmark_result', None)
             export_data = {
                 "video_path": analysis_result.video_path,
+                "stroke_type": analysis_result.stroke_type,
+                "stroke_selection": analysis_result.stroke_selection.to_dict() if analysis_result.stroke_selection else None,
                 "average_stroke_rate": analysis_result.average_stroke_rate,
                 "report": dataclasses.asdict(analysis_result.report) if analysis_result.report else None,
                 "consistency": dataclasses.asdict(analysis_result.consistency) if getattr(analysis_result, 'consistency', None) else None,
