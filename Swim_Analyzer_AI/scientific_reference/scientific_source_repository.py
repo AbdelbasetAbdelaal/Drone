@@ -12,6 +12,8 @@ class ScientificSourceRepository:
     Repository layer for scientific literature sources and citation provenance.
     Decoupled from UI and business logic to allow future SQLite/PostgreSQL migration.
     """
+    _sources_cache: Optional[Dict[str, ScientificSource]] = None
+
     def __init__(self, registry_path: Optional[Path] = None):
         if registry_path is None:
             registry_path = Path(__file__).resolve().parent / "sources" / "source_registry.yaml"
@@ -19,7 +21,11 @@ class ScientificSourceRepository:
         self._sources: Dict[str, ScientificSource] = {}
         self.load_registry()
 
-    def load_registry(self):
+    def load_registry(self, force_reload: bool = False):
+        if not force_reload and ScientificSourceRepository._sources_cache is not None:
+            self._sources = dict(ScientificSourceRepository._sources_cache)
+            return
+
         self._sources.clear()
         if not self.registry_path.exists():
             logger.warning(f"Scientific source registry not found at {self.registry_path}")
@@ -57,6 +63,7 @@ class ScientificSourceRepository:
                         verification_status=sdata.get("verification_status", "VERIFIED_CORRECT"),
                         notes=sdata.get("notes", "")
                     )
+            ScientificSourceRepository._sources_cache = dict(self._sources)
             logger.info(f"Loaded {len(self._sources)} scientific literature sources from registry.")
         except Exception as e:
             logger.error(f"Failed to parse scientific source registry YAML: {e}")

@@ -671,13 +671,15 @@ def render_coach_auth_sidebar():
     """Renders Authentication card in sidebar."""
     st.sidebar.markdown("### 🔐 Account")
     
-    # Ensure default demo accounts exist in DB
-    try:
-        AuthService.seed_default_coach()
-    except Exception as e:
-        logger.error(f"Database initialization failed: {e}")
-        st.sidebar.error("Service temporarily unavailable. Please try again later.")
-        st.stop()
+    # Ensure default demo accounts exist in DB once per session
+    if not st.session_state.get("_db_seeded"):
+        try:
+            AuthService.seed_default_coach()
+            st.session_state["_db_seeded"] = True
+        except Exception as e:
+            logger.error(f"Database initialization failed: {e}")
+            st.sidebar.error("Service temporarily unavailable. Please try again later.")
+            st.stop()
 
     if "current_coach" not in st.session_state:
         st.session_state.current_coach = None
@@ -695,6 +697,7 @@ def render_coach_auth_sidebar():
         if st.sidebar.button("🚪 Logout", key="logout_btn", width="stretch"):
             st.session_state.current_coach = None
             st.session_state.viewing_athlete_id = None
+            st.session_state["nav_mode"] = "📊 Coach Dashboard"
             st.rerun()
     else:
         st.sidebar.warning("Not Logged In")
@@ -751,9 +754,6 @@ def main():
     if "viewing_athlete_id" not in st.session_state:
         st.session_state.viewing_athlete_id = None
 
-    if "nav_mode" not in st.session_state:
-        st.session_state["nav_mode"] = "📊 Coach Dashboard"
-
     current_role = st.session_state.current_coach.role if st.session_state.get("current_coach") else None
     if current_role == "admin":
         nav_options = ["🏛 Admin Console", "📚 Reference Data Manager", "📊 Coach Dashboard", "🏊‍♂️ Video Analysis", "👥 Athletes", "📉 Analysis History"]
@@ -762,11 +762,11 @@ def main():
     else:
         nav_options = ["🏊‍♂️ Video Analysis", "📚 Reference Data Manager", "📉 Analysis History"]
 
-    default_idx = nav_options.index(st.session_state["nav_mode"]) if st.session_state["nav_mode"] in nav_options else 0
+    if "nav_mode" not in st.session_state or st.session_state["nav_mode"] not in nav_options:
+        st.session_state["nav_mode"] = nav_options[0]
 
     st.sidebar.markdown("### Navigation")
-    app_mode = st.sidebar.radio("Go to:", nav_options, index=default_idx, label_visibility="collapsed")
-    st.session_state["nav_mode"] = app_mode
+    app_mode = st.sidebar.radio("Go to:", nav_options, key="nav_mode", label_visibility="collapsed")
     st.sidebar.markdown("---")
 
     if current_role == "admin" and st.session_state.get("trigger_sci_db_update", False):
