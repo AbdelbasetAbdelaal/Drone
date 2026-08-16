@@ -3,6 +3,7 @@ import uuid
 from datetime import datetime
 from typing import List, Optional, Any
 from fpdf import FPDF
+from fpdf.enums import XPos, YPos
 
 from models.athlete_profile import AthleteProfile
 from models.analysis_session import AnalysisSession
@@ -48,18 +49,18 @@ class PDFReportService:
         # Header
         pdf.set_font("Helvetica", style="B", size=22)
         pdf.set_text_color(0, 85, 255) # Swim Blue
-        pdf.cell(0, 15, "SwimAnalyzer AI - Athlete Summary Report", ln=True, align="C")
+        pdf.cell(0, 15, "SwimAnalyzer AI - Athlete Summary Report", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")
         
         pdf.set_font("Helvetica", size=10)
         pdf.set_text_color(100, 100, 100)
         coach_info = f" | Coach: {coach.full_name}" if coach else ""
-        pdf.cell(0, 6, f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}{coach_info}", ln=True, align="C")
+        pdf.cell(0, 6, f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}{coach_info}", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")
         pdf.ln(8)
         
         # Athlete Profile
         pdf.set_text_color(0, 0, 0)
         pdf.set_font("Helvetica", style="B", size=14)
-        pdf.cell(0, 8, "Athlete Profile", ln=True, border="B")
+        pdf.cell(0, 8, "Athlete Profile", new_x=XPos.LMARGIN, new_y=YPos.NEXT, border="B")
         pdf.ln(4)
         
         pdf.set_font("Helvetica", size=11)
@@ -70,7 +71,7 @@ class PDFReportService:
             f"Level: {profile.swimming_level} | Preferred Stroke: {profile.preferred_stroke}"
         ]
         for line in info_lines:
-            pdf.cell(0, 7, line, ln=True)
+            pdf.cell(0, 7, line, new_x=XPos.LMARGIN, new_y=YPos.NEXT)
             
         pdf.ln(6)
         
@@ -78,7 +79,7 @@ class PDFReportService:
         if profile.notes:
             pdf.set_font("Helvetica", style="B", size=13)
             pdf.set_text_color(0, 85, 255)
-            pdf.cell(0, 8, "Coach Notes", ln=True)
+            pdf.cell(0, 8, "Coach Notes", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
             pdf.set_font("Helvetica", size=10)
             pdf.set_text_color(0, 0, 0)
             pdf.multi_cell(0, 6, profile.notes)
@@ -88,7 +89,7 @@ class PDFReportService:
         if profile.training_goals:
             pdf.set_font("Helvetica", style="B", size=13)
             pdf.set_text_color(0, 160, 80) # Green
-            pdf.cell(0, 8, "Training Goals", ln=True)
+            pdf.cell(0, 8, "Training Goals", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
             pdf.set_font("Helvetica", size=10)
             pdf.set_text_color(0, 0, 0)
             pdf.multi_cell(0, 6, profile.training_goals)
@@ -103,7 +104,7 @@ class PDFReportService:
 
             pdf.set_font("Helvetica", style="B", size=13)
             pdf.set_text_color(0, 85, 255)
-            pdf.cell(0, 8, "Overall Performance Overview", ln=True)
+            pdf.cell(0, 8, "Overall Performance Overview", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
             
             pdf.set_font("Helvetica", size=10)
             pdf.set_fill_color(245, 248, 255)
@@ -121,7 +122,7 @@ class PDFReportService:
         if history:
             pdf.set_font("Helvetica", style="B", size=14)
             pdf.set_text_color(0, 0, 0)
-            pdf.cell(0, 8, "Recent Sessions Breakdown", ln=True, border="B")
+            pdf.cell(0, 8, "Recent Sessions Breakdown", new_x=XPos.LMARGIN, new_y=YPos.NEXT, border="B")
             pdf.ln(4)
             
             pdf.set_fill_color(240, 244, 250)
@@ -165,13 +166,13 @@ class PDFReportService:
         # Header Title
         pdf.set_font("Helvetica", style="B", size=22)
         pdf.set_text_color(0, 85, 255)
-        pdf.cell(0, 12, "SwimAnalyzer AI - Biomechanical Report", ln=True, align="C")
+        pdf.cell(0, 12, "SwimAnalyzer AI - Biomechanical Report", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")
 
         pdf.set_font("Helvetica", size=10)
         pdf.set_text_color(100, 100, 100)
         athlete_name = profile.full_name if profile else "Guest Athlete"
         coach_name = f" | Coach: {coach.full_name}" if coach else ""
-        pdf.cell(0, 6, f"Athlete: {athlete_name}{coach_name} | Date: {datetime.now().strftime('%Y-%m-%d %H:%M')}", ln=True, align="C")
+        pdf.cell(0, 6, f"Athlete: {athlete_name}{coach_name} | Date: {datetime.now().strftime('%Y-%m-%d %H:%M')}", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")
         pdf.ln(6)
 
         # Performance Score & Stroke Selection Banner
@@ -212,7 +213,7 @@ class PDFReportService:
         # Key Biomechanical Metrics Table
         pdf.set_font("Helvetica", style="B", size=13)
         pdf.set_text_color(0, 0, 0)
-        pdf.cell(0, 8, "Key Biomechanical Metrics", ln=True, border="B")
+        pdf.cell(0, 8, "Key Biomechanical Metrics", new_x=XPos.LMARGIN, new_y=YPos.NEXT, border="B")
         pdf.ln(4)
 
         report = getattr(analysis_result, 'report', None)
@@ -266,7 +267,7 @@ class PDFReportService:
         if bm_res and getattr(bm_res, 'comparisons', None):
             pdf.set_font("Helvetica", style="B", size=13)
             pdf.set_text_color(0, 0, 0)
-            pdf.cell(0, 8, f"Population Benchmarks & Percentiles ({bm_res.age_group} | {bm_res.gender})", ln=True, border="B")
+            pdf.cell(0, 8, f"Population Benchmarks & Percentiles ({bm_res.age_group} | {bm_res.gender})", new_x=XPos.LMARGIN, new_y=YPos.NEXT, border="B")
             pdf.ln(4)
 
             pdf.set_fill_color(240, 244, 250)
@@ -309,7 +310,7 @@ class PDFReportService:
         # Coaching Feedback & Technique Drills
         pdf.set_font("Helvetica", style="B", size=13)
         pdf.set_text_color(0, 0, 0)
-        pdf.cell(0, 8, "Coaching Feedback & Recommended Drills", ln=True, border="B")
+        pdf.cell(0, 8, "Coaching Feedback & Recommended Drills", new_x=XPos.LMARGIN, new_y=YPos.NEXT, border="B")
         pdf.ln(4)
 
         feedback_text = report.feedback_summary if (report and report.feedback_summary) else "INSUFFICIENT_EVIDENCE: No reliable coaching assessment is available."
@@ -322,12 +323,12 @@ class PDFReportService:
         if bm_res and getattr(bm_res, 'comparisons', None):
             pdf.set_font("Helvetica", style="B", size=11)
             pdf.set_text_color(0, 0, 0)
-            pdf.cell(0, 7, "Scientific References & Literature Provenance", ln=True, border="B")
+            pdf.cell(0, 7, "Scientific References & Literature Provenance", new_x=XPos.LMARGIN, new_y=YPos.NEXT, border="B")
             pdf.ln(3)
 
             pdf.set_font("Helvetica", size=8)
             pdf.set_text_color(80, 80, 80)
-            pdf.cell(0, 5, self._clean_text(f"Dataset: {bm_res.dataset_name} (ID: {bm_res.dataset_id}, v{bm_res.dataset_version}, Revision: {bm_res.scientific_revision})"), ln=True)
+            pdf.cell(0, 5, self._clean_text(f"Dataset: {bm_res.dataset_name} (ID: {bm_res.dataset_id}, v{bm_res.dataset_version}, Revision: {bm_res.scientific_revision})"), new_x=XPos.LMARGIN, new_y=YPos.NEXT)
 
             from services.scientific_evidence_service import ScientificEvidenceService
             ev_service = ScientificEvidenceService()
@@ -339,7 +340,7 @@ class PDFReportService:
         # Phase Breakdown
         pdf.set_font("Helvetica", style="B", size=13)
         pdf.set_text_color(0, 0, 0)
-        pdf.cell(0, 8, "Cycle & Timeline Statistics", ln=True, border="B")
+        pdf.cell(0, 8, "Cycle & Timeline Statistics", new_x=XPos.LMARGIN, new_y=YPos.NEXT, border="B")
         pdf.ln(4)
 
         stats = getattr(analysis_result, 'stroke_statistics', None)
@@ -347,11 +348,11 @@ class PDFReportService:
         total_frames = len(analysis_result.frames)
 
         pdf.set_font("Helvetica", size=10)
-        pdf.cell(0, 6, f"Completed Stroke Cycles: {completed_cycles}", ln=True)
-        pdf.cell(0, 6, f"Total Analyzed Frames: {total_frames}", ln=True)
+        pdf.cell(0, 6, f"Completed Stroke Cycles: {completed_cycles}", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        pdf.cell(0, 6, f"Total Analyzed Frames: {total_frames}", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
 
         from utils.file_security import sanitize_and_resolve_path
-        filename = "Session_Report.pdf"
+        filename = f"SwimReport_{stroke_title}.pdf"
         filepath = sanitize_and_resolve_path(filename, str(self.output_dir), generate_unique=True)
         pdf.output(filepath)
         logger.info(f"Generated session analysis PDF: {filepath}")

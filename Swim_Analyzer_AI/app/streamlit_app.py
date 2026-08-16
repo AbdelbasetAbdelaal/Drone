@@ -118,6 +118,8 @@ def render_athletes_page():
                         st.rerun()
 
 def render_athlete_profile_page():
+    coach = st.session_state.get("current_coach")
+    current_coach_id = coach.coach_id if coach else None
     athlete_id = st.session_state.viewing_athlete_id
     athlete_service = AthleteService()
     profile = athlete_service.load_profile(athlete_id, current_coach_id)
@@ -518,7 +520,7 @@ def render_dashboard_page():
     with cta_col2:
         st.write("")
         if st.button("➕ Analyze New Video", type="primary", width="stretch"):
-            st.session_state["nav_mode"] = "🏊‍♂️ Video Analysis"
+            st.session_state["_target_nav"] = "🏊‍♂️ Video Analysis"
             st.rerun()
 
     st.markdown("---")
@@ -583,7 +585,7 @@ def render_dashboard_page():
                             with c_btn:
                                 if st.button("Inspect", key=f"dash_risk_{p.athlete_id}", width="stretch"):
                                     st.session_state.viewing_athlete_id = p.athlete_id
-                                    st.session_state["nav_mode"] = "👥 Athletes"
+                                    st.session_state["_target_nav"] = "👥 Athletes"
                                     st.rerun()
 
     with col_right:
@@ -757,6 +759,11 @@ def main():
         nav_options = ["📊 Coach Dashboard", "📚 Reference Data Manager", "🏊‍♂️ Video Analysis", "👥 Athletes", "📉 Analysis History"]
     else:
         nav_options = ["🏊‍♂️ Video Analysis", "📚 Reference Data Manager", "📉 Analysis History"]
+
+    if "_target_nav" in st.session_state:
+        target = st.session_state.pop("_target_nav")
+        if target in nav_options:
+            st.session_state["nav_mode"] = target
 
     if "nav_mode" not in st.session_state or st.session_state["nav_mode"] not in nav_options:
         st.session_state["nav_mode"] = nav_options[0]

@@ -81,31 +81,36 @@ def render_download_buttons(output_video_path, json_report_path, metadata_path, 
         except Exception as e:
             logger.warning(f"Failed to generate PDF for download button: {e}")
 
+    stroke_name = str(getattr(analysis_result, 'stroke_type', 'Session')).title() if analysis_result else "Session"
+    
     with open(output_video_path, 'rb') as video_file:
         video_bytes = video_file.read()
     st.download_button(
-        label="Download Processed Video",
+        label="🎥 Download Processed Video (.mp4)",
         data=video_bytes,
-        file_name=Path(output_video_path).name,
-        mime="video/mp4"
+        file_name=f"SwimVideo_{stroke_name}.mp4",
+        mime="video/mp4",
+        width="stretch"
     )
     
     if json_report_path:
         with open(json_report_path, 'r') as json_file:
             json_str = json_file.read()
         st.download_button(
-            label="Download JSON Report",
+            label="📊 Download Biomechanical Data (.json)",
             data=json_str,
-            file_name=Path(json_report_path).name,
-            mime="application/json"
+            file_name=f"SwimReport_{stroke_name}.json",
+            mime="application/json",
+            width="stretch"
         )
         
     if metadata_path:
         with open(metadata_path, 'r') as meta_file:
             meta_str = meta_file.read()
         st.download_button(
-            label="Download Metadata JSON",
+            label="ℹ️ Download Session Metadata (.json)",
             data=meta_str,
-            file_name=Path(metadata_path).name,
-            mime="application/json"
+            file_name=f"SwimMetadata_{stroke_name}.json",
+            mime="application/json",
+            width="stretch"
         )
